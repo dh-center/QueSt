@@ -9,7 +9,7 @@
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "relay": "relay-compiler --src ./src --schema ./schema.graphql --language typescript",
-    "relay: watch": "yarn relay --watch",
+    "relay:watch": "yarn relay --watch",
     "get-schema": "get-graphql-schema https://api.st-retrospect.dh-center.ru/graphql > schema.graphql",
     "get-schema:stage": "get-graphql-schema https://api.stage.st-retrospect.dh-center.ru/graphql > schema.graphql"
   },
