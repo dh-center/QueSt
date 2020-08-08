@@ -1,11 +1,15 @@
-/**
- * @flow
- */
-import {Environment, Network, RecordSource, Store} from 'relay-runtime';
+import {
+  Environment,
+  Network,
+  RecordSource,
+  Store,
+  Variables,
+  RequestParameters,
+} from 'relay-runtime';
 
 // Define a function that fetches the results of an operation (query/mutation/etc)
 // and returns its results as a Promise:
-function fetchQuery(operation, variables, cacheConfig, uploadables) {
+function fetchQuery(operation: RequestParameters, variables: Variables) {
   return fetch('https://api.stage.st-retrospect.dh-center.ru/graphql', {
     method: 'POST',
     headers: {
