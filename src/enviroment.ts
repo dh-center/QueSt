@@ -7,9 +7,16 @@ import {
   RequestParameters,
 } from 'relay-runtime';
 
-// Define a function that fetches the results of an operation (query/mutation/etc)
-// and returns its results as a Promise:
-function fetchQuery(operation: RequestParameters, variables: Variables) {
+/**
+ * Function for make queries to GraphQL server
+ *
+ * @param operation - query to perform
+ * @param variables - query variables
+ */
+function fetchQuery(
+  operation: RequestParameters,
+  variables: Variables,
+): Promise<any> {
   return fetch('https://api.stage.st-retrospect.dh-center.ru/graphql', {
     method: 'POST',
     headers: {
@@ -17,7 +24,7 @@ function fetchQuery(operation: RequestParameters, variables: Variables) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      query: operation.text, // GraphQL text from input
+      query: operation.text,
       variables,
     }),
   }).then((response) => {
@@ -25,7 +32,6 @@ function fetchQuery(operation: RequestParameters, variables: Variables) {
   });
 }
 
-// Create a network layer from the fetch function
 const network = Network.create(fetchQuery);
 
 const source = new RecordSource();
