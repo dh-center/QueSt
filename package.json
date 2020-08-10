@@ -14,6 +14,7 @@
     "get-schema:stage": "get-graphql-schema https://api.stage.st-retrospect.dh-center.ru/graphql > schema.graphql"
   },
   "dependencies": {
+    "@types/react": "^16.9.45",
     "@types/react-relay": "^7.0.8",
     "@types/relay-runtime": "^10.0.2",
     "get-graphql-schema": "^2.1.2",
