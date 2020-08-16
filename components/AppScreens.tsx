@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import QuestList from './QuestList';
 import MapList from './MapList';
 import PersonList from './PersonList';
@@ -14,72 +14,49 @@ import {
   Title,
 } from 'native-base';
 
-export default class AppScreens extends Component {
-  state = {
-    index: 1,
-  };
+export default function AppScreens() {
+  const [index, setIndex] = useState(1);
 
-  switchScreen(index: number) {
-    this.setState({index: index});
+  let ScreenContent: React.ComponentType | null = null;
+  let header = null;
+
+  if (index === 0) {
+    header = 'Квесты';
+    ScreenContent = QuestList;
   }
 
-  render() {
-    let ScreenContent: React.ComponentType | null = null;
-    let header = null;
-
-    if (this.state.index === 0) {
-      header = 'Квесты';
-      ScreenContent = QuestList;
-    }
-
-    if (this.state.index === 1) {
-      header = 'Карта';
-      ScreenContent = MapList;
-    }
-
-    if (this.state.index === 2) {
-      header = 'Профиль';
-      ScreenContent = PersonList;
-    }
-
-    return (
-      <Container>
-        <Header>
-          <Title> {header} </Title>
-        </Header>
-        <Content>{ScreenContent && <ScreenContent />}</Content>
-        <Footer>
-          <FooterTab>
-            <Button
-              vertical
-              active={this.state.index === 0}
-              onPress={() => {
-                this.switchScreen(0);
-              }}>
-              <Icon type="FontAwesome5" name="route" />
-              <Text>Квесты</Text>
-            </Button>
-            <Button
-              vertical
-              active={this.state.index === 1}
-              onPress={() => {
-                this.switchScreen(1);
-              }}>
-              <Icon type="FontAwesome5" name="map-marked-alt" />
-              <Text>Карта</Text>
-            </Button>
-            <Button
-              vertical
-              active={this.state.index === 2}
-              onPress={() => {
-                this.switchScreen(2);
-              }}>
-              <Icon type="FontAwesome5" name="user" />
-              <Text>Профиль</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
-      </Container>
-    );
+  if (index === 1) {
+    header = 'Карта';
+    ScreenContent = MapList;
   }
+
+  if (index === 2) {
+    header = 'Профиль';
+    ScreenContent = PersonList;
+  }
+
+  return (
+    <Container>
+      <Header>
+        <Title> {header} </Title>
+      </Header>
+      <Content>{ScreenContent && <ScreenContent />}</Content>
+      <Footer>
+        <FooterTab>
+          <Button vertical active={index === 0} onPress={() => setIndex(0)}>
+            <Icon type="FontAwesome5" name="route" />
+            <Text>Квесты</Text>
+          </Button>
+          <Button vertical active={index === 1} onPress={() => setIndex(1)}>
+            <Icon type="FontAwesome5" name="map-marked-alt" />
+            <Text>Карта</Text>
+          </Button>
+          <Button vertical active={index === 2} onPress={() => setIndex(2)}>
+            <Icon type="FontAwesome5" name="user" />
+            <Text>Профиль</Text>
+          </Button>
+        </FooterTab>
+      </Footer>
+    </Container>
+  );
 }
