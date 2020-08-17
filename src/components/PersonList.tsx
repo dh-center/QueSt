@@ -1,11 +1,14 @@
 import React from 'react';
 import {Container, Content, Text} from 'native-base';
 
-export default function MapList() {
+/**
+ * function to display person's page
+ */
+export default function PersonList(): React.ReactElement {
   return (
     <Container>
       <Content padder>
-        <Text>Карта</Text>
+        <Text>Страничка пользователя</Text>
       </Content>
     </Container>
   );

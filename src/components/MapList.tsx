@@ -1,11 +1,14 @@
 import React from 'react';
 import {Container, Content, Text} from 'native-base';
 
-export default function QuestList() {
+/**
+ * function to display the map
+ */
+export default function MapList(): React.ReactElement {
   return (
     <Container>
       <Content padder>
-        <Text>Список квестов</Text>
+        <Text>Карта</Text>
       </Content>
     </Container>
   );

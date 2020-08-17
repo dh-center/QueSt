@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import QuestList from './QuestList';
+import Quests from './Quests';
 import MapList from './MapList';
 import PersonList from './PersonList';
 import {
@@ -14,7 +14,10 @@ import {
   Title,
 } from 'native-base';
 
-export default function AppScreens() {
+/**
+ * function to display the FooterTab and the selected screen
+ */
+export default function AppScreens(): React.ReactElement {
   const [index, setIndex] = useState(1);
 
   let ScreenContent: React.ComponentType | null = null;
@@ -22,7 +25,7 @@ export default function AppScreens() {
 
   if (index === 0) {
     header = 'Квесты';
-    ScreenContent = QuestList;
+    ScreenContent = Quests;
   }
 
   if (index === 1) {
