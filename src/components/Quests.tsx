@@ -16,8 +16,7 @@ function QuestView(props: QuestsQueryResponse): React.ReactElement {
     <View>
       <FlatList
         data={props.quests.edges}
-        // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-        renderItem={({item}) => (
+        renderItem={({item}): React.ReactElement => (
           <Button
             large
             block
