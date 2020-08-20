@@ -56,8 +56,7 @@ export default function Quests(): React.ReactElement {
       environment={env}
       query={query}
       variables={{}}
-      // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-      render={({error, props}) => {
+      render={({error, props}): React.ReactElement => {
         if (error) {
           console.log(error);
 
