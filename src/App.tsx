@@ -1,7 +1,7 @@
 import React from 'react';
-import AppScreens from '../components/AppScreens';
+import AppScreens from './components/AppScreens';
 
-const App = () => {
+const App = (): React.ReactElement => {
   return <AppScreens />;
 };
 
