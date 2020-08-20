@@ -2,7 +2,7 @@ import React from 'react';
 import {Container, Content, Text} from 'native-base';
 
 /**
- * functional component of the map
+ * Functional component of the map
  */
 export default function MapList(): React.ReactElement {
   return (

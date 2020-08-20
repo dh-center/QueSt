@@ -15,7 +15,7 @@ import {
 } from 'native-base';
 
 /**
- * functional component of the FooterTab and the selected screen
+ * Functional component of the FooterTab and the selected screen
  */
 export default function AppScreens(): React.ReactElement {
   const [index, setIndex] = useState(1);
