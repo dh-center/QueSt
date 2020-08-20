@@ -6,4 +6,7 @@ module.exports = {
     'codex',
     '@react-native-community'
   ],
+  "rules": {
+    "prettier/prettier": "off"
+  }
 };

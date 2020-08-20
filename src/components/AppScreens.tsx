@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Quests from './Quests';
 import MapList from './MapList';
 import PersonList from './PersonList';

@@ -1,7 +1,7 @@
 import React from 'react';
-import {View, FlatList} from 'react-native';
-import {Button, Container, Content, Spinner, Text} from 'native-base';
-import {graphql, QueryRenderer} from 'react-relay';
+import { View, FlatList } from 'react-native';
+import { Button, Container, Content, Spinner, Text } from 'native-base';
+import { graphql, QueryRenderer } from 'react-relay';
 import env from '../enviroment';
 import {
   QuestsQuery,
@@ -16,14 +16,15 @@ function QuestView(props: QuestsQueryResponse): React.ReactElement {
     <View>
       <FlatList
         data={props.quests.edges}
-        renderItem={({item}): React.ReactElement => (
+        renderItem={({ item }): React.ReactElement => (
           <Button
             large
             block
             rounded
             success
-            style={{margin: 10}}
-            key={item.node.id}>
+            style={{ margin: 10 }}
+            key={item.node.id}
+          >
             <Text uppercase={false} numberOfLines={2}>
               {item.node.name}
             </Text>
@@ -56,7 +57,7 @@ export default function Quests(): React.ReactElement {
       environment={env}
       query={query}
       variables={{}}
-      render={({error, props}): React.ReactElement => {
+      render={({ error, props }): React.ReactElement => {
         if (error) {
           console.log(error);
 
