@@ -49,7 +49,7 @@ const query = graphql`
 `;
 
 /**
- * function to display the list of quests
+ * functional component of the quests list
  */
 export default function Quests(): React.ReactElement {
   return (
