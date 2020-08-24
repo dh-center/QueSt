@@ -1,5 +1,4 @@
 import React from 'react';
-// import AppScreens from './components/AppScreens';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Icon} from 'native-base';
