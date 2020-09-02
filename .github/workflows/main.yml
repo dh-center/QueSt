@@ -20,10 +20,12 @@ jobs:
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
+      - uses: nelonoel/branch-name@v1
       - name: Send release to the channel
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: New release!
+          message: |
+            New *${BRANCH_NAME}* release!
           document: android/app/build/outputs/apk/release/app-release.apk
