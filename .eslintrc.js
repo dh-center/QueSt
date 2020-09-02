@@ -3,10 +3,10 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
   extends: [
-    'codex',
-    '@react-native-community'
+    '@react-native-community',
+    'codex'
   ],
-  "rules": {
+  rules: {
     "prettier/prettier": "off"
   }
 };

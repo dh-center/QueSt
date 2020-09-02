@@ -1,8 +1,8 @@
 import React from 'react';
-import AppScreens from './components/AppScreens';
+import TabsNavigator from './components/TabsNavigator';
 
 const App = (): React.ReactElement => {
-  return <AppScreens />;
+  return <TabsNavigator/>;
 };
 
 export default App;

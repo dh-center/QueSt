@@ -5,7 +5,7 @@ import { graphql, QueryRenderer } from 'react-relay';
 import env from '../enviroment';
 import {
   QuestsQuery,
-  QuestsQueryResponse,
+  QuestsQueryResponse
 } from './__generated__/QuestsQuery.graphql';
 
 /**
@@ -23,13 +23,13 @@ function QuestView(props: QuestsQueryResponse): React.ReactElement {
             rounded
             success
             style={{ margin: 10 }}
-            key={item.node.id}
           >
             <Text uppercase={false} numberOfLines={2}>
               {item.node.name}
             </Text>
           </Button>
         )}
+        keyExtractor={(item, index): string => index.toString()}
       />
     </View>
   );
