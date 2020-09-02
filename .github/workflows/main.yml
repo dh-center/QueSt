@@ -24,6 +24,7 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
           message: |
-            New *${BRANCH_NAME}* release!
+            New *${{env.BRANCH_NAME}}* release!
           document: android/app/build/outputs/apk/release/app-release.apk
