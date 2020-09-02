@@ -1,9 +1,6 @@
 name: react-native-android-build-apk
-on:
-  push:
-    branches:
-      - master
-      - stage
+on: [push]
+
 jobs:
   build-android:
     runs-on: ubuntu-20.04
@@ -22,6 +19,7 @@ jobs:
           path: android/app/build/outputs/apk/release/
       - uses: nelonoel/branch-name@v1
       - name: Send release to the channel
+        if: endsWith(github.ref, '/master') || endsWith(github.ref, '/stage')
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
