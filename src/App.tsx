@@ -1,8 +1,8 @@
 import React from 'react';
-import MyNavigation from './components/MyNavigation';
+import TabsNavigator from './components/TabsNavigator';
 
 const App = (): React.ReactElement => {
-  return <MyNavigation/>;
+  return <TabsNavigator/>;
 };
 
 export default App;

@@ -11,10 +11,10 @@ const Tab = createBottomTabNavigator();
 /**
  * Functional component for implementing navigation between screens
  */
-export default function MyNavigation(): React.ReactElement {
+export default function TabsNavigator(): React.ReactElement {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Map">
+      <Tab.Navigator initialRouteName="Map" tabBarOptions={{}}>
         <Tab.Screen
           name="Quest"
           options={{
