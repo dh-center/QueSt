@@ -1,6 +1,6 @@
 import React from 'react';
 import TabsNavigator from './components/TabsNavigator';
-import MapList from "./components/MapList";
+import Map from "./components/Map";
 
 const App = (): React.ReactElement => {
   return <TabsNavigator/>;

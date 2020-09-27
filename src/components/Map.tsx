@@ -16,9 +16,9 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Functional component of the map
+ * Renders map for quests
  */
-export default function MapList(): React.ReactElement {
+export default function Map(): React.ReactElement {
   return (
     <View style={styles.page}>
       <MapboxGL.MapView style={styles.map} />

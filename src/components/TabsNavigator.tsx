@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'native-base';
 import Quests from './Quests';
-import MapList from './MapList';
+import Map from './Map';
 import PersonList from './PersonList';
 
 const Tab = createBottomTabNavigator();
@@ -38,7 +38,7 @@ export default function TabsNavigator(): React.ReactElement {
               return <Icon type="FontAwesome5" name="map-marked-alt" />;
             },
           }}
-          component={MapList} />
+          component={Map} />
         <Tab.Screen
           name="Person"
           options={{
