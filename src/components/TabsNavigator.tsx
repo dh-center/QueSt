@@ -14,7 +14,13 @@ const Tab = createBottomTabNavigator();
 export default function TabsNavigator(): React.ReactElement {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Map" tabBarOptions={{}}>
+      <Tab.Navigator initialRouteName="Map" tabBarOptions={{
+        style: {
+          paddingTop: 10,
+          paddingBottom: 10,
+          height: 71,
+        },
+      }}>
         <Tab.Screen
           name="Quest"
           options={{
