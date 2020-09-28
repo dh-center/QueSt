@@ -10,28 +10,36 @@ import {
 
 const styles = StyleSheet.create({
   body: {
-    marginLeft: 16,
-    marginRight: 16,
+    backgroundColor: '#ffffff',
+    height: '100%',
+  },
+  header: {
+    height: 69,
+    paddingLeft: 16,
+    justifyContent: 'center',
   },
   title: {
     fontFamily: 'SF UI Display',
     fontWeight: '600',
     fontSize: 32,
     lineHeight: 38,
-    color: '#000000',
-    opacity: 0.8,
-    marginTop: 14,
-    marginBottom: 25,
+    color: 'rgba(0,0,0,0.8)',
   },
-  button: {
-    height: 60,
+  questItem: {
+    minHeight: 60,
+    height: 'auto',
     backgroundColor: 'rgba(64, 190, 32, 0.5)',
     borderRadius: 15,
     marginBottom: 15,
+    paddingTop: 15,
     paddingRight: 60,
+    paddingBottom: 15,
     paddingLeft: 60,
     justifyContent: 'center',
     overflow: 'hidden',
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: 'rgba(0, 0, 0, 0.2)',
   },
   questName: {
     fontFamily: 'SF UI Display',
@@ -43,17 +51,25 @@ const styles = StyleSheet.create({
 });
 
 /**
+ * Component of the quests list
+ *
  * @param props - data with query results
  */
 function QuestView(props: QuestsQueryResponse): React.ReactElement {
   return (
     <View style={styles.body}>
-      <Text style={styles.title} >Квесты</Text>
+      <View style={styles.header}>
+        <Text style={styles.title}>Квесты</Text>
+      </View>
       <FlatList
+        style={{
+          paddingLeft: 16,
+          paddingRight: 16,
+        }}
         data={props.quests.edges}
         renderItem={({ item }): React.ReactElement => (
-          <TouchableOpacity style={styles.button}>
-            <Text numberOfLines={2} style={styles.questName}>
+          <TouchableOpacity style={styles.questItem}>
+            <Text style={styles.questName}>
               {item.node.name}
             </Text>
             <Image source={require('../images/done.png')} style={{
@@ -76,6 +92,7 @@ const query = graphql`
         node {
           id
           name
+          description
         }
       }
     }
@@ -83,7 +100,7 @@ const query = graphql`
 `;
 
 /**
- * Functional component of the quests list
+ * Functional component of the query result
  */
 export default function Quests(): React.ReactElement {
   return (
