@@ -59,8 +59,6 @@ export default function Quests(): React.ReactElement {
       variables={{}}
       render={({ error, props }): React.ReactElement => {
         if (error) {
-          console.log(error);
-
           return (
             <Container>
               <Content padder>
