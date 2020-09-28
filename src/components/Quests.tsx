@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, FlatList } from 'react-native';
-import { Button, Container, Content, Spinner, Text } from 'native-base';
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, Dimensions, StatusBar } from 'react-native';
+import { Container, Content, Spinner } from 'native-base';
 import { graphql, QueryRenderer } from 'react-relay';
 import env from '../enviroment';
 import {
@@ -8,26 +8,60 @@ import {
   QuestsQueryResponse
 } from './__generated__/QuestsQuery.graphql';
 
+const styles = StyleSheet.create({
+  body: {
+    marginLeft: 16,
+    marginRight: 16,
+  },
+  title: {
+    fontFamily: 'SF UI Display',
+    fontWeight: '600',
+    fontSize: 32,
+    lineHeight: 38,
+    color: '#000000',
+    opacity: 0.8,
+    marginTop: 14,
+    marginBottom: 25,
+  },
+  button: {
+    height: 60,
+    backgroundColor: 'rgba(64, 190, 32, 0.5)',
+    borderRadius: 15,
+    marginBottom: 15,
+    paddingRight: 60,
+    paddingLeft: 60,
+    justifyContent: 'center',
+    overflow: 'hidden',
+  },
+  questName: {
+    fontFamily: 'SF UI Display',
+    fontWeight: '600',
+    fontSize: 17,
+    lineHeight: 20,
+    color: 'rgba(0,0,0,0.8)',
+  },
+});
+
 /**
  * @param props - data with query results
  */
 function QuestView(props: QuestsQueryResponse): React.ReactElement {
   return (
-    <View>
+    <View style={styles.body}>
+      <Text style={styles.title} >Квесты</Text>
       <FlatList
         data={props.quests.edges}
         renderItem={({ item }): React.ReactElement => (
-          <Button
-            large
-            block
-            rounded
-            success
-            style={{ margin: 10 }}
-          >
-            <Text uppercase={false} numberOfLines={2}>
+          <TouchableOpacity style={styles.button}>
+            <Text numberOfLines={2} style={styles.questName}>
               {item.node.name}
             </Text>
-          </Button>
+            <Image source={require('../images/done.png')} style={{
+              position: 'absolute',
+              right: -9,
+              top: -9,
+            }}/>
+          </TouchableOpacity>
         )}
         keyExtractor={(item, index): string => index.toString()}
       />
@@ -63,7 +97,7 @@ export default function Quests(): React.ReactElement {
 
           return (
             <Container>
-              <Content padder>
+              <Content>
                 <Text>Квест не найден</Text>
               </Content>
             </Container>
