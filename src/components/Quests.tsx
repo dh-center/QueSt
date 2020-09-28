@@ -7,6 +7,14 @@ import {
   QuestsQuery,
   QuestsQueryResponse
 } from './__generated__/QuestsQuery.graphql';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { QuestsStackParamList } from './AppNavigator';
+import { useNavigation } from '@react-navigation/native';
+
+type ProfileScreenNavigationProp = StackNavigationProp<
+    QuestsStackParamList,
+    'List'
+>;
 
 const styles = StyleSheet.create({
   body: {
@@ -56,6 +64,8 @@ const styles = StyleSheet.create({
  * @param props - data with query results
  */
 function QuestView(props: QuestsQueryResponse): React.ReactElement {
+  const navigation = useNavigation<ProfileScreenNavigationProp>();
+
   return (
     <View style={styles.body}>
       <View style={styles.header}>
@@ -68,7 +78,9 @@ function QuestView(props: QuestsQueryResponse): React.ReactElement {
         }}
         data={props.quests.edges}
         renderItem={({ item }): React.ReactElement => (
-          <TouchableOpacity style={styles.questItem}>
+          <TouchableOpacity style={styles.questItem}
+            onPress={(): void => navigation.navigate('Description')}
+          >
             <Text style={styles.questName}>
               {item.node.name}
             </Text>

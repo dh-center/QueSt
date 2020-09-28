@@ -18,6 +18,7 @@
     "@react-native-mapbox-gl/maps": "^8.1.0-rc.4",
     "@react-navigation/bottom-tabs": "^5.8.0",
     "@react-navigation/native": "^5.7.3",
+    "@react-navigation/stack": "^5.9.2",
     "@types/react": "^16.9.45",
     "@types/react-relay": "^7.0.8",
     "@types/relay-runtime": "^10.0.2",

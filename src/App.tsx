@@ -1,12 +1,12 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
-import TabsNavigator from './components/TabsNavigator';
+import AppNavigator from './components/AppNavigator';
 
 const App = (): React.ReactElement => {
   return (
     <>
       <StatusBar backgroundColor="white" barStyle="dark-content" />
-      <TabsNavigator/>
+      <AppNavigator/>
     </>
   );
 };

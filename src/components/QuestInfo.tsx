@@ -1,6 +1,13 @@
 import React from 'react';
-import { View, ScrollView, Text, FlatList, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import { Container, Content, Spinner } from 'native-base';
+import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { QuestsStackParamList } from './AppNavigator';
+import { useNavigation } from '@react-navigation/native';
+
+type ProfileScreenNavigationProp = StackNavigationProp<
+    QuestsStackParamList,
+    'Description'
+    >;
 
 const styles = StyleSheet.create({
   body: {
@@ -65,9 +72,23 @@ const styles = StyleSheet.create({
  * Functional component of the screen with quest info
  */
 export default function QuestInfo(): React.ReactElement {
+  const navigation = useNavigation<ProfileScreenNavigationProp>();
+
   return (
     <View style={styles.body}>
       <View style={styles.header}>
+        <TouchableOpacity style={{
+          position: 'absolute',
+          width: 24,
+          height: 24,
+          top: 29,
+          left: 8,
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+        onPress={(): void => navigation.goBack()}>
+          <Image source={require('../images/back.png')} />
+        </TouchableOpacity>
         <Text style={styles.title}>
           Помоги Достоевскому опубликовать роман «Бедные люди»
         </Text>
