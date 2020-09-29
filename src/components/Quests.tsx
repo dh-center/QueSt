@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontFamily: 'SF UI Display',
     fontWeight: '600',
     fontSize: 32,
     lineHeight: 38,
@@ -54,7 +53,6 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0, 0, 0, 0.2)',
   },
   questName: {
-    fontFamily: 'SF UI Display',
     fontWeight: '600',
     fontSize: 17,
     lineHeight: 20,

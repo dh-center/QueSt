@@ -1,13 +1,11 @@
 import React from 'react';
-import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, SafeAreaView } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { QuestsStackParamList } from './AppNavigator';
 import { useNavigation } from '@react-navigation/native';
 
-type ProfileScreenNavigationProp = StackNavigationProp<
-    QuestsStackParamList,
-    'Description'
->;
+type ProfileScreenNavigationProp = StackNavigationProp<QuestsStackParamList,
+    'Description'>;
 
 const styles = StyleSheet.create({
   body: {
@@ -15,8 +13,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   header: {
-    minHeight: 82,
-    height: 'auto',
+    alignItems: 'stretch',
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderStyle: 'solid',
@@ -29,10 +26,8 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     paddingLeft: 41,
     flexDirection: 'row',
-    alignItems: 'center',
   },
   section: {
-    height: 'auto',
     paddingRight: 41,
     paddingLeft: 41,
     flexDirection: 'row',
@@ -44,23 +39,19 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(33, 68, 104, 0.4)',
   },
   title: {
-    fontFamily: 'SF UI Display',
     fontSize: 28,
-    lineHeight: 33,
     color: 'rgba(0, 0, 0, 0.8)',
   },
   description: {
-    fontFamily: 'SF UI Display',
     fontSize: 17,
     lineHeight: 20,
     color: 'rgba(0, 0, 0, 0.8)',
   },
   backButton: {
-    position: 'absolute',
-    width: 40,
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    // flex: 1,
+    // flexGrow: 0,
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
   startButton: {
     width: 162,
@@ -78,6 +69,10 @@ const styles = StyleSheet.create({
     width: 40,
   },
   iconBack: {
+    marginTop: 11,
+    marginLeft: 15,
+    marginRight: 15,
+    lineHeight: 33,
     width: 8,
     height: 14,
   },
@@ -95,25 +90,27 @@ export default function QuestInfo(): React.ReactElement {
 
   return (
     <View style={styles.body}>
-      <View style={styles.header}>
+      <SafeAreaView style={styles.header}>
         <TouchableOpacity style={styles.backButton}
           onPress={(): void => navigation.goBack()}
         >
           <Image source={require('../images/back.png')} style={styles.iconBack}/>
         </TouchableOpacity>
         <Text style={styles.title}>
-          Помоги Достоевскому опубликовать роман «Бедные люди»
+                    Помоги Достоевскому опубликовать роман «Бедные люди»
         </Text>
-      </View>
+      </SafeAreaView>
 
-      <ScrollView>
+      <ScrollView style={{ flexGrow: 1 }}>
         <View style={{
           ...styles.section,
+          flexGrow: 1,
           paddingTop: 15,
           paddingBottom: 15,
         }}>
           <Text style={styles.description}>
-            Пройди квест вместе с интеллектуальной элитой Петербурга, встреться с другом и уговори его показать свой роман Белинскому!
+                        Пройди квест вместе с интеллектуальной элитой Петербурга, встреться с другом и уговори его
+                        показать свой роман Белинскому!
           </Text>
         </View>
         <View style={styles.line}/>
