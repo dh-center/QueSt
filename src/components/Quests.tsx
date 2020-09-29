@@ -33,6 +33,10 @@ const styles = StyleSheet.create({
     lineHeight: 38,
     color: 'rgba(0,0,0,0.8)',
   },
+  content: {
+    paddingLeft: 16,
+    paddingRight: 16,
+  },
   questItem: {
     minHeight: 60,
     height: 'auto',
@@ -56,6 +60,13 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     color: 'rgba(0,0,0,0.8)',
   },
+  icon: {
+    position: 'absolute',
+    height: 62,
+    width: 62,
+    right: -9,
+    top: -9,
+  },
 });
 
 /**
@@ -72,10 +83,7 @@ function QuestView(props: QuestsQueryResponse): React.ReactElement {
         <Text style={styles.title}>Квесты</Text>
       </View>
       <FlatList
-        style={{
-          paddingLeft: 16,
-          paddingRight: 16,
-        }}
+        style={styles.content}
         data={props.quests.edges}
         renderItem={({ item }): React.ReactElement => (
           <TouchableOpacity style={styles.questItem}
@@ -84,11 +92,7 @@ function QuestView(props: QuestsQueryResponse): React.ReactElement {
             <Text style={styles.questName}>
               {item.node.name}
             </Text>
-            <Image source={require('../images/done.png')} style={{
-              position: 'absolute',
-              right: -9,
-              top: -9,
-            }}/>
+            <Image source={require('../images/done.png')} style={styles.icon}/>
           </TouchableOpacity>
         )}
         keyExtractor={(item, index): string => index.toString()}

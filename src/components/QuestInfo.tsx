@@ -74,6 +74,16 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginRight: 5,
+    height: 40,
+    width: 40,
+  },
+  iconBack: {
+    width: 8,
+    height: 14,
+  },
+  card: {
+    width: 163,
+    height: 263,
   },
 });
 
@@ -89,7 +99,7 @@ export default function QuestInfo(): React.ReactElement {
         <TouchableOpacity style={styles.backButton}
           onPress={(): void => navigation.goBack()}
         >
-          <Image source={require('../images/back.png')} />
+          <Image source={require('../images/back.png')} style={styles.iconBack}/>
         </TouchableOpacity>
         <Text style={styles.title}>
           Помоги Достоевскому опубликовать роман «Бедные люди»
@@ -140,8 +150,8 @@ export default function QuestInfo(): React.ReactElement {
           paddingLeft: 0,
           justifyContent: 'space-around',
         }}>
-          <Image source={require('../images/Dostoevsky.png')}/>
-          <Image source={require('../images/Belinsky.png')}/>
+          <Image source={require('../images/Dostoevsky.png')} style={styles.card}/>
+          <Image source={require('../images/Belinsky.png')} style={styles.card}/>
         </View>
         <View style={{
           ...styles.section,
