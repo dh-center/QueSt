@@ -7,7 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 type ProfileScreenNavigationProp = StackNavigationProp<
     QuestsStackParamList,
     'Description'
-    >;
+>;
 
 const styles = StyleSheet.create({
   body: {
@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   header: {
-    height: 135,
+    minHeight: 82,
+    height: 'auto',
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderStyle: 'solid',
@@ -23,10 +24,12 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0, 46, 66, 0.5)',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+    paddingTop: 15,
     paddingRight: 16,
-    paddingBottom: 15,
+    paddingBottom: 16,
     paddingLeft: 41,
-    // box-shadow: 1px 1px 3px rgba(0, 46, 66, 0.5);
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   section: {
     height: 'auto',
@@ -39,21 +42,25 @@ const styles = StyleSheet.create({
     borderWidth: 0.3,
     borderStyle: 'solid',
     borderColor: 'rgba(33, 68, 104, 0.4)',
-    // box-shadow: 0px 1px 2px rgba(33, 68, 104, 0.4);
   },
   title: {
     fontFamily: 'SF UI Display',
     fontSize: 28,
     lineHeight: 33,
-    color: 'rgba(0,0,0,0.8)',
-    marginTop: 14,
-    marginBottom: 25,
+    color: 'rgba(0, 0, 0, 0.8)',
   },
   description: {
     fontFamily: 'SF UI Display',
     fontSize: 17,
     lineHeight: 20,
-    color: 'rgba(0,0,0,0.8)',
+    color: 'rgba(0, 0, 0, 0.8)',
+  },
+  backButton: {
+    position: 'absolute',
+    width: 40,
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   startButton: {
     width: 162,
@@ -64,7 +71,9 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    // box-shadow: 1px 1px 3px rgba(0, 46, 66, 0.5);
+  },
+  icon: {
+    marginRight: 5,
   },
 });
 
@@ -77,16 +86,9 @@ export default function QuestInfo(): React.ReactElement {
   return (
     <View style={styles.body}>
       <View style={styles.header}>
-        <TouchableOpacity style={{
-          position: 'absolute',
-          width: 24,
-          height: 24,
-          top: 29,
-          left: 8,
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        onPress={(): void => navigation.goBack()}>
+        <TouchableOpacity style={styles.backButton}
+          onPress={(): void => navigation.goBack()}
+        >
           <Image source={require('../images/back.png')} />
         </TouchableOpacity>
         <Text style={styles.title}>
@@ -110,7 +112,7 @@ export default function QuestInfo(): React.ReactElement {
           ...styles.section,
           minHeight: 100,
         }}>
-          <Image source={require('../images/footprint.png')} style={{ marginRight: 5 }}/>
+          <Image source={require('../images/footprint.png')} style={styles.icon}/>
           <Text style={styles.description}>45 мин</Text>
         </View>
         <View style={styles.line}/>
@@ -119,14 +121,14 @@ export default function QuestInfo(): React.ReactElement {
           ...styles.section,
           paddingTop: 22,
         }}>
-          <Image source={require('../images/star.png')} style={{ marginRight: 5 }}/>
+          <Image source={require('../images/star.png')} style={styles.icon}/>
           <Text style={styles.description}>Друг Достоевского</Text>
         </View>
         <View style={{
           ...styles.section,
           paddingBottom: 22,
         }}>
-          <Image source={require('../images/star.png')} style={{ marginRight: 5 }}/>
+          <Image source={require('../images/star.png')} style={styles.icon}/>
           <Text style={styles.description}>Петербургская интеллигенция</Text>
         </View>
         <View style={styles.line}/>
