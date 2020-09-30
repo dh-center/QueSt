@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'native-base';
 import Quests from './Quests';
 import Map from './Map';
-import PersonList from './PersonList';
+import Profile from './Profile';
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +16,7 @@ export default function TabsNavigator(): React.ReactElement {
     <NavigationContainer>
       <Tab.Navigator initialRouteName="Map">
         <Tab.Screen
-          name="Quest"
+          name="Quests"
           options={{
             title: 'КВЕСТЫ',
             tabBarIcon: (): React.ReactElement => {
@@ -34,14 +34,14 @@ export default function TabsNavigator(): React.ReactElement {
           }}
           component={Map} />
         <Tab.Screen
-          name="Person"
+          name="Profile"
           options={{
             title: 'ПРОФИЛЬ',
             tabBarIcon: (): React.ReactElement => {
               return <Icon type="FontAwesome5" name="user" />;
             },
           }}
-          component={PersonList} />
+          component={Profile} />
       </Tab.Navigator>
     </NavigationContainer>
   );
