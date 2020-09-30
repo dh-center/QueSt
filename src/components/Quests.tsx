@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, SafeAreaView } from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
 import { graphql, QueryRenderer } from 'react-relay';
 import env from '../enviroment';
@@ -76,7 +76,7 @@ function QuestView(props: QuestsQueryResponse): React.ReactElement {
   const navigation = useNavigation<ProfileScreenNavigationProp>();
 
   return (
-    <View style={styles.body}>
+    <SafeAreaView style={styles.body}>
       <View style={styles.header}>
         <Text style={styles.title}>Квесты</Text>
       </View>
@@ -95,7 +95,7 @@ function QuestView(props: QuestsQueryResponse): React.ReactElement {
         )}
         keyExtractor={(item, index): string => index.toString()}
       />
-    </View>
+    </SafeAreaView>
   );
 }
 
