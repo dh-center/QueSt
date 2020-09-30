@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingRight: 16,
     paddingBottom: 16,
-    paddingLeft: 41,
     flexDirection: 'row',
   },
   section: {
@@ -72,7 +71,6 @@ const styles = StyleSheet.create({
     marginTop: 11,
     marginLeft: 15,
     marginRight: 15,
-    lineHeight: 33,
     width: 8,
     height: 14,
   },
