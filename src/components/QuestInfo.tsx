@@ -89,8 +89,8 @@ export default function QuestInfo(): React.ReactElement {
   const navigation = useNavigation<DescriptionScreenNavigationProp>();
 
   return (
-    <View style={styles.body}>
-      <SafeAreaView style={styles.header}>
+    <SafeAreaView style={styles.body}>
+      <View style={styles.header}>
         <TouchableOpacity style={styles.backButton}
           onPress={(): void => navigation.goBack()}
         >
@@ -99,7 +99,7 @@ export default function QuestInfo(): React.ReactElement {
         <Text style={styles.title}>
                     Помоги Достоевскому опубликовать роман «Бедные люди»
         </Text>
-      </SafeAreaView>
+      </View>
 
       <ScrollView>
         <View style={{
@@ -158,13 +158,11 @@ export default function QuestInfo(): React.ReactElement {
         }}>
           <Text style={{
             ...styles.description,
-            width: 163,
             textAlign: 'center',
             color: '#000',
           }}>Федор Достоевский</Text>
           <Text style={{
             ...styles.description,
-            width: 163,
             textAlign: 'center',
             color: '#000',
           }}>Виссарион Белинский</Text>
@@ -181,6 +179,6 @@ export default function QuestInfo(): React.ReactElement {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 }
