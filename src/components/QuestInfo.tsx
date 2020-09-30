@@ -4,7 +4,10 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { QuestsStackParamList } from './AppNavigator';
 import { useNavigation } from '@react-navigation/native';
 
-type ProfileScreenNavigationProp = StackNavigationProp<QuestsStackParamList,
+/**
+ * Type with props of screen 'Description' in QuestsStackScreen
+ */
+type DescriptionScreenNavigationProp = StackNavigationProp<QuestsStackParamList,
     'Description'>;
 
 const styles = StyleSheet.create({
@@ -84,7 +87,7 @@ const styles = StyleSheet.create({
  * Functional component of the screen with quest info
  */
 export default function QuestInfo(): React.ReactElement {
-  const navigation = useNavigation<ProfileScreenNavigationProp>();
+  const navigation = useNavigation<DescriptionScreenNavigationProp>();
 
   return (
     <View style={styles.body}>

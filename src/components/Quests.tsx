@@ -11,10 +11,11 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { QuestsStackParamList } from './AppNavigator';
 import { useNavigation } from '@react-navigation/native';
 
-type ProfileScreenNavigationProp = StackNavigationProp<
-    QuestsStackParamList,
-    'List'
->;
+/**
+ * Type with props of screen 'List' in QuestsStackScreen
+ */
+type ListScreenNavigationProp = StackNavigationProp<QuestsStackParamList,
+    'List'>;
 
 const styles = StyleSheet.create({
   body: {
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
  * @param props - data with query results
  */
 function QuestView(props: QuestsQueryResponse): React.ReactElement {
-  const navigation = useNavigation<ProfileScreenNavigationProp>();
+  const navigation = useNavigation<ListScreenNavigationProp>();
 
   return (
     <View style={styles.body}>
