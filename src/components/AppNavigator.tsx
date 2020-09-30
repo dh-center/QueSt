@@ -8,6 +8,9 @@ import Map from './Map';
 import PersonList from './PersonList';
 import QuestInfo from './QuestInfo';
 
+/**
+ * Type with params of screens and their props in QuestsStackScreen
+ */
 export type QuestsStackParamList = {
     List: undefined;
     Description: undefined;
@@ -15,7 +18,7 @@ export type QuestsStackParamList = {
 const QuestsStack = createStackNavigator<QuestsStackParamList>();
 
 /**
- *
+ * Component for implementing navigation between screens in quest tab
  */
 function QuestsStackScreen(): React.ReactElement {
   return (
