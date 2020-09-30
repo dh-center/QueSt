@@ -7,8 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 /**
  * Type with props of screen 'Description' in QuestsStackScreen
  */
-type DescriptionScreenNavigationProp = StackNavigationProp<QuestsStackParamList,
-    'Description'>;
+type DescriptionScreenNavigationProp = StackNavigationProp<QuestsStackParamList, 'Description'>;
 
 const styles = StyleSheet.create({
   body: {
@@ -102,10 +101,9 @@ export default function QuestInfo(): React.ReactElement {
         </Text>
       </SafeAreaView>
 
-      <ScrollView style={{ flexGrow: 1 }}>
+      <ScrollView>
         <View style={{
           ...styles.section,
-          flexGrow: 1,
           paddingTop: 15,
           paddingBottom: 15,
         }}>
