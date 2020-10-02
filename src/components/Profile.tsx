@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Text, ScrollView, View, TouchableOpacity } from 'react-native';
 
 const styles = StyleSheet.create({
   body: {
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
  */
 export default function Profile(): React.ReactElement {
   return (
-    <View style={styles.body}>
+    <ScrollView style={styles.body}>
       <View style={styles.header}>
         <Image source={require('./images/avatar.jpg')} style={styles.avatar} />
         <View style={styles.info}>
@@ -132,6 +132,6 @@ export default function Profile(): React.ReactElement {
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Коллекция карточек</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
