@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   header: {
-    alignItems: 'stretch',
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderStyle: 'solid',
@@ -25,22 +24,22 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 20,
     paddingTop: 15,
     paddingRight: 16,
-    paddingBottom: 16,
+    paddingBottom: 15,
     flexDirection: 'row',
+    alignItems: 'stretch',
   },
   section: {
     paddingRight: 41,
     paddingLeft: 41,
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  line: {
-    borderWidth: 0.3,
+    borderBottomWidth: 0.6,
     borderStyle: 'solid',
-    borderColor: 'rgba(33, 68, 104, 0.4)',
+    borderBottomColor: 'rgba(33, 68, 104, 0.4)',
   },
   title: {
     fontSize: 28,
+    lineHeight: 28,
     color: 'rgba(0, 0, 0, 0.8)',
   },
   description: {
@@ -49,10 +48,8 @@ const styles = StyleSheet.create({
     color: 'rgba(0, 0, 0, 0.8)',
   },
   backButton: {
-    // flex: 1,
-    // flexGrow: 0,
-    // justifyContent: 'center',
-    // alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   startButton: {
     width: 162,
@@ -70,7 +67,6 @@ const styles = StyleSheet.create({
     width: 40,
   },
   iconBack: {
-    marginTop: 11,
     marginLeft: 15,
     marginRight: 15,
     width: 8,
@@ -97,7 +93,7 @@ export default function QuestInfo(): React.ReactElement {
           <Image source={require('../images/back.png')} style={styles.iconBack}/>
         </TouchableOpacity>
         <Text style={styles.title}>
-                    Помоги Достоевскому опубликовать роман «Бедные люди»
+          Помоги Достоевскому опубликовать роман «Бедные люди»
         </Text>
       </View>
 
@@ -112,7 +108,6 @@ export default function QuestInfo(): React.ReactElement {
                         показать свой роман Белинскому!
           </Text>
         </View>
-        <View style={styles.line}/>
 
         <View style={{
           ...styles.section,
@@ -121,11 +116,11 @@ export default function QuestInfo(): React.ReactElement {
           <Image source={require('../images/footprint.png')} style={styles.icon}/>
           <Text style={styles.description}>45 мин</Text>
         </View>
-        <View style={styles.line}/>
 
         <View style={{
           ...styles.section,
           paddingTop: 22,
+          borderBottomColor: '#fff',
         }}>
           <Image source={require('../images/star.png')} style={styles.icon}/>
           <Text style={styles.description}>Друг Достоевского</Text>
@@ -137,7 +132,6 @@ export default function QuestInfo(): React.ReactElement {
           <Image source={require('../images/star.png')} style={styles.icon}/>
           <Text style={styles.description}>Петербургская интеллигенция</Text>
         </View>
-        <View style={styles.line}/>
 
         <View style={{
           ...styles.section,
@@ -145,6 +139,7 @@ export default function QuestInfo(): React.ReactElement {
           paddingRight: 0,
           paddingLeft: 0,
           justifyContent: 'space-around',
+          borderBottomColor: '#fff',
         }}>
           <Image source={require('../images/Dostoevsky.png')} style={styles.card}/>
           <Image source={require('../images/Belinsky.png')} style={styles.card}/>
@@ -155,6 +150,7 @@ export default function QuestInfo(): React.ReactElement {
           paddingLeft: 0,
           justifyContent: 'space-around',
           alignItems: 'flex-start',
+          borderBottomColor: '#fff',
         }}>
           <Text style={{
             ...styles.description,
@@ -170,6 +166,7 @@ export default function QuestInfo(): React.ReactElement {
         <View style={{
           ...styles.section,
           justifyContent: 'center',
+          borderBottomColor: '#fff',
         }}>
           <TouchableOpacity style={styles.startButton}>
             <Text style={{
