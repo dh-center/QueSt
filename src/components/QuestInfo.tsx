@@ -33,6 +33,8 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#FFFFFF',
+    marginRight: -1,
+    marginLeft: -1,
     borderWidth: 1,
     borderStyle: 'solid',
     borderTopColor: 'white',
