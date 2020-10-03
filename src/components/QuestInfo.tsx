@@ -9,6 +9,23 @@ import { useNavigation } from '@react-navigation/native';
  */
 type DescriptionScreenNavigationProp = StackNavigationProp<QuestsStackParamList, 'Description'>;
 
+const basis = StyleSheet.create({
+  section: {
+    paddingRight: 41,
+    paddingLeft: 41,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 0.6,
+    borderStyle: 'solid',
+    borderBottomColor: 'rgba(33, 68, 104, 0.4)',
+  },
+  description: {
+    fontSize: 17,
+    lineHeight: 20,
+    color: 'rgba(0, 0, 0, 0.8)',
+  },
+});
+
 const styles = StyleSheet.create({
   body: {
     backgroundColor: '#ffffff',
@@ -28,24 +45,58 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'stretch',
   },
-  section: {
-    paddingRight: 41,
-    paddingLeft: 41,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 0.6,
-    borderStyle: 'solid',
-    borderBottomColor: 'rgba(33, 68, 104, 0.4)',
+  descriptionSection: {
+    ...basis.section,
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  footerSection: {
+    ...basis.section,
+    minHeight: 100,
+  },
+  starSectionTop: {
+    ...basis.section,
+    paddingTop: 22,
+    borderBottomColor: '#fff',
+  },
+  starSectionBottom: {
+    ...basis.section,
+    paddingBottom: 22,
+  },
+  cardSection: {
+    ...basis.section,
+    paddingTop: 30,
+    paddingRight: 0,
+    paddingLeft: 0,
+    justifyContent: 'space-around',
+    borderBottomColor: '#fff',
+  },
+  cardTitleSection: {
+    ...basis.section,
+    paddingRight: 0,
+    paddingLeft: 0,
+    justifyContent: 'space-around',
+    alignItems: 'flex-start',
+    borderBottomColor: '#fff',
+  },
+  buttonSection: {
+    ...basis.section,
+    justifyContent: 'center',
+    borderBottomColor: '#fff',
   },
   title: {
     fontSize: 28,
     lineHeight: 28,
     color: 'rgba(0, 0, 0, 0.8)',
   },
-  description: {
-    fontSize: 17,
-    lineHeight: 20,
-    color: 'rgba(0, 0, 0, 0.8)',
+  cardTitle: {
+    ...basis.description,
+    textAlign: 'center',
+    color: '#000',
+  },
+  buttonText: {
+    ...basis.description,
+    color: '#fff',
   },
   backButton: {
     justifyContent: 'center',
@@ -98,81 +149,38 @@ export default function QuestInfo(): React.ReactElement {
       </View>
 
       <ScrollView>
-        <View style={{
-          ...styles.section,
-          paddingTop: 15,
-          paddingBottom: 15,
-        }}>
-          <Text style={styles.description}>
-                        Пройди квест вместе с интеллектуальной элитой Петербурга, встреться с другом и уговори его
-                        показать свой роман Белинскому!
+        <View style={styles.descriptionSection}>
+          <Text style={basis.description}>
+            Пройди квест вместе с интеллектуальной элитой Петербурга, встреться с другом и уговори его
+            показать свой роман Белинскому!
           </Text>
         </View>
 
-        <View style={{
-          ...styles.section,
-          minHeight: 100,
-        }}>
+        <View style={styles.footerSection}>
           <Image source={require('../images/footprint.png')} style={styles.icon}/>
-          <Text style={styles.description}>45 мин</Text>
+          <Text style={basis.description}>45 мин</Text>
         </View>
 
-        <View style={{
-          ...styles.section,
-          paddingTop: 22,
-          borderBottomColor: '#fff',
-        }}>
+        <View style={styles.starSectionTop}>
           <Image source={require('../images/star.png')} style={styles.icon}/>
-          <Text style={styles.description}>Друг Достоевского</Text>
+          <Text style={basis.description}>Друг Достоевского</Text>
         </View>
-        <View style={{
-          ...styles.section,
-          paddingBottom: 22,
-        }}>
+        <View style={styles.starSectionBottom}>
           <Image source={require('../images/star.png')} style={styles.icon}/>
-          <Text style={styles.description}>Петербургская интеллигенция</Text>
+          <Text style={basis.description}>Петербургская интеллигенция</Text>
         </View>
 
-        <View style={{
-          ...styles.section,
-          paddingTop: 30,
-          paddingRight: 0,
-          paddingLeft: 0,
-          justifyContent: 'space-around',
-          borderBottomColor: '#fff',
-        }}>
+        <View style={styles.cardSection}>
           <Image source={require('../images/Dostoevsky.png')} style={styles.card}/>
           <Image source={require('../images/Belinsky.png')} style={styles.card}/>
         </View>
-        <View style={{
-          ...styles.section,
-          paddingRight: 0,
-          paddingLeft: 0,
-          justifyContent: 'space-around',
-          alignItems: 'flex-start',
-          borderBottomColor: '#fff',
-        }}>
-          <Text style={{
-            ...styles.description,
-            textAlign: 'center',
-            color: '#000',
-          }}>Федор Достоевский</Text>
-          <Text style={{
-            ...styles.description,
-            textAlign: 'center',
-            color: '#000',
-          }}>Виссарион Белинский</Text>
+        <View style={styles.cardTitleSection}>
+          <Text style={styles.cardTitle}>Федор Достоевский</Text>
+          <Text style={styles.cardTitle}>Виссарион Белинский</Text>
         </View>
-        <View style={{
-          ...styles.section,
-          justifyContent: 'center',
-          borderBottomColor: '#fff',
-        }}>
+        <View style={styles.buttonSection}>
           <TouchableOpacity style={styles.startButton}>
-            <Text style={{
-              ...styles.description,
-              color: '#fff',
-            }}>Начать квест</Text>
+            <Text style={styles.buttonText}>Начать квест</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
