@@ -4,12 +4,12 @@ import { Image, StyleSheet, Text, ScrollView, View, TouchableOpacity } from 'rea
 const styles = StyleSheet.create({
   body: {
     backgroundColor: '#fff',
-    paddingTop: 44,
     paddingRight: 16,
     paddingLeft: 16,
     height: '100%',
   },
   header: {
+    marginTop: 44,
     flexDirection: 'row',
     marginBottom: 33,
   },
@@ -70,10 +70,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 20,
     color: 'black',
-    // color: '#FFFFFF',
-    // borderWidth: 1,
-    // borderStyle: 'solid',
-    // borderColor: 'rgba(0, 0, 0, 0.8)',
   },
   settings: {
     height: 33,
