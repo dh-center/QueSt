@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Functional component of the person's page
+ * Displays user's profile
  */
 export default function Profile(): React.ReactElement {
   return (
