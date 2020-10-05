@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
   },
-  info: {
+  userInfo: {
     marginLeft: 15,
     marginRight: 5,
     paddingTop: 13,
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     lineHeight: 26,
     color: 'rgba(0, 0, 0, 0.8)',
   },
-  login: {
+  caption: {
     fontSize: 11,
     lineHeight: 13,
     color: 'rgba(0, 0, 0, 0.6)',
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     color: 'black',
   },
-  settings: {
+  settingsButton: {
     height: 33,
     width: 33,
     marginTop: -3,
