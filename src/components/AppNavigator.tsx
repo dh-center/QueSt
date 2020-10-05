@@ -5,7 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Icon } from 'native-base';
 import Quests from './Quests';
 import Map from './Map';
-import PersonList from './PersonList';
+import Profile from './Profile';
 import QuestInfo from './QuestInfo';
 
 /**
@@ -37,9 +37,9 @@ const Tab = createBottomTabNavigator();
 export default function AppNavigator(): React.ReactElement {
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Map">
+      <Tab.Navigator initialRouteName="Map" tabBarOptions={{ labelPosition: 'below-icon' }}>
         <Tab.Screen
-          name="Quest"
+          name="Quests"
           options={{
             title: 'КВЕСТЫ',
             tabBarIcon: (): React.ReactElement => {
@@ -57,14 +57,14 @@ export default function AppNavigator(): React.ReactElement {
           }}
           component={Map} />
         <Tab.Screen
-          name="Person"
+          name="Profile"
           options={{
             title: 'ПРОФИЛЬ',
             tabBarIcon: (): React.ReactElement => {
               return <Icon type="FontAwesome5" name="user" />;
             },
           }}
-          component={PersonList} />
+          component={Profile} />
       </Tab.Navigator>
     </NavigationContainer>
   );
