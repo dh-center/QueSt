@@ -6,7 +6,6 @@ import { Icon } from 'native-base';
 import Quests from './Quests';
 import Map from './Map';
 import Profile from './Profile';
-import PersonList from './PersonList';
 import QuestInfo from './QuestInfo';
 
 /**
