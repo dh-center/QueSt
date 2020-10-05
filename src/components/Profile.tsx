@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
     borderRadius: 20,
   },
-  fill: {
+  progressFill: {
     position: 'absolute',
     height: 8,
     width: '76.5%',
@@ -74,8 +74,6 @@ const styles = StyleSheet.create({
   settingsButton: {
     height: 33,
     width: 33,
-    marginTop: -3,
-    marginRight: -2,
   },
   button: {
     height: 60,
@@ -102,18 +100,18 @@ export default function Profile(): React.ReactElement {
     <ScrollView style={styles.body}>
       <View style={styles.header}>
         <Image source={require('./images/avatar.jpg')} style={styles.avatar} />
-        <View style={styles.info}>
+        <View style={styles.userInfo}>
           <Text style={styles.name}>Соня</Text>
-          <Text style={styles.login}>@soninlogin</Text>
+          <Text style={styles.caption}>@sonincaption</Text>
           <View style={styles.progress}>
             <View style={styles.progressBar} />
-            <View style={styles.fill} />
+            <View style={styles.progressFill} />
             <Text style={styles.level}>LV. 5</Text>
-            <Text style={styles.login}>153/200</Text>
+            <Text style={styles.caption}>153/200</Text>
           </View>
         </View>
         <TouchableOpacity>
-          <Image source={require('./images/settings.png')} style={styles.settings} />
+          <Image source={require('./images/settings.png')} style={styles.settingsButton} />
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={styles.button}>
