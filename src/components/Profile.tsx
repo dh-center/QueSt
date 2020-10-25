@@ -1,5 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, Text, ScrollView, View, TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 const styles = StyleSheet.create({
   body: {
@@ -96,6 +97,8 @@ const styles = StyleSheet.create({
  * Displays user's profile
  */
 export default function Profile(): React.ReactElement {
+  const { t } = useTranslation();
+
   return (
     <ScrollView style={styles.body}>
       <View style={styles.header}>
@@ -115,16 +118,16 @@ export default function Profile(): React.ReactElement {
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Друзья</Text>
+        <Text style={styles.buttonText}>{t('Profile.friends')}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Рейтинг</Text>
+        <Text style={styles.buttonText}>{t('Profile.rating')}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Достижения</Text>
+        <Text style={styles.buttonText}>{t('Profile.achievements')}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Коллекция карточек</Text>
+        <Text style={styles.buttonText}>{t('Profile.cards')}</Text>
       </TouchableOpacity>
     </ScrollView>
   );

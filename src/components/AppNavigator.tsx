@@ -7,6 +7,7 @@ import Quests from './Quests';
 import Map from './Map';
 import Profile from './Profile';
 import QuestInfo from './QuestInfo';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Type with params of screens and their props in QuestsStackScreen
@@ -35,13 +36,15 @@ const Tab = createBottomTabNavigator();
  * Functional component for implementing navigation between screens
  */
 export default function AppNavigator(): React.ReactElement {
+  const { t } = useTranslation();
+
   return (
     <NavigationContainer>
       <Tab.Navigator initialRouteName="Map" tabBarOptions={{ labelPosition: 'below-icon' }}>
         <Tab.Screen
           name="Quests"
           options={{
-            title: 'КВЕСТЫ',
+            title: t('AppNavigation.quests'),
             tabBarIcon: (): React.ReactElement => {
               return <Icon type="FontAwesome5" name="route" />;
             },
@@ -50,7 +53,7 @@ export default function AppNavigator(): React.ReactElement {
         <Tab.Screen
           name="Map"
           options={{
-            title: 'КАРТА',
+            title: t('AppNavigation.map'),
             tabBarIcon: (): React.ReactElement => {
               return <Icon type="FontAwesome5" name="map-marked-alt" />;
             },
@@ -59,7 +62,7 @@ export default function AppNavigator(): React.ReactElement {
         <Tab.Screen
           name="Profile"
           options={{
-            title: 'ПРОФИЛЬ',
+            title: t('AppNavigation.profile'),
             tabBarIcon: (): React.ReactElement => {
               return <Icon type="FontAwesome5" name="user" />;
             },

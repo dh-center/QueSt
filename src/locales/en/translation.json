@@ -1,0 +1,19 @@
+{
+  "AppNavigation": {
+    "quests": "QUESTS",
+    "map": "MAP",
+    "profile": "PROFILE"
+  },
+  "Quests": {
+    "title": "Quests"
+  },
+  "Profile": {
+    "friends": "Friends",
+    "rating": "Rating",
+    "achievements": "Achievements",
+    "cards": "Cards collection"
+  },
+  "QuestInfo": {
+    "startQuest": "Start quest"
+  }
+}

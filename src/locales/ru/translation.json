@@ -1,0 +1,19 @@
+{
+  "AppNavigation": {
+    "quests": "КВЕСТЫ",
+    "map": "КАРТА",
+    "profile": "ПРОФИЛЬ"
+  },
+  "Quests": {
+    "title": "Квесты"
+  },
+  "Profile": {
+    "friends": "Друзья",
+    "rating": "Рейтинг",
+    "achievements": "Достижения",
+    "cards": "Коллекция карточек"
+  },
+  "QuestInfo": {
+    "startQuest": "Начать квест"
+  }
+}

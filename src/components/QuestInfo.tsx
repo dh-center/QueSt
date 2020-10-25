@@ -3,6 +3,7 @@ import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, SafeAreaVi
 import { StackNavigationProp } from '@react-navigation/stack';
 import { QuestsStackParamList } from './AppNavigator';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Type with props of screen 'Description' in QuestsStackScreen
@@ -136,6 +137,7 @@ const styles = StyleSheet.create({
  */
 export default function QuestInfo(): React.ReactElement {
   const navigation = useNavigation<DescriptionScreenNavigationProp>();
+  const { t } = useTranslation();
 
   return (
     <SafeAreaView style={styles.body}>
@@ -182,7 +184,7 @@ export default function QuestInfo(): React.ReactElement {
         </View>
         <View style={styles.buttonSection}>
           <TouchableOpacity style={styles.startButton}>
-            <Text style={styles.buttonText}>Начать квест</Text>
+            <Text style={styles.buttonText}>{t('QuestInfo.startQuest')}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
