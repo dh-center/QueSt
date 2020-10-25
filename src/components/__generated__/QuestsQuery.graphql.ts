@@ -10,6 +10,7 @@ export type QuestsQueryResponse = {
             readonly node: {
                 readonly id: string;
                 readonly name: string;
+                readonly description: string | null;
             };
         }>;
     };
@@ -28,6 +29,7 @@ query QuestsQuery {
       node {
         id
         name
+        description
       }
     }
   }
@@ -73,6 +75,13 @@ var v0 = [
                 "kind": "ScalarField",
                 "name": "name",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "description",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -102,14 +111,14 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "ffd18936de0c2c85b73df9a342edf3bb",
+    "cacheID": "a73cc8c97b8dd2b63ac45f3c7aff7c23",
     "id": null,
     "metadata": {},
     "name": "QuestsQuery",
     "operationKind": "query",
-    "text": "query QuestsQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n      }\n    }\n  }\n}\n"
+    "text": "query QuestsQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '8166b43217b58ca7628b88c5efc59d27';
+(node as any).hash = 'd9b01503035d33fa3e32c309c40b3c14';
 export default node;
