@@ -184,7 +184,7 @@ export default function QuestInfo(): React.ReactElement {
         </View>
         <View style={styles.buttonSection}>
           <TouchableOpacity style={styles.startButton}>
-            <Text style={styles.buttonText}>{t('QuestInfo.startQuest')}</Text>
+            <Text style={styles.buttonText}>{t('quests.startQuest')}</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

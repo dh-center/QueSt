@@ -44,7 +44,7 @@ export default function AppNavigator(): React.ReactElement {
         <Tab.Screen
           name="Quests"
           options={{
-            title: t('AppNavigation.quests'),
+            title: t('quests.title').toUpperCase(),
             tabBarIcon: (): React.ReactElement => {
               return <Icon type="FontAwesome5" name="route" />;
             },
@@ -53,7 +53,7 @@ export default function AppNavigator(): React.ReactElement {
         <Tab.Screen
           name="Map"
           options={{
-            title: t('AppNavigation.map'),
+            title: t('map.title').toUpperCase(),
             tabBarIcon: (): React.ReactElement => {
               return <Icon type="FontAwesome5" name="map-marked-alt" />;
             },
@@ -62,7 +62,7 @@ export default function AppNavigator(): React.ReactElement {
         <Tab.Screen
           name="Profile"
           options={{
-            title: t('AppNavigation.profile'),
+            title: t('profile.title').toUpperCase(),
             tabBarIcon: (): React.ReactElement => {
               return <Icon type="FontAwesome5" name="user" />;
             },

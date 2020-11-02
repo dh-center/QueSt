@@ -81,7 +81,7 @@ function QuestView(props: QuestsQueryResponse): React.ReactElement {
   return (
     <SafeAreaView style={styles.body}>
       <View style={styles.header}>
-        <Text style={styles.title}>{t('Quests.title')}</Text>
+        <Text style={styles.title}>{t('quests.title')}</Text>
       </View>
       <FlatList
         style={styles.content}

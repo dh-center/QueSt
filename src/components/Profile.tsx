@@ -118,16 +118,16 @@ export default function Profile(): React.ReactElement {
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>{t('Profile.friends')}</Text>
+        <Text style={styles.buttonText}>{t('profile.friends')}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>{t('Profile.rating')}</Text>
+        <Text style={styles.buttonText}>{t('profile.rating')}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>{t('Profile.achievements')}</Text>
+        <Text style={styles.buttonText}>{t('profile.achievements')}</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>{t('Profile.cards')}</Text>
+        <Text style={styles.buttonText}>{t('profile.cards')}</Text>
       </TouchableOpacity>
     </ScrollView>
   );
