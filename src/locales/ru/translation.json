@@ -1,0 +1,16 @@
+{
+  "quests": {
+    "title": "Квесты",
+    "startQuest": "Начать квест"
+  },
+  "profile": {
+    "title": "Профиль",
+    "friends": "Друзья",
+    "rating": "Рейтинг",
+    "achievements": "Достижения",
+    "cards": "Коллекция карточек"
+  },
+  "map": {
+    "title": "Карта"
+  }
+}

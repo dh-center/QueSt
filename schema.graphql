@@ -1,3 +1,6 @@
+"""Converts MongoDB ObjectId value to the Global Unique ID"""
+directive @toGlobalId(type: String!) on FIELD_DEFINITION
+
 """Extracts value from specified field in parent object"""
 directive @fromField(name: String!) on FIELD_DEFINITION
 
@@ -30,30 +33,138 @@ directive @authCheck on FIELD_DEFINITION
 """Directive for checking admin permissions"""
 directive @adminCheck on FIELD_DEFINITION
 
+"""Exposes a URL that specifies the behaviour of this scalar."""
+directive @specifiedBy(
+  """The URL that specifies the behaviour of this scalar."""
+  url: String!
+) on SCALAR
+
 """Location address representation"""
 type Address {
-  """Address's ID"""
-  id: ID!
+  """Country data"""
+  country: Country
 
-  """Street on which the location is located"""
-  street: String
+  """Country region data"""
+  region: Region
 
-  """Build name"""
-  build: String
+  """City name, e.g. Saint-Petersburg"""
+  place: MultilingualString
 
-  """House number on the street"""
-  homeNumber: String
+  """City district e.g. Адмиралтейский округ"""
+  locality: MultilingualString
 
-  """Corps of home"""
-  housing: String
+  """The first line of an address e.g. Пл. Никольская 1"""
+  address: MultilingualString
 
-  """Link for location info"""
-  link: String
+  """An optional second line of an address"""
+  address2: MultilingualString
+
+  """Address postcode"""
+  postcode: MultilingualString
 }
 
 input Coordinates {
   longitude: Float!
   latitude: Float!
+}
+
+"""Country data in address of location"""
+type Country implements Node {
+  """Country identifier"""
+  id: ID!
+
+  """ISO 3166 country code"""
+  code: String!
+
+  """Country name"""
+  name: MultilingualString!
+}
+
+"""Input type for specifying address in new location"""
+input CreateAddressInput {
+  """Unique country code from ISO 3166"""
+  countryCode: String!
+
+  """Unique region code from ISO 3166"""
+  regionCode: String!
+
+  """City name, e.g. Saint-Petersburg"""
+  place: MultilingualString
+
+  """City district e.g. Адмиралтейский округ"""
+  locality: MultilingualString
+
+  """The first line of an address e.g. Пл. Никольская 1"""
+  address: MultilingualString!
+
+  """An optional second line of an address"""
+  address2: MultilingualString
+
+  """Address postcode"""
+  postcode: MultilingualString
+}
+
+"""Input for creating new location"""
+input CreateLocationInput {
+  """Location position latitude"""
+  latitude: Float!
+
+  """Location position longitude"""
+  longitude: Float!
+
+  """Possible location representations"""
+  instances: [LocationInstanceInput!]!
+
+  """Address to bind to new location"""
+  addresses: [CreateAddressInput!]!
+}
+
+input CreateLocationInstanceInput {
+  """Location's name"""
+  name: MultilingualString!
+
+  """Location's description"""
+  description: MultilingualString!
+
+  """Link for location info"""
+  wikiLink: String
+
+  """Contains links with location's photos"""
+  photoLinks: [String!]
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Location's construction date"""
+  constructionDate: String
+
+  """Location's demolition date"""
+  demolitionDate: String
+
+  """Start of period"""
+  startDate: String
+
+  """End of period"""
+  endDate: String
+
+  """Location id to which this instance below"""
+  locationId: GlobalId!
+}
+
+type CreateLocationInstancePayload {
+  """Created location id"""
+  recordId: GlobalId!
+
+  """Created location"""
+  record: LocationInstance!
+}
+
+type CreateLocationPayload {
+  """Created location id"""
+  recordId: GlobalId!
+
+  """Created location"""
+  record: Location!
 }
 
 input CreatePersonInput {
@@ -87,10 +198,10 @@ input CreatePersonInput {
 
 type CreatePersonPayload {
   """Created person id"""
-  recordId: ID
+  recordId: GlobalId!
 
   """Created person"""
-  record: Person
+  record: Person!
 }
 
 input CreateQuestInput {
@@ -107,28 +218,118 @@ input CreateQuestInput {
   type: TaskTypes! = ROUTE
 
   """Quest data"""
-  data: JSON!
+  data: EditorDataInput!
 }
 
 type CreateQuestPayload {
   """Created quest id"""
-  recordId: ID!
+  recordId: GlobalId!
 
   """Created quest"""
   record: Quest!
 }
 
+input CreateRelationInput {
+  """Person ID in relation"""
+  personId: GlobalId!
+
+  """Location Instance ID in relation"""
+  locationInstanceId: GlobalId!
+
+  """Relation type ID"""
+  relationId: GlobalId!
+
+  """Quote about relation"""
+  quote: MultilingualString!
+}
+
+type CreateRelationPayload {
+  """Created relation id"""
+  recordId: GlobalId!
+
+  """Created relation"""
+  record: Relation!
+}
+
+input CreateRelationTypeInput {
+  """Relation type name"""
+  name: MultilingualString!
+
+  """Relation type synonyms"""
+  synonyms: [MultilingualString]!
+}
+
+type CreateRelationTypePayload {
+  """Created relation type id"""
+  recordId: GlobalId!
+
+  """Created relation type"""
+  record: RelationType!
+}
+
 scalar Cursor
+
+type DeleteLocationInstancePayload {
+  """Created location id"""
+  recordId: GlobalId!
+}
+
+type DeleteLocationPayload {
+  """Deleted location id"""
+  recordId: GlobalId!
+}
 
 type DeletePersonPayload {
   """Deleted person id"""
-  recordId: ID
+  recordId: GlobalId!
 }
 
 type DeleteQuestPayload {
   """Deleted quest id"""
-  recordId: ID!
+  recordId: GlobalId!
 }
+
+type DeleteRelationPayload {
+  """Deleted relation id"""
+  recordId: GlobalId!
+}
+
+type DeleteRelationTypePayload {
+  """Deleted relation type id"""
+  recordId: GlobalId!
+}
+
+"""
+Data saved from Editor.js
+See https://editorjs.io/saving-data
+"""
+type EditorData {
+  """Saving timestamp"""
+  time: Timestamp
+
+  """List of Blocks data"""
+  blocks: [JSON!]!
+
+  """Version of Editor.js"""
+  version: String
+}
+
+"""
+Data saved from Editor.js
+See https://editorjs.io/saving-data
+"""
+input EditorDataInput {
+  """Saving timestamp"""
+  time: Timestamp
+
+  """List of Blocks data"""
+  blocks: [JSON!]!
+
+  """Version of Editor.js"""
+  version: String
+}
+
+scalar GlobalId
 
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
@@ -142,18 +343,18 @@ enum Languages {
 }
 
 """Location for displaying on map and making relations with persons"""
-type Location {
+type Location implements Node {
   """Location's ID"""
   id: ID!
 
-  """Location coordinate by X"""
-  coordinateX: Float
+  """Location position latitude"""
+  latitude: Float
 
-  """Location coordinate by Y"""
-  coordinateY: Float
+  """Location position longitude"""
+  longitude: Float
 
   """Array of addresses ids"""
-  addresses: [Address]
+  addresses: [Address!]
 
   """Possible location representations"""
   instances: [LocationInstance!]!
@@ -183,7 +384,7 @@ type LocationEdge {
 """
 Location context. This can be a time period, a special description for a particular route, etc.
 """
-type LocationInstance {
+type LocationInstance implements Node {
   """Instance's ID"""
   id: ID!
 
@@ -203,7 +404,7 @@ type LocationInstance {
   locationTypes: [LocationType]
 
   """Contains links with location's photos"""
-  photoLinks: [String]
+  photoLinks: [String!]
 
   """Link with main photo"""
   mainPhotoLink: String
@@ -227,8 +428,59 @@ type LocationInstance {
   architects: [Person]
 }
 
+input LocationInstanceInput {
+  """Location's name"""
+  name: MultilingualString!
+
+  """Location's description"""
+  description: MultilingualString!
+
+  """Link for location info"""
+  wikiLink: String
+
+  """Contains links with location's photos"""
+  photoLinks: [String!]
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Location's construction date"""
+  constructionDate: String
+
+  """Location's demolition date"""
+  demolitionDate: String
+
+  """Start of period"""
+  startDate: String
+
+  """End of period"""
+  endDate: String
+}
+
+type LocationInstanceMutations {
+  """Create location instance"""
+  create(input: CreateLocationInstanceInput!): CreateLocationInstancePayload!
+
+  """Update location instance"""
+  update(input: UpdateLocationInstanceInput!): UpdateLocationInstancePayload!
+
+  """Delete location instance"""
+  delete(id: GlobalId!): DeleteLocationInstancePayload!
+}
+
+type LocationMutations {
+  """Create location"""
+  create(input: CreateLocationInput!): CreateLocationPayload!
+
+  """Update location"""
+  update(input: UpdateLocationInput!): UpdateLocationPayload!
+
+  """Delete location"""
+  delete(id: GlobalId!): DeleteLocationPayload!
+}
+
 """Location type to add it to Location"""
-type LocationType {
+type LocationType implements Node {
   """LocationType's ID"""
   id: ID!
 
@@ -236,11 +488,27 @@ type LocationType {
   name: String
 }
 
+"""
+The `BigInt` scalar type represents non-fractional signed whole numeric values.
+"""
+scalar Long
+
+"""
+The `String` scalar type represents textual data, represented as UTF-8 character
+sequences. The String type is most often used by GraphQL to represent free-form
+human-readable text.
+"""
+scalar MultilingualString
+
 """API mutations"""
 type Mutation {
   """Unused field to let extend this type"""
   _: Boolean
   person: PersonMutations
+  location: LocationMutations!
+  locationInstances: LocationInstanceMutations!
+  relation: RelationMutations!
+  relationType: RelationTypeMutations!
 
   """Save route to user"""
   saveRoute(routeId: String!): User!
@@ -255,6 +523,19 @@ type Mutation {
   dislikeRoute(routeId: String!): User!
   quest: QuestMutations!
 }
+
+"""An object with a Globally Unique ID"""
+interface Node {
+  """The ID of the object."""
+  id: ID!
+}
+
+"""
+A field whose value conforms with the standard mongodb object ID as described
+here: https://docs.mongodb.com/manual/reference/method/ObjectId/#ObjectId.
+Example: 5e5677d71bdc2ae76344968c
+"""
+scalar ObjectId
 
 """Information about current page"""
 type PageInfo {
@@ -271,7 +552,7 @@ type PageInfo {
   endCursor: Cursor
 }
 
-type Person {
+type Person implements Node {
   """Person's id"""
   id: ID!
 
@@ -341,18 +622,17 @@ type PersonMutations {
   update(input: UpdatePersonInput!): UpdatePersonPayload!
 
   """Delete person"""
-  delete(id: ID!): DeletePersonPayload!
+  delete(id: GlobalId!): DeletePersonPayload!
 }
 
 """API queries"""
 type Query {
-  """Healthcheck endpoint"""
-  health: String!
+  node(id: ID!): Node
 
   """Get specific person"""
   person(
     """Person id"""
-    id: ID!
+    id: GlobalId!
   ): Person
 
   """Get all persons"""
@@ -377,7 +657,7 @@ type Query {
   """Get specific location"""
   location(
     """Location id"""
-    id: ID!
+    id: GlobalId!
   ): Location
 
   """Get all locations"""
@@ -402,7 +682,7 @@ type Query {
   """Get specific locationInstances"""
   locationInstance(
     """locationInstances id"""
-    id: ID!
+    id: GlobalId!
   ): LocationInstance
 
   """Get all locationInstances"""
@@ -420,7 +700,7 @@ type Query {
   """Get specific relation"""
   relation(
     """Relation id"""
-    id: ID!
+    id: GlobalId!
   ): Relation
 
   """Get all relations"""
@@ -441,6 +721,31 @@ type Query {
     """
     last: Int
   ): RelationConnection!
+
+  """Get specific relation type"""
+  relationType(
+    """Relation type id"""
+    id: GlobalId!
+  ): RelationType
+
+  """List of available relation types"""
+  relationTypes(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): RelationTypeConnection!
 
   """Get all routes"""
   routes(
@@ -463,7 +768,7 @@ type Query {
   """Get specific route by id"""
   route(
     """Route id"""
-    id: ID!
+    id: GlobalId!
   ): Route
 
   """Get info about user"""
@@ -472,7 +777,7 @@ type Query {
   """Get specific Quest"""
   quest(
     """Quest id"""
-    id: ID!
+    id: GlobalId!
   ): Quest
 
   """Get all quests"""
@@ -495,7 +800,7 @@ type Query {
   ): QuestConnection!
 }
 
-type Quest {
+type Quest implements Node {
   """Quest ID"""
   id: ID!
 
@@ -515,7 +820,7 @@ type Quest {
   task: JSON!
 
   """Quest data"""
-  data: JSON
+  data: EditorData
 
   """Quest rewards"""
   rewards: [JSON!]!
@@ -550,11 +855,26 @@ type QuestMutations {
   update(input: UpdateQuestInput!): UpdateQuestPayload!
 
   """Delete quest"""
-  delete(id: ID!): DeleteQuestPayload!
+  delete(id: GlobalId!): DeleteQuestPayload!
+}
+
+"""Region data in address of location"""
+type Region implements Node {
+  """Region identifier"""
+  id: ID!
+
+  """
+  ISO 3166 country code
+  see https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
+  """
+  code: String!
+
+  """Region name"""
+  name: MultilingualString!
 }
 
 """Represents relation between person and location"""
-type Relation {
+type Relation implements Node {
   """Relation's id"""
   id: ID!
 
@@ -592,20 +912,63 @@ type RelationEdge {
   node: Relation!
 }
 
+type RelationMutations {
+  """Create relation"""
+  create(input: CreateRelationInput!): CreateRelationPayload!
+
+  """Update relation"""
+  update(input: UpdateRelationInput!): UpdateRelationPayload!
+
+  """Delete relation"""
+  delete(id: GlobalId!): DeleteRelationPayload!
+}
+
 """Represents one of the relations types"""
-type RelationType {
+type RelationType implements Node {
   """Relation type id"""
   id: ID!
 
   """Relation type name"""
-  name: String
+  name: MultilingualString!
 
   """Relation type synonyms"""
-  synonyms: [String]
+  synonyms: [MultilingualString]!
+}
+
+"""Model for representing list of relation types"""
+type RelationTypeConnection {
+  """List of relation types edges"""
+  edges: [RelationTypeEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+}
+
+"""Information about specific relation type in connection"""
+type RelationTypeEdge {
+  """Cursor of this relation type"""
+  cursor: Cursor!
+
+  """Relation type info"""
+  node: RelationType!
+}
+
+type RelationTypeMutations {
+  """Creates relation type"""
+  create(input: CreateRelationTypeInput!): CreateRelationTypePayload!
+
+  """Update relation type"""
+  update(input: UpdateRelationTypeInput!): UpdateRelationTypePayload!
+
+  """Delete relation type"""
+  delete(id: GlobalId!): DeleteRelationTypePayload!
 }
 
 """Route between locations"""
-type Route {
+type Route implements Node {
   """Route id"""
   id: ID!
 
@@ -637,9 +1000,100 @@ enum TaskTypes {
   ROUTE
 }
 
+"""
+The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+"""Input type for updating address in location"""
+input UpdateAddressInput {
+  """Unique country code from ISO 3166"""
+  countryCode: String
+
+  """Unique region code from ISO 3166"""
+  regionCode: String
+
+  """City name, e.g. Saint-Petersburg"""
+  place: MultilingualString
+
+  """City district e.g. Адмиралтейский округ"""
+  locality: MultilingualString
+
+  """The first line of an address e.g. Пл. Никольская 1"""
+  address: MultilingualString
+
+  """An optional second line of an address"""
+  address2: MultilingualString
+
+  """Address postcode"""
+  postcode: MultilingualString
+}
+
+input UpdateLocationInput {
+  """Location id to update"""
+  id: GlobalId!
+
+  """Location position latitude"""
+  latitude: Float
+
+  """Location position longitude"""
+  longitude: Float
+
+  """Updated location address"""
+  addresses: [UpdateAddressInput!]
+}
+
+input UpdateLocationInstanceInput {
+  """Location instance id"""
+  id: GlobalId!
+
+  """Location's name"""
+  name: MultilingualString!
+
+  """Location's description"""
+  description: MultilingualString!
+
+  """Link for location info"""
+  wikiLink: String
+
+  """Contains links with location's photos"""
+  photoLinks: [String!]
+
+  """Link with main photo"""
+  mainPhotoLink: String
+
+  """Location's construction date"""
+  constructionDate: String
+
+  """Location's demolition date"""
+  demolitionDate: String
+
+  """Start of period"""
+  startDate: String
+
+  """End of period"""
+  endDate: String
+}
+
+type UpdateLocationInstancePayload {
+  """Created location id"""
+  recordId: GlobalId!
+
+  """Created location"""
+  record: LocationInstance!
+}
+
+type UpdateLocationPayload {
+  """Updated location id"""
+  recordId: GlobalId!
+
+  """Updated location"""
+  record: Location!
+}
+
 input UpdatePersonInput {
   """ID of person for updating"""
-  id: ID!
+  id: GlobalId!
 
   """Person's first name"""
   firstName: String
@@ -671,15 +1125,15 @@ input UpdatePersonInput {
 
 type UpdatePersonPayload {
   """Updated person id"""
-  recordId: ID
+  recordId: GlobalId!
 
   """Updated person"""
-  record: Person
+  record: Person!
 }
 
 input UpdateQuestInput {
   """Quest ID"""
-  id: ID!
+  id: GlobalId!
 
   """Quest name"""
   name: String
@@ -694,18 +1148,62 @@ input UpdateQuestInput {
   type: TaskTypes
 
   """Quest data"""
-  data: JSON
+  data: EditorDataInput
 }
 
 type UpdateQuestPayload {
-  """Created quest id"""
-  recordId: ID!
+  """Updated quest id"""
+  recordId: GlobalId!
 
-  """Created quest"""
+  """Updated quest"""
   record: Quest!
 }
 
-type User {
+input UpdateRelationInput {
+  """ID of relation for updating"""
+  id: GlobalId!
+
+  """Person ID in relation"""
+  personId: GlobalId
+
+  """Location Instance ID in relation"""
+  locationInstanceId: GlobalId
+
+  """Relation type ID"""
+  relationId: GlobalId
+
+  """Quote about relation"""
+  quote: MultilingualString
+}
+
+type UpdateRelationPayload {
+  """Updated relation id"""
+  recordId: GlobalId!
+
+  """Updated relation"""
+  record: Relation!
+}
+
+input UpdateRelationTypeInput {
+  """ID of relation type for updating"""
+  id: GlobalId!
+
+  """Relation type name"""
+  name: MultilingualString
+
+  """Relation type synonyms"""
+  synonyms: [MultilingualString]
+}
+
+type UpdateRelationTypePayload {
+  """Updated relation type id"""
+  recordId: GlobalId!
+
+  """Updated relation type"""
+  record: RelationType!
+}
+
+type User implements Node {
   """User's ID"""
   id: ID!
 

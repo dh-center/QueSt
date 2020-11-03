@@ -10,6 +10,7 @@ import {
 import { StackNavigationProp } from '@react-navigation/stack';
 import { QuestsStackParamList } from './AppNavigator';
 import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Type with props of screen 'List' in QuestsStackScreen
@@ -75,11 +76,12 @@ const styles = StyleSheet.create({
  */
 function QuestView(props: QuestsQueryResponse): React.ReactElement {
   const navigation = useNavigation<ListScreenNavigationProp>();
+  const { t } = useTranslation();
 
   return (
     <SafeAreaView style={styles.body}>
       <View style={styles.header}>
-        <Text style={styles.title}>Квесты</Text>
+        <Text style={styles.title}>{t('quests.title')}</Text>
       </View>
       <FlatList
         style={styles.content}

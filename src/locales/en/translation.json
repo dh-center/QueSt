@@ -1,0 +1,16 @@
+{
+  "quests": {
+    "title": "Quests",
+    "startQuest": "Start quest"
+  },
+  "profile": {
+    "title": "Profile",
+    "friends": "Friends",
+    "rating": "Rating",
+    "achievements": "Achievements",
+    "cards": "Cards collection"
+  },
+  "map": {
+    "title": "Map"
+  }
+}
