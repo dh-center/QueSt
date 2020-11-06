@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
  */
 export type QuestsStackParamList = {
     List: undefined;
-    Description: undefined;
+    Description: {title: string; description: string | null};
 };
 const QuestsStack = createStackNavigator<QuestsStackParamList>();
 

@@ -1,14 +1,15 @@
 import React from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, SafeAreaView } from 'react-native';
-import { StackNavigationProp } from '@react-navigation/stack';
+// import { StackNavigationProp } from '@react-navigation/stack';
+// import { RouteProp } from '@react-navigation/native';
 import { QuestsStackParamList } from './AppNavigator';
-import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import { StackScreenProps } from '@react-navigation/stack';
 
 /**
  * Type with props of screen 'Description' in QuestsStackScreen
  */
-type DescriptionScreenNavigationProp = StackNavigationProp<QuestsStackParamList, 'Description'>;
+type Props = StackScreenProps<QuestsStackParamList, 'Description'>;
 
 const basis = StyleSheet.create({
   section: {
@@ -47,6 +48,7 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     flexDirection: 'row',
     alignItems: 'stretch',
+    maxHeight: '25%',
   },
   descriptionSection: {
     ...basis.section,
@@ -135,9 +137,10 @@ const styles = StyleSheet.create({
 /**
  * Functional component of the screen with quest info
  */
-export default function QuestInfo(): React.ReactElement {
-  const navigation = useNavigation<DescriptionScreenNavigationProp>();
+export default function QuestInfo({ route, navigation }: Props): React.ReactElement {
   const { t } = useTranslation();
+
+  // console.log(route.params);
 
   return (
     <SafeAreaView style={styles.body}>
@@ -147,16 +150,17 @@ export default function QuestInfo(): React.ReactElement {
         >
           <Image source={require('../images/back.png')} style={styles.iconBack}/>
         </TouchableOpacity>
-        <Text style={styles.title}>
-          Помоги Достоевскому опубликовать роман «Бедные люди»
-        </Text>
+        <ScrollView>
+          <Text style={styles.title}>
+            {route.params.title}
+          </Text>
+        </ScrollView>
       </View>
 
       <ScrollView>
         <View style={styles.descriptionSection}>
           <Text style={basis.description}>
-            Пройди квест вместе с интеллектуальной элитой Петербурга, встреться с другом и уговори его
-            показать свой роман Белинскому!
+            {route.params.description}
           </Text>
         </View>
 

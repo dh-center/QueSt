@@ -102,7 +102,7 @@ export default function Profile(): React.ReactElement {
   return (
     <ScrollView style={styles.body}>
       <View style={styles.header}>
-        <Image source={require('./images/avatar.jpg')} style={styles.avatar} />
+        <Image source={require('../images/avatar.jpg')} style={styles.avatar} />
         <View style={styles.userInfo}>
           <Text style={styles.name}>Соня</Text>
           <Text style={styles.caption}>@sonincaption</Text>
@@ -114,7 +114,7 @@ export default function Profile(): React.ReactElement {
           </View>
         </View>
         <TouchableOpacity>
-          <Image source={require('./images/settings.png')} style={styles.settingsButton} />
+          <Image source={require('../images/settings.png')} style={styles.settingsButton} />
         </TouchableOpacity>
       </View>
       <TouchableOpacity style={styles.button}>
