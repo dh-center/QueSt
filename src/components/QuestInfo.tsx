@@ -1,7 +1,5 @@
 import React from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, SafeAreaView } from 'react-native';
-// import { StackNavigationProp } from '@react-navigation/stack';
-// import { RouteProp } from '@react-navigation/native';
 import { QuestsStackParamList } from './AppNavigator';
 import { useTranslation } from 'react-i18next';
 import { StackScreenProps } from '@react-navigation/stack';
