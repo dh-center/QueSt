@@ -138,8 +138,6 @@ const styles = StyleSheet.create({
 export default function QuestInfo({ route, navigation }: Props): React.ReactElement {
   const { t } = useTranslation();
 
-  // console.log(route.params);
-
   return (
     <SafeAreaView style={styles.body}>
       <View style={styles.header}>
