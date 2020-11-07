@@ -147,7 +147,11 @@ export default function Quests(): React.ReactElement {
           return <QuestView {...props} />;
         }
 
-        return <View style={styles.loading}><Spinner /></View>;
+        return (
+          <View style={styles.loading}>
+            <Spinner />
+          </View>
+        );
       }}
     />
   );
