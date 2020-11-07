@@ -22,6 +22,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     height: '100%',
   },
+  loading: {
+    backgroundColor: '#ffffff',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   header: {
     height: 69,
     paddingLeft: 16,
@@ -87,7 +93,11 @@ function QuestView(props: QuestsQueryResponse): React.ReactElement {
         data={props.quests.edges}
         renderItem={({ item }): React.ReactElement => (
           <TouchableOpacity style={styles.questItem}
-            onPress={(): void => navigation.navigate('Description')}
+            onPress={(): void => navigation.navigate('Description', {
+              title: item.node.name,
+              description: item.node.description,
+            })
+            }
           >
             <Text style={styles.questName}>
               {item.node.name}
@@ -137,7 +147,11 @@ export default function Quests(): React.ReactElement {
           return <QuestView {...props} />;
         }
 
-        return <Spinner />;
+        return (
+          <View style={styles.loading}>
+            <Spinner />
+          </View>
+        );
       }}
     />
   );
