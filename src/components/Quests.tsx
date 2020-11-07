@@ -15,8 +15,7 @@ import { useTranslation } from 'react-i18next';
 /**
  * Type with props of screen 'List' in QuestsStackScreen
  */
-type ListScreenNavigationProp = StackNavigationProp<QuestsStackParamList,
-    'List'>;
+type ListScreenNavigationProp = StackNavigationProp<QuestsStackParamList, 'List'>;
 
 const styles = StyleSheet.create({
   body: {
