@@ -1,6 +1,14 @@
 import React from 'react';
 import { Image, StyleSheet, Text, ScrollView, View, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ProfileStackParamList } from './AppNavigator';
+import { useNavigation } from '@react-navigation/native';
+
+/**
+ * Type with props of screen 'Main' in QuestsStackScreen
+ */
+type MainScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Main'>;
 
 const styles = StyleSheet.create({
   body: {
@@ -97,6 +105,7 @@ const styles = StyleSheet.create({
  * Displays user's profile
  */
 export default function Profile(): React.ReactElement {
+  const navigation = useNavigation<MainScreenNavigationProp>();
   const { t } = useTranslation();
 
   return (
@@ -113,7 +122,7 @@ export default function Profile(): React.ReactElement {
             <Text style={styles.caption}>153/200</Text>
           </View>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={(): void => navigation.navigate('Settings')}>
           <Image source={require('../images/settings.png')} style={styles.settingsButton} />
         </TouchableOpacity>
       </View>
