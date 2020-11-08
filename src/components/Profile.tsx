@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, ScrollView, View, TouchableOpacity, Alert } from 'react-native';
+import { Image, StyleSheet, Text, ScrollView, View, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from './AppNavigator';
@@ -121,56 +121,58 @@ export default function Profile(): React.ReactElement {
   const authState = useAuthState();
 
   return (
-    <ScrollView style={styles.body}>
-      <View style={styles.header}>
-        <Image source={require('../images/avatar.jpg')} style={styles.avatar} />
-        <View style={styles.userInfo}>
-          <Text style={styles.name}>Соня</Text>
-          <Text style={styles.caption}>@sonincaption</Text>
-          <View style={styles.progress}>
-            <View style={styles.progressBar} />
-            <View style={styles.progressFill} />
-            <Text style={styles.level}>LV. 5</Text>
-            <Text style={styles.caption}>153/200</Text>
+    <SafeAreaView style={styles.body}>
+      <ScrollView>
+        <View style={styles.header}>
+          <Image source={require('../images/avatar.jpg')} style={styles.avatar} />
+          <View style={styles.userInfo}>
+            <Text style={styles.name}>Соня</Text>
+            <Text style={styles.caption}>@sonincaption</Text>
+            <View style={styles.progress}>
+              <View style={styles.progressBar} />
+              <View style={styles.progressFill} />
+              <Text style={styles.level}>LV. 5</Text>
+              <Text style={styles.caption}>153/200</Text>
+            </View>
           </View>
+          <TouchableOpacity onPress={(): void => navigation.navigate('Settings')}>
+            <Image source={require('../images/settings.png')} style={styles.settingsButton} />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={(): void => navigation.navigate('Settings')}>
-          <Image source={require('../images/settings.png')} style={styles.settingsButton} />
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>{t('profile.friends')}</Text>
         </TouchableOpacity>
-      </View>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>{t('profile.friends')}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>{t('profile.rating')}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>{t('profile.achievements')}</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>{t('profile.cards')}</Text>
-      </TouchableOpacity>
-      {!authState.accessToken &&
-      <GoogleSigninButton
-        size={GoogleSigninButton.Size.Wide}
-        color={GoogleSigninButton.Color.Light}
-        onPress={async (): Promise<void> => {
-          try {
-            await GoogleSignin.hasPlayServices();
-            const userInfo = await GoogleSignin.signIn();
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>{t('profile.rating')}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>{t('profile.achievements')}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>{t('profile.cards')}</Text>
+        </TouchableOpacity>
+        {!authState.accessToken &&
+        <GoogleSigninButton
+          size={GoogleSigninButton.Size.Wide}
+          color={GoogleSigninButton.Color.Light}
+          onPress={async (): Promise<void> => {
+            try {
+              await GoogleSignin.hasPlayServices();
+              const userInfo = await GoogleSignin.signIn();
 
-            if (userInfo.serverAuthCode) {
-              await authController.authWithGoogle(userInfo.serverAuthCode);
-            } else {
-              console.error('Can\'t perform auth due to missing server auth code');
+              if (userInfo.serverAuthCode) {
+                await authController.authWithGoogle(userInfo.serverAuthCode);
+              } else {
+                console.error('Can\'t perform auth due to missing server auth code');
+              }
+            } catch (error) {
+              console.log(error);
+              Alert.alert('Ошибка', error.message);
             }
-          } catch (error) {
-            console.log(error);
-            Alert.alert('Ошибка', error.message);
-          }
-        }}
-      />
-      }
-    </ScrollView>
+          }}
+        />
+        }
+      </ScrollView>
+    </SafeAreaView>
   );
 }
