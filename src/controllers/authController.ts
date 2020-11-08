@@ -54,7 +54,6 @@ class AuthController {
   public async init(): Promise<void> {
     this.accessToken = await SInfo.getItem(AuthController.ACCESS_TOKEN_KEY, AuthController.sensitiveInfoOptions);
     this.notifySubscribers();
-    console.log('init', await SInfo.getItem(AuthController.ACCESS_TOKEN_KEY, AuthController.sensitiveInfoOptions))
   }
 
   /**
@@ -126,7 +125,6 @@ class AuthController {
     const newState = {
       accessToken: this.accessToken,
     };
-    console.log('newState',newState)
 
 
     this.listeners.forEach((listener) => {
@@ -141,10 +139,7 @@ class AuthController {
    */
   private async setTokens(tokensData: AuthServerResponse): Promise<void> {
     this.accessToken = tokensData.data.accessToken;
-    console.log('set token')
     await SInfo.setItem(AuthController.ACCESS_TOKEN_KEY, this.accessToken, AuthController.sensitiveInfoOptions);
-    console.log(await SInfo.getItem(AuthController.ACCESS_TOKEN_KEY, AuthController.sensitiveInfoOptions))
-    console.log('token setted')
     this.notifySubscribers();
   }
 }

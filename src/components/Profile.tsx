@@ -121,8 +121,6 @@ export default function Profile(): React.ReactElement {
   const { t } = useTranslation();
   const authState = useAuthState();
 
-  console.log(authState);
-
   return (
     <ScrollView style={styles.body}>
       <View style={styles.header}>
