@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, StyleSheet, Text, ScrollView, View, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Text, ScrollView, View, TouchableOpacity, Alert } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from './AppNavigator';
@@ -7,8 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import authController, { useAuthState } from '../controllers/authController';
 import {
   GoogleSignin,
-  GoogleSigninButton,
-  statusCodes
+  GoogleSigninButton
 } from '@react-native-community/google-signin';
 import { OAUTH_WEB_CLIENT_ID } from '@env';
 
@@ -167,15 +166,7 @@ export default function Profile(): React.ReactElement {
             }
           } catch (error) {
             console.log(error);
-            if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-              // user cancelled the login flow
-            } else if (error.code === statusCodes.IN_PROGRESS) {
-              // operation (e.g. sign in) is in progress already
-            } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-              // play services not available or outdated
-            } else {
-              // some other error happened
-            }
+            Alert.alert('Ошибка', error.message);
           }
         }}
       />
