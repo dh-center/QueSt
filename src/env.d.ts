@@ -12,5 +12,5 @@ declare module '@env' {
   /**
    * OAuth client id for google app from Cloud Console
    */
-  export const OAUTH_ANDROID_CLIENT_ID: string;
+  export const OAUTH_WEB_CLIENT_ID: string;
 }

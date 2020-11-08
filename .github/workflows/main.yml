@@ -13,7 +13,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v1
         with:
           envkey_MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
-          envkey_OAUTH_ANDROID_CLIENT_ID: ${{ secrets.OAUTH_ANDROID_CLIENT_ID }}
+          envkey_OAUTH_WEB_CLIENT_ID: ${{ secrets.OAUTH_WEB_CLIENT_ID }}
           envKey_API_ENDPOINT: 'https://api.stage.st-retrospect.dh-center.ru'
 
 

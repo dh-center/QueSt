@@ -4,16 +4,16 @@ import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from './AppNavigator';
 import { useNavigation } from '@react-navigation/native';
-import AuthController from '../controllers/authController';
+import authController from '../controllers/authController';
 import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes
 } from '@react-native-community/google-signin';
-import { OAUTH_ANDROID_CLIENT_ID } from '@env';
+import { OAUTH_WEB_CLIENT_ID } from '@env';
 
 GoogleSignin.configure({
-  webClientId: OAUTH_ANDROID_CLIENT_ID,
+  webClientId: OAUTH_WEB_CLIENT_ID,
   offlineAccess: true,
 });
 
@@ -150,6 +150,7 @@ export default function Profile(): React.ReactElement {
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>{t('profile.cards')}</Text>
       </TouchableOpacity>
+      {!authController.isAuthenticated() &&
       <GoogleSigninButton
         size={GoogleSigninButton.Size.Wide}
         color={GoogleSigninButton.Color.Light}
@@ -159,7 +160,7 @@ export default function Profile(): React.ReactElement {
             const userInfo = await GoogleSignin.signIn();
 
             if (userInfo.serverAuthCode) {
-              await AuthController.authWithGoogle(userInfo.serverAuthCode);
+              await authController.authWithGoogle(userInfo.serverAuthCode);
             } else {
               console.error('Can\'t perform auth due to missing server auth code');
             }
@@ -177,6 +178,7 @@ export default function Profile(): React.ReactElement {
           }
         }}
       />
+      }
     </ScrollView>
   );
 }
