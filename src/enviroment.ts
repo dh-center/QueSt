@@ -4,8 +4,10 @@ import {
   RecordSource,
   Store,
   Variables,
-  RequestParameters,
+  RequestParameters
 } from 'relay-runtime';
+import { API_ENDPOINT } from '@env';
+import authController from './controllers/authController';
 
 /**
  * Function for make queries to GraphQL server
@@ -15,14 +17,20 @@ import {
  */
 function fetchQuery(
   operation: RequestParameters,
-  variables: Variables,
+  variables: Variables
 ): Promise<any> {
-  return fetch('https://api.stage.st-retrospect.dh-center.ru/graphql', {
+  const headers: Record<string, string> = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  };
+
+  if (authController.accessToken) {
+    headers.Authorization = 'Bearer ' + authController.accessToken;
+  }
+
+  return fetch(`${API_ENDPOINT}/graphql`, {
     method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify({
       query: operation.text,
       variables,

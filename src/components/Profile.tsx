@@ -4,13 +4,18 @@ import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from './AppNavigator';
 import { useNavigation } from '@react-navigation/native';
+import AuthController from '../controllers/authController';
 import {
   GoogleSignin,
   GoogleSigninButton,
   statusCodes
 } from '@react-native-community/google-signin';
+import { OAUTH_ANDROID_CLIENT_ID } from '@env';
 
-GoogleSignin.configure();
+GoogleSignin.configure({
+  webClientId: OAUTH_ANDROID_CLIENT_ID,
+  offlineAccess: true,
+});
 
 /**
  * Type with props of screen 'Main' in QuestsStackScreen
@@ -147,15 +152,19 @@ export default function Profile(): React.ReactElement {
       </TouchableOpacity>
       <GoogleSigninButton
         size={GoogleSigninButton.Size.Wide}
-        color={GoogleSigninButton.Color.Dark}
-        onPress={async () => {
+        color={GoogleSigninButton.Color.Light}
+        onPress={async (): Promise<void> => {
           try {
             await GoogleSignin.hasPlayServices();
             const userInfo = await GoogleSignin.signIn();
-            console.log(userInfo)
-            // this.setState({ userInfo });
+
+            if (userInfo.serverAuthCode) {
+              await AuthController.authWithGoogle(userInfo.serverAuthCode);
+            } else {
+              console.error('Can\'t perform auth due to missing server auth code');
+            }
           } catch (error) {
-            console.log(error)
+            console.log(error);
             if (error.code === statusCodes.SIGN_IN_CANCELLED) {
               // user cancelled the login flow
             } else if (error.code === statusCodes.IN_PROGRESS) {
