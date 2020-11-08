@@ -1,4 +1,4 @@
-package com.quest;
+package ru.dhcenter.quest;
 
 import com.facebook.react.ReactActivity;
 

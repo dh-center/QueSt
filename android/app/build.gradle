@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.quest"
+        applicationId "ru.dhcenter.quest"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
