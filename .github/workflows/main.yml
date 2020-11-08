@@ -6,9 +6,11 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
+
       - name: Install npm dependencies
         run: |
           yarn install
+
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v1
         with:
@@ -16,16 +18,18 @@ jobs:
           envkey_OAUTH_WEB_CLIENT_ID: ${{ secrets.OAUTH_WEB_CLIENT_ID }}
           envKey_API_ENDPOINT: 'https://api.stage.st-retrospect.dh-center.ru'
 
-
       - name: Build Android Release
         run: |
           cd android && ./gradlew assembleRelease
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v1
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
+
       - uses: nelonoel/branch-name@v1
+
       - name: Send release to the channel
         if: endsWith(github.ref, '/master') || endsWith(github.ref, '/stage')
         uses: appleboy/telegram-action@master
