@@ -1,6 +1,9 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
+import { MAPBOX_ACCESS_TOKEN } from '@env';
+
+MapboxGL.setAccessToken(MAPBOX_ACCESS_TOKEN);
 
 const styles = StyleSheet.create({
   page: {
