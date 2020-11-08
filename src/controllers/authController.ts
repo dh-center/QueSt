@@ -1,5 +1,6 @@
 import { API_ENDPOINT } from '@env';
 import SInfo from 'react-native-sensitive-info';
+import { useEffect, useState } from 'react';
 
 /**
  * Represents response of the auth server in case of success
@@ -12,6 +13,18 @@ interface AuthServerResponse {
     accessToken: string;
   };
 }
+
+/**
+ * Auth state to use in React components
+ */
+interface AuthState {
+  /**
+   * Current access token for API
+   */
+  accessToken: string | null;
+}
+
+type SubscribeHandler = (authState: AuthState) => void;
 
 /**
  * Controller for auth actions
@@ -32,12 +45,16 @@ class AuthController {
    */
   private static ACCESS_TOKEN_KEY = 'access-token';
 
+  private listeners: SubscribeHandler[] = []
+
   /**
    * Auth controller initializer
    * Restores last authed user
    */
   public async init(): Promise<void> {
     this.accessToken = await SInfo.getItem(AuthController.ACCESS_TOKEN_KEY, AuthController.sensitiveInfoOptions);
+    this.notifySubscribers();
+    console.log('init', await SInfo.getItem(AuthController.ACCESS_TOKEN_KEY, AuthController.sensitiveInfoOptions))
   }
 
   /**
@@ -80,6 +97,41 @@ class AuthController {
   public async logout(): Promise<void> {
     this.accessToken = null;
     await SInfo.deleteItem(AuthController.ACCESS_TOKEN_KEY, AuthController.sensitiveInfoOptions);
+    this.notifySubscribers();
+  }
+
+  /**
+   * Add subscriber for auth state changes
+   *
+   * @param handler - handler on change event
+   */
+  public subscribe(handler: SubscribeHandler): void {
+    this.listeners.push(handler);
+  }
+
+  /**
+   * Remove subscriber for auth state changes
+   *
+   * @param handler - handler on change event
+   */
+  public unsubscribe(handler: SubscribeHandler): void {
+    this.listeners = this.listeners.filter((l) => l !== handler);
+  }
+
+  /**
+   *
+   * @private
+   */
+  private notifySubscribers(): void {
+    const newState = {
+      accessToken: this.accessToken,
+    };
+    console.log('newState',newState)
+
+
+    this.listeners.forEach((listener) => {
+      listener(newState);
+    });
   }
 
   /**
@@ -89,8 +141,35 @@ class AuthController {
    */
   private async setTokens(tokensData: AuthServerResponse): Promise<void> {
     this.accessToken = tokensData.data.accessToken;
+    console.log('set token')
     await SInfo.setItem(AuthController.ACCESS_TOKEN_KEY, this.accessToken, AuthController.sensitiveInfoOptions);
+    console.log(await SInfo.getItem(AuthController.ACCESS_TOKEN_KEY, AuthController.sensitiveInfoOptions))
+    console.log('token setted')
+    this.notifySubscribers();
   }
 }
 
-export default new AuthController();
+const authController = new AuthController();
+
+/**
+ * Hook for accessing auth state from React components
+ */
+export function useAuthState(): AuthState {
+  const [authState, setAuthState] = useState<AuthState>({ accessToken: authController.accessToken });
+
+  useEffect(() => {
+    const handler: SubscribeHandler = (newVal) => {
+      setAuthState(newVal);
+    };
+
+    authController.subscribe(handler);
+
+    return (): void => {
+      authController.unsubscribe(handler);
+    };
+  }, []);
+
+  return authState;
+}
+
+export default authController;

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from './AppNavigator';
 import { useNavigation } from '@react-navigation/native';
-import authController from '../controllers/authController';
+import authController, { useAuthState } from '../controllers/authController';
 import {
   GoogleSignin,
   GoogleSigninButton,
@@ -119,6 +119,9 @@ const styles = StyleSheet.create({
 export default function Profile(): React.ReactElement {
   const navigation = useNavigation<MainScreenNavigationProp>();
   const { t } = useTranslation();
+  const authState = useAuthState();
+
+  console.log(authState);
 
   return (
     <ScrollView style={styles.body}>
@@ -150,7 +153,7 @@ export default function Profile(): React.ReactElement {
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>{t('profile.cards')}</Text>
       </TouchableOpacity>
-      {!authController.isAuthenticated() &&
+      {!authState.accessToken &&
       <GoogleSigninButton
         size={GoogleSigninButton.Size.Wide}
         color={GoogleSigninButton.Color.Light}

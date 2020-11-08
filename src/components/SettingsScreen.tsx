@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from './AppNavigator';
+import authController from '../controllers/authController';
 
 /**
  * Type with props of screen 'Settings' in ProfileStackScreen
@@ -105,7 +106,7 @@ export default function Profile(): React.ReactElement {
         />
       </View>
       <View style={styles.logoutBlock}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={(): Promise<void> => authController.logout()}>
           <Text style={styles.logoutText}>{t('settings.logout')}</Text>
         </TouchableOpacity>
       </View>
