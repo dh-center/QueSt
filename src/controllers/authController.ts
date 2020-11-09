@@ -126,7 +126,6 @@ class AuthController {
       accessToken: this.accessToken,
     };
 
-
     this.listeners.forEach((listener) => {
       listener(newState);
     });
