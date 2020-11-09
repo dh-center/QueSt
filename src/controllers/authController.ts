@@ -24,6 +24,9 @@ interface AuthState {
   accessToken: string | null;
 }
 
+/**
+ * Type for on AuthState change event handler
+ */
 type SubscribeHandler = (authState: AuthState) => void;
 
 /**
@@ -35,6 +38,9 @@ class AuthController {
    */
   public accessToken: string | null = null;
 
+  /**
+   * Settings for react-native-sensitive-info
+   */
   private static sensitiveInfoOptions = {
     sharedPreferencesName: 'questSharedPrefs',
     keychainService: 'questKeychain',
@@ -45,6 +51,9 @@ class AuthController {
    */
   private static ACCESS_TOKEN_KEY = 'access-token';
 
+  /**
+   * Array of listeners on AuthState change event
+   */
   private listeners: SubscribeHandler[] = []
 
   /**
@@ -118,8 +127,7 @@ class AuthController {
   }
 
   /**
-   *
-   * @private
+   * Call subscribers handlers with new AuthState
    */
   private notifySubscribers(): void {
     const newState = {
