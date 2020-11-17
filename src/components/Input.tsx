@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { StyleSheet, TextInput, TextInputProps, View } from 'react-native';
+import textStyles from '../styles/textStyles';
 
 /**
  * Styles for custom Input field
@@ -46,8 +47,7 @@ const styles = StyleSheet.create({
     /**
      * Text styles
      */
-    fontSize: 18,
-    color: '#222222',
+    ...textStyles.default,
 
     /**
      * Margins and paddings
