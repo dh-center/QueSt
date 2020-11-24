@@ -31,12 +31,13 @@ const styles = StyleSheet.create({
     /**
      * Shadows on IOS
      */
-    shadowColor: 'rgba(65, 67, 102, 0.07)',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 2,
     },
-    shadowRadius: 8,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
 
     /**
      * Shadows on Android
@@ -71,10 +72,10 @@ const styles = StyleSheet.create({
  */
 export default function Input(props: TextInputProps): ReactElement {
   return (
-    <View style={styles.container}>
+    <View style={[props.style, styles.container]}>
       <TextInput
         {...props}
-        style={[props.style, styles.textInput]}
+        style={styles.textInput}
         underlineColorAndroid={props.underlineColorAndroid || 'transparent'}
         spellCheck={props.spellCheck || false}
         autoCorrect={props.autoCorrect || false}
