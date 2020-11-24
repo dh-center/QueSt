@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { StyleSheet, TextInput, TextInputProps, View } from 'react-native';
 import textStyles from '../styles/textStyles';
+import Colors from '../styles/colors';
 
 /**
  * Styles for custom Input field
@@ -10,7 +11,7 @@ const styles = StyleSheet.create({
     /**
      * Colors
      */
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.WHITE,
 
     /**
      * Margins and paddings
