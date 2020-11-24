@@ -119,9 +119,9 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Displays settings screen
+ * Displays test
  */
-export default function Profile(): React.ReactElement {
+export default function TestView(): React.ReactElement {
   const [result, setResult] = useState<boolean>();
   const [selectedAnswer, setSelectedAnswer] = useState<number>();
 
