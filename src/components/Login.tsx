@@ -4,9 +4,15 @@ import Input from './Input';
 import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
 import CustomButton from './CustomButton';
-import UnderlinedButton from "./UnderlinedButton";
+import UnderlinedButton from './UnderlinedButton';
 
+/**
+ * Styles for login view
+ */
 const styles = StyleSheet.create({
+  /**
+   * Styles for container
+   */
   body: {
     backgroundColor: Colors.BACKGROUND,
     height: '100%',
@@ -17,6 +23,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 15,
   },
+
+  /**
+   * Logo placeholder styles
+   */
   logo: {
     ...textStyles.default,
     backgroundColor: '#C4C4C4',
@@ -27,6 +37,10 @@ const styles = StyleSheet.create({
     borderRadius: 55,
     marginVertical: 30,
   },
+
+  /**
+   * Welcome text block
+   */
   welcomeTextContainer: {
     marginBottom: 30,
   },
@@ -38,13 +52,53 @@ const styles = StyleSheet.create({
     ...textStyles.robotoMedium,
     textAlign: 'center',
   },
+
+  /**
+   * Inputs styles
+   */
   input: {
     marginBottom: 15,
+  },
+  recoverPasswordButton: {
+    opacity: 0.5,
+    marginBottom: 10,
+  },
+
+  /**
+   * Login with socials block
+   */
+  socials: {
+    width: 180,
+    marginBottom: 50,
+  },
+  socialsText: {
+    ...textStyles.default,
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  socialsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  socialItem: {
+    width: 40,
+    height: 40,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    backgroundColor: '#C4C4C4',
+  },
+
+  /**
+   * Class-helper for making margin bottom 30
+   */
+  mb30: {
+    marginBottom: 30,
   },
 });
 
 /**
- *
+ * Login view
  */
 export default function Login(): ReactElement {
   return (
@@ -73,10 +127,27 @@ export default function Login(): ReactElement {
           <CustomButton
             title="Войти"
             onPress={() => {}}
+            style={styles.mb30}
           />
           <UnderlinedButton
             title="Регистрация"
             onPress={() => {}}
+            style={styles.mb30}
+          />
+          <View style={styles.socials}>
+            <Text style={styles.socialsText}>
+              Войти с помощью
+            </Text>
+            <View style={styles.socialsContainer}>
+              <Text style={styles.socialItem}>VK</Text>
+              <Text style={styles.socialItem}>FB</Text>
+              <Text style={styles.socialItem}>Google</Text>
+            </View>
+          </View>
+          <UnderlinedButton
+            title="Забыли пароль?"
+            onPress={() => {}}
+            style={styles.recoverPasswordButton}
           />
         </View>
       </ScrollView>

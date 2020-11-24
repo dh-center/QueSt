@@ -4,20 +4,31 @@ import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
 import { CustomButtonProps } from './CustomButton';
 
+/**
+ * Underlined button styles
+ */
 const styles = StyleSheet.create({
+  /**
+   * Button container styles
+   */
   button: {
-    paddingVertical: 3,
     borderStyle: 'solid',
     borderBottomWidth: 1,
     borderBottomColor: Colors.BLACK,
   },
+
+  /**
+   * Button text styles
+   */
   buttonText: {
     ...textStyles.default,
   },
 });
 
 /**
- * @param props
+ * Custom button with underline
+ *
+ * @param props - component props
  */
 export default function UnderlinedButton(props: CustomButtonProps): ReactElement {
   return (

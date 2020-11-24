@@ -4,19 +4,40 @@ import {
   StyleSheet,
   TouchableOpacity,
   StyleProp,
-  ViewProps,
-  NativeSyntheticEvent, NativeTouchEvent
+  NativeSyntheticEvent, NativeTouchEvent, ViewStyle
 } from 'react-native';
 import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
 
+/**
+ * Custom button props
+ */
 export interface CustomButtonProps {
+  /**
+   * Text on button
+   */
   title: string;
+
+  /**
+   * onPress event handler
+   *
+   * @param ev - event object
+   */
   onPress: (ev: NativeSyntheticEvent<NativeTouchEvent>) => void;
-  style: StyleProp<ViewProps>;
+
+  /**
+   * View styles
+   */
+  style?: StyleProp<ViewStyle>;
 }
 
+/**
+ * Styles for custom button
+ */
 const styles = StyleSheet.create({
+  /**
+   * Button container
+   */
   button: {
     backgroundColor: Colors.BLUE,
     minWidth: 227,
@@ -40,6 +61,10 @@ const styles = StyleSheet.create({
      */
     elevation: 5,
   },
+
+  /**
+   * Button text
+   */
   buttonText: {
     ...textStyles.ptRootMedium,
     color: Colors.WHITE,
@@ -48,7 +73,9 @@ const styles = StyleSheet.create({
 });
 
 /**
- * @param props
+ * Custom button with light blue background
+ *
+ * @param props - component props
  */
 export default function CustomButton(props: CustomButtonProps): ReactElement {
   return (
