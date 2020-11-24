@@ -9,6 +9,7 @@ import Profile from './Profile';
 import QuestInfo from './QuestInfo';
 import SettingsScreen from './SettingsScreen';
 import { useTranslation } from 'react-i18next';
+import Login from './Login';
 
 /**
  * Type with params of screens and their props in QuestsStackScreen
@@ -46,7 +47,7 @@ function QuestsStackScreen(): React.ReactElement {
 function ProfileStackScreen(): React.ReactElement {
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen name="Main" component={Profile} options={{ headerShown: false }}/>
+      <ProfileStack.Screen name="Main" component={Login} options={{ headerShown: false }}/>
       <ProfileStack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }}/>
     </ProfileStack.Navigator>
   );

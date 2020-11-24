@@ -15,10 +15,9 @@ const styles = StyleSheet.create({
     /**
      * Margins and paddings
      */
-    marginHorizontal: 15,
-    marginBottom: 15,
     paddingVertical: 11,
     paddingHorizontal: 30,
+    width: '100%',
 
     /**
      * Border
