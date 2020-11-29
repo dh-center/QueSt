@@ -36,6 +36,7 @@ const answerButton = StyleSheet.create({
 
 const styles = StyleSheet.create({
   body: {
+    position: 'absolute',
     backgroundColor: colors.white,
     height: '100%',
   },
