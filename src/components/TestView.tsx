@@ -80,6 +80,13 @@ const styles = StyleSheet.create({
     borderRadius: 32,
     elevation: 10,
     alignSelf: 'center',
+    shadowColor: '#414366',
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 20,
   },
 });
 
