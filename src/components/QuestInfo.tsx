@@ -1,8 +1,15 @@
 import React from 'react';
 import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, SafeAreaView } from 'react-native';
-import { QuestsStackParamList } from './AppNavigator';
+import { QuestsStackParamList, TabParamList } from './AppNavigator';
 import { useTranslation } from 'react-i18next';
 import { StackScreenProps } from '@react-navigation/stack';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
+
+/**
+ * Type with props of screen 'Map' in BottomTabNavigator
+ */
+type MapScreenNavigationProp = BottomTabNavigationProp<TabParamList, 'Map'>;
 
 /**
  * Type with props of screen 'Description' in QuestsStackScreen
@@ -135,7 +142,8 @@ const styles = StyleSheet.create({
 /**
  * Functional component of the screen with quest info
  */
-export default function QuestInfo({ route, navigation }: Props): React.ReactElement {
+export default function QuestInfo({ route }: Props): React.ReactElement {
+  const navigation = useNavigation<MapScreenNavigationProp>();
   const { t } = useTranslation();
 
   return (
@@ -183,7 +191,11 @@ export default function QuestInfo({ route, navigation }: Props): React.ReactElem
           <Text style={styles.cardTitle}>Виссарион Белинский</Text>
         </View>
         <View style={styles.buttonSection}>
-          <TouchableOpacity style={styles.startButton}>
+          <TouchableOpacity style={styles.startButton}
+            onPress={(): void => navigation.navigate('Map', {
+              questId: route.params.id,
+            })
+            }>
             <Text style={styles.buttonText}>{t('quests.startQuest')}</Text>
           </TouchableOpacity>
         </View>

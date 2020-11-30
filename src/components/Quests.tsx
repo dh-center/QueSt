@@ -94,6 +94,7 @@ function QuestView(props: QuestsQueryResponse): React.ReactElement {
         renderItem={({ item }): React.ReactElement => (
           <TouchableOpacity style={styles.questItem}
             onPress={(): void => navigation.navigate('Description', {
+              id: item.node.id,
               title: item.node.name,
               description: item.node.description,
             })
