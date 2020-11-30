@@ -24,15 +24,12 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
-  block: {
-    position: 'absolute',
-  },
 });
 
 /**
  * Renders map for quests
  */
-export default function Map({ route, navigation }: Props): React.ReactElement {
+export default function Map({ route }: Props): React.ReactElement {
   return (
     <View style={styles.page}>
       <MapboxGL.MapView style={styles.map} />

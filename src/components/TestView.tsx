@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: colors.white,
     height: '100%',
+    width: '100%',
   },
   view: {
     backgroundColor: colors.fond,
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
       width: 0,
       height: 4,
     },
-    shadowOpacity: 0.07,
+    shadowOpacity: 0.2,
     shadowRadius: 8,
     flexDirection: 'column',
     alignItems: 'center',
