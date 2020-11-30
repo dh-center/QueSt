@@ -118,11 +118,14 @@ export default function Login(): ReactElement {
           <Input
             autoCompleteType="email"
             placeholder="Email"
+            textContentType="username"
             style={styles.input}
           />
           <Input
             autoCompleteType="password"
             placeholder="Пароль"
+            textContentType="password"
+            secureTextEntry={true}
             style={styles.input}
           />
           <CustomButton
