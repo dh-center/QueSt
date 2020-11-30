@@ -10,7 +10,7 @@ const textStyles = StyleSheet.create({
    */
   default: {
     fontSize: 18,
-    fontFamily: 'PT Root UI-Regular',
+    fontFamily: 'PTRootUIWeb-Regular',
     color: Colors.BLACK,
   },
 
@@ -28,7 +28,7 @@ const textStyles = StyleSheet.create({
    */
   ptRootMedium: {
     fontSize: 18,
-    fontFamily: 'PT Root UI-Medium',
+    fontFamily: 'PTRootUIWeb-Medium',
     color: Colors.BLACK,
   },
 });
