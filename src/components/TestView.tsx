@@ -55,16 +55,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  headerImages: {
-    width: '100%',
-    paddingRight: 15,
-    paddingBottom: 30,
-    paddingLeft: 15,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  invisible: {
-    opacity: 0,
+  headerImage: {
+    marginBottom: 30,
   },
   answersView: {
     paddingTop: 30,
@@ -130,12 +122,10 @@ export default function TestView(): React.ReactElement {
     <SafeAreaView style={styles.body}>
       <ScrollView style={styles.view}>
         <View style={styles.headerBlock}>
-          <View style={styles.headerImages}>
-            <Voice style={styles.invisible}/>
+          <View style={styles.headerImage}>
             {(result == undefined) && <Question/>}
             {(result == true) && <RightAnswer/>}
             {(result == false) && <WrongAnswer/>}
-            <Voice/>
           </View>
           <Text style={styles.headerText}>{testQuestion.question}</Text>
         </View>
