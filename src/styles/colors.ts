@@ -5,7 +5,7 @@ enum Colors {
   /**
    * Background color
    */
-  BACKGROUND = 'linear-gradient(0deg, rgba(142, 178, 188, 0.1), rgba(142, 178, 188, 0.1)), #ffffff',
+  BACKGROUND = 'rgba(142, 178, 188, 0.1)',
 
   /**
    * Black color
@@ -13,9 +13,29 @@ enum Colors {
   BLACK = '#222222',
 
   /**
+   * Dark blue color
+   */
+  DARK_BLUE = '#55556B',
+
+  /**
    * Light blue color
    */
   BLUE = '#68C6DF',
+
+  /**
+   * Yellow color
+   */
+  YELLOW = '#F6E864',
+
+  /**
+   * Red color
+   */
+  RED = '#EF6B59',
+
+  /**
+   * Green color
+   */
+  GREEN = '#5BC378',
 
   /**
    * White color
