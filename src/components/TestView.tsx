@@ -100,7 +100,7 @@ export default function TestView(): React.ReactElement {
         <View style={styles.headerBlock}>
           {(selectedAnswer === undefined) && <Question/>}
           {(selectedAnswer === testQuestion.correctAnswerIndex) && <RightAnswer/>}
-          {(selectedAnswer && selectedAnswer !== testQuestion.correctAnswerIndex) && <WrongAnswer/>}
+          {(selectedAnswer !== undefined && selectedAnswer !== testQuestion.correctAnswerIndex) && <WrongAnswer/>}
           <Text style={styles.headerText}>{testQuestion.question}</Text>
         </View>
         <View style={styles.answersView}>
@@ -108,14 +108,21 @@ export default function TestView(): React.ReactElement {
             testQuestion.answers.map((answer, index) => {
               let buttonState: AnswerButtonState = 'disabled';
 
-              if (selectedAnswer === undefined) {
-                buttonState = 'active';
-              } else if (selectedAnswer === testQuestion.correctAnswerIndex && index === testQuestion.correctAnswerIndex) {
-                buttonState = 'selectedCorrect';
-              } else if (selectedAnswer !== testQuestion.correctAnswerIndex && index === testQuestion.correctAnswerIndex) {
-                buttonState = 'unselectedCorrect';
-              } else if (selectedAnswer !== testQuestion.correctAnswerIndex && index === selectedAnswer) {
-                buttonState = 'selectedWrong';
+              switch (selectedAnswer) {
+                case undefined:
+                  buttonState = 'active';
+                  break;
+
+                case testQuestion.correctAnswerIndex:
+                  buttonState = index === testQuestion.correctAnswerIndex ? 'selectedCorrect' : 'disabled';
+                  break;
+
+                default:
+                  if (index === testQuestion.correctAnswerIndex) {
+                    buttonState = 'unselectedCorrect';
+                  } else if (index === selectedAnswer) {
+                    buttonState = 'selectedWrong';
+                  }
               }
 
               return <AnswerButton
@@ -128,7 +135,8 @@ export default function TestView(): React.ReactElement {
                   setSelectedAnswer(index);
                 }}
               />;
-            })
+            }
+            )
           }
         </View>
         {(selectedAnswer !== undefined) && <TouchableOpacity><Next style={styles.next}/></TouchableOpacity>}
