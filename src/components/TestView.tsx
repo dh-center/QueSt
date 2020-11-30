@@ -8,10 +8,10 @@ import {
   SafeAreaView
 } from 'react-native';
 import colors from '../styles/colors';
+import AnswerButton, { ButtonProps } from './AnswerButton';
 import Question from '../images/question.svg';
 import RightAnswer from '../images/rightAnswer.svg';
 import WrongAnswer from '../images/wrongAnswer.svg';
-import Voice from '../images/voice.svg';
 import Next from '../images/nextButton.svg';
 
 const testQuestion = {
@@ -19,20 +19,6 @@ const testQuestion = {
   answers: ['Солжиница', 'Есенищина', 'Гумильвица', 'Сологубщина'],
   correctAnswerIndex: 1,
 };
-
-const answerButton = StyleSheet.create({
-  button: {
-    minHeight: 60,
-    marginBottom: 10,
-    borderRadius: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonText: {
-    fontSize: 18,
-    lineHeight: 22,
-  },
-});
 
 const styles = StyleSheet.create({
   body: {
@@ -52,6 +38,13 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
     borderBottomLeftRadius: 15,
     elevation: 4,
+    shadowColor: '#414366',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.07,
+    shadowRadius: 8,
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -64,41 +57,19 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingLeft: 15,
   },
-  activeAnswerButton: {
-    ...answerButton.button,
-    backgroundColor: colors.white,
-    elevation: 10,
-  },
-  disabledAnswerButton: {
-    ...answerButton.button,
-    backgroundColor: colors.white,
-  },
-  rightAnswerButton: {
-    ...answerButton.button,
-    backgroundColor: colors.white,
-    borderWidth: 2,
-    borderStyle: 'solid',
-    borderColor: colors.green,
-  },
-  rightAnsweredButton: {
-    ...answerButton.button,
-    backgroundColor: colors.green,
-  },
-  wrongAnsweredButton: {
-    ...answerButton.button,
-    backgroundColor: colors.red,
-  },
   headerText: {
     color: colors.black,
     fontSize: 22,
     lineHeight: 22,
   },
   blackAnswerText: {
-    ...answerButton.buttonText,
+    fontSize: 18,
+    lineHeight: 22,
     color: colors.black,
   },
   whiteAnswerText: {
-    ...answerButton.buttonText,
+    fontSize: 18,
+    lineHeight: 22,
     color: colors.white,
   },
   next: {
@@ -132,31 +103,35 @@ export default function TestView(): React.ReactElement {
         <View style={styles.answersView}>
           {
             testQuestion.answers.map((answer, index) => {
-              return (
-                <TouchableOpacity
-                  disabled={!(result == undefined)}
-                  style={
-                    (result == undefined) ? styles.activeAnswerButton
-                      : (result && index == testQuestion.correctAnswerIndex) ? styles.rightAnsweredButton
-                        : (!result && index == testQuestion.correctAnswerIndex) ? styles.rightAnswerButton
-                          : (!result && index == selectedAnswer) ? styles.wrongAnsweredButton
-                            : styles.disabledAnswerButton
-                  }
-                  key={index.toString()}
-                  activeOpacity={0.5}
-                  onPress={(): void => {
-                    (index == testQuestion.correctAnswerIndex)
-                      ? setResult(true)
-                      : setResult(false);
-                    setSelectedAnswer(index);
-                  }}
-                >
-                  <Text style={
-                    (result && index == testQuestion.correctAnswerIndex) || (!result && index == selectedAnswer)
-                      ? styles.whiteAnswerText : styles.blackAnswerText
-                  }>{answer}</Text>
-                </TouchableOpacity>
-              );
+              let buttonState: ButtonProps['answerButtonState'] = 'disabled';
+              let buttonTextState: ButtonProps['answerButtonTextState'] = 'blackButtonText';
+
+              if (result == undefined) {
+                buttonState = 'active';
+              } else if (result && index == testQuestion.correctAnswerIndex) {
+                buttonState = 'selectedCorrect';
+                buttonTextState = 'whiteButtonText';
+              } else if (!result && index == testQuestion.correctAnswerIndex) {
+                buttonState = 'unselectedCorrect';
+              } else if (!result && index == selectedAnswer) {
+                buttonState = 'selectedWrong';
+                buttonTextState = 'whiteButtonText';
+              }
+
+              return <AnswerButton
+                answerButtonState={buttonState}
+                answerButtonTextState={buttonTextState}
+                buttonText={answer}
+                disabled={!(result == undefined)}
+                key={index.toString()}
+                activeOpacity={0.5}
+                onPress={(): void => {
+                  (index == testQuestion.correctAnswerIndex)
+                    ? setResult(true)
+                    : setResult(false);
+                  setSelectedAnswer(index);
+                }}
+              />;
             })
           }
         </View>
