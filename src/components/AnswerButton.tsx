@@ -58,25 +58,42 @@ const buttonStyles = StyleSheet.create({
   },
 });
 
-export type ButtonProps = {
-  answerButtonState: 'active' | 'disabled' | 'unselectedCorrect' | 'selectedCorrect' | 'selectedWrong';
-  answerButtonTextState: 'blackButtonText' | 'whiteButtonText';
+/**
+ * Possible AnswerButton states
+ */
+export type AnswerButtonState = 'active' | 'disabled' | 'unselectedCorrect' | 'selectedCorrect' | 'selectedWrong';
+
+/**
+ * Props for AnswerButton component
+ */
+export interface ButtonProps {
+  /**
+   * State for applying correct button styles
+   */
+  answerButtonState: AnswerButtonState;
+
+  /**
+   * Button text content
+   */
   buttonText: string;
 }
+
 /**
  * Component with buttons for tests
  *
  * @param props - props for TouchableOpacity and Text
  */
-export default function AnswerButton(props: TouchableOpacityProps & ButtonProps): React.ReactElement {
+export default function AnswerButton({ answerButtonState, buttonText, ...rest }: TouchableOpacityProps & ButtonProps): React.ReactElement {
+  const answerButtonTextState = answerButtonState === 'selectedCorrect' || answerButtonState === 'selectedWrong'
+    ? 'whiteButtonText'
+    : 'blackButtonText';
+
   return (
     <TouchableOpacity
-      style={buttonStyles[props.answerButtonState]}
-      disabled={props.disabled}
-      activeOpacity={props.activeOpacity}
-      onPress={props.onPress}
+      style={buttonStyles[answerButtonState]}
+      {...rest}
     >
-      <Text style={buttonStyles[props.answerButtonTextState]}>{props.buttonText}</Text>
+      <Text style={buttonStyles[answerButtonTextState]}>{buttonText}</Text>
     </TouchableOpacity>
   );
 }

@@ -8,7 +8,7 @@ import {
   SafeAreaView
 } from 'react-native';
 import colors from '../styles/colors';
-import AnswerButton, { ButtonProps } from './AnswerButton';
+import AnswerButton, {AnswerButtonState, ButtonProps} from './AnswerButton';
 import Question from '../images/question.svg';
 import RightAnswer from '../images/rightAnswer.svg';
 import WrongAnswer from '../images/wrongAnswer.svg';
@@ -104,24 +104,20 @@ export default function TestView(): React.ReactElement {
         <View style={styles.answersView}>
           {
             testQuestion.answers.map((answer, index) => {
-              let buttonState: ButtonProps['answerButtonState'] = 'disabled';
-              let buttonTextState: ButtonProps['answerButtonTextState'] = 'blackButtonText';
+              let buttonState: AnswerButtonState = 'disabled';
 
               if (result == undefined) {
                 buttonState = 'active';
               } else if (result && index == testQuestion.correctAnswerIndex) {
                 buttonState = 'selectedCorrect';
-                buttonTextState = 'whiteButtonText';
               } else if (!result && index == testQuestion.correctAnswerIndex) {
                 buttonState = 'unselectedCorrect';
               } else if (!result && index == selectedAnswer) {
                 buttonState = 'selectedWrong';
-                buttonTextState = 'whiteButtonText';
               }
 
               return <AnswerButton
                 answerButtonState={buttonState}
-                answerButtonTextState={buttonTextState}
                 buttonText={answer}
                 disabled={!(result == undefined)}
                 key={index.toString()}
