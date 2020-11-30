@@ -117,6 +117,7 @@ export default function Login(): ReactElement {
           </View>
           <Input
             autoCompleteType="username"
+            keyboardType="email-address"
             placeholder="Email"
             textContentType="username"
             style={styles.input}
