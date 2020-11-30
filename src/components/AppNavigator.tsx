@@ -10,6 +10,7 @@ import QuestInfo from './QuestInfo';
 import SettingsScreen from './SettingsScreen';
 import { useTranslation } from 'react-i18next';
 import Login from './Login';
+import { useAuthState } from '../controllers/authController';
 
 /**
  * Type with params of screens and their props in QuestsStackScreen
@@ -26,6 +27,7 @@ const QuestsStack = createStackNavigator<QuestsStackParamList>();
 export type ProfileStackParamList = {
     Main: undefined;
     Settings: undefined;
+    Login: undefined;
 };
 const ProfileStack = createStackNavigator<ProfileStackParamList>();
 
@@ -45,10 +47,19 @@ function QuestsStackScreen(): React.ReactElement {
  * Component for implementing navigation between screens in profile tab
  */
 function ProfileStackScreen(): React.ReactElement {
+  const authState = useAuthState();
+
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen name="Main" component={Login} options={{ headerShown: false }}/>
-      <ProfileStack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }}/>
+      {authState.accessToken
+        ? <>
+          <ProfileStack.Screen name="Main" component={Profile} options={{ headerShown: false }}/>
+          <ProfileStack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }}/>
+        </>
+        : <>
+          <ProfileStack.Screen name="Login" component={Login} options={{ headerShown: false }}/>
+        </>
+      }
     </ProfileStack.Navigator>
   );
 }

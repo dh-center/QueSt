@@ -5,6 +5,14 @@ import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
 import CustomButton from './CustomButton';
 import UnderlinedButton from './UnderlinedButton';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ProfileStackParamList } from './AppNavigator';
+import { useNavigation } from '@react-navigation/native';
+
+/**
+ * Type with props of screen 'Login' in ProfileStackScreen
+ */
+type MainScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Login'>;
 
 /**
  * Styles for login view
@@ -101,6 +109,8 @@ const styles = StyleSheet.create({
  * Login view
  */
 export default function Login(): ReactElement {
+  const navigation = useNavigation<MainScreenNavigationProp>();
+
   return (
     <SafeAreaView style={styles.body}>
       <ScrollView>
@@ -126,12 +136,12 @@ export default function Login(): ReactElement {
           />
           <CustomButton
             title="Войти"
-            onPress={() => {}}
+            onPress={(): void => console.log('Login')}
             style={styles.mb30}
           />
           <UnderlinedButton
             title="Регистрация"
-            onPress={() => {}}
+            onPress={(): void => console.log('Registration')}
             style={styles.mb30}
           />
           <View style={styles.socials}>
@@ -146,7 +156,7 @@ export default function Login(): ReactElement {
           </View>
           <UnderlinedButton
             title="Забыли пароль?"
-            onPress={() => {}}
+            onPress={(): void => console.log('Recover password')}
             style={styles.recoverPasswordButton}
           />
         </View>
