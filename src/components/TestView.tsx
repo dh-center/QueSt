@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   SafeAreaView
 } from 'react-native';
-import colors from '../styles/colors';
+import Colors from '../styles/colors';
 import AnswerButton, { AnswerButtonState } from './AnswerButton';
 import Question from '../images/question.svg';
 import RightAnswer from '../images/rightAnswer.svg';
@@ -23,15 +23,15 @@ const testQuestion = {
 const styles = StyleSheet.create({
   body: {
     position: 'absolute',
-    backgroundColor: colors.white,
+    backgroundColor: Colors.WHITE,
     height: '100%',
     width: '100%',
   },
   view: {
-    backgroundColor: colors.fond,
+    backgroundColor: Colors.BACKGROUND,
   },
   headerBlock: {
-    backgroundColor: colors.white,
+    backgroundColor: Colors.WHITE,
     paddingTop: 50,
     paddingRight: 15,
     paddingBottom: 30,
@@ -57,19 +57,19 @@ const styles = StyleSheet.create({
   },
   headerText: {
     marginTop: 30,
-    color: colors.black,
+    color: Colors.BLACK,
     fontSize: 22,
     lineHeight: 22,
   },
   blackAnswerText: {
     fontSize: 18,
     lineHeight: 22,
-    color: colors.black,
+    color: Colors.BLACK,
   },
   whiteAnswerText: {
     fontSize: 18,
     lineHeight: 22,
-    color: colors.white,
+    color: Colors.WHITE,
   },
   next: {
     height: 64,
