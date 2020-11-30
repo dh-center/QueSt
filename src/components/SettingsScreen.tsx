@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from './AppNavigator';
 import authController from '../controllers/authController';
-import Input from './Input';
 
 /**
  * Type with props of screen 'Settings' in ProfileStackScreen
@@ -14,7 +13,6 @@ type SettingsScreenNavigationProp = StackNavigationProp<ProfileStackParamList, '
 
 const styles = StyleSheet.create({
   body: {
-    backgroundColor: 'linear-gradient(0deg, rgba(142, 178, 188, 0.1), rgba(142, 178, 188, 0.1)), #ffffff',
     height: '100%',
   },
   headerBlock: {
@@ -111,16 +109,6 @@ export default function Profile(): React.ReactElement {
           <TouchableOpacity onPress={(): Promise<void> => authController.logout()}>
             <Text style={styles.logoutText}>{t('settings.logout')}</Text>
           </TouchableOpacity>
-        </View>
-        <View>
-          <Input
-            autoCompleteType="email"
-            placeholder="Email"
-          />
-          <Input
-            autoCompleteType="password"
-            placeholder="Пароль"
-          />
         </View>
       </ScrollView>
     </SafeAreaView>
