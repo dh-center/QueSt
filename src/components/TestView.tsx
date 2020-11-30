@@ -92,16 +92,15 @@ const styles = StyleSheet.create({
  * Displays test
  */
 export default function TestView(): React.ReactElement {
-  const [result, setResult] = useState<boolean>();
   const [selectedAnswer, setSelectedAnswer] = useState<number>();
 
   return (
     <SafeAreaView style={styles.body}>
       <ScrollView style={styles.view}>
         <View style={styles.headerBlock}>
-          {(result === undefined) && <Question/>}
-          {(result === true) && <RightAnswer/>}
-          {(result === false) && <WrongAnswer/>}
+          {(selectedAnswer === undefined) && <Question/>}
+          {(selectedAnswer === testQuestion.correctAnswerIndex) && <RightAnswer/>}
+          {(selectedAnswer && selectedAnswer !== testQuestion.correctAnswerIndex) && <WrongAnswer/>}
           <Text style={styles.headerText}>{testQuestion.question}</Text>
         </View>
         <View style={styles.answersView}>
@@ -109,31 +108,30 @@ export default function TestView(): React.ReactElement {
             testQuestion.answers.map((answer, index) => {
               let buttonState: AnswerButtonState = 'disabled';
 
-              if (result === undefined) {
+              if (selectedAnswer === undefined) {
                 buttonState = 'active';
-              } else if (result && index === testQuestion.correctAnswerIndex) {
+              } else if (selectedAnswer === testQuestion.correctAnswerIndex && index === testQuestion.correctAnswerIndex) {
                 buttonState = 'selectedCorrect';
-              } else if (!result && index === testQuestion.correctAnswerIndex) {
+              } else if (selectedAnswer !== testQuestion.correctAnswerIndex && index === testQuestion.correctAnswerIndex) {
                 buttonState = 'unselectedCorrect';
-              } else if (!result && index === selectedAnswer) {
+              } else if (selectedAnswer !== testQuestion.correctAnswerIndex && index === selectedAnswer) {
                 buttonState = 'selectedWrong';
               }
 
               return <AnswerButton
                 answerButtonState={buttonState}
                 buttonText={answer}
-                disabled={!(result === undefined)}
+                disabled={selectedAnswer !== undefined}
                 key={index.toString()}
                 activeOpacity={0.5}
                 onPress={(): void => {
-                  setResult(index === testQuestion.correctAnswerIndex);
                   setSelectedAnswer(index);
                 }}
               />;
             })
           }
         </View>
-        {(result != undefined) && <TouchableOpacity><Next style={styles.next}/></TouchableOpacity>}
+        {(selectedAnswer !== undefined) && <TouchableOpacity><Next style={styles.next}/></TouchableOpacity>}
       </ScrollView>
     </SafeAreaView>
   );
