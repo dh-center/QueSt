@@ -5,14 +5,6 @@ import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
 import CustomButton from './CustomButton';
 import UnderlinedButton from './UnderlinedButton';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { ProfileStackParamList } from './AppNavigator';
-import { useNavigation } from '@react-navigation/native';
-
-/**
- * Type with props of screen 'Login' in ProfileStackScreen
- */
-type MainScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Login'>;
 
 /**
  * Styles for login view
@@ -22,10 +14,11 @@ const styles = StyleSheet.create({
    * Styles for container
    */
   body: {
-    backgroundColor: Colors.BACKGROUND,
+    backgroundColor: Colors.WHITE,
     height: '100%',
   },
   container: {
+    backgroundColor: Colors.BACKGROUND,
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -109,8 +102,6 @@ const styles = StyleSheet.create({
  * Login view
  */
 export default function Login(): ReactElement {
-  const navigation = useNavigation<MainScreenNavigationProp>();
-
   return (
     <SafeAreaView style={styles.body}>
       <ScrollView>
