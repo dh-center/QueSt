@@ -8,7 +8,7 @@ import {
   SafeAreaView
 } from 'react-native';
 import colors from '../styles/colors';
-import AnswerButton, {AnswerButtonState, ButtonProps} from './AnswerButton';
+import AnswerButton, { AnswerButtonState } from './AnswerButton';
 import Question from '../images/question.svg';
 import RightAnswer from '../images/rightAnswer.svg';
 import WrongAnswer from '../images/wrongAnswer.svg';
@@ -49,9 +49,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  headerImage: {
-    marginBottom: 30,
-  },
   answersView: {
     paddingTop: 30,
     paddingRight: 15,
@@ -59,6 +56,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   headerText: {
+    marginTop: 30,
     color: colors.black,
     fontSize: 22,
     lineHeight: 22,
@@ -101,11 +99,9 @@ export default function TestView(): React.ReactElement {
     <SafeAreaView style={styles.body}>
       <ScrollView style={styles.view}>
         <View style={styles.headerBlock}>
-          <View style={styles.headerImage}>
-            {(result == undefined) && <Question/>}
-            {(result == true) && <RightAnswer/>}
-            {(result == false) && <WrongAnswer/>}
-          </View>
+          {(result === undefined) && <Question/>}
+          {(result === true) && <RightAnswer/>}
+          {(result === false) && <WrongAnswer/>}
           <Text style={styles.headerText}>{testQuestion.question}</Text>
         </View>
         <View style={styles.answersView}>
@@ -113,26 +109,24 @@ export default function TestView(): React.ReactElement {
             testQuestion.answers.map((answer, index) => {
               let buttonState: AnswerButtonState = 'disabled';
 
-              if (result == undefined) {
+              if (result === undefined) {
                 buttonState = 'active';
-              } else if (result && index == testQuestion.correctAnswerIndex) {
+              } else if (result && index === testQuestion.correctAnswerIndex) {
                 buttonState = 'selectedCorrect';
-              } else if (!result && index == testQuestion.correctAnswerIndex) {
+              } else if (!result && index === testQuestion.correctAnswerIndex) {
                 buttonState = 'unselectedCorrect';
-              } else if (!result && index == selectedAnswer) {
+              } else if (!result && index === selectedAnswer) {
                 buttonState = 'selectedWrong';
               }
 
               return <AnswerButton
                 answerButtonState={buttonState}
                 buttonText={answer}
-                disabled={!(result == undefined)}
+                disabled={!(result === undefined)}
                 key={index.toString()}
                 activeOpacity={0.5}
                 onPress={(): void => {
-                  (index == testQuestion.correctAnswerIndex)
-                    ? setResult(true)
-                    : setResult(false);
+                  setResult(index === testQuestion.correctAnswerIndex);
                   setSelectedAnswer(index);
                 }}
               />;
