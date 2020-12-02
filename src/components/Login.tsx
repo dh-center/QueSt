@@ -15,10 +15,9 @@ const styles = StyleSheet.create({
    */
   body: {
     backgroundColor: Colors.BACKGROUND,
-    height: '100%',
+    flex: 1,
   },
   container: {
-    flex: 1,
     display: 'flex',
     alignItems: 'center',
     paddingHorizontal: 15,
