@@ -5,7 +5,7 @@ enum Colors {
   /**
    * Background color
    */
-  BACKGROUND = '#f4f7f8',
+  BACKGROUND = '#F4F7F8',
 
   /**
    * Black color
