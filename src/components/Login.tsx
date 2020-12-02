@@ -5,6 +5,7 @@ import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
 import Button from './Button';
 import UnderlinedButton from './UnderlinedButton';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Styles for login view
@@ -100,6 +101,8 @@ const styles = StyleSheet.create({
  * Login view
  */
 export default function Login(): ReactElement {
+  const { t } = useTranslation();
+
   return (
     <SafeAreaView style={styles.body}>
       <StatusBar backgroundColor={Colors.BACKGROUND}/>
@@ -107,10 +110,10 @@ export default function Login(): ReactElement {
         <Text style={styles.logo}>Logo</Text>
         <View style={styles.welcomeTextContainer}>
           <Text style={styles.welcomeTextMedium}>
-            Войдите в приложение
+            {t('signIn.welcomeHeader')}
           </Text>
           <Text style={styles.welcomeText}>
-            чтобы открыть все возможности Que.St
+            {t('signIn.welcomeText')}
           </Text>
         </View>
         <Input
@@ -122,24 +125,24 @@ export default function Login(): ReactElement {
         />
         <Input
           autoCompleteType="password"
-          placeholder="Пароль"
+          placeholder={t('signIn.password')}
           textContentType="password"
           secureTextEntry={true}
           style={styles.input}
         />
         <Button
-          title="Войти"
+          title={t('signIn.logIn')}
           onPress={(): void => console.log('Login')}
           style={styles.mb30}
         />
         <UnderlinedButton
-          title="Регистрация"
+          title={t('signIn.signUp')}
           onPress={(): void => console.log('Registration')}
           style={styles.mb30}
         />
         <View style={styles.socials}>
           <Text style={styles.socialsText}>
-            Войти с помощью
+            {t('signIn.logInWith')}
           </Text>
           <View style={styles.socialsContainer}>
             <Text style={styles.socialItem}>VK</Text>
@@ -148,7 +151,7 @@ export default function Login(): ReactElement {
           </View>
         </View>
         <UnderlinedButton
-          title="Забыли пароль?"
+          title={t('signIn.forgotPassword')}
           onPress={(): void => console.log('Recover password')}
           style={styles.recoverPasswordButton}
         />

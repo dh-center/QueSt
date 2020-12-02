@@ -19,5 +19,14 @@
     "avatar": "Change profile photo",
     "theme": "Dark theme",
     "logout": "Log out"
+  },
+  "signIn": {
+    "welcomeHeader": "Войдите в приложение",
+    "welcomeText": "чтобы открыть все возможности Que.St",
+    "logIn": "Login",
+    "logInWith": "Login with",
+    "signUp": "Sign up",
+    "password": "Password",
+    "forgotPassword": "Forgot your password?"
   }
 }
