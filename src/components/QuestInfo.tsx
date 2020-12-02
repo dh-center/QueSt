@@ -8,6 +8,7 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import BackArrow from '../images/back.svg';
 import Walker from '../images/walker.svg';
+import BlueCircle from '../images/blueCircle5.svg';
 import YellowCircle from '../images/yellowCircle.svg';
 import Dostoevsky from '../images/Dostoevsky.svg';
 import Belinsky from '../images/Belinsky.svg';
@@ -36,6 +37,11 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     flexDirection: 'row',
     maxHeight: 158,
+  },
+  blueCircle: {
+    position: 'absolute',
+    bottom: 26,
+    right: -169,
   },
   title: {
     fontSize: 28,
@@ -154,6 +160,7 @@ export default function QuestInfo({ route }: Props): React.ReactElement {
     <SafeAreaView style={styles.body}>
       <View style={styles.container}>
         <View style={styles.header}>
+          <BlueCircle style={styles.blueCircle}/>
           <TouchableOpacity style={styles.backButton}
             onPress={(): void => navigation.goBack()}
           >
