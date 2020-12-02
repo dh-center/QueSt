@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
  *
  * @param props - component props
  */
-export default function CustomButton(props: CustomButtonProps): ReactElement {
+export default function Button(props: CustomButtonProps): ReactElement {
   return (
     <TouchableOpacity onPress={props.onPress} style={[props.style, styles.button]}>
       <Text style={styles.buttonText}>{props.title}</Text>

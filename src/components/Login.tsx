@@ -3,7 +3,7 @@ import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from 'rea
 import Input from './Input';
 import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
-import CustomButton from './CustomButton';
+import Button from './Button';
 import UnderlinedButton from './UnderlinedButton';
 
 /**
@@ -127,7 +127,7 @@ export default function Login(): ReactElement {
           secureTextEntry={true}
           style={styles.input}
         />
-        <CustomButton
+        <Button
           title="Войти"
           onPress={(): void => console.log('Login')}
           style={styles.mb30}

@@ -2,7 +2,7 @@ import React, { ReactElement } from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
-import { CustomButtonProps } from './CustomButton';
+import { CustomButtonProps } from './Button';
 
 /**
  * Underlined button styles
