@@ -17,7 +17,7 @@ import { useAuthState } from '../controllers/authController';
  */
 export type QuestsStackParamList = {
     List: undefined;
-    Description: {title: string; description: string | null};
+    Description: {id: string; title: string; description: string | null};
 };
 const QuestsStack = createStackNavigator<QuestsStackParamList>();
 
@@ -64,6 +64,14 @@ function ProfileStackScreen(): React.ReactElement {
   );
 }
 
+/**
+ * Type with params of screens and their props in BottomTabNavigator
+ */
+export type TabParamList = {
+  Quests: undefined;
+  Map: {questId: string | undefined};
+  Profile: undefined;
+};
 const Tab = createBottomTabNavigator();
 
 /**
