@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Input from './Input';
 import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
@@ -19,7 +19,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    display: 'flex',
     alignItems: 'center',
     paddingHorizontal: 15,
   },
@@ -105,7 +104,6 @@ export default function Login(): ReactElement {
 
   return (
     <SafeAreaView style={styles.body}>
-      <StatusBar backgroundColor={Colors.BACKGROUND}/>
       <ScrollView contentContainerStyle={styles.container}>
         <Text style={styles.logo}>Logo</Text>
         <View style={styles.welcomeTextContainer}>
