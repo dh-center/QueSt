@@ -13,7 +13,6 @@ type SettingsScreenNavigationProp = StackNavigationProp<ProfileStackParamList, '
 
 const styles = StyleSheet.create({
   body: {
-    backgroundColor: '#fff',
     height: '100%',
   },
   headerBlock: {
