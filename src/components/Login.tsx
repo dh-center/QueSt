@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, ScrollView, StatusBar, StyleSheet, Text, View } from 'react-native';
 import Input from './Input';
 import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
@@ -14,13 +14,12 @@ const styles = StyleSheet.create({
    * Styles for container
    */
   body: {
-    backgroundColor: Colors.WHITE,
+    backgroundColor: Colors.BACKGROUND,
     height: '100%',
   },
   container: {
-    backgroundColor: Colors.BACKGROUND,
+    flex: 1,
     display: 'flex',
-    flexDirection: 'column',
     alignItems: 'center',
     paddingHorizontal: 15,
   },
@@ -104,57 +103,56 @@ const styles = StyleSheet.create({
 export default function Login(): ReactElement {
   return (
     <SafeAreaView style={styles.body}>
-      <ScrollView>
-        <View style={styles.container}>
-          <Text style={styles.logo}>Logo</Text>
-          <View style={styles.welcomeTextContainer}>
-            <Text style={styles.welcomeTextMedium}>
-              Войдите в приложение
-            </Text>
-            <Text style={styles.welcomeText}>
-              чтобы открыть все возможности Que.St
-            </Text>
-          </View>
-          <Input
-            autoCompleteType="username"
-            keyboardType="email-address"
-            placeholder="Email"
-            textContentType="username"
-            style={styles.input}
-          />
-          <Input
-            autoCompleteType="password"
-            placeholder="Пароль"
-            textContentType="password"
-            secureTextEntry={true}
-            style={styles.input}
-          />
-          <CustomButton
-            title="Войти"
-            onPress={(): void => console.log('Login')}
-            style={styles.mb30}
-          />
-          <UnderlinedButton
-            title="Регистрация"
-            onPress={(): void => console.log('Registration')}
-            style={styles.mb30}
-          />
-          <View style={styles.socials}>
-            <Text style={styles.socialsText}>
-              Войти с помощью
-            </Text>
-            <View style={styles.socialsContainer}>
-              <Text style={styles.socialItem}>VK</Text>
-              <Text style={styles.socialItem}>FB</Text>
-              <Text style={styles.socialItem}>Google</Text>
-            </View>
-          </View>
-          <UnderlinedButton
-            title="Забыли пароль?"
-            onPress={(): void => console.log('Recover password')}
-            style={styles.recoverPasswordButton}
-          />
+      <StatusBar backgroundColor={Colors.BACKGROUND}/>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.logo}>Logo</Text>
+        <View style={styles.welcomeTextContainer}>
+          <Text style={styles.welcomeTextMedium}>
+            Войдите в приложение
+          </Text>
+          <Text style={styles.welcomeText}>
+            чтобы открыть все возможности Que.St
+          </Text>
         </View>
+        <Input
+          autoCompleteType="username"
+          keyboardType="email-address"
+          placeholder="E-mail"
+          textContentType="username"
+          style={styles.input}
+        />
+        <Input
+          autoCompleteType="password"
+          placeholder="Пароль"
+          textContentType="password"
+          secureTextEntry={true}
+          style={styles.input}
+        />
+        <CustomButton
+          title="Войти"
+          onPress={(): void => console.log('Login')}
+          style={styles.mb30}
+        />
+        <UnderlinedButton
+          title="Регистрация"
+          onPress={(): void => console.log('Registration')}
+          style={styles.mb30}
+        />
+        <View style={styles.socials}>
+          <Text style={styles.socialsText}>
+            Войти с помощью
+          </Text>
+          <View style={styles.socialsContainer}>
+            <Text style={styles.socialItem}>VK</Text>
+            <Text style={styles.socialItem}>FB</Text>
+            <Text style={styles.socialItem}>Google</Text>
+          </View>
+        </View>
+        <UnderlinedButton
+          title="Забыли пароль?"
+          onPress={(): void => console.log('Recover password')}
+          style={styles.recoverPasswordButton}
+        />
       </ScrollView>
     </SafeAreaView>
   );

@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
      * Border
      */
     borderColor: '#E0E0E0',
-    borderRadius: 5,
+    borderRadius: 10,
     borderStyle: 'solid',
     borderWidth: 0.4,
 
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     /**
      * Underline
      */
-    borderBottomColor: 'rgba(34, 34, 34, .5)',
+    borderBottomColor: 'rgba(34, 34, 34, 0.5)',
     borderStyle: 'solid',
     borderBottomWidth: 0.5,
   },
@@ -75,6 +75,7 @@ export default function Input(props: TextInputProps): ReactElement {
     <View style={[props.style, styles.container]}>
       <TextInput
         {...props}
+        placeholderTextColor={'rgba(34, 34, 34, 0.5)'}
         style={styles.textInput}
         underlineColorAndroid={props.underlineColorAndroid || 'transparent'}
         spellCheck={props.spellCheck || false}
