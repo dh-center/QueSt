@@ -1,0 +1,23 @@
+{
+  "quests": {
+    "title": "Quests",
+    "startQuest": "Start quest"
+  },
+  "profile": {
+    "title": "Profile",
+    "friends": "Friends",
+    "rating": "Rating",
+    "achievements": "Achievements",
+    "cards": "Cards collection"
+  },
+  "map": {
+    "title": "Map"
+  },
+  "settings": {
+    "title": "Settings",
+    "password": "Change password",
+    "avatar": "Change profile photo",
+    "theme": "Dark theme",
+    "logout": "Log out"
+  }
+}
