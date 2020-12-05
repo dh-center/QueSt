@@ -19,13 +19,13 @@ const styles = StyleSheet.create({
 /**
  * Component of the achievement
  *
- * @param Props
+ * @param props - component props
  */
-export default function Achievement(Props: Record<string, string>): React.ReactElement {
+export default function Achievement(props: Record<string, string>): React.ReactElement {
   return (
     <View style={styles.achievement}>
       <YellowCircle style={styles.achievementCircle}/>
-      <Text style={textStyles.default}>{Props.text}</Text>
+      <Text style={textStyles.default}>{props.text}</Text>
     </View>
   );
 }
