@@ -45,10 +45,14 @@ const styles = StyleSheet.create({
     paddingTop: 8,
     paddingRight: 15,
   },
-  questInfo: {
-    backgroundColor: Colors.WHITE,
+  scrollContainer: {
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
+    flex: 1,
+    overflow: 'hidden',
+  },
+  questInfo: {
+    backgroundColor: Colors.WHITE,
     paddingHorizontal: 15,
     paddingVertical: 30,
   },
@@ -121,34 +125,36 @@ export default function QuestInfo({ route }: Props): React.ReactElement {
           </Text>
         </ScrollView>
       </View>
-      <ScrollView contentContainerStyle={styles.questInfo}>
-        <Text style={textStyles.default}>{route.params.description}</Text>
-        <View style={styles.routeLength}>
-          <Walker style={styles.walker}/>
-          <Text style={textStyles.default}>7,8 км ~ 90 мин</Text>
-        </View>
-        <View style={styles.advice}>
-          <Text style={styles.adviceText}>{t('quests.advice')}</Text>
-        </View>
-        <View style={styles.line}/>
-        <Text style={styles.descriptionTitleText}>{t('quests.achievements')}</Text>
-        <View style={styles.achievementsView}>
-          <Achievement text={'Петербургская интеллигенция'}/>
-          <Achievement text={'Друг Достоевского'}/>
-        </View>
-        <Text style={styles.descriptionTitleText}>{t('quests.cards')}</Text>
-        <View style={styles.cardView}>
-          <CollectionCards imgSource={require('../images/Dostoevsky.png')} text={'Федор Достоевский'}/>
-          <CollectionCards imgSource={require('../images/Belinsky.png')} text={'Виссарион Белинский'}/>
-        </View>
-        <Button
-          title={t('quests.startQuest')}
-          style={styles.startButton}
-          onPress={(): void => navigation.navigate('Map', {
-            questId: route.params.id,
-          })}
-        />
-      </ScrollView>
+      <View style={styles.scrollContainer}>
+        <ScrollView contentContainerStyle={styles.questInfo}>
+          <Text style={textStyles.default}>{route.params.description}</Text>
+          <View style={styles.routeLength}>
+            <Walker style={styles.walker}/>
+            <Text style={textStyles.default}>7,8 км ~ 90 мин</Text>
+          </View>
+          <View style={styles.advice}>
+            <Text style={styles.adviceText}>{t('quests.advice')}</Text>
+          </View>
+          <View style={styles.line}/>
+          <Text style={styles.descriptionTitleText}>{t('quests.achievements')}</Text>
+          <View style={styles.achievementsView}>
+            <Achievement text={'Петербургская интеллигенция'}/>
+            <Achievement text={'Друг Достоевского'}/>
+          </View>
+          <Text style={styles.descriptionTitleText}>{t('quests.cards')}</Text>
+          <View style={styles.cardView}>
+            <CollectionCards imgSource={require('../images/Dostoevsky.png')} text={'Федор Достоевский'}/>
+            <CollectionCards imgSource={require('../images/Belinsky.png')} text={'Виссарион Белинский'}/>
+          </View>
+          <Button
+            title={t('quests.startQuest')}
+            style={styles.startButton}
+            onPress={(): void => navigation.navigate('Map', {
+              questId: route.params.id,
+            })}
+          />
+        </ScrollView>
+      </View>
     </View>
   );
 }
