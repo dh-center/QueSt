@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, ScrollView, Text, TouchableOpacity, StyleSheet, SafeAreaView, Image } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { StackScreenProps } from '@react-navigation/stack';
 import { QuestsStackParamList, TabParamList } from './AppNavigator';
 import Achievement from './Achievement';
 import Button from './Button';
+import CollectionCards from './CollectionCards';
 import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
@@ -93,31 +94,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  card: {
-    flex: 1,
-    marginHorizontal: 4.5,
-    backgroundColor: Colors.WHITE,
-    borderRadius: 15,
-    overflow: 'hidden',
-    elevation: 4,
-    shadowColor: '#414366',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-  },
-  cardImage: {
-    width: '100%',
-    height: 250,
-    resizeMode: 'cover',
-  },
-  cardText: {
-    ...textStyles.default,
-    textAlign: 'center',
-    paddingVertical: 10,
-  },
   startButton: {
     height: 44,
     backgroundColor: Colors.GREEN,
@@ -165,14 +141,8 @@ export default function QuestInfo({ route }: Props): React.ReactElement {
           </View>
           <Text style={styles.descriptionTitleText}>{t('quests.cards')}</Text>
           <View style={styles.cardView}>
-            <View style={styles.card}>
-              <Image source={require('../images/Dostoevsky.png')} style={styles.cardImage}/>
-              <Text style={styles.cardText}>Федор{'\n'}Достоевский</Text>
-            </View>
-            <View style={styles.card}>
-              <Image source={require('../images/Belinsky.png')} style={styles.cardImage}/>
-              <Text style={styles.cardText}>Виссарион{'\n'}Белинский</Text>
-            </View>
+            <CollectionCards imgSource={require('../images/Dostoevsky.png')} text={'Федор Достоевский'}/>
+            <CollectionCards imgSource={require('../images/Belinsky.png')} text={'Виссарион Белинский'}/>
           </View>
           <Button title={t('quests.startQuest')} style={styles.startButton} onPress={(): void => navigation.navigate('Map', {
             questId: route.params.id,
