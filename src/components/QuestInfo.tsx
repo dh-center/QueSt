@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   },
   line: {
     marginVertical: 30,
-    borderWidth: 0.5,
+    borderTopWidth: 0.5,
     borderStyle: 'solid',
     borderColor: Colors.BLUE,
   },
