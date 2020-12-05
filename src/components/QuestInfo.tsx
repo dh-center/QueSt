@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ScrollView, Text, TouchableOpacity, StyleSheet, SafeAreaView } from 'react-native';
+import { View, ScrollView, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { StackScreenProps } from '@react-navigation/stack';
 import { QuestsStackParamList, TabParamList } from './AppNavigator';
@@ -30,11 +30,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.BACKGROUND,
   },
   header: {
-    paddingTop: 59,
+    paddingTop: 60,
     paddingHorizontal: 15,
     paddingBottom: 15,
     flexDirection: 'row',
-    maxHeight: 158,
+    maxHeight: 160,
   },
   blueCircle: {
     position: 'absolute',
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   walker: {
-    marginRight: 9,
+    marginRight: 10,
   },
   advice: {
     backgroundColor: 'rgba(104,198,223, 0.15)',
@@ -79,10 +79,8 @@ const styles = StyleSheet.create({
     borderColor: Colors.BLUE,
   },
   descriptionTitleText: {
-    fontFamily: 'PTRootUIWeb-Medium',
+    ...textStyles.ptRootMedium,
     fontSize: 22,
-    lineHeight: 22,
-    color: Colors.BLACK,
     marginBottom: 15,
   },
   achievementsView: {
@@ -109,7 +107,7 @@ export default function QuestInfo({ route }: Props): React.ReactElement {
   const { t } = useTranslation();
 
   return (
-    <SafeAreaView style={styles.body}>
+    <View style={styles.body}>
       <View style={styles.header}>
         <BlueCircle style={styles.blueCircle}/>
         <TouchableOpacity style={styles.backButton}
@@ -123,32 +121,34 @@ export default function QuestInfo({ route }: Props): React.ReactElement {
           </Text>
         </ScrollView>
       </View>
-      <ScrollView>
-        <View style={styles.questInfo}>
-          <Text style={textStyles.default}>{route.params.description}</Text>
-          <View style={styles.routeLength}>
-            <Walker style={styles.walker}/>
-            <Text style={textStyles.default}>7,8 км ~ 90 мин</Text>
-          </View>
-          <View style={styles.advice}>
-            <Text style={styles.adviceText}>{t('quests.advice')}</Text>
-          </View>
-          <View style={styles.line}/>
-          <Text style={styles.descriptionTitleText}>{t('quests.achievements')}</Text>
-          <View style={styles.achievementsView}>
-            <Achievement text={'Петербургская интеллигенция'}/>
-            <Achievement text={'Друг Достоевского'}/>
-          </View>
-          <Text style={styles.descriptionTitleText}>{t('quests.cards')}</Text>
-          <View style={styles.cardView}>
-            <CollectionCards imgSource={require('../images/Dostoevsky.png')} text={'Федор Достоевский'}/>
-            <CollectionCards imgSource={require('../images/Belinsky.png')} text={'Виссарион Белинский'}/>
-          </View>
-          <Button title={t('quests.startQuest')} style={styles.startButton} onPress={(): void => navigation.navigate('Map', {
-            questId: route.params.id,
-          })}/>
+      <ScrollView contentContainerStyle={styles.questInfo}>
+        <Text style={textStyles.default}>{route.params.description}</Text>
+        <View style={styles.routeLength}>
+          <Walker style={styles.walker}/>
+          <Text style={textStyles.default}>7,8 км ~ 90 мин</Text>
         </View>
+        <View style={styles.advice}>
+          <Text style={styles.adviceText}>{t('quests.advice')}</Text>
+        </View>
+        <View style={styles.line}/>
+        <Text style={styles.descriptionTitleText}>{t('quests.achievements')}</Text>
+        <View style={styles.achievementsView}>
+          <Achievement text={'Петербургская интеллигенция'}/>
+          <Achievement text={'Друг Достоевского'}/>
+        </View>
+        <Text style={styles.descriptionTitleText}>{t('quests.cards')}</Text>
+        <View style={styles.cardView}>
+          <CollectionCards imgSource={require('../images/Dostoevsky.png')} text={'Федор Достоевский'}/>
+          <CollectionCards imgSource={require('../images/Belinsky.png')} text={'Виссарион Белинский'}/>
+        </View>
+        <Button
+          title={t('quests.startQuest')}
+          style={styles.startButton}
+          onPress={(): void => navigation.navigate('Map', {
+            questId: route.params.id,
+          })}
+        />
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
