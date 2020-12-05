@@ -1,6 +1,9 @@
 {
   "quests": {
     "title": "Quests",
+    "advice": "We advise you to use an electric scooter or bicycle",
+    "achievements": "Achievements",
+    "cards": "Collection cards",
     "startQuest": "Start quest"
   },
   "profile": {
