@@ -27,7 +27,7 @@ function App(): React.ReactElement {
     return (
       (
         <>
-          <StatusBar backgroundColor="white" barStyle="dark-content"/>
+          <StatusBar backgroundColor="transparent" barStyle="dark-content" translucent={true}/>
         </>
       )
     );
@@ -35,7 +35,7 @@ function App(): React.ReactElement {
 
   return (
     <>
-      <StatusBar backgroundColor="white" barStyle="dark-content"/>
+      <StatusBar backgroundColor="transparent" barStyle="dark-content" translucent={true}/>
       <AppNavigator/>
     </>
   );

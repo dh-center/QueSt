@@ -10,6 +10,7 @@ const textStyles = StyleSheet.create({
    */
   default: {
     fontSize: 18,
+    lineHeight: 22,
     fontFamily: 'PTRootUIWeb-Regular',
     color: Colors.BLACK,
   },
@@ -19,6 +20,7 @@ const textStyles = StyleSheet.create({
    */
   robotoMedium: {
     fontSize: 28,
+    lineHeight: 28,
     fontFamily: 'Roboto-Medium',
     color: Colors.BLACK,
   },
@@ -28,6 +30,7 @@ const textStyles = StyleSheet.create({
    */
   ptRootMedium: {
     fontSize: 18,
+    lineHeight: 22,
     fontFamily: 'PTRootUIWeb-Medium',
     color: Colors.BLACK,
   },

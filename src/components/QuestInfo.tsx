@@ -1,10 +1,18 @@
 import React from 'react';
-import { View, ScrollView, Text, TouchableOpacity, Image, StyleSheet, SafeAreaView } from 'react-native';
-import { QuestsStackParamList, TabParamList } from './AppNavigator';
+import { View, ScrollView, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { StackScreenProps } from '@react-navigation/stack';
+import { QuestsStackParamList, TabParamList } from './AppNavigator';
+import Achievement from './Achievement';
+import Button from './Button';
+import CollectionCards from './CollectionCards';
+import Colors from '../styles/colors';
+import textStyles from '../styles/textStyles';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
+import BackArrow from '../images/back.svg';
+import Walker from '../images/walker.svg';
+import BlueCircle from '../images/blueCircle5.svg';
 
 /**
  * Type with props of screen 'Map' in BottomTabNavigator
@@ -16,126 +24,82 @@ type MapScreenNavigationProp = BottomTabNavigationProp<TabParamList, 'Map'>;
  */
 type Props = StackScreenProps<QuestsStackParamList, 'Description'>;
 
-const basis = StyleSheet.create({
-  section: {
-    paddingRight: 41,
-    paddingLeft: 41,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomWidth: 0.6,
-    borderStyle: 'solid',
-    borderBottomColor: 'rgba(33, 68, 104, 0.4)',
-  },
-  description: {
-    fontSize: 17,
-    lineHeight: 20,
-    color: 'rgba(0, 0, 0, 0.8)',
-  },
-});
-
 const styles = StyleSheet.create({
   body: {
-    backgroundColor: '#ffffff',
     height: '100%',
+    backgroundColor: Colors.BACKGROUND,
   },
   header: {
-    backgroundColor: '#FFFFFF',
-    marginRight: -1,
-    marginLeft: -1,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderTopColor: 'white',
-    borderColor: 'rgba(0, 46, 66, 0.5)',
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    paddingTop: 15,
-    paddingRight: 16,
+    paddingTop: 60,
+    paddingHorizontal: 15,
     paddingBottom: 15,
     flexDirection: 'row',
-    alignItems: 'stretch',
-    maxHeight: '25%',
+    maxHeight: 160,
   },
-  descriptionSection: {
-    ...basis.section,
-    paddingTop: 15,
-    paddingBottom: 15,
-  },
-  footerSection: {
-    ...basis.section,
-    minHeight: 100,
-  },
-  starSectionTop: {
-    ...basis.section,
-    paddingTop: 22,
-    borderBottomColor: '#fff',
-  },
-  starSectionBottom: {
-    ...basis.section,
-    paddingBottom: 22,
-  },
-  cardSection: {
-    ...basis.section,
-    paddingTop: 30,
-    paddingRight: 0,
-    paddingLeft: 0,
-    justifyContent: 'space-around',
-    borderBottomColor: '#fff',
-  },
-  cardTitleSection: {
-    ...basis.section,
-    paddingRight: 0,
-    paddingLeft: 0,
-    justifyContent: 'space-around',
-    alignItems: 'flex-start',
-    borderBottomColor: '#fff',
-  },
-  buttonSection: {
-    ...basis.section,
-    justifyContent: 'center',
-    borderBottomColor: '#fff',
-  },
-  title: {
-    fontSize: 28,
-    lineHeight: 28,
-    color: 'rgba(0, 0, 0, 0.8)',
-  },
-  cardTitle: {
-    ...basis.description,
-    textAlign: 'center',
-    color: '#000',
-  },
-  buttonText: {
-    ...basis.description,
-    color: '#fff',
+  blueCircle: {
+    position: 'absolute',
+    bottom: 26,
+    right: -169,
   },
   backButton: {
-    justifyContent: 'center',
+    paddingTop: 8,
+    paddingRight: 15,
+  },
+  scrollContainer: {
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+    flex: 1,
+    overflow: 'hidden',
+  },
+  questInfo: {
+    backgroundColor: Colors.WHITE,
+    paddingHorizontal: 15,
+    paddingVertical: 30,
+  },
+  routeLength: {
+    marginTop: 30,
+    flexDirection: 'row',
     alignItems: 'center',
+  },
+  walker: {
+    marginRight: 10,
+  },
+  advice: {
+    backgroundColor: 'rgba(104,198,223, 0.15)',
+    marginTop: 15,
+    paddingVertical: 15,
+    paddingHorizontal: 15,
+    borderRadius: 15,
+  },
+  adviceText: {
+    ...textStyles.default,
+    color: Colors.DARK_BLUE,
+    textAlign: 'center',
+  },
+  line: {
+    marginVertical: 30,
+    borderTopWidth: 0.5,
+    borderStyle: 'solid',
+    borderColor: Colors.BLUE,
+  },
+  descriptionTitleText: {
+    ...textStyles.ptRootMedium,
+    fontSize: 22,
+    marginBottom: 15,
+  },
+  achievementsView: {
+    marginBottom: 20,
+  },
+  cardView: {
+    flex: 1,
+    marginHorizontal: -4.5,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   startButton: {
-    width: 162,
     height: 44,
-    backgroundColor: '#00A743',
-    borderRadius: 10,
+    backgroundColor: Colors.GREEN,
     marginTop: 30,
-    marginBottom: 15,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  icon: {
-    marginRight: 5,
-    height: 40,
-    width: 40,
-  },
-  iconBack: {
-    marginLeft: 15,
-    marginRight: 15,
-    width: 8,
-    height: 14,
-  },
-  card: {
-    width: 163,
-    height: 263,
   },
 });
 
@@ -147,59 +111,50 @@ export default function QuestInfo({ route }: Props): React.ReactElement {
   const { t } = useTranslation();
 
   return (
-    <SafeAreaView style={styles.body}>
+    <View style={styles.body}>
       <View style={styles.header}>
+        <BlueCircle style={styles.blueCircle}/>
         <TouchableOpacity style={styles.backButton}
           onPress={(): void => navigation.goBack()}
         >
-          <Image source={require('../images/back.png')} style={styles.iconBack}/>
+          <BackArrow/>
         </TouchableOpacity>
         <ScrollView>
-          <Text style={styles.title}>
+          <Text style={textStyles.robotoMedium}>
             {route.params.title}
           </Text>
         </ScrollView>
       </View>
-
-      <ScrollView>
-        <View style={styles.descriptionSection}>
-          <Text style={basis.description}>
-            {route.params.description}
-          </Text>
-        </View>
-
-        <View style={styles.footerSection}>
-          <Image source={require('../images/footprint.png')} style={styles.icon}/>
-          <Text style={basis.description}>45 мин</Text>
-        </View>
-
-        <View style={styles.starSectionTop}>
-          <Image source={require('../images/star.png')} style={styles.icon}/>
-          <Text style={basis.description}>Друг Достоевского</Text>
-        </View>
-        <View style={styles.starSectionBottom}>
-          <Image source={require('../images/star.png')} style={styles.icon}/>
-          <Text style={basis.description}>Петербургская интеллигенция</Text>
-        </View>
-
-        <View style={styles.cardSection}>
-          <Image source={require('../images/Dostoevsky.png')} style={styles.card}/>
-          <Image source={require('../images/Belinsky.png')} style={styles.card}/>
-        </View>
-        <View style={styles.cardTitleSection}>
-          <Text style={styles.cardTitle}>Федор Достоевский</Text>
-          <Text style={styles.cardTitle}>Виссарион Белинский</Text>
-        </View>
-        <View style={styles.buttonSection}>
-          <TouchableOpacity style={styles.startButton}
+      <View style={styles.scrollContainer}>
+        <ScrollView contentContainerStyle={styles.questInfo}>
+          <Text style={textStyles.default}>{route.params.description}</Text>
+          <View style={styles.routeLength}>
+            <Walker style={styles.walker}/>
+            <Text style={textStyles.default}>7,8 км ~ 90 мин</Text>
+          </View>
+          <View style={styles.advice}>
+            <Text style={styles.adviceText}>{t('quests.advice')}</Text>
+          </View>
+          <View style={styles.line}/>
+          <Text style={styles.descriptionTitleText}>{t('quests.achievements')}</Text>
+          <View style={styles.achievementsView}>
+            <Achievement text={'Петербургская интеллигенция'}/>
+            <Achievement text={'Друг Достоевского'}/>
+          </View>
+          <Text style={styles.descriptionTitleText}>{t('quests.cards')}</Text>
+          <View style={styles.cardView}>
+            <CollectionCards imgSource={require('../images/Dostoevsky.png')} text={'Федор Достоевский'}/>
+            <CollectionCards imgSource={require('../images/Belinsky.png')} text={'Виссарион Белинский'}/>
+          </View>
+          <Button
+            title={t('quests.startQuest')}
+            style={styles.startButton}
             onPress={(): void => navigation.navigate('Map', {
               questId: route.params.id,
-            })
-            }>
-            <Text style={styles.buttonText}>{t('quests.startQuest')}</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+            })}
+          />
+        </ScrollView>
+      </View>
+    </View>
   );
 }

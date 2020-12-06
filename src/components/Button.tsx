@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
  */
 export default function Button(props: CustomButtonProps): ReactElement {
   return (
-    <TouchableOpacity onPress={props.onPress} style={[props.style, styles.button]}>
+    <TouchableOpacity onPress={props.onPress} style={[styles.button, props.style]}>
       <Text style={styles.buttonText}>{props.title}</Text>
     </TouchableOpacity>
   );

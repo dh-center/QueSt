@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
-import colors from '../styles/colors';
+import Colors from '../styles/colors';
 
 const button = StyleSheet.create({
   button: {
@@ -19,7 +19,7 @@ const button = StyleSheet.create({
 const buttonStyles = StyleSheet.create({
   active: {
     ...button.button,
-    backgroundColor: colors.white,
+    backgroundColor: Colors.WHITE,
     elevation: 10,
     shadowColor: '#414366',
     shadowOffset: {
@@ -31,30 +31,30 @@ const buttonStyles = StyleSheet.create({
   },
   disabled: {
     ...button.button,
-    backgroundColor: colors.white,
+    backgroundColor: Colors.WHITE,
   },
   unselectedCorrect: {
     ...button.button,
-    backgroundColor: colors.white,
+    backgroundColor: Colors.WHITE,
     borderWidth: 2,
     borderStyle: 'solid',
-    borderColor: colors.green,
+    borderColor: Colors.GREEN,
   },
   selectedCorrect: {
     ...button.button,
-    backgroundColor: colors.green,
+    backgroundColor: Colors.GREEN,
   },
   selectedWrong: {
     ...button.button,
-    backgroundColor: colors.red,
+    backgroundColor: Colors.RED,
   },
   blackButtonText: {
     ...button.buttonText,
-    color: colors.black,
+    color: Colors.BLACK,
   },
   whiteButtonText: {
     ...button.buttonText,
-    color: colors.white,
+    color: Colors.WHITE,
   },
 });
 
