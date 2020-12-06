@@ -5,7 +5,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { TabParamList } from '../navigation/mainTabs';
 import Achievement from '../components/Achievement';
 import Button from '../components/ui/Button';
-import CollectionCards from '../components/CollectionCards';
+import CollectionCard from '../components/CollectionCard';
 import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
@@ -144,8 +144,8 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
           </View>
           <Text style={styles.descriptionTitleText}>{t('quests.cards')}</Text>
           <View style={styles.cardView}>
-            <CollectionCards imgSource={require('../images/Dostoevsky.png')} text={'Федор Достоевский'}/>
-            <CollectionCards imgSource={require('../images/Belinsky.png')} text={'Виссарион Белинский'}/>
+            <CollectionCard imgSource={require('../images/Dostoevsky.png')} text={'Федор Достоевский'}/>
+            <CollectionCard imgSource={require('../images/Belinsky.png')} text={'Виссарион Белинский'}/>
           </View>
           <Button
             title={t('quests.startQuest')}
