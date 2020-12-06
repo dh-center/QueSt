@@ -6,8 +6,8 @@ import {
   StyleProp,
   NativeSyntheticEvent, NativeTouchEvent, ViewStyle
 } from 'react-native';
-import Colors from '../styles/colors';
-import textStyles from '../styles/textStyles';
+import Colors from '../../styles/colors';
+import textStyles from '../../styles/textStyles';
 
 /**
  * Custom button props

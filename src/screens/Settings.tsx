@@ -3,8 +3,8 @@ import { Image, StyleSheet, Text, ScrollView, View, TouchableOpacity, Switch, Sa
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ProfileStackParamList } from './AppNavigator';
 import authController from '../controllers/authController';
+import { ProfileStackParamList } from '../navigation/profileStack';
 
 /**
  * Type with props of screen 'Settings' in ProfileStackScreen
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
 /**
  * Displays settings screen
  */
-export default function Profile(): React.ReactElement {
+export default function SettingsScreen(): React.ReactElement {
   const navigation = useNavigation<SettingsScreenNavigationProp>();
   const { t } = useTranslation();
 

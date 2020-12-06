@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
  *
  * @param props - component props
  */
-export default function CollectionCards(props: CollectionCardProps): React.ReactElement {
+export default function CollectionCard(props: CollectionCardProps): React.ReactElement {
   return (
     <View style={styles.card}>
       <Image source={props.imgSource} style={styles.cardImage}/>

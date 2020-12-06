@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import Input from './Input';
+import Input from '../components/ui/Input';
 import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
-import Button from './Button';
-import UnderlinedButton from './UnderlinedButton';
+import Button from '../components/ui/Button';
+import UnderlinedButton from '../components/ui/UnderlinedButton';
 import { useTranslation } from 'react-i18next';
 
 /**
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
 /**
  * Login view
  */
-export default function Login(): ReactElement {
+export default function LoginScreen(): ReactElement {
   const { t } = useTranslation();
 
   return (

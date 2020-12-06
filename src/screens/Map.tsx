@@ -2,9 +2,9 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import { MAPBOX_ACCESS_TOKEN } from '@env';
-import TestView from './TestView';
+import TestView from '../components/TestView';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { TabParamList } from './AppNavigator';
+import { TabParamList } from '../navigation/mainTabs';
 
 /**
  * Type with props of screen 'Map' in BottomTabNavigator
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 /**
  * Renders map for quests
  */
-export default function Map({ route }: Props): React.ReactElement {
+export default function MapScreen({ route }: Props): React.ReactElement {
   return (
     <View style={styles.page}>
       <MapboxGL.MapView style={styles.map} />

@@ -2,10 +2,10 @@ import React from 'react';
 import { View, ScrollView, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { StackScreenProps } from '@react-navigation/stack';
-import { QuestsStackParamList, TabParamList } from './AppNavigator';
-import Achievement from './Achievement';
-import Button from './Button';
-import CollectionCards from './CollectionCards';
+import { TabParamList } from '../navigation/mainTabs';
+import Achievement from '../components/Achievement';
+import Button from '../components/ui/Button';
+import CollectionCard from '../components/CollectionCard';
 import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import BackArrow from '../images/back.svg';
 import Walker from '../images/walker.svg';
 import BlueCircle from '../images/blueCircle5.svg';
+import { QuestsStackParamList } from '../navigation/questsStack';
 
 /**
  * Type with props of screen 'Map' in BottomTabNavigator
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
 /**
  * Functional component of the screen with quest info
  */
-export default function QuestInfo({ route }: Props): React.ReactElement {
+export default function QuestInfoScreen({ route }: Props): React.ReactElement {
   const navigation = useNavigation<MapScreenNavigationProp>();
   const { t } = useTranslation();
 
@@ -143,8 +144,8 @@ export default function QuestInfo({ route }: Props): React.ReactElement {
           </View>
           <Text style={styles.descriptionTitleText}>{t('quests.cards')}</Text>
           <View style={styles.cardView}>
-            <CollectionCards imgSource={require('../images/Dostoevsky.png')} text={'Федор Достоевский'}/>
-            <CollectionCards imgSource={require('../images/Belinsky.png')} text={'Виссарион Белинский'}/>
+            <CollectionCard imgSource={require('../images/Dostoevsky.png')} text={'Федор Достоевский'}/>
+            <CollectionCard imgSource={require('../images/Belinsky.png')} text={'Виссарион Белинский'}/>
           </View>
           <Button
             title={t('quests.startQuest')}
