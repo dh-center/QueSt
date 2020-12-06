@@ -40,7 +40,7 @@ jobs:
 
       - name: Send stage release to the chat
         if: endsWith(github.ref, '/stage')
-        uses: curl https://api.telegram.org/bot<token>/getUpdates
+        uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_DEV_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
