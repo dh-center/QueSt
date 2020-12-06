@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     borderColor: '#E0E0E0',
     borderRadius: 10,
     borderStyle: 'solid',
-    borderWidth: 0.4,
+    borderWidth: 0.5,
 
     /**
      * Shadows on IOS
