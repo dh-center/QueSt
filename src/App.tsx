@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
-import AppNavigator from './components/AppNavigator';
+import AppNavigator from './navigation/AppNavigator';
 import authController from './controllers/authController';
 
 /**

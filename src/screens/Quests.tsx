@@ -8,7 +8,7 @@ import {
   QuestsQueryResponse
 } from './__generated__/QuestsQuery.graphql';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { QuestsStackParamList } from './AppNavigator';
+import { QuestsStackParamList } from '../navigation/AppNavigator';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 

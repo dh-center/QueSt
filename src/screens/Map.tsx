@@ -4,7 +4,7 @@ import MapboxGL from '@react-native-mapbox-gl/maps';
 import { MAPBOX_ACCESS_TOKEN } from '@env';
 import TestView from './TestView';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
-import { TabParamList } from './AppNavigator';
+import { TabParamList } from '../navigation/AppNavigator';
 
 /**
  * Type with props of screen 'Map' in BottomTabNavigator

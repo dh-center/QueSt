@@ -3,7 +3,7 @@ import { Image, StyleSheet, Text, ScrollView, View, TouchableOpacity, Switch, Sa
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ProfileStackParamList } from './AppNavigator';
+import { ProfileStackParamList } from '../navigation/AppNavigator';
 import authController from '../controllers/authController';
 
 /**

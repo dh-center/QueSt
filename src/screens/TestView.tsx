@@ -8,7 +8,7 @@ import {
   SafeAreaView
 } from 'react-native';
 import Colors from '../styles/colors';
-import AnswerButton, { AnswerButtonState } from './AnswerButton';
+import AnswerButton, { AnswerButtonState } from '../components/AnswerButton';
 import Question from '../images/question.svg';
 import RightAnswer from '../images/rightAnswer.svg';
 import WrongAnswer from '../images/wrongAnswer.svg';

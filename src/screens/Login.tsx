@@ -1,10 +1,10 @@
 import React, { ReactElement } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
-import Input from './Input';
+import Input from '../components/Input';
 import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
-import Button from './Button';
-import UnderlinedButton from './UnderlinedButton';
+import Button from '../components/Button';
+import UnderlinedButton from '../components/UnderlinedButton';
 import { useTranslation } from 'react-i18next';
 
 /**

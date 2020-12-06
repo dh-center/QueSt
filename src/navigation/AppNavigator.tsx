@@ -3,13 +3,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Icon } from 'native-base';
-import Quests from './Quests';
-import Map from './Map';
-import Profile from './Profile';
-import QuestInfo from './QuestInfo';
-import SettingsScreen from './SettingsScreen';
+import Quests from '../screens/Quests';
+import Map from '../screens/Map';
+import Profile from '../screens/Profile';
+import QuestInfo from '../screens/QuestInfo';
+import SettingsScreen from '../screens/SettingsScreen';
 import { useTranslation } from 'react-i18next';
-import Login from './Login';
+import Login from '../screens/Login';
 import { useAuthState } from '../controllers/authController';
 
 /**
