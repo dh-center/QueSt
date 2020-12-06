@@ -2,7 +2,6 @@ import React from 'react';
 import { Image, StyleSheet, Text, ScrollView, View, TouchableOpacity, Alert, SafeAreaView } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ProfileStackParamList } from '../navigation/AppNavigator';
 import { useNavigation } from '@react-navigation/native';
 import authController, { useAuthState } from '../controllers/authController';
 import {
@@ -10,6 +9,7 @@ import {
   GoogleSigninButton
 } from '@react-native-community/google-signin';
 import { OAUTH_WEB_CLIENT_ID } from '@env';
+import { ProfileStackParamList } from '../navigation/profileStack';
 
 GoogleSignin.configure({
   webClientId: OAUTH_WEB_CLIENT_ID,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
 /**
  * Displays user's profile
  */
-export default function Profile(): React.ReactElement {
+export default function ProfileScreen(): React.ReactElement {
   const navigation = useNavigation<MainScreenNavigationProp>();
   const { t } = useTranslation();
   const authState = useAuthState();

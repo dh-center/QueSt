@@ -8,9 +8,9 @@ import {
   QuestsQueryResponse
 } from './__generated__/QuestsQuery.graphql';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { QuestsStackParamList } from '../navigation/AppNavigator';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import { QuestsStackParamList } from '../navigation/questsStack';
 
 /**
  * Type with props of screen 'List' in QuestsStackScreen
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
  *
  * @param props - data with query results
  */
-function QuestView(props: QuestsQueryResponse): React.ReactElement {
+function QuestsListScreen(props: QuestsQueryResponse): React.ReactElement {
   const navigation = useNavigation<ListScreenNavigationProp>();
   const { t } = useTranslation();
 
@@ -145,7 +145,7 @@ export default function Quests(): React.ReactElement {
             </Container>
           );
         } else if (props) {
-          return <QuestView {...props} />;
+          return <QuestsListScreen {...props} />;
         }
 
         return (

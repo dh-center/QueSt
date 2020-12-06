@@ -2,9 +2,9 @@ import React from 'react';
 import { View, ScrollView, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { StackScreenProps } from '@react-navigation/stack';
-import { QuestsStackParamList, TabParamList } from '../navigation/AppNavigator';
+import { TabParamList } from '../navigation/mainTabs';
 import Achievement from '../components/Achievement';
-import Button from '../components/Button';
+import Button from '../components/ui/Button';
 import CollectionCards from '../components/CollectionCards';
 import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import BackArrow from '../images/back.svg';
 import Walker from '../images/walker.svg';
 import BlueCircle from '../images/blueCircle5.svg';
+import { QuestsStackParamList } from '../navigation/questsStack';
 
 /**
  * Type with props of screen 'Map' in BottomTabNavigator
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
 /**
  * Functional component of the screen with quest info
  */
-export default function QuestInfo({ route }: Props): React.ReactElement {
+export default function QuestInfoScreen({ route }: Props): React.ReactElement {
   const navigation = useNavigation<MapScreenNavigationProp>();
   const { t } = useTranslation();
 

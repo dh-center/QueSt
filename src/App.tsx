@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
-import AppNavigator from './navigation/AppNavigator';
+import MainTabsNavigation from './navigation/mainTabs';
 import authController from './controllers/authController';
 
 /**
@@ -36,7 +36,7 @@ function App(): React.ReactElement {
   return (
     <>
       <StatusBar backgroundColor="transparent" barStyle="dark-content" translucent={true}/>
-      <AppNavigator/>
+      <MainTabsNavigation/>
     </>
   );
 }
