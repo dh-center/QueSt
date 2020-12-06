@@ -6,6 +6,9 @@ import textStyles from '../styles/textStyles';
 import Button from '../components/ui/Button';
 import UnderlinedButton from '../components/ui/UnderlinedButton';
 import { useTranslation } from 'react-i18next';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { ProfileStackParamList } from '../navigation/profileStack';
+import { useNavigation } from '@react-navigation/native';
 
 /**
  * Styles for login view
@@ -21,6 +24,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     paddingHorizontal: 15,
+    paddingTop: 40,
   },
 
   /**
@@ -97,10 +101,16 @@ const styles = StyleSheet.create({
 });
 
 /**
+ * Type with props of screen 'List' in QuestsStackScreen
+ */
+type LoginScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Login'>;
+
+/**
  * Login view
  */
 export default function LoginScreen(): ReactElement {
   const { t } = useTranslation();
+  const navigation = useNavigation<LoginScreenNavigationProp>();
 
   return (
     <SafeAreaView style={styles.body}>
@@ -135,7 +145,7 @@ export default function LoginScreen(): ReactElement {
         />
         <UnderlinedButton
           title={t('signIn.signUp')}
-          onPress={(): void => console.log('Registration')}
+          onPress={(): void => navigation.navigate('Registration')}
           style={styles.mb30}
         />
         <View style={styles.socials}>
