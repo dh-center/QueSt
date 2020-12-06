@@ -31,5 +31,10 @@
     "signUp": "Sign up",
     "password": "Password",
     "forgotPassword": "Forgot your password?"
+  },
+  "signUp": {
+    "registration": "Registration",
+    "password": "Password",
+    "repeatPassword": "Repeat password"
   }
 }

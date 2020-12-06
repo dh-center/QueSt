@@ -31,5 +31,10 @@
     "signUp": "Регистрация",
     "password": "Пароль",
     "forgotPassword": "Забыли пароль?"
+  },
+  "signUp": {
+    "registration": "Регистрация",
+    "password": "Пароль",
+    "repeatPassword": "Повторите пароль"
   }
 }
