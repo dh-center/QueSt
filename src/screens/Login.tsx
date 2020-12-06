@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Type with props of screen 'List' in QuestsStackScreen
+ * Type with props of screen 'Login' in ProfileStackScreen
  */
 type LoginScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Login'>;
 
