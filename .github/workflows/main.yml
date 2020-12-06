@@ -27,15 +27,24 @@ jobs:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
 
-      - uses: nelonoel/branch-name@v1.0.1
-
-      - name: Send release to the channel
-        if: endsWith(github.ref, '/master') || endsWith(github.ref, '/stage')
+      - name: Send prod release to the channel
+        if: endsWith(github.ref, '/prod')
         uses: appleboy/telegram-action@master
         with:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           format: markdown
           message: |
-            New *${{env.BRANCH_NAME}}* release!
+            New release!
+          document: android/app/build/outputs/apk/release/app-release.apk
+
+      - name: Send stage release to the chat
+        if: endsWith(github.ref, '/stage')
+        uses: curl https://api.telegram.org/bot<token>/getUpdates
+        with:
+          to: ${{ secrets.TELEGRAM_DEV_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          format: markdown
+          message: |
+            New Que.St *stage* release!
           document: android/app/build/outputs/apk/release/app-release.apk
