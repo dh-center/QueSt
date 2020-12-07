@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useAuthState } from '../controllers/authController';
-import ProfileScreen from '../screens/ProfileScreen';
+import ProfileScreen from '../screens/Profile';
 import LoginScreen from '../screens/Login';
 import SettingsScreen from '../screens/Settings';
 import RegistrationScreen from '../screens/Registration';
@@ -41,16 +41,17 @@ export default function ProfileStackNavigation(): React.ReactElement {
 
   return (
     <ProfileStack.Navigator>
-      {authState.accessToken
-        ? <>
-          <ProfileStack.Screen name="Main" component={ProfileScreen} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }}/>
-        </>
-        : <>
-          <ProfileStack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }}/>
-        </>
-      }
+      {/* {authState.accessToken*/}
+      {/*  ? */}
+      <>
+        <ProfileStack.Screen name="Main" component={ProfileScreen} options={{ headerShown: false }}/>
+        <ProfileStack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }}/>
+      </>
+      {/* : <>*/}
+      {/*  <ProfileStack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>*/}
+      {/*  <ProfileStack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }}/>*/}
+      {/* </>*/}
+      {/* }*/}
     </ProfileStack.Navigator>
   );
 }
