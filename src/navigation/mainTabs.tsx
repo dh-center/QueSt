@@ -37,6 +37,7 @@ const TabNavigator = styled(Tab.Navigator).attrs(() => ({
       backgroundColor: Colors.WHITE,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
+      borderTopColor: 'transparent',
       height: 75,
 
       /**
