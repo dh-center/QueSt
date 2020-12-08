@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
   questInfo: {
     backgroundColor: Colors.WHITE,
     paddingHorizontal: 15,
-    paddingVertical: 30,
+    paddingTop: 30,
+    paddingBottom: 105,
   },
   routeLength: {
     marginTop: 30,
