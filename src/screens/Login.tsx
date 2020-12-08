@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import Input from '../components/ui/Input';
-import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
 import Button from '../components/ui/Button';
 import UnderlinedButton from '../components/ui/UnderlinedButton';
@@ -9,24 +8,12 @@ import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import { useNavigation } from '@react-navigation/native';
+import ScreenWrapper from '../components/utils/ScreenWrapper';
 
 /**
  * Styles for login view
  */
 const styles = StyleSheet.create({
-  /**
-   * Styles for container
-   */
-  body: {
-    backgroundColor: Colors.BACKGROUND,
-    flex: 1,
-  },
-  container: {
-    alignItems: 'center',
-    paddingHorizontal: 15,
-    paddingTop: 40,
-  },
-
   /**
    * Logo placeholder styles
    */
@@ -113,57 +100,55 @@ export default function LoginScreen(): ReactElement {
   const navigation = useNavigation<LoginScreenNavigationProp>();
 
   return (
-    <SafeAreaView style={styles.body}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.logo}>Logo</Text>
-        <View style={styles.welcomeTextContainer}>
-          <Text style={styles.welcomeTextMedium}>
-            {t('signIn.welcomeHeader')}
-          </Text>
-          <Text style={styles.welcomeText}>
-            {t('signIn.welcomeText')}
-          </Text>
+    <ScreenWrapper withScrollView>
+      <Text style={styles.logo}>Logo</Text>
+      <View style={styles.welcomeTextContainer}>
+        <Text style={styles.welcomeTextMedium}>
+          {t('signIn.welcomeHeader')}
+        </Text>
+        <Text style={styles.welcomeText}>
+          {t('signIn.welcomeText')}
+        </Text>
+      </View>
+      <Input
+        autoCompleteType="username"
+        keyboardType="email-address"
+        placeholder="E-mail"
+        textContentType="username"
+        style={styles.input}
+      />
+      <Input
+        autoCompleteType="password"
+        placeholder={t('signIn.password')}
+        textContentType="password"
+        secureTextEntry={true}
+        style={styles.input}
+      />
+      <Button
+        title={t('signIn.logIn')}
+        onPress={(): void => console.log('Login')}
+        style={styles.mb30}
+      />
+      <UnderlinedButton
+        title={t('signIn.signUp')}
+        onPress={(): void => navigation.navigate('Registration')}
+        style={styles.mb30}
+      />
+      <View style={styles.socials}>
+        <Text style={styles.socialsText}>
+          {t('signIn.logInWith')}
+        </Text>
+        <View style={styles.socialsContainer}>
+          <Text style={styles.socialItem}>VK</Text>
+          <Text style={styles.socialItem}>FB</Text>
+          <Text style={styles.socialItem}>Google</Text>
         </View>
-        <Input
-          autoCompleteType="username"
-          keyboardType="email-address"
-          placeholder="E-mail"
-          textContentType="username"
-          style={styles.input}
-        />
-        <Input
-          autoCompleteType="password"
-          placeholder={t('signIn.password')}
-          textContentType="password"
-          secureTextEntry={true}
-          style={styles.input}
-        />
-        <Button
-          title={t('signIn.logIn')}
-          onPress={(): void => console.log('Login')}
-          style={styles.mb30}
-        />
-        <UnderlinedButton
-          title={t('signIn.signUp')}
-          onPress={(): void => navigation.navigate('Registration')}
-          style={styles.mb30}
-        />
-        <View style={styles.socials}>
-          <Text style={styles.socialsText}>
-            {t('signIn.logInWith')}
-          </Text>
-          <View style={styles.socialsContainer}>
-            <Text style={styles.socialItem}>VK</Text>
-            <Text style={styles.socialItem}>FB</Text>
-            <Text style={styles.socialItem}>Google</Text>
-          </View>
-        </View>
-        <UnderlinedButton
-          title={t('signIn.forgotPassword')}
-          onPress={(): void => console.log('Recover password')}
-          style={styles.recoverPasswordButton}
-        />
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+      <UnderlinedButton
+        title={t('signIn.forgotPassword')}
+        onPress={(): void => console.log('Recover password')}
+        style={styles.recoverPasswordButton}
+      />
+    </ScreenWrapper>
   );
 }

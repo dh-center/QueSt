@@ -11,6 +11,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { QuestsStackParamList } from '../navigation/questsStack';
+import ScreenWrapper from '../components/utils/ScreenWrapper';
 
 /**
  * Type with props of screen 'List' in QuestsStackScreen
@@ -18,10 +19,6 @@ import { QuestsStackParamList } from '../navigation/questsStack';
 type ListScreenNavigationProp = StackNavigationProp<QuestsStackParamList, 'List'>;
 
 const styles = StyleSheet.create({
-  body: {
-    backgroundColor: '#ffffff',
-    height: '100%',
-  },
   loading: {
     backgroundColor: '#ffffff',
     height: '100%',
@@ -30,18 +27,14 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 69,
-    paddingLeft: 16,
     justifyContent: 'center',
+    alignSelf: 'flex-start',
   },
   title: {
     fontWeight: '600',
     fontSize: 32,
     lineHeight: 38,
     color: 'rgba(0,0,0,0.8)',
-  },
-  content: {
-    paddingLeft: 16,
-    paddingRight: 16,
   },
   questItem: {
     minHeight: 60,
@@ -84,12 +77,11 @@ function QuestsListScreen(props: QuestsQueryResponse): React.ReactElement {
   const { t } = useTranslation();
 
   return (
-    <SafeAreaView style={styles.body}>
+    <ScreenWrapper>
       <View style={styles.header}>
         <Text style={styles.title}>{t('quests.title')}</Text>
       </View>
       <FlatList
-        style={styles.content}
         data={props.quests.edges}
         renderItem={({ item }): React.ReactElement => (
           <TouchableOpacity style={styles.questItem}
@@ -108,7 +100,7 @@ function QuestsListScreen(props: QuestsQueryResponse): React.ReactElement {
         )}
         keyExtractor={(item, index): string => index.toString()}
       />
-    </SafeAreaView>
+    </ScreenWrapper>
   );
 }
 
