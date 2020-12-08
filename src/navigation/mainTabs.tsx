@@ -56,6 +56,7 @@ const TabNavigator = styled(Tab.Navigator).attrs(() => ({
       shadowOpacity: 0.30,
       shadowRadius: 4.65,
     },
+
     /**
      * Label styles
      */
@@ -72,13 +73,27 @@ const TabNavigator = styled(Tab.Navigator).attrs(() => ({
        * Fix position
        */
       flex: 1,
+
+      /**
+       * Remove margins in landscape
+       */
+      marginLeft: 0,
+      marginTop: 0,
     },
+
     /**
      * Icon styles
      */
     iconStyle: {
       flex: 1,
       marginTop: 15,
+    },
+
+    /**
+     * Tabs styles
+     */
+    tabStyle: {
+      flexDirection: 'column',
     },
   },
 }))``;
