@@ -39,7 +39,7 @@ const textStyles = StyleSheet.create({
 export default textStyles;
 
 /**
- * Default text styles for StyleSheet
+ * Fonts for styled-components
  */
 export const StyledFonts = {
   uiWebRegular: 'font-family: PTRootUIWeb-Regular',
