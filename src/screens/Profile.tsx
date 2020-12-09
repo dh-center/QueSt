@@ -13,6 +13,7 @@ import RatingIcon from '../images/rating.svg';
 import AchievementsIcon from '../images/achievements.svg';
 import CollectionIcon from '../images/collection.svg';
 import RewardsIcon from '../images/rewards.svg';
+import ProfileButton from '../components/ProfileButton';
 
 /**
  * Type with props of screen 'Main' in ProfileStack
@@ -108,38 +109,6 @@ const ProgressFill = styled.View`
   box-shadow: 0 2px 2.62px rgba(0,0,0,0.23);
 `;
 
-const Button = styled.TouchableOpacity`
-  width: 100%;
-  height: 60px;
-  margin-bottom: 15px;
-  border-radius: 15px;
-  background-color: ${Colors.WHITE};
-  elevation: ${4};
-  box-shadow: 0 2px 2.62px rgba(0,0,0,0.23);
-  flex-direction: row;
-  align-items: center;
-`;
-
-// shadowColor: "#000";
-// shadowOffset: {
-// width: 0;
-// height: 2;
-// },
-// shadowOpacity: 0.23;
-// shadowRadius: 2.62;
-
-const Icon = styled.View`
-  margin: 0 13px;
-`;
-
-const ButtonText = styled.Text`
-  ${StyledFonts.uiWebRegular};
-  font-size: 18px;
-  line-height: 22px;
-  color: ${Colors.BLACK};
-  margin-left: 8px;
-`;
-
 /**
  * Displays user's profile
  */
@@ -164,26 +133,11 @@ export default function ProfileScreen(): React.ReactElement {
           <ProgressBar/>
           <ProgressFill/>
         </LevelView>
-        <Button>
-          <Icon><FriendsIcon/></Icon>
-          <ButtonText>{t('profile.friends')}</ButtonText>
-        </Button>
-        <Button>
-          <Icon><RatingIcon/></Icon>
-          <ButtonText>{t('profile.rating')}</ButtonText>
-        </Button>
-        <Button>
-          <Icon><AchievementsIcon/></Icon>
-          <ButtonText>{t('profile.achievements')}</ButtonText>
-        </Button>
-        <Button>
-          <Icon><CollectionIcon/></Icon>
-          <ButtonText>{t('profile.cards')}</ButtonText>
-        </Button>
-        <Button>
-          <Icon><RewardsIcon/></Icon>
-          <ButtonText>{t('profile.rewards')}</ButtonText>
-        </Button>
+        <ProfileButton icon={<FriendsIcon/>} buttonText={t('profile.friends')}/>
+        <ProfileButton icon={<RatingIcon/>} buttonText={t('profile.rating')}/>
+        <ProfileButton icon={<AchievementsIcon/>} buttonText={t('profile.achievements')}/>
+        <ProfileButton icon={<CollectionIcon/>} buttonText={t('profile.cards')}/>
+        <ProfileButton icon={<RewardsIcon/>} buttonText={t('profile.rewards')}/>
       </Scroll>
     </Body>
   );
