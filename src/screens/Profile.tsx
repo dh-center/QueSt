@@ -15,7 +15,7 @@ import CollectionIcon from '../images/collection.svg';
 import RewardsIcon from '../images/rewards.svg';
 
 /**
- * Type with props of screen 'Main' in QuestsStackScreen
+ * Type with props of screen 'Main' in ProfileStack
  */
 type MainScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Main'>;
 
