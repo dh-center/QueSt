@@ -150,7 +150,7 @@ export default function ProfileScreen(): React.ReactElement {
         <AvatarView>
           <Avatar source={require('../images/lapki.jpg')}/>
         </AvatarView>
-        <Name style={textStyles.robotoMedium}>Соня</Name>
+        <Name>Соня</Name>
         <LevelView>
           <Progress>153/200</Progress>
           <Level>LV. 5</Level>
