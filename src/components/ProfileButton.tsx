@@ -6,9 +6,9 @@ import { StyledFonts } from '../styles/textStyles';
 
 const Button = styled.TouchableOpacity`
   width: 100%;
-  height: 60px;
+  min-height: 60px;
   margin-bottom: 15px;
-  padding-left: 13px;
+  padding: 0 13px;
   border-radius: 15px;
   background-color: ${Colors.WHITE};
   elevation: ${4};
