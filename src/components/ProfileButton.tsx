@@ -8,6 +8,7 @@ const Button = styled.TouchableOpacity`
   width: 100%;
   height: 60px;
   margin-bottom: 15px;
+  padding-left: 13px;
   border-radius: 15px;
   background-color: ${Colors.WHITE};
   elevation: ${4};
@@ -24,16 +25,12 @@ const Button = styled.TouchableOpacity`
 // shadowOpacity: 0.23;
 // shadowRadius: 2.62;
 
-const Icon = styled.View`
-  margin: 0 13px;
-`;
-
 const ButtonText = styled.Text`
   ${StyledFonts.uiWebRegular};
   font-size: 18px;
   line-height: 22px;
   color: ${Colors.BLACK};
-  margin-left: 8px;
+  margin-left: 22px;
 `;
 
 /**
@@ -43,7 +40,7 @@ export interface ButtonProps {
   /**
    * SVG icon to display on button
    */
-  icon: JSX.Element;
+  icon: React.ReactNode;
 
   /**
    * Button text content
@@ -59,7 +56,7 @@ export interface ButtonProps {
 export default function ProfileButton({ style, icon, buttonText, ...rest }: TouchableOpacityProps & ButtonProps): React.ReactElement {
   return (
     <Button {...rest}>
-      <Icon>{icon}</Icon>
+      {icon}
       <ButtonText>{buttonText}</ButtonText>
     </Button>
   );
