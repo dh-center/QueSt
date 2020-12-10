@@ -8,11 +8,11 @@ import Colors from '../styles/colors';
 import textStyles, { StyledFonts } from '../styles/textStyles';
 import Settings from '../images/settings.svg';
 import BlueEllipse from '../images/blueEllipse.svg';
-import FriendsIcon from '../images/friends.svg';
-import RatingIcon from '../images/rating.svg';
-import AchievementsIcon from '../images/achievements.svg';
-import CollectionIcon from '../images/collection.svg';
-import RewardsIcon from '../images/rewards.svg';
+import Friends from '../images/friends.svg';
+import Rating from '../images/rating.svg';
+import Achievements from '../images/achievements.svg';
+import Collection from '../images/collection.svg';
+import Rewards from '../images/rewards.svg';
 import ProfileButton from '../components/ProfileButton';
 
 /**
@@ -107,6 +107,26 @@ const ProgressFill = styled.View`
   background-color: ${Colors.YELLOW};
   elevation: ${4};
   box-shadow: 0 2px 2.62px rgba(0,0,0,0.23);
+`;
+
+const FriendsIcon = styled(Friends)`
+  color: ${Colors.DARK_BLUE};
+`;
+
+const RatingIcon = styled(Rating)`
+  color: ${Colors.DARK_BLUE};
+`;
+
+const AchievementsIcon = styled(Achievements)`
+  color: ${Colors.DARK_BLUE};
+`;
+
+const CollectionIcon = styled(Collection)`
+  color: ${Colors.DARK_BLUE};
+`;
+
+const RewardsIcon = styled(Rewards)`
+  color: ${Colors.DARK_BLUE};
 `;
 
 /**
