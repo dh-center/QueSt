@@ -5,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import Colors from '../styles/colors';
-import textStyles, { StyledFonts } from '../styles/textStyles';
+import { StyledFonts } from '../styles/textStyles';
 import Settings from '../images/settings.svg';
 import BlueEllipse from '../images/blueEllipse.svg';
 import Friends from '../images/friends.svg';
