@@ -60,6 +60,10 @@ const Avatar = styled.Image`
 `;
 
 const Name = styled.Text`
+  ${StyledFonts.roboto};
+  font-size: 28px;
+  line-height: 28px;
+  color: ${Colors.BLACK};
   margin: 15px 0;
 `;
 
