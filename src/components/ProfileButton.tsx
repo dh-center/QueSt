@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, TouchableOpacityProps, ViewStyle } from 'react-native';
+import { TouchableOpacityProps } from 'react-native';
 import Colors from '../styles/colors';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../styles/textStyles';
