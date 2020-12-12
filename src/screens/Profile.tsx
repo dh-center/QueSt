@@ -68,23 +68,7 @@ const Name = styled.Text`
   margin: 15px 0;
 `;
 
-const FriendsIcon = styled(Friends)`
-  color: ${Colors.DARK_BLUE};
-`;
-
-const RatingIcon = styled(Rating)`
-  color: ${Colors.DARK_BLUE};
-`;
-
-const AchievementsIcon = styled(Achievements)`
-  color: ${Colors.DARK_BLUE};
-`;
-
-const CollectionIcon = styled(Collection)`
-  color: ${Colors.DARK_BLUE};
-`;
-
-const RewardsIcon = styled(Rewards)`
+const Icon = styled.View`
   color: ${Colors.DARK_BLUE};
 `;
 
@@ -107,11 +91,11 @@ export default function ProfileScreen(): React.ReactElement {
         </AvatarView>
         <Name>Соня</Name>
         <ProgressBlock totalExp={200} currentExp={153}/>
-        <ProfileButton icon={<FriendsIcon/>} buttonText={t('profile.friends')}/>
-        <ProfileButton icon={<RatingIcon/>} buttonText={t('profile.rating')}/>
-        <ProfileButton icon={<AchievementsIcon/>} buttonText={t('profile.achievements')}/>
-        <ProfileButton icon={<CollectionIcon/>} buttonText={t('profile.cards')}/>
-        <ProfileButton icon={<RewardsIcon/>} buttonText={t('profile.rewards')}/>
+        <ProfileButton icon={<Icon as={Friends}/>} buttonText={t('profile.friends')}/>
+        <ProfileButton icon={<Icon as={Rating}/>} buttonText={t('profile.rating')}/>
+        <ProfileButton icon={<Icon as={Achievements}/>} buttonText={t('profile.achievements')}/>
+        <ProfileButton icon={<Icon as={Collection}/>} buttonText={t('profile.cards')}/>
+        <ProfileButton icon={<Icon as={Rewards}/>} buttonText={t('profile.rewards')}/>
       </Scroll>
     </Body>
   );
