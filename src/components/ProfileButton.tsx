@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacityProps } from 'react-native';
+import { StyleProp, TouchableOpacityProps, ViewStyle } from 'react-native';
 import Colors from '../styles/colors';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../styles/textStyles';
@@ -12,18 +12,10 @@ const Button = styled.TouchableOpacity`
   border-radius: 15px;
   background-color: ${Colors.WHITE};
   elevation: ${4};
-  box-shadow: 0 2px 2.62px rgba(0,0,0,0.23);
+  box-shadow: 0 2px 2.62px rgba(0,0,0,0.1);
   flex-direction: row;
   align-items: center;
 `;
-
-// shadowColor: "#000";
-// shadowOffset: {
-// width: 0;
-// height: 2;
-// },
-// shadowOpacity: 0.23;
-// shadowRadius: 2.62;
 
 const ButtonText = styled.Text`
   ${StyledFonts.uiWebRegular};
@@ -53,7 +45,7 @@ export interface ButtonProps {
  *
  * @param props - props for button
  */
-export default function ProfileButton({ style, icon, buttonText, ...rest }: TouchableOpacityProps & ButtonProps): React.ReactElement {
+export default function ProfileButton({ style: _style, icon, buttonText, ...rest }: TouchableOpacityProps & ButtonProps): React.ReactElement {
   return (
     <Button {...rest}>
       {icon}

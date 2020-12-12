@@ -21,7 +21,7 @@ import ProfileButton from '../components/ProfileButton';
  */
 type MainScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Main'>;
 
-const Body = styled.SafeAreaView`
+const Body = styled.View`
   background-color: ${Colors.BACKGROUND};
   height: 100%;
 `;
@@ -51,7 +51,7 @@ const AvatarView = styled.View`
   width: 110px;
   border-radius: 60px;
   elevation: ${8};
-  box-shadow: 0 4px 4.65px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 4.65px rgba(0,0,0,0.2);
 `;
 
 const Avatar = styled.Image`
