@@ -1,33 +1,71 @@
 import React from 'react';
-import styled, { css } from 'styled-components/native';
+import styled from 'styled-components/native';
 import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import Colors from '../styles/colors';
+import { StyledFonts } from '../styles/textStyles';
+import Settings from '../images/settings.svg';
+import BlueEllipse from '../images/blueEllipse.svg';
+import Friends from '../images/friends.svg';
+import Rating from '../images/rating.svg';
+import Achievements from '../images/achievements.svg';
+import Collection from '../images/collection.svg';
+import Rewards from '../images/rewards.svg';
+import ProgressBlock from '../components/ProgressBlock';
+import ProfileButton from '../components/ProfileButton';
 
 /**
- * Type with props of screen 'Main' in QuestsStackScreen
+ * Type with props of screen 'Main' in ProfileStack
  */
 type MainScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Main'>;
 
-const Body = styled.SafeAreaView`
+const Body = styled.View`
   background-color: ${Colors.BACKGROUND};
   height: 100%;
 `;
 
 const Scroll = styled.ScrollView.attrs(() => ({
-  contentContainerStyle: css`
-    align-items: center;
-    justify-content: center;
-    padding: 74px 15px 0;
-  `,
+  contentContainerStyle: {
+    paddingHorizontal: 15,
+    paddingTop: 74,
+    paddingBottom: 15,
+    alignItems: 'center',
+  },
 }))``;
 
-const Avatar = styled.Image`
-  height: 109px;
-  width: 109px;
+const Ellipse = styled(BlueEllipse)`
+  position: absolute;
+  top: -341px;
+`;
+
+const SettingsButton = styled.TouchableOpacity`
+  position: absolute;
+  top: 74px;
+  right: 15px;
+`;
+
+const AvatarView = styled.View`
+  height: 110px;
+  width: 110px;
   border-radius: 60px;
+  elevation: ${8};
+  box-shadow: 0 4px 4.65px rgba(0,0,0,0.2);
+`;
+
+const Avatar = styled.Image`
+  height: 110px;
+  width: 110px;
+  border-radius: 60px;
+`;
+
+const Name = styled.Text`
+  ${StyledFonts.roboto};
+  font-size: 28px;
+  line-height: 28px;
+  color: ${Colors.BLACK};
+  margin: 15px 0;
 `;
 
 /**
@@ -40,36 +78,20 @@ export default function ProfileScreen(): React.ReactElement {
   return (
     <Body>
       <Scroll>
-        <Avatar source={require('../images/avatar.jpg')}/>
-        <Avatar source={require('../images/avatar.jpg')}/>
-        {/* <View style={styles.header}>*/}
-        {/*  <Image source={require('../images/avatar.jpg')} style={styles.avatar} />*/}
-        {/*  <View style={styles.userInfo}>*/}
-        {/*    <Text style={styles.name}>Соня</Text>*/}
-        {/*    <Text style={styles.caption}>@sonincaption</Text>*/}
-        {/*    <View style={styles.progress}>*/}
-        {/*      <View style={styles.progressBar} />*/}
-        {/*      <View style={styles.progressFill} />*/}
-        {/*      <Text style={styles.level}>LV. 5</Text>*/}
-        {/*      <Text style={styles.caption}>153/200</Text>*/}
-        {/*    </View>*/}
-        {/*  </View>*/}
-        {/*  <TouchableOpacity onPress={(): void => navigation.navigate('Settings')}>*/}
-        {/*    <Image source={require('../images/settings.png')} style={styles.settingsButton} />*/}
-        {/*  </TouchableOpacity>*/}
-        {/* </View>*/}
-        {/* <TouchableOpacity style={styles.button}>*/}
-        {/*  <Text style={styles.buttonText}>{t('profile.friends')}</Text>*/}
-        {/* </TouchableOpacity>*/}
-        {/* <TouchableOpacity style={styles.button}>*/}
-        {/*  <Text style={styles.buttonText}>{t('profile.rating')}</Text>*/}
-        {/* </TouchableOpacity>*/}
-        {/* <TouchableOpacity style={styles.button}>*/}
-        {/*  <Text style={styles.buttonText}>{t('profile.achievements')}</Text>*/}
-        {/* </TouchableOpacity>*/}
-        {/* <TouchableOpacity style={styles.button}>*/}
-        {/*  <Text style={styles.buttonText}>{t('profile.cards')}</Text>*/}
-        {/* </TouchableOpacity>*/}
+        <Ellipse/>
+        <SettingsButton onPress={(): void => navigation.navigate('Settings')}>
+          <Settings/>
+        </SettingsButton>
+        <AvatarView>
+          <Avatar source={require('../images/lapki.jpg')}/>
+        </AvatarView>
+        <Name>Соня</Name>
+        <ProgressBlock totalExp={200} currentExp={153}/>
+        <ProfileButton icon={Friends} buttonText={t('profile.friends')}/>
+        <ProfileButton icon={Rating} buttonText={t('profile.rating')}/>
+        <ProfileButton icon={Achievements} buttonText={t('profile.achievements')}/>
+        <ProfileButton icon={Collection} buttonText={t('profile.cards')}/>
+        <ProfileButton icon={Rewards} buttonText={t('profile.rewards')}/>
       </Scroll>
     </Body>
   );
