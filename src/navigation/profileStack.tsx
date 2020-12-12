@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useAuthState } from '../controllers/authController';
-import ProfileScreen from '../screens/ProfileScreen';
+import ProfileScreen from '../screens/Profile';
 import LoginScreen from '../screens/Login';
 import SettingsScreen from '../screens/Settings';
 import RegistrationScreen from '../screens/Registration';
