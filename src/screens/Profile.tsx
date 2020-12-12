@@ -68,10 +68,6 @@ const Name = styled.Text`
   margin: 15px 0;
 `;
 
-const Icon = styled.View`
-  color: ${Colors.DARK_BLUE};
-`;
-
 /**
  * Displays user's profile
  */
@@ -91,11 +87,11 @@ export default function ProfileScreen(): React.ReactElement {
         </AvatarView>
         <Name>Соня</Name>
         <ProgressBlock totalExp={200} currentExp={153}/>
-        <ProfileButton icon={<Icon as={Friends}/>} buttonText={t('profile.friends')}/>
-        <ProfileButton icon={<Icon as={Rating}/>} buttonText={t('profile.rating')}/>
-        <ProfileButton icon={<Icon as={Achievements}/>} buttonText={t('profile.achievements')}/>
-        <ProfileButton icon={<Icon as={Collection}/>} buttonText={t('profile.cards')}/>
-        <ProfileButton icon={<Icon as={Rewards}/>} buttonText={t('profile.rewards')}/>
+        <ProfileButton icon={Friends} buttonText={t('profile.friends')}/>
+        <ProfileButton icon={Rating} buttonText={t('profile.rating')}/>
+        <ProfileButton icon={Achievements} buttonText={t('profile.achievements')}/>
+        <ProfileButton icon={Collection} buttonText={t('profile.cards')}/>
+        <ProfileButton icon={Rewards} buttonText={t('profile.rewards')}/>
       </Scroll>
     </Body>
   );

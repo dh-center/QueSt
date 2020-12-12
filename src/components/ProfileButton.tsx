@@ -25,6 +25,10 @@ const ButtonText = styled.Text`
   margin-left: 22px;
 `;
 
+const Icon = styled.View`
+  color: ${Colors.DARK_BLUE};
+`;
+
 /**
  * Props for ProfileButton component
  */
@@ -32,7 +36,7 @@ export interface ButtonProps {
   /**
    * SVG icon to display on button
    */
-  icon: React.ReactNode;
+  icon: React.ComponentType;
 
   /**
    * Button text content
@@ -48,7 +52,7 @@ export interface ButtonProps {
 export default function ProfileButton({ style: _style, icon, buttonText, ...rest }: TouchableOpacityProps & ButtonProps): React.ReactElement {
   return (
     <Button {...rest}>
-      {icon}
+      <Icon as={icon}/>
       <ButtonText>{buttonText}</ButtonText>
     </Button>
   );
