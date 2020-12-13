@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   blueCircle: {
     position: 'absolute',
-    bottom: 26,
+    top: -376,
     right: -169,
   },
   backButton: {

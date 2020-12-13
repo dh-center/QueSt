@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, SafeAreaView } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, FlatList } from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
 import { graphql, QueryRenderer } from 'react-relay';
 import env from '../enviroment';
@@ -11,104 +11,79 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { QuestsStackParamList } from '../navigation/questsStack';
+import styled from 'styled-components/native';
+import { StyledFonts } from '../styles/textStyles';
+import Colors from '../styles/colors';
+import BlueCircle from '../images/blueCircle15.svg';
+import QuestsListItem from '../components/QuestsListItem';
 
 /**
  * Type with props of screen 'List' in QuestsStackScreen
  */
 type ListScreenNavigationProp = StackNavigationProp<QuestsStackParamList, 'List'>;
 
-const styles = StyleSheet.create({
-  body: {
-    backgroundColor: '#ffffff',
-    height: '100%',
-  },
-  loading: {
-    backgroundColor: '#ffffff',
-    height: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  header: {
-    height: 69,
-    paddingLeft: 16,
-    justifyContent: 'center',
-  },
-  title: {
-    fontWeight: '600',
-    fontSize: 32,
-    lineHeight: 38,
-    color: 'rgba(0,0,0,0.8)',
-  },
-  content: {
-    paddingLeft: 16,
-    paddingRight: 16,
-  },
-  questItem: {
-    minHeight: 60,
-    height: 'auto',
-    backgroundColor: 'rgba(64, 190, 32, 0.5)',
-    borderRadius: 15,
-    marginBottom: 15,
-    paddingTop: 15,
-    paddingRight: 60,
-    paddingBottom: 15,
-    paddingLeft: 60,
-    justifyContent: 'center',
-    overflow: 'hidden',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: 'rgba(0, 0, 0, 0.2)',
-  },
-  questName: {
-    fontWeight: '600',
-    fontSize: 17,
-    lineHeight: 20,
-    color: 'rgba(0,0,0,0.8)',
-  },
-  icon: {
-    position: 'absolute',
-    height: 62,
-    width: 62,
-    right: -9,
-    top: -9,
-  },
-});
+const Body = styled.View`
+  background-color: ${Colors.BACKGROUND};
+  height: 100%;
+  align-items: stretch;
+`;
+
+const Circle = styled(BlueCircle)`
+  position: absolute;
+  top: -376px;
+  right: -169px;
+`;
+
+const Title = styled.Text`
+  ${StyledFonts.roboto};
+  font-size: 28px;
+  line-height: 28px;
+  color: ${Colors.BLACK};
+  margin-top: 74px;
+  margin-bottom: 25px;
+  margin-left: 15px;
+`;
 
 /**
  * Component of the quests list
  *
  * @param props - data with query results
  */
-function QuestsListScreen(props: QuestsQueryResponse): React.ReactElement {
+function QuestsListScreen(props: QuestsQueryResponse & {retry: (() => void) | null}): React.ReactElement {
   const navigation = useNavigation<ListScreenNavigationProp>();
   const { t } = useTranslation();
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <SafeAreaView style={styles.body}>
-      <View style={styles.header}>
-        <Text style={styles.title}>{t('quests.title')}</Text>
-      </View>
+    <Body>
+      <Circle/>
       <FlatList
-        style={styles.content}
         data={props.quests.edges}
-        renderItem={({ item }): React.ReactElement => (
-          <TouchableOpacity style={styles.questItem}
-            onPress={(): void => navigation.navigate('Description', {
-              id: item.node.id,
-              title: item.node.name,
-              description: item.node.description,
-            })
-            }
-          >
-            <Text style={styles.questName}>
-              {item.node.name}
-            </Text>
-            <Image source={require('../images/done.png')} style={styles.icon}/>
-          </TouchableOpacity>
+        renderItem={({ item, index }): React.ReactElement => (
+          <>
+            {(index === 0) && <Title>{t('quests.title')}</Title>}
+            <QuestsListItem
+              onPress={(): void => navigation.navigate('Description', {
+                id: item.node.id,
+                title: item.node.name,
+                description: item.node.description,
+              })
+              }
+              name={item.node.name}
+            />
+          </>
         )}
+        refreshing={isLoading}
+        onRefresh={(): void => {
+          setIsLoading(true);
+          if (props.retry) {
+            props.retry();
+          }
+          setIsLoading(false);
+        }}
         keyExtractor={(item, index): string => index.toString()}
       />
-    </SafeAreaView>
+    </Body>
   );
 }
 
@@ -135,7 +110,7 @@ export default function Quests(): React.ReactElement {
       environment={env}
       query={query}
       variables={{}}
-      render={({ error, props }): React.ReactElement => {
+      render={({ error, props, retry }): React.ReactElement => {
         if (error) {
           return (
             <Container>
@@ -144,12 +119,13 @@ export default function Quests(): React.ReactElement {
               </Content>
             </Container>
           );
-        } else if (props) {
-          return <QuestsListScreen {...props} />;
+        }
+        if (props) {
+          return <QuestsListScreen {...props} retry={retry} />;
         }
 
         return (
-          <View style={styles.loading}>
+          <View>
             <Spinner />
           </View>
         );
