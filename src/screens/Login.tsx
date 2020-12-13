@@ -9,6 +9,9 @@ import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import { useNavigation } from '@react-navigation/native';
+import FacebookAuth from '../components/auth/Facebook';
+import VkAuth from '../components/auth/Vk';
+import GoogleAuth from '../components/auth/Google';
 
 /**
  * Styles for login view
@@ -153,9 +156,9 @@ export default function LoginScreen(): ReactElement {
             {t('signIn.logInWith')}
           </Text>
           <View style={styles.socialsContainer}>
-            <Text style={styles.socialItem}>VK</Text>
-            <Text style={styles.socialItem}>FB</Text>
-            <Text style={styles.socialItem}>Google</Text>
+            <FacebookAuth/>
+            <VkAuth/>
+            <GoogleAuth/>
           </View>
         </View>
         <UnderlinedButton
