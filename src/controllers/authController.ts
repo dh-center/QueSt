@@ -1,6 +1,7 @@
 import { API_ENDPOINT } from '@env';
 import SInfo from 'react-native-sensitive-info';
 import { useEffect, useState } from 'react';
+import { VKLoginResult } from 'react-native-vkontakte-login';
 
 /**
  * Represents response of the auth server in case of success
@@ -77,6 +78,50 @@ class AuthController {
     );
 
     await this.setTokens(await response.json());
+  }
+
+  /**
+   *
+   * @param data
+   */
+  public async authWithVK(data: VKLoginResult): Promise<void> {
+    const userData = await (await fetch(`https://api.vk.com/method/account.getProfileInfo?v=5.126&access_token=${data.access_token}`)).json();
+
+    const response = await fetch(`${API_ENDPOINT}/oauth/vk/callback?${this.objToQueryString({
+      ...data,
+      ...userData.response,
+    })}`, {
+      method: 'POST',
+    });
+
+    await this.setTokens(await response.json());
+  }
+
+  /**
+   *
+   * @param accessToken
+   */
+  public async authWithFacebook(accessToken: string) {
+    const response = await fetch(`${API_ENDPOINT}/oauth/facebook/callback?token=${accessToken}`, {
+      method: 'POST',
+    });
+
+    await this.setTokens(await response.json());
+  }
+
+  /**
+   *
+   * @param obj
+   * @private
+   */
+  private objToQueryString(obj: object): string {
+    return Object.entries(obj)
+      .reduce((acc, [key, value]) => {
+        acc.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+
+        return acc;
+      }, [] as string[])
+      .join('&');
   }
 
   /**

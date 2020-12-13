@@ -278,6 +278,9 @@ PODS:
     - React-Core
   - react-native-sensitive-info (6.0.0-alpha.8):
     - React
+  - react-native-vkontakte-login (1.0.1):
+    - React
+    - VK-ios-sdk
   - React-RCTActionSheet (0.63.2):
     - React-Core/RCTActionSheetHeaders (= 0.63.2)
   - React-RCTAnimation (0.63.2):
@@ -357,6 +360,7 @@ PODS:
     - React
   - RNVectorIcons (7.1.0):
     - React
+  - VK-ios-sdk (1.6.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -402,6 +406,7 @@ DEPENDENCIES:
   - "react-native-mapbox-gl (from `../node_modules/@react-native-mapbox-gl/maps`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-sensitive-info (from `../node_modules/react-native-sensitive-info`)
+  - react-native-vkontakte-login (from `../node_modules/react-native-vkontakte-login`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
@@ -443,6 +448,7 @@ SPEC REPOS:
     - Mapbox-iOS-SDK
     - MapboxMobileEvents
     - OpenSSL-Universal
+    - VK-ios-sdk
     - YogaKit
 
 EXTERNAL SOURCES:
@@ -482,6 +488,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-sensitive-info:
     :path: "../node_modules/react-native-sensitive-info"
+  react-native-vkontakte-login:
+    :path: "../node_modules/react-native-vkontakte-login"
   React-RCTActionSheet:
     :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -560,6 +568,7 @@ SPEC CHECKSUMS:
   react-native-mapbox-gl: 2a4b1bbfb5708b4c997d312ad73337bafdc5baf5
   react-native-safe-area-context: 79fea126c6830c85f65947c223a5e3058a666937
   react-native-sensitive-info: 7682ade5fe71c87a5e93a35d9e9c8a3c8a038a7d
+  react-native-vkontakte-login: d5f2e9624b531f7aa3f8c178b2f273715a8b142e
   React-RCTActionSheet: 910163b6b09685a35c4ebbc52b66d1bfbbe39fc5
   React-RCTAnimation: 9a883bbe1e9d2e158d4fb53765ed64c8dc2200c6
   React-RCTBlob: 39cf0ece1927996c4466510e25d2105f67010e13
@@ -579,6 +588,7 @@ SPEC CHECKSUMS:
   RNScreens: 13f23e5498fb4aa749d19a5eda7f8792fbb9d01f
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
+  VK-ios-sdk: 104a8bc259199fb1fc621c1c93d7a9a6befb4ca0
   Yoga: 7740b94929bbacbddda59bf115b5317e9a161598
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
 import MainTabsNavigation from './navigation/mainTabs';
 import authController from './controllers/authController';
+import VKLogin from 'react-native-vkontakte-login';
+import { VK_APP_ID } from '@env';
 
 /**
  * Imports i18next plugin to react native app
@@ -16,11 +18,11 @@ function App(): React.ReactElement {
 
   const initApp = async (): Promise<void> => {
     await authController.init();
-    setIsAppInitialized(true);
   };
 
   useEffect(() => {
-    initApp();
+    initApp().finally(() => setIsAppInitialized(true));
+    VKLogin.initialize(VK_APP_ID);
   }, []);
 
   if (!isAppInitialized) {
