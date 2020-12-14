@@ -100,7 +100,7 @@ export default function LoginScreen(): ReactElement {
   const navigation = useNavigation<LoginScreenNavigationProp>();
 
   return (
-    <ScreenWrapper withScrollView>
+    <ScreenWrapper scrollable>
       <Text style={styles.logo}>Logo</Text>
       <View style={styles.welcomeTextContainer}>
         <Text style={styles.welcomeTextMedium}>

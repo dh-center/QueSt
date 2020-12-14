@@ -38,7 +38,7 @@ interface ScreenWrapperProps {
   /**
    * Is screen wrapper with scroll
    */
-  withScrollView?: boolean;
+  scrollable?: boolean;
 
   /**
    * Children components in wrapper
@@ -52,7 +52,7 @@ interface ScreenWrapperProps {
  * @param props - props of component
  */
 export default function ScreenWrapper(props: ScreenWrapperProps): ReactElement {
-  if (props.withScrollView) {
+  if (props.scrollable) {
     return (
       <SafeArea>
         <CustomScrollView>

@@ -81,7 +81,7 @@ export default function RegistrationScreen(): ReactElement {
   const navigation = useNavigation<RegistrationScreenNavigationProp>();
 
   return (
-    <ScreenWrapper withScrollView>
+    <ScreenWrapper scrollable>
       <TouchableOpacity style={styles.backButton}
         onPress={(): void => navigation.goBack()}
       >
