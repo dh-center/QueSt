@@ -5,7 +5,6 @@ import {
   ScrollView,
   View,
   TouchableOpacity,
-  SafeAreaView,
   Image,
   Modal
 } from 'react-native';
@@ -16,10 +15,28 @@ import RightAnswer from '../images/rightAnswer.svg';
 import WrongAnswer from '../images/wrongAnswer.svg';
 import Next from '../images/nextButton.svg';
 
+/**
+ * Props for test question
+ */
 interface Question {
+  /**
+   * Question to answer
+   */
   question: string;
+
+  /**
+   * Array of answers to choose from
+   */
   answers: string[];
+
+  /**
+   * Index of right answer
+   */
   correctAnswerIndex: number;
+
+  /**
+   * Picture attachment for the test
+   */
   picture?: string;
 }
 
@@ -33,9 +50,7 @@ const testQuestion: Question = {
 const styles = StyleSheet.create({
   body: {
     position: 'absolute',
-    backgroundColor: Colors.WHITE,
     height: '100%',
-    width: '100%',
   },
   view: {
     backgroundColor: Colors.BACKGROUND,
@@ -106,7 +121,7 @@ const styles = StyleSheet.create({
   answersView: {
     paddingTop: 30,
     paddingRight: 15,
-    paddingBottom: 20,
+    paddingBottom: 75,
     paddingLeft: 15,
   },
   headerText: {
@@ -128,7 +143,7 @@ const styles = StyleSheet.create({
   next: {
     height: 64,
     width: 64,
-    marginBottom: 30,
+    marginVertical: 15,
     borderRadius: 32,
     elevation: 10,
     alignSelf: 'center',
@@ -151,18 +166,21 @@ export default function TestView(): React.ReactElement {
   let questionIcon;
 
   if (testQuestion.picture) {
+    // Image component, if testQuestion has picture uri
     questionIcon =
       <TouchableOpacity style={styles.imageView} onPress={(): void => setModalVisible(true)}>
         <Image source={{ uri: testQuestion.picture }} style={styles.image}/>
       </TouchableOpacity>;
   } else if (selectedAnswer === undefined) {
+    // Question component, if question is active
     questionIcon = <Question/>;
   } else {
+    // RightAnswer or WrongAnswer component, according the user answer
     questionIcon = (selectedAnswer === testQuestion.correctAnswerIndex) ? <RightAnswer/> : <WrongAnswer/>;
   }
 
   return (
-    <SafeAreaView style={styles.body}>
+    <View style={styles.body}>
       <ScrollView style={styles.view}>
         <View style={styles.headerBlock}>
           {questionIcon}
@@ -203,9 +221,10 @@ export default function TestView(): React.ReactElement {
             }
             )
           }
+          {(selectedAnswer !== undefined) && <TouchableOpacity><Next style={styles.next}/></TouchableOpacity>}
         </View>
-        {(selectedAnswer !== undefined) && <TouchableOpacity><Next style={styles.next}/></TouchableOpacity>}
       </ScrollView>
+      {testQuestion.picture &&
       <Modal
         animationType="fade"
         transparent={true}
@@ -219,6 +238,7 @@ export default function TestView(): React.ReactElement {
           </View>
         </TouchableOpacity>
       </Modal>
-    </SafeAreaView>
+      }
+    </View>
   );
 }
