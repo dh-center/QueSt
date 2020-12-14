@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, FlatList } from 'react-native';
-import { Container, Content, Spinner } from 'native-base';
+import { FlatList } from 'react-native';
+import { Spinner } from 'native-base';
 import { graphql, QueryRenderer } from 'react-relay';
 import env from '../enviroment';
 import {
@@ -16,7 +16,6 @@ import { StyledFonts } from '../styles/textStyles';
 import Colors from '../styles/colors';
 import BlueCircle from '../images/blueCircle15.svg';
 import QuestsListItem from '../components/QuestsListItem';
-import ScreenWrapper from '../components/utils/ScreenWrapper';
 
 /**
  * Type with props of screen 'List' in QuestsStackScreen
@@ -25,8 +24,9 @@ type ListScreenNavigationProp = StackNavigationProp<QuestsStackParamList, 'List'
 
 const Body = styled.View`
   background-color: ${Colors.BACKGROUND};
-  height: 100%;
+  flex: 1;
   align-items: stretch;
+  padding-bottom: 80px;
 `;
 
 const SpinnerView = styled.View`
@@ -121,11 +121,9 @@ export default function Quests(): React.ReactElement {
       render={({ error, props, retry }): React.ReactElement => {
         if (error) {
           return (
-            <Container>
-              <Content>
-                <Text>Квест не найден</Text>
-              </Content>
-            </Container>
+            <Body>
+              <Title>Квест не найден</Title>
+            </Body>
           );
         }
         if (props) {
@@ -134,7 +132,7 @@ export default function Quests(): React.ReactElement {
 
         return (
           <SpinnerView>
-            <Spinner/>
+            <Spinner color={Colors.DARK_BLUE}/>
           </SpinnerView>
         );
       }}
