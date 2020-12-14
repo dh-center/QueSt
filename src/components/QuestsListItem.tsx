@@ -42,7 +42,6 @@ const QuestName = styled.Text`
  * Props for QuestsListItem component
  */
 export interface QuestItemProps {
-
   /**
    * Quests name
    */
