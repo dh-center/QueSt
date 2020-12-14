@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     textAlign: 'center',
     borderRadius: 55,
-    marginVertical: 30,
+    marginBottom: 30,
   },
 
   /**

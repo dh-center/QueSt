@@ -15,7 +15,7 @@ const Body = styled(View)`
  * SafeAreaView component for using without ScrollView
  */
 const BodyWithoutScrollView = styled(Body)`
-  padding: 0 15px 75px;
+  padding: 74px 15px 75px;
   align-items: center;
 `;
 
@@ -25,6 +25,7 @@ const BodyWithoutScrollView = styled(Body)`
 const CustomScrollView = styled(ScrollView).attrs(() => ({
   contentContainerStyle: {
     alignItems: 'center',
+    paddingTop: 74,
     paddingHorizontal: 15,
     paddingBottom: 75,
   },
