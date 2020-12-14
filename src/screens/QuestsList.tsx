@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
 import { graphql, QueryRenderer } from 'react-relay';
 import env from '../enviroment';
