@@ -166,16 +166,22 @@ export default function TestView(): React.ReactElement {
   let questionIcon;
 
   if (testQuestion.picture) {
-    // Image component, if testQuestion has picture uri
+    /**
+     * Image component, if testQuestion has picture uri
+     */
     questionIcon =
       <TouchableOpacity style={styles.imageView} onPress={(): void => setModalVisible(true)}>
         <Image source={{ uri: testQuestion.picture }} style={styles.image}/>
       </TouchableOpacity>;
   } else if (selectedAnswer === undefined) {
-    // Question component, if question is active
+    /**
+     * Question component, if question is active
+     */
     questionIcon = <Question/>;
   } else {
-    // RightAnswer or WrongAnswer component, according the user answer
+    /**
+     * RightAnswer or WrongAnswer component, according the user answer
+     */
     questionIcon = (selectedAnswer === testQuestion.correctAnswerIndex) ? <RightAnswer/> : <WrongAnswer/>;
   }
 
@@ -221,7 +227,11 @@ export default function TestView(): React.ReactElement {
             }
             )
           }
-          {(selectedAnswer !== undefined) && <TouchableOpacity><Next style={styles.next}/></TouchableOpacity>}
+          {(selectedAnswer !== undefined) &&
+          <TouchableOpacity>
+            <Next style={styles.next}/>
+          </TouchableOpacity>
+          }
         </View>
       </ScrollView>
       {testQuestion.picture &&
