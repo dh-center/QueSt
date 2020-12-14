@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   recoverPasswordButton: {
     opacity: 0.5,
-    marginBottom: 10,
+    marginBottom: 15,
   },
 
   /**

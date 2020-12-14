@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   registrationButton: {
-    marginTop: 15,
+    marginVertical: 15,
   },
 });
 
