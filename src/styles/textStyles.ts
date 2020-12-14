@@ -2,7 +2,9 @@ import { StyleSheet } from 'react-native';
 import Colors from './colors';
 
 /**
- * Default text styles
+ * Default text styles for StyleSheet
+ *
+ * @todo only font families will stay here
  */
 const textStyles = StyleSheet.create({
   /**
@@ -34,6 +36,22 @@ const textStyles = StyleSheet.create({
     fontFamily: 'PTRootUIWeb-Medium',
     color: Colors.BLACK,
   },
+
+  /**
+   * PT Root Regular font
+   */
+  ptRootRegular: {
+    fontFamily: 'PTRootUIWeb-Regular',
+  },
 });
 
 export default textStyles;
+
+/**
+ * Fonts for styled-components
+ */
+export const StyledFonts = {
+  uiWebRegular: 'font-family: PTRootUIWeb-Regular',
+  uiWebMedium: 'font-family: PTRootUIWeb-Medium',
+  roboto: 'font-family: Roboto-Medium',
+};
