@@ -3,6 +3,8 @@ import Colors from './colors';
 
 /**
  * Default text styles for StyleSheet
+ *
+ * @todo only font families will stay here
  */
 const textStyles = StyleSheet.create({
   /**
@@ -33,6 +35,13 @@ const textStyles = StyleSheet.create({
     lineHeight: 22,
     fontFamily: 'PTRootUIWeb-Medium',
     color: Colors.BLACK,
+  },
+
+  /**
+   * PT Root Regular font
+   */
+  ptRootRegular: {
+    fontFamily: 'PTRootUIWeb-Regular',
   },
 });
 
