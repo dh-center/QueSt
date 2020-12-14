@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
+import React from 'react';
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
 import { graphql, QueryRenderer } from 'react-relay';
 import env from '../enviroment';
@@ -16,6 +18,7 @@ import { StyledFonts } from '../styles/textStyles';
 import Colors from '../styles/colors';
 import BlueCircle from '../images/blueCircle15.svg';
 import QuestsListItem from '../components/QuestsListItem';
+import ScreenWrapper from '../components/utils/ScreenWrapper';
 
 /**
  * Type with props of screen 'List' in QuestsStackScreen
