@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList } from 'react-native';
-import React from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { Container, Content, Spinner } from 'native-base';
 import { graphql, QueryRenderer } from 'react-relay';
 import env from '../enviroment';
@@ -29,6 +27,13 @@ const Body = styled.View`
   background-color: ${Colors.BACKGROUND};
   height: 100%;
   align-items: stretch;
+`;
+
+const SpinnerView = styled.View`
+  background-color: ${Colors.BACKGROUND};
+  height: 100%;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Circle = styled(BlueCircle)`
@@ -128,9 +133,9 @@ export default function Quests(): React.ReactElement {
         }
 
         return (
-          <View>
-            <Spinner />
-          </View>
+          <SpinnerView>
+            <Spinner/>
+          </SpinnerView>
         );
       }}
     />
