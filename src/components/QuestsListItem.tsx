@@ -41,7 +41,7 @@ const QuestName = styled.Text`
 /**
  * Props for QuestsListItem component
  */
-export interface ButtonProps {
+export interface QuestItemProps {
 
   /**
    * Quests name
@@ -54,7 +54,7 @@ export interface ButtonProps {
  *
  * @param props - props for item
  */
-export default function QuestsListItem({ style: _style, name, ...rest }: TouchableOpacityProps & ButtonProps): React.ReactElement {
+export default function QuestsListItem({ style: _style, name, ...rest }: TouchableOpacityProps & QuestItemProps): React.ReactElement {
   return (
     <QuestItem {...rest}>
       <IconView>
