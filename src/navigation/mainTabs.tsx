@@ -10,6 +10,7 @@ import Colors from '../styles/colors';
 import Map from '../images/navigation/map.svg';
 import Account from '../images/navigation/account.svg';
 import Quests from '../images/navigation/quests.svg';
+import textStyles from '../styles/textStyles';
 
 /**
  * Type with params of screens and their props in BottomTabNavigator
@@ -66,7 +67,7 @@ const TabNavigator = styled(Tab.Navigator).attrs(() => ({
        */
       fontSize: 12,
       lineHeight: 18,
-      fontFamily: 'PTRootUIWeb-Regular',
+      ...textStyles.ptRootRegular,
       color: Colors.DARK_BLUE,
 
       /**
