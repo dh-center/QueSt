@@ -7,6 +7,7 @@ module.exports = {
     'codex'
   ],
   rules: {
-    "prettier/prettier": "off"
+    'prettier/prettier': 'off',
+    'eslint-comments/no-unlimited-disable': 'off'
   }
 };
