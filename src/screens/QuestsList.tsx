@@ -50,7 +50,7 @@ const Title = styled.Text`
   margin: 74px 15px 25px;
 `;
 
-const Error = styled.Text`
+const ErrorText = styled.Text`
   ${StyledFonts.uiWebMedium};
   font-size: 18px;
   line-height: 22px;
@@ -134,9 +134,9 @@ export default function Quests(): React.ReactElement {
               <Title>
                 К сожалению, произошла ошибка 😔
               </Title>
-              <Error>
+              <ErrorText>
                 Пожалуйста, попробуйте повторить попытку спустя некоторое время
-              </Error>
+              </ErrorText>
             </Body>
           );
         }
