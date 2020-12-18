@@ -19,6 +19,7 @@
 #import <FlipperKitUserDefaultsPlugin/FKUserDefaultsPlugin.h>
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <RNGoogleSignin/RNGoogleSignin.h>
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -71,11 +72,12 @@ static void InitializeFlipper(UIApplication *application) {
 //iOS 8 and lower
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-    [VKSdk processOpenURL:url fromApplication:sourceApplication];
     return [[FBSDKApplicationDelegate sharedInstance] application:application
-                                                           openURL:url
-                                                 sourceApplication:sourceApplication
-                                                       annotation:annotation];
+                                                              openURL:url
+                                                              sourceApplication:sourceApplication
+                                                              annotation:annotation] ||
+  [VKSdk processOpenURL:url fromApplication:sourceApplication]
+  || [RNGoogleSignin application:application openURL:url options:annotation];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
