@@ -1,11 +1,16 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Icon } from 'native-base';
 import MapScreen from '../screens/Map';
 import { useTranslation } from 'react-i18next';
 import ProfileStackNavigation from './profileStack';
 import QuestsStackNavigation from './questsStack';
+import styled from 'styled-components/native';
+import Colors from '../styles/colors';
+import Map from '../images/navigation/map.svg';
+import Account from '../images/navigation/account.svg';
+import Quests from '../images/navigation/quests.svg';
+import textStyles from '../styles/textStyles';
 
 /**
  * Type with params of screens and their props in BottomTabNavigator
@@ -18,6 +23,91 @@ export type TabParamList = {
 const Tab = createBottomTabNavigator();
 
 /**
+ * Styled tab navigator component
+ */
+const TabNavigator = styled(Tab.Navigator).attrs(() => ({
+  tabBarOptions: {
+    /**
+     * Tab bar container styles
+     */
+    style: {
+      /**
+       * Screens will be displayed under the tab navigator
+       */
+      position: 'absolute',
+      backgroundColor: Colors.WHITE,
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 15,
+      borderTopColor: 'transparent',
+      height: 75,
+
+      /**
+       * Android shadow
+       */
+      elevation: 8,
+
+      /**
+       * IOS shadow
+       */
+      shadowColor: '#000000',
+      shadowOffset: {
+        width: 0,
+        height: 4,
+      },
+      shadowOpacity: 0.30,
+      shadowRadius: 4.65,
+    },
+
+    /**
+     * Label styles
+     */
+    labelStyle: {
+      /**
+       * Font styles
+       */
+      fontSize: 12,
+      lineHeight: 18,
+      ...textStyles.ptRootRegular,
+      color: Colors.DARK_BLUE,
+
+      /**
+       * Fix position
+       */
+      flex: 1,
+
+      /**
+       * Remove margins in landscape
+       */
+      marginLeft: 0,
+      marginTop: 0,
+    },
+
+    /**
+     * Icon styles
+     */
+    iconStyle: {
+      flex: 1,
+      marginTop: 15,
+    },
+
+    /**
+     * Tabs styles
+     */
+    tabStyle: {
+      flexDirection: 'column',
+    },
+  },
+}))``;
+
+/**
+ * Styled svg icons
+ * Adds color for icons
+ */
+const Icon = styled.View`
+  color: ${Colors.DARK_BLUE}
+`;
+
+/**
  * Functional component for implementing navigation between screens
  */
 export default function MainTabsNavigation(): React.ReactElement {
@@ -25,35 +115,38 @@ export default function MainTabsNavigation(): React.ReactElement {
 
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Map" tabBarOptions={{ labelPosition: 'below-icon' }}>
-        <Tab.Screen
-          name="Quests"
-          options={{
-            title: t('quests.title').toUpperCase(),
-            tabBarIcon: (): React.ReactElement => {
-              return <Icon type="FontAwesome5" name="route" />;
-            },
-          }}
-          component={QuestsStackNavigation} />
+      <TabNavigator initialRouteName="Map">
         <Tab.Screen
           name="Map"
           options={{
-            title: t('map.title').toUpperCase(),
+            title: t('map.title').toLowerCase(),
             tabBarIcon: (): React.ReactElement => {
-              return <Icon type="FontAwesome5" name="map-marked-alt" />;
+              return <Icon as={Map}/>;
             },
           }}
-          component={MapScreen} />
+          component={MapScreen}
+        />
+        <Tab.Screen
+          name="Quests"
+          options={{
+            title: t('quests.title').toLowerCase(),
+            tabBarIcon: (): React.ReactElement => {
+              return <Icon as={Quests}/>;
+            },
+          }}
+          component={QuestsStackNavigation}
+        />
         <Tab.Screen
           name="Profile"
           options={{
-            title: t('profile.title').toUpperCase(),
+            title: t('profile.title').toLowerCase(),
             tabBarIcon: (): React.ReactElement => {
-              return <Icon type="FontAwesome5" name="user" />;
+              return <Icon as={Account}/>;
             },
           }}
-          component={ProfileStackNavigation} />
-      </Tab.Navigator>
+          component={ProfileStackNavigation}
+        />
+      </TabNavigator>
     </NavigationContainer>
   );
 }

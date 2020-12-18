@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Input from '../components/ui/Input';
-import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
 import Button from '../components/ui/Button';
 import { useTranslation } from 'react-i18next';
@@ -9,25 +8,12 @@ import BackArrow from '../images/back.svg';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import { useNavigation } from '@react-navigation/native';
+import ScreenWrapper from '../components/utils/ScreenWrapper';
 
 /**
  * Styles for registration screen component
  */
 const styles = StyleSheet.create({
-  /**
-   * Styles for container
-   */
-  body: {
-    backgroundColor: Colors.BACKGROUND,
-    flex: 1,
-  },
-  container: {
-    alignItems: 'center',
-    paddingHorizontal: 15,
-    paddingTop: 40,
-    paddingBottom: 15,
-  },
-
   /**
    * Back button
    */
@@ -95,46 +81,44 @@ export default function RegistrationScreen(): ReactElement {
   const navigation = useNavigation<RegistrationScreenNavigationProp>();
 
   return (
-    <SafeAreaView style={styles.body}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <TouchableOpacity style={styles.backButton}
-          onPress={(): void => navigation.goBack()}
-        >
-          <BackArrow/>
-        </TouchableOpacity>
-        <Text style={styles.logo}>Logo</Text>
-        <View style={styles.registrationTitleContainer}>
-          <Text style={styles.registrationTitle}>
-            {t('signUp.registration')}
-          </Text>
-        </View>
-        <Input
-          autoCompleteType="username"
-          keyboardType="email-address"
-          placeholder="E-mail"
-          textContentType="username"
-          style={styles.input}
-        />
-        <Input
-          autoCompleteType="password"
-          placeholder={t('signUp.password')}
-          textContentType="newPassword"
-          secureTextEntry={true}
-          style={styles.input}
-        />
-        <Input
-          autoCompleteType="password"
-          placeholder={t('signUp.repeatPassword')}
-          textContentType="newPassword"
-          secureTextEntry={true}
-          style={styles.input}
-        />
-        <Button
-          title={t('signUp.registration')}
-          onPress={(): void => console.log('Registration')}
-          style={styles.registrationButton}
-        />
-      </ScrollView>
-    </SafeAreaView>
+    <ScreenWrapper scrollable>
+      <TouchableOpacity style={styles.backButton}
+        onPress={(): void => navigation.goBack()}
+      >
+        <BackArrow/>
+      </TouchableOpacity>
+      <Text style={styles.logo}>Logo</Text>
+      <View style={styles.registrationTitleContainer}>
+        <Text style={styles.registrationTitle}>
+          {t('signUp.registration')}
+        </Text>
+      </View>
+      <Input
+        autoCompleteType="username"
+        keyboardType="email-address"
+        placeholder="E-mail"
+        textContentType="username"
+        style={styles.input}
+      />
+      <Input
+        autoCompleteType="password"
+        placeholder={t('signUp.password')}
+        textContentType="newPassword"
+        secureTextEntry={true}
+        style={styles.input}
+      />
+      <Input
+        autoCompleteType="password"
+        placeholder={t('signUp.repeatPassword')}
+        textContentType="newPassword"
+        secureTextEntry={true}
+        style={styles.input}
+      />
+      <Button
+        title={t('signUp.registration')}
+        onPress={(): void => console.log('Registration')}
+        style={styles.registrationButton}
+      />
+    </ScreenWrapper>
   );
 }
