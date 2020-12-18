@@ -40,6 +40,7 @@
   },
   "errors": {
     "WRONG_AUTH_DATA": "Authorization failed due to wrong auth data",
+    "MISSING_AUTH_CODE": "Can't perform auth due to missing server auth code",
     "unspecific": "Something went wrong"
   }
 }

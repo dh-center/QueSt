@@ -16,6 +16,7 @@ jobs:
           envkey_MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
           envkey_OAUTH_WEB_CLIENT_ID: ${{ secrets.OAUTH_WEB_CLIENT_ID }}
           envKey_API_ENDPOINT: 'https://api.stage.st-retrospect.dh-center.ru'
+          envKey_VK_APP_ID: ${{ secrets.VK_APP_ID }}
 
       - name: Build Android Release
         run: |

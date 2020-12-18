@@ -19,8 +19,17 @@ interface AuthServerResponse {
   };
 }
 
+/**
+ * Server error representation
+ */
 interface AuthServerError {
+  /**
+   * Error extensions
+   */
   extensions: {
+    /**
+     * Error code
+     */
     code: string;
   };
 }
@@ -123,14 +132,9 @@ class AuthController {
     const result = await LoginManager.logInWithPermissions(['public_profile', 'email', 'user_photos']);
 
     if (result.isCancelled) {
-      console.log('Login cancelled');
-
       return;
     }
-    console.log(
-      'Login success with permissions: ' +
-        result.grantedPermissions?.toString()
-    );
+
     const data = await AccessToken.getCurrentAccessToken();
 
     console.log(data);
@@ -153,22 +157,17 @@ class AuthController {
    * Performs auth with Google
    */
   public async authWithGoogle(): Promise<void> {
-    try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn();
+    await GoogleSignin.hasPlayServices();
+    const userInfo = await GoogleSignin.signIn();
 
-      if (userInfo.serverAuthCode) {
-        const response = await fetch(`${API_ENDPOINT}/oauth/google/callback?code=${userInfo.serverAuthCode}`, {
-          method: 'POST',
-        });
+    if (userInfo.serverAuthCode) {
+      const response = await fetch(`${API_ENDPOINT}/oauth/google/callback?code=${userInfo.serverAuthCode}`, {
+        method: 'POST',
+      });
 
-        await this.setTokens(await response.json());
-      } else {
-        console.error('Can\'t perform auth due to missing server auth code');
-      }
-    } catch (error) {
-      console.log(error);
-      Alert.alert('Ошибка', error.message);
+      await this.setTokens(await response.json());
+    } else {
+      throw new Error('MISSING_AUTH_CODE');
     }
   }
 
