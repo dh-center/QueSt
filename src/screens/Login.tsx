@@ -104,54 +104,54 @@ export default function LoginScreen(): ReactElement {
 
   return (
     <ScreenWrapper scrollable>
-        <Text style={styles.logo}>Logo</Text>
-        <View style={styles.welcomeTextContainer}>
-          <Text style={styles.welcomeTextMedium}>
-            {t('signIn.welcomeHeader')}
-          </Text>
-          <Text style={styles.welcomeText}>
-            {t('signIn.welcomeText')}
-          </Text>
+      <Text style={styles.logo}>Logo</Text>
+      <View style={styles.welcomeTextContainer}>
+        <Text style={styles.welcomeTextMedium}>
+          {t('signIn.welcomeHeader')}
+        </Text>
+        <Text style={styles.welcomeText}>
+          {t('signIn.welcomeText')}
+        </Text>
+      </View>
+      <Input
+        autoCompleteType="username"
+        keyboardType="email-address"
+        placeholder="E-mail"
+        textContentType="username"
+        style={styles.input}
+      />
+      <Input
+        autoCompleteType="password"
+        placeholder={t('signIn.password')}
+        textContentType="password"
+        secureTextEntry={true}
+        style={styles.input}
+      />
+      <Button
+        title={t('signIn.logIn')}
+        onPress={(): void => console.log('Login')}
+        style={styles.mb30}
+      />
+      <UnderlinedButton
+        title={t('signIn.signUp')}
+        onPress={(): void => navigation.navigate('Registration')}
+        style={styles.mb30}
+      />
+      <View style={styles.socials}>
+        <Text style={styles.socialsText}>
+          {t('signIn.logInWith')}
+        </Text>
+        <View style={styles.socialsContainer}>
+          <FacebookAuth/>
+          <VkAuth/>
+          <GoogleAuth/>
         </View>
-        <Input
-          autoCompleteType="username"
-          keyboardType="email-address"
-          placeholder="E-mail"
-          textContentType="username"
-          style={styles.input}
-        />
-        <Input
-          autoCompleteType="password"
-          placeholder={t('signIn.password')}
-          textContentType="password"
-          secureTextEntry={true}
-          style={styles.input}
-        />
-        <Button
-          title={t('signIn.logIn')}
-          onPress={(): void => console.log('Login')}
-          style={styles.mb30}
-        />
-        <UnderlinedButton
-          title={t('signIn.signUp')}
-          onPress={(): void => navigation.navigate('Registration')}
-          style={styles.mb30}
-        />
-        <View style={styles.socials}>
-          <Text style={styles.socialsText}>
-            {t('signIn.logInWith')}
-          </Text>
-          <View style={styles.socialsContainer}>
-            <FacebookAuth/>
-            <VkAuth/>
-            <GoogleAuth/>
-          </View>
-        </View>
-        <UnderlinedButton
-          title={t('signIn.forgotPassword')}
-          onPress={(): void => console.log('Recover password')}
-          style={styles.recoverPasswordButton}
-        />
+      </View>
+      <UnderlinedButton
+        title={t('signIn.forgotPassword')}
+        onPress={(): void => console.log('Recover password')}
+        style={styles.recoverPasswordButton}
+      />
     </ScreenWrapper>
   );
 }
