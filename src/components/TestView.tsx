@@ -236,6 +236,7 @@ export default function TestView(): React.ReactElement {
       </ScrollView>
       {testQuestion.picture &&
       <Modal
+        supportedOrientations={['portrait', 'landscape']}
         animationType="fade"
         transparent={true}
         visible={modalVisible}
