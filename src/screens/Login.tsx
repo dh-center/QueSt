@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     textAlign: 'center',
     borderRadius: 55,
-    marginVertical: 30,
+    marginBottom: 30,
   },
 
   /**
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   recoverPasswordButton: {
     opacity: 0.5,
-    marginBottom: 10,
+    marginBottom: 15,
   },
 
   /**

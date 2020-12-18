@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
      * Positions button in the left top corner
      */
     position: 'absolute',
-    top: 40,
+    top: 45,
     left: 15,
 
     /**
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     textAlign: 'center',
     borderRadius: 55,
-    marginVertical: 30,
+    marginBottom: 30,
   },
 
   /**
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   registrationButton: {
-    marginTop: 15,
+    marginVertical: 15,
   },
 });
 
