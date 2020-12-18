@@ -23,6 +23,7 @@
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.9.2",
     "@types/react": "^16.9.45",
+    "@types/react-native-fbsdk": "^1.1.1",
     "@types/react-relay": "^7.0.8",
     "@types/relay-runtime": "^10.0.2",
     "@types/styled-components": "^5.1.5",

@@ -1,7 +1,10 @@
 import { API_ENDPOINT } from '@env';
 import SInfo from 'react-native-sensitive-info';
 import { useEffect, useState } from 'react';
-import { VKLoginResult } from 'react-native-vkontakte-login';
+import VKLogin from 'react-native-vkontakte-login';
+import { AccessToken, LoginManager } from 'react-native-fbsdk';
+import { GoogleSignin } from '@react-native-community/google-signin';
+import { Alert } from 'react-native';
 
 /**
  * Represents response of the auth server in case of success
@@ -81,10 +84,11 @@ class AuthController {
   }
 
   /**
-   *
-   * @param data
+   * Performs authorization via VKontakte
    */
-  public async authWithVK(data: VKLoginResult): Promise<void> {
+  public async authWithVK(): Promise<void> {
+    const data = await VKLogin.login(['friends', 'photos', 'email']);
+
     const userData = await (await fetch(`https://api.vk.com/method/account.getProfileInfo?v=5.126&access_token=${data.access_token}`)).json();
 
     const response = await fetch(`${API_ENDPOINT}/oauth/vk/callback?${this.objToQueryString({
@@ -98,30 +102,29 @@ class AuthController {
   }
 
   /**
-   *
-   * @param accessToken
+   * Performs authorization via Facebook
    */
-  public async authWithFacebook(accessToken: string) {
-    const response = await fetch(`${API_ENDPOINT}/oauth/facebook/callback?token=${accessToken}`, {
+  public async authWithFacebook(): Promise<void> {
+    const result = await LoginManager.logInWithPermissions(['public_profile', 'email', 'user_photos']);
+
+    if (result.isCancelled) {
+      console.log('Login cancelled');
+
+      return;
+    }
+    console.log(
+      'Login success with permissions: ' +
+        result.grantedPermissions?.toString()
+    );
+    const data = await AccessToken.getCurrentAccessToken();
+
+    console.log(data);
+
+    const response = await fetch(`${API_ENDPOINT}/oauth/facebook/callback?token=${data?.accessToken}`, {
       method: 'POST',
     });
 
     await this.setTokens(await response.json());
-  }
-
-  /**
-   *
-   * @param obj
-   * @private
-   */
-  private objToQueryString(obj: object): string {
-    return Object.entries(obj)
-      .reduce((acc, [key, value]) => {
-        acc.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
-
-        return acc;
-      }, [] as string[])
-      .join('&');
   }
 
   /**
@@ -133,15 +136,25 @@ class AuthController {
 
   /**
    * Performs auth with Google
-   *
-   * @param code - code for token exchanging
    */
-  public async authWithGoogle(code: string): Promise<void> {
-    const response = await fetch(`${API_ENDPOINT}/oauth/google/callback?code=${code}`, {
-      method: 'POST',
-    });
+  public async authWithGoogle(): Promise<void> {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
 
-    await this.setTokens(await response.json());
+      if (userInfo.serverAuthCode) {
+        const response = await fetch(`${API_ENDPOINT}/oauth/google/callback?code=${userInfo.serverAuthCode}`, {
+          method: 'POST',
+        });
+
+        await this.setTokens(await response.json());
+      } else {
+        console.error('Can\'t perform auth due to missing server auth code');
+      }
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Ошибка', error.message);
+    }
   }
 
   /**
@@ -193,6 +206,21 @@ class AuthController {
     this.accessToken = tokensData.data.accessToken;
     await SInfo.setItem(AuthController.ACCESS_TOKEN_KEY, this.accessToken, AuthController.sensitiveInfoOptions);
     this.notifySubscribers();
+  }
+
+  /**
+   * Converts object to query string
+   *
+   * @param obj - object to convert
+   */
+  private objToQueryString(obj: object): string {
+    return Object.entries(obj)
+      .reduce((acc, [key, value]) => {
+        acc.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+
+        return acc;
+      }, [] as string[])
+      .join('&');
   }
 }
 
