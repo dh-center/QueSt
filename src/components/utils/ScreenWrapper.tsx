@@ -1,12 +1,12 @@
 import React, { ReactElement, ReactNode } from 'react';
 import styled from 'styled-components/native';
 import Colors from '../../styles/colors';
-import { SafeAreaView, ScrollView } from 'react-native';
+import { ScrollView, View } from 'react-native';
 
 /**
  * Styled SafeAreaView component
  */
-const SafeArea = styled(SafeAreaView)`
+const Body = styled(View)`
   background-color: ${Colors.BACKGROUND};
   flex: 1;
 `;
@@ -14,8 +14,8 @@ const SafeArea = styled(SafeAreaView)`
 /**
  * SafeAreaView component for using without ScrollView
  */
-const SafeAreaWithoutScrollView = styled(SafeArea)`
-  padding: 40px 15px 75px;
+const BodyWithoutScrollView = styled(Body)`
+  padding: 74px 15px 75px;
   align-items: center;
 `;
 
@@ -25,8 +25,8 @@ const SafeAreaWithoutScrollView = styled(SafeArea)`
 const CustomScrollView = styled(ScrollView).attrs(() => ({
   contentContainerStyle: {
     alignItems: 'center',
+    paddingTop: 74,
     paddingHorizontal: 15,
-    paddingTop: 40,
     paddingBottom: 75,
   },
 }))``;
@@ -54,17 +54,17 @@ interface ScreenWrapperProps {
 export default function ScreenWrapper(props: ScreenWrapperProps): ReactElement {
   if (props.scrollable) {
     return (
-      <SafeArea>
+      <Body>
         <CustomScrollView>
           { props.children }
         </CustomScrollView>
-      </SafeArea>
+      </Body>
     );
   } else {
     return (
-      <SafeAreaWithoutScrollView>
+      <BodyWithoutScrollView>
         { props.children }
-      </SafeAreaWithoutScrollView>
+      </BodyWithoutScrollView>
     );
   }
 }
