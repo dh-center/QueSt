@@ -37,5 +37,9 @@
     "registration": "Registration",
     "password": "Password",
     "repeatPassword": "Repeat password"
+  },
+  "errors": {
+    "WRONG_AUTH_DATA": "Authorization failed due to wrong auth data",
+    "unspecific": "Something went wrong"
   }
 }

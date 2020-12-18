@@ -5,6 +5,7 @@ import VKLogin from 'react-native-vkontakte-login';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import { Alert } from 'react-native';
+import hasOwnProperty from '../utils/hasOwnProperty';
 
 /**
  * Represents response of the auth server in case of success
@@ -15,6 +16,12 @@ interface AuthServerResponse {
      * Access login to interact with API
      */
     accessToken: string;
+  };
+}
+
+interface AuthServerError {
+  extensions: {
+    code: string;
   };
 }
 
@@ -87,18 +94,26 @@ class AuthController {
    * Performs authorization via VKontakte
    */
   public async authWithVK(): Promise<void> {
-    const data = await VKLogin.login(['friends', 'photos', 'email']);
+    const data = await VKLogin.login(['friends', 'photos', 'email', 'offline']);
 
     const userData = await (await fetch(`https://api.vk.com/method/account.getProfileInfo?v=5.126&access_token=${data.access_token}`)).json();
 
-    const response = await fetch(`${API_ENDPOINT}/oauth/vk/callback?${this.objToQueryString({
-      ...data,
-      ...userData.response,
-    })}`, {
+    const queryString = this.objToQueryString({
+      accessToken: data.access_token,
+      userId: data.user_id,
+      firstName: userData.response.first_name,
+      lastName: userData.response.last_name,
+    });
+
+    const response = await fetch(`${API_ENDPOINT}/oauth/vk/callback?${queryString}`, {
       method: 'POST',
     });
 
-    await this.setTokens(await response.json());
+    const requestData = await response.json();
+
+    this.checkApiErrors(requestData);
+
+    await this.setTokens(requestData);
   }
 
   /**
@@ -195,6 +210,19 @@ class AuthController {
     this.listeners.forEach((listener) => {
       listener(newState);
     });
+  }
+
+  /**
+   * Check if there is any errors form API
+   *
+   * @param apiResult - result to check
+   */
+  private checkApiErrors(apiResult: unknown): void {
+    if (typeof apiResult === 'object' && apiResult !== null && hasOwnProperty(apiResult, 'errors')) {
+      const errors = apiResult.errors as AuthServerError[];
+
+      throw new Error(errors.pop()?.extensions.code);
+    }
   }
 
   /**
