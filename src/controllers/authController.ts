@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import VKLogin from 'react-native-vkontakte-login';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { GoogleSignin } from '@react-native-community/google-signin';
-import { Alert } from 'react-native';
 import hasOwnProperty from '../utils/hasOwnProperty';
 
 /**
@@ -136,8 +135,6 @@ class AuthController {
     }
 
     const data = await AccessToken.getCurrentAccessToken();
-
-    console.log(data);
 
     const response = await fetch(`${API_ENDPOINT}/oauth/facebook/callback?token=${data?.accessToken}`, {
       method: 'POST',
