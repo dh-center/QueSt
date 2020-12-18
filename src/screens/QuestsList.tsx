@@ -47,9 +47,15 @@ const Title = styled.Text`
   font-size: 28px;
   line-height: 28px;
   color: ${Colors.BLACK};
-  margin-top: 74px;
-  margin-bottom: 25px;
-  margin-left: 15px;
+  margin: 74px 15px 25px;
+`;
+
+const Error = styled.Text`
+  ${StyledFonts.uiWebMedium};
+  font-size: 18px;
+  line-height: 22px;
+  color: ${Colors.BLACK};
+  margin: 0 15px;
 `;
 
 /**
@@ -87,6 +93,9 @@ function QuestsListScreen(props: QuestsQueryResponse & {retry: (() => void) | nu
           if (props.retry) {
             props.retry();
           }
+          /**
+           * @todo set false only when receiving data
+           */
           setIsLoading(false);
         }}
         keyExtractor={(item, index): string => index.toString()}
@@ -122,7 +131,12 @@ export default function Quests(): React.ReactElement {
         if (error) {
           return (
             <Body>
-              <Title>Квест не найден</Title>
+              <Title>
+                К сожалению, произошла ошибка 😔
+              </Title>
+              <Error>
+                Пожалуйста, попробуйте повторить попытку спустя некоторое время
+              </Error>
             </Body>
           );
         }
