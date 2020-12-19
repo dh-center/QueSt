@@ -140,7 +140,11 @@ class AuthController {
       method: 'POST',
     });
 
-    await this.setTokens(await response.json());
+    const requestData = await response.json();
+
+    this.checkApiErrors(requestData);
+
+    await this.setTokens(requestData);
   }
 
   /**
