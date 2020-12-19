@@ -74,13 +74,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  socialItem: {
-    width: 40,
-    height: 40,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    backgroundColor: '#C4C4C4',
-  },
 
   /**
    * Class-helper for making margin bottom 30
