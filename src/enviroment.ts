@@ -18,6 +18,7 @@ import authController from './controllers/authController';
 function fetchQuery(
   operation: RequestParameters,
   variables: Variables
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<any> {
   const headers: Record<string, string> = {
     Accept: 'application/json',

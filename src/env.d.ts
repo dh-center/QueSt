@@ -13,4 +13,9 @@ declare module '@env' {
    * OAuth client id for google app from Cloud Console
    */
   export const OAUTH_WEB_CLIENT_ID: string;
+
+  /**
+   * VK application id for Auth
+   */
+  export const VK_APP_ID: string;
 }

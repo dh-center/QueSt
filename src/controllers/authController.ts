@@ -1,6 +1,10 @@
 import { API_ENDPOINT } from '@env';
 import SInfo from 'react-native-sensitive-info';
 import { useEffect, useState } from 'react';
+import VKLogin from 'react-native-vkontakte-login';
+import { AccessToken, LoginManager } from 'react-native-fbsdk';
+import { GoogleSignin } from '@react-native-community/google-signin';
+import hasOwnProperty from '../utils/hasOwnProperty';
 
 /**
  * Represents response of the auth server in case of success
@@ -11,6 +15,21 @@ interface AuthServerResponse {
      * Access login to interact with API
      */
     accessToken: string;
+  };
+}
+
+/**
+ * Server error representation
+ */
+interface AuthServerError {
+  /**
+   * Error extensions
+   */
+  extensions: {
+    /**
+     * Error code
+     */
+    code: string;
   };
 }
 
@@ -80,6 +99,55 @@ class AuthController {
   }
 
   /**
+   * Performs authorization via VKontakte
+   */
+  public async authWithVK(): Promise<void> {
+    const data = await VKLogin.login(['friends', 'photos', 'email', 'offline']);
+
+    const userData = await (await fetch(`https://api.vk.com/method/account.getProfileInfo?v=5.126&access_token=${data.access_token}`)).json();
+
+    const queryString = this.objToQueryString({
+      accessToken: data.access_token,
+      userId: data.user_id,
+      firstName: userData.response.first_name,
+      lastName: userData.response.last_name,
+    });
+
+    const response = await fetch(`${API_ENDPOINT}/oauth/vk/callback?${queryString}`, {
+      method: 'POST',
+    });
+
+    const requestData = await response.json();
+
+    this.checkApiErrors(requestData);
+
+    await this.setTokens(requestData);
+  }
+
+  /**
+   * Performs authorization via Facebook
+   */
+  public async authWithFacebook(): Promise<void> {
+    const result = await LoginManager.logInWithPermissions(['public_profile', 'email', 'user_photos']);
+
+    if (result.isCancelled) {
+      return;
+    }
+
+    const data = await AccessToken.getCurrentAccessToken();
+
+    const response = await fetch(`${API_ENDPOINT}/oauth/facebook/callback?token=${data?.accessToken}`, {
+      method: 'POST',
+    });
+
+    const requestData = await response.json();
+
+    this.checkApiErrors(requestData);
+
+    await this.setTokens(requestData);
+  }
+
+  /**
    * Returns true if user is authenticated
    */
   public isAuthenticated(): boolean {
@@ -88,15 +156,20 @@ class AuthController {
 
   /**
    * Performs auth with Google
-   *
-   * @param code - code for token exchanging
    */
-  public async authWithGoogle(code: string): Promise<void> {
-    const response = await fetch(`${API_ENDPOINT}/oauth/google/callback?code=${code}`, {
-      method: 'POST',
-    });
+  public async authWithGoogle(): Promise<void> {
+    await GoogleSignin.hasPlayServices();
+    const userInfo = await GoogleSignin.signIn();
 
-    await this.setTokens(await response.json());
+    if (userInfo.serverAuthCode) {
+      const response = await fetch(`${API_ENDPOINT}/oauth/google/callback?code=${userInfo.serverAuthCode}`, {
+        method: 'POST',
+      });
+
+      await this.setTokens(await response.json());
+    } else {
+      throw new Error('MISSING_AUTH_CODE');
+    }
   }
 
   /**
@@ -140,6 +213,19 @@ class AuthController {
   }
 
   /**
+   * Check if there is any errors form API
+   *
+   * @param apiResult - result to check
+   */
+  private checkApiErrors(apiResult: unknown): void {
+    if (typeof apiResult === 'object' && apiResult !== null && hasOwnProperty(apiResult, 'errors')) {
+      const errors = apiResult.errors as AuthServerError[];
+
+      throw new Error(errors.pop()?.extensions.code);
+    }
+  }
+
+  /**
    * Stores tokens in secure storage
    *
    * @param tokensData - tokens data to store
@@ -148,6 +234,21 @@ class AuthController {
     this.accessToken = tokensData.data.accessToken;
     await SInfo.setItem(AuthController.ACCESS_TOKEN_KEY, this.accessToken, AuthController.sensitiveInfoOptions);
     this.notifySubscribers();
+  }
+
+  /**
+   * Converts object to query string
+   *
+   * @param obj - object to convert
+   */
+  private objToQueryString(obj: object): string {
+    return Object.entries(obj)
+      .reduce((acc, [key, value]) => {
+        acc.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+
+        return acc;
+      }, [] as string[])
+      .join('&');
   }
 }
 

@@ -9,6 +9,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import { useNavigation } from '@react-navigation/native';
 import ScreenWrapper from '../components/utils/ScreenWrapper';
+import FacebookAuth from '../components/auth/Facebook';
+import VkAuth from '../components/auth/Vk';
+import GoogleAuth from '../components/auth/Google';
 
 /**
  * Styles for login view
@@ -71,13 +74,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  socialItem: {
-    width: 40,
-    height: 40,
-    textAlign: 'center',
-    textAlignVertical: 'center',
-    backgroundColor: '#C4C4C4',
-  },
 
   /**
    * Class-helper for making margin bottom 30
@@ -139,9 +135,9 @@ export default function LoginScreen(): ReactElement {
           {t('signIn.logInWith')}
         </Text>
         <View style={styles.socialsContainer}>
-          <Text style={styles.socialItem}>VK</Text>
-          <Text style={styles.socialItem}>FB</Text>
-          <Text style={styles.socialItem}>Google</Text>
+          <FacebookAuth/>
+          <VkAuth/>
+          <GoogleAuth/>
         </View>
       </View>
       <UnderlinedButton
