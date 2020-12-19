@@ -14,7 +14,7 @@ const textStyles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 22,
     fontFamily: 'PTRootUIWeb-Regular',
-    color: Colors.BLACK,
+    color: Colors.Black,
   },
 
   /**
@@ -24,7 +24,7 @@ const textStyles = StyleSheet.create({
     fontSize: 28,
     lineHeight: 28,
     fontFamily: 'Roboto-Medium',
-    color: Colors.BLACK,
+    color: Colors.Black,
   },
 
   /**
@@ -34,7 +34,7 @@ const textStyles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 22,
     fontFamily: 'PTRootUIWeb-Medium',
-    color: Colors.BLACK,
+    color: Colors.Black,
   },
 
   /**

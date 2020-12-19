@@ -35,7 +35,7 @@ const TabNavigator = styled(Tab.Navigator).attrs(() => ({
        * Screens will be displayed under the tab navigator
        */
       position: 'absolute',
-      backgroundColor: Colors.WHITE,
+      backgroundColor: Colors.White,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
       borderTopColor: 'transparent',
@@ -68,7 +68,7 @@ const TabNavigator = styled(Tab.Navigator).attrs(() => ({
       fontSize: 12,
       lineHeight: 18,
       ...textStyles.ptRootRegular,
-      color: Colors.DARK_BLUE,
+      color: Colors.DarkBlue,
 
       /**
        * Fix position
@@ -104,7 +104,7 @@ const TabNavigator = styled(Tab.Navigator).attrs(() => ({
  * Adds color for icons
  */
 const Icon = styled.View`
-  color: ${Colors.DARK_BLUE}
+  color: ${Colors.DarkBlue}
 `;
 
 /**

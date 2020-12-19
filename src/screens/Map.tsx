@@ -28,6 +28,8 @@ const styles = StyleSheet.create({
 
 /**
  * Renders map for quests
+ *
+ * @param props - props for component rendering
  */
 export default function MapScreen({ route }: Props): React.ReactElement {
   return (

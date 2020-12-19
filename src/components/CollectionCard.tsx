@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     marginHorizontal: 4.5,
-    backgroundColor: Colors.WHITE,
+    backgroundColor: Colors.White,
     borderWidth: 0.5,
     borderStyle: 'solid',
     borderColor: '#E0E0E0',

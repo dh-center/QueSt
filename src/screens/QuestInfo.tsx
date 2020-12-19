@@ -28,7 +28,7 @@ type Props = StackScreenProps<QuestsStackParamList, 'Description'>;
 const styles = StyleSheet.create({
   body: {
     height: '100%',
-    backgroundColor: Colors.BACKGROUND,
+    backgroundColor: Colors.Background,
   },
   header: {
     paddingTop: 60,
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   questInfo: {
-    backgroundColor: Colors.WHITE,
+    backgroundColor: Colors.White,
     paddingHorizontal: 15,
     paddingTop: 30,
     paddingBottom: 105,
@@ -75,14 +75,14 @@ const styles = StyleSheet.create({
   },
   adviceText: {
     ...textStyles.default,
-    color: Colors.DARK_BLUE,
+    color: Colors.DarkBlue,
     textAlign: 'center',
   },
   line: {
     marginVertical: 30,
     borderTopWidth: 0.5,
     borderStyle: 'solid',
-    borderColor: Colors.BLUE,
+    borderColor: Colors.Blue,
   },
   descriptionTitleText: {
     ...textStyles.ptRootMedium,
@@ -100,13 +100,15 @@ const styles = StyleSheet.create({
   },
   startButton: {
     height: 44,
-    backgroundColor: Colors.GREEN,
+    backgroundColor: Colors.Green,
     marginTop: 30,
   },
 });
 
 /**
  * Functional component of the screen with quest info
+ *
+ * @param props - props for component rendering
  */
 export default function QuestInfoScreen({ route }: Props): React.ReactElement {
   const navigation = useNavigation<MapScreenNavigationProp>();

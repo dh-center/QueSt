@@ -53,10 +53,10 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   view: {
-    backgroundColor: Colors.BACKGROUND,
+    backgroundColor: Colors.Background,
   },
   headerBlock: {
-    backgroundColor: Colors.WHITE,
+    backgroundColor: Colors.White,
     paddingTop: 74,
     paddingRight: 15,
     paddingBottom: 30,
@@ -126,19 +126,19 @@ const styles = StyleSheet.create({
   },
   headerText: {
     marginTop: 30,
-    color: Colors.BLACK,
+    color: Colors.Black,
     fontSize: 22,
     lineHeight: 22,
   },
   blackAnswerText: {
     fontSize: 18,
     lineHeight: 22,
-    color: Colors.BLACK,
+    color: Colors.Black,
   },
   whiteAnswerText: {
     fontSize: 18,
     lineHeight: 22,
-    color: Colors.WHITE,
+    color: Colors.White,
   },
   next: {
     height: 64,

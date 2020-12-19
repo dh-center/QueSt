@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     /**
      * Colors
      */
-    backgroundColor: Colors.WHITE,
+    backgroundColor: Colors.White,
 
     /**
      * Margins and paddings

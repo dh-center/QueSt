@@ -13,7 +13,7 @@ const Level = styled.Text`
   ${StyledFonts.uiWebMedium};
   font-size: 22px;
   line-height: 22px;
-  color: ${Colors.BLACK};
+  color: ${Colors.Black};
   position: absolute;
   left: 0;
   top: 0;
@@ -23,7 +23,7 @@ const Progress = styled.Text`
   ${StyledFonts.uiWebMedium};
   font-size: 12px;
   line-height: 18px;
-  color: ${Colors.BLACK};
+  color: ${Colors.Black};
 `;
 
 const ProgressBar = styled.View`
@@ -31,7 +31,7 @@ const ProgressBar = styled.View`
   height: 10px;
   margin-top: 3px;
   border-radius: 6px;
-  background-color: ${Colors.BLUE};
+  background-color: ${Colors.Blue};
   opacity: 0.15;
 `;
 
@@ -42,7 +42,7 @@ const ProgressFill = styled.View<{ customWidth: number }>`
   left: 0;
   bottom: 0;
   border-radius: 6px;
-  background-color: ${Colors.YELLOW};
+  background-color: ${Colors.Yellow};
   elevation: ${4};
   box-shadow: 0 2px 2.62px rgba(0,0,0,0.23);
 `;
