@@ -11,6 +11,7 @@ import Map from '../images/navigation/map.svg';
 import Account from '../images/navigation/account.svg';
 import Quests from '../images/navigation/quests.svg';
 import textStyles from '../styles/textStyles';
+import TabBar from '../components/TabBar';
 
 /**
  * Type with params of screens and their props in BottomTabNavigator
@@ -115,7 +116,7 @@ export default function MainTabsNavigation(): React.ReactElement {
 
   return (
     <NavigationContainer>
-      <TabNavigator initialRouteName="Map">
+      <Tab.Navigator initialRouteName="Map" tabBar={props => <TabBar {...props} />}>
         <Tab.Screen
           name="Map"
           options={{
@@ -146,7 +147,7 @@ export default function MainTabsNavigation(): React.ReactElement {
           }}
           component={ProfileStackNavigation}
         />
-      </TabNavigator>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
