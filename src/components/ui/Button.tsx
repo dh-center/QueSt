@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
    * Button container
    */
   button: {
-    backgroundColor: Colors.BLUE,
+    backgroundColor: Colors.Blue,
     minWidth: 227,
     borderRadius: 25,
     paddingVertical: 11,
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
    */
   buttonText: {
     ...textStyles.ptRootMedium,
-    color: Colors.WHITE,
+    color: Colors.White,
     textAlign: 'center',
   },
 });

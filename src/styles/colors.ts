@@ -5,42 +5,42 @@ enum Colors {
   /**
    * Background color
    */
-  BACKGROUND = '#F4F7F8',
+  Background = '#F4F7F8',
 
   /**
    * Black color
    */
-  BLACK = '#222222',
+  Black = '#222222',
 
   /**
    * Dark blue color
    */
-  DARK_BLUE = '#55556B',
+  DarkBlue = '#55556B',
 
   /**
    * Light blue color
    */
-  BLUE = '#68C6DF',
+  Blue = '#68C6DF',
 
   /**
    * Yellow color
    */
-  YELLOW = '#F6E864',
+  Yellow = '#F6E864',
 
   /**
    * Red color
    */
-  RED = '#EF6B59',
+  Red = '#EF6B59',
 
   /**
    * Green color
    */
-  GREEN = '#5BC378',
+  Green = '#5BC378',
 
   /**
    * White color
    */
-  WHITE = '#FFFFFF',
+  White = '#FFFFFF',
 }
 
 export default Colors;

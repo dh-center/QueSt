@@ -10,7 +10,7 @@ const Button = styled.TouchableOpacity`
   margin-bottom: 15px;
   padding: 0 13px;
   border-radius: 15px;
-  background-color: ${Colors.WHITE};
+  background-color: ${Colors.White};
   elevation: ${4};
   box-shadow: 0 2px 2.62px rgba(0,0,0,0.1);
   flex-direction: row;
@@ -21,12 +21,12 @@ const ButtonText = styled.Text`
   ${StyledFonts.uiWebRegular};
   font-size: 18px;
   line-height: 22px;
-  color: ${Colors.BLACK};
+  color: ${Colors.Black};
   margin-left: 22px;
 `;
 
 const Icon = styled.View`
-  color: ${Colors.DARK_BLUE};
+  color: ${Colors.DarkBlue};
 `;
 
 /**

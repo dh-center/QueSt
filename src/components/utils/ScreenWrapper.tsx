@@ -7,7 +7,7 @@ import { ScrollView, View } from 'react-native';
  * Styled SafeAreaView component
  */
 const Body = styled(View)`
-  background-color: ${Colors.BACKGROUND};
+  background-color: ${Colors.Background};
   flex: 1;
 `;
 

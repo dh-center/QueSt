@@ -23,14 +23,14 @@ import QuestsListItem from '../components/QuestsListItem';
 type ListScreenNavigationProp = StackNavigationProp<QuestsStackParamList, 'List'>;
 
 const Body = styled.View`
-  background-color: ${Colors.BACKGROUND};
+  background-color: ${Colors.Background};
   flex: 1;
   align-items: stretch;
   padding-bottom: 80px;
 `;
 
 const SpinnerView = styled.View`
-  background-color: ${Colors.BACKGROUND};
+  background-color: ${Colors.Background};
   height: 100%;
   align-items: center;
   justify-content: center;
@@ -46,7 +46,7 @@ const Title = styled.Text`
   ${StyledFonts.roboto};
   font-size: 28px;
   line-height: 28px;
-  color: ${Colors.BLACK};
+  color: ${Colors.Black};
   margin: 74px 15px 25px;
 `;
 
@@ -54,7 +54,7 @@ const ErrorText = styled.Text`
   ${StyledFonts.uiWebMedium};
   font-size: 18px;
   line-height: 22px;
-  color: ${Colors.BLACK};
+  color: ${Colors.Black};
   margin: 0 15px;
 `;
 
@@ -146,7 +146,7 @@ export default function Quests(): React.ReactElement {
 
         return (
           <SpinnerView>
-            <Spinner color={Colors.DARK_BLUE}/>
+            <Spinner color={Colors.DarkBlue}/>
           </SpinnerView>
         );
       }}

@@ -22,7 +22,7 @@ import ProfileButton from '../components/ProfileButton';
 type MainScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Main'>;
 
 const Body = styled.View`
-  background-color: ${Colors.BACKGROUND};
+  background-color: ${Colors.Background};
   height: 100%;
 `;
 
@@ -64,7 +64,7 @@ const Name = styled.Text`
   ${StyledFonts.roboto};
   font-size: 28px;
   line-height: 28px;
-  color: ${Colors.BLACK};
+  color: ${Colors.Black};
   margin: 15px 0;
 `;
 

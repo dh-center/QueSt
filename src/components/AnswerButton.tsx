@@ -19,7 +19,7 @@ const button = StyleSheet.create({
 const buttonStyles = StyleSheet.create({
   active: {
     ...button.button,
-    backgroundColor: Colors.WHITE,
+    backgroundColor: Colors.White,
     elevation: 10,
     shadowColor: '#414366',
     shadowOffset: {
@@ -31,30 +31,30 @@ const buttonStyles = StyleSheet.create({
   },
   disabled: {
     ...button.button,
-    backgroundColor: Colors.WHITE,
+    backgroundColor: Colors.White,
   },
   unselectedCorrect: {
     ...button.button,
-    backgroundColor: Colors.WHITE,
+    backgroundColor: Colors.White,
     borderWidth: 2,
     borderStyle: 'solid',
-    borderColor: Colors.GREEN,
+    borderColor: Colors.Green,
   },
   selectedCorrect: {
     ...button.button,
-    backgroundColor: Colors.GREEN,
+    backgroundColor: Colors.Green,
   },
   selectedWrong: {
     ...button.button,
-    backgroundColor: Colors.RED,
+    backgroundColor: Colors.Red,
   },
   blackButtonText: {
     ...button.buttonText,
-    color: Colors.BLACK,
+    color: Colors.Black,
   },
   whiteButtonText: {
     ...button.buttonText,
-    color: Colors.WHITE,
+    color: Colors.White,
   },
 });
 

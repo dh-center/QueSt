@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
   button: {
     borderStyle: 'solid',
     borderBottomWidth: 1,
-    borderBottomColor: Colors.BLACK,
+    borderBottomColor: Colors.Black,
   },
 
   /**

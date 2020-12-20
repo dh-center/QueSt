@@ -10,7 +10,7 @@ const QuestItem = styled.TouchableOpacity`
   min-height: 60px;
   flex-direction: row;
   align-items: center;
-  background-color: ${Colors.WHITE};
+  background-color: ${Colors.White};
   border-radius: 15px;
   margin: 5px 15px 10px;
   padding-right: 22px;
@@ -21,7 +21,7 @@ const QuestItem = styled.TouchableOpacity`
 const IconView = styled.View`
   align-self: stretch;
   width: 50px;
-  background-color: ${Colors.YELLOW};
+  background-color: ${Colors.Yellow};
   justify-content: center;
   align-items: center;
   border-top-left-radius: 15px;
@@ -32,7 +32,7 @@ const QuestName = styled.Text`
   ${StyledFonts.uiWebRegular};
   font-size: 18px;
   line-height: 22px;
-  color: ${Colors.BLACK};
+  color: ${Colors.Black};
   margin-left: 9px;
   margin-right: 30px;
   flex: 1;

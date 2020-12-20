@@ -63,7 +63,7 @@ class AuthController {
   private static sensitiveInfoOptions = {
     sharedPreferencesName: 'questSharedPrefs',
     keychainService: 'questKeychain',
-  }
+  };
 
   /**
    * LocalStorage key for storing access token
@@ -73,7 +73,7 @@ class AuthController {
   /**
    * Array of listeners on AuthState change event
    */
-  private listeners: SubscribeHandler[] = []
+  private listeners: SubscribeHandler[] = [];
 
   /**
    * Auth controller initializer
@@ -241,10 +241,10 @@ class AuthController {
    *
    * @param obj - object to convert
    */
-  private objToQueryString(obj: object): string {
+  private objToQueryString(obj: Record<string, string | number | boolean | null>): string {
     return Object.entries(obj)
       .reduce((acc, [key, value]) => {
-        acc.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+        acc.push(encodeURIComponent(key) + '=' + encodeURIComponent(value || ''));
 
         return acc;
       }, [] as string[])
