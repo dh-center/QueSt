@@ -103,9 +103,11 @@ const TabNavigator = styled(Tab.Navigator).attrs(() => ({
 /**
  * Styled svg icons
  * Adds color for icons
+ *
+ * @param p
  */
-const Icon = styled.View`
-  color: ${Colors.DarkBlue}
+const Icon = styled.View<{color: string}>`
+  color: ${p => p.color}
 `;
 
 /**
@@ -121,8 +123,8 @@ export default function MainTabsNavigation(): React.ReactElement {
           name="Map"
           options={{
             title: t('map.title').toLowerCase(),
-            tabBarIcon: (): React.ReactElement => {
-              return <Icon as={Map}/>;
+            tabBarIcon: ({ color }): React.ReactElement => {
+              return <Icon color={color} as={Map}/>;
             },
           }}
           component={MapScreen}
@@ -131,8 +133,8 @@ export default function MainTabsNavigation(): React.ReactElement {
           name="Quests"
           options={{
             title: t('quests.title').toLowerCase(),
-            tabBarIcon: (): React.ReactElement => {
-              return <Icon as={Quests}/>;
+            tabBarIcon: ({ color }): React.ReactElement => {
+              return <Icon color={color} as={Quests}/>;
             },
           }}
           component={QuestsStackNavigation}
@@ -141,8 +143,8 @@ export default function MainTabsNavigation(): React.ReactElement {
           name="Profile"
           options={{
             title: t('profile.title').toLowerCase(),
-            tabBarIcon: (): React.ReactElement => {
-              return <Icon as={Account}/>;
+            tabBarIcon: ({ color }): React.ReactElement => {
+              return <Icon color={color} as={Account}/>;
             },
           }}
           component={ProfileStackNavigation}

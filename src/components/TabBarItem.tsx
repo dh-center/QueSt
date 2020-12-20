@@ -1,7 +1,8 @@
 import styled from 'styled-components/native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import { Animated, Pressable, Text } from 'react-native';
+import { Animated, Pressable } from 'react-native';
 import React, { useRef } from 'react';
+import Colors from '../styles/colors';
 
 const TabButton = styled(Pressable)`
   align-items: center;
@@ -23,7 +24,7 @@ export default function TabBarItem({ tabBarOptions, index }: TabBarItemProps): R
   const { options } = tabBarOptions.descriptors[route.key];
   const isFocused = tabBarOptions.state.index === index;
 
-  const translateYAnim = useRef(new Animated.Value(-5)).current;
+  const translateYAnim = useRef(new Animated.Value(0)).current;
 
   /**
    * Helper function to render the icon
@@ -39,7 +40,7 @@ export default function TabBarItem({ tabBarOptions, index }: TabBarItemProps): R
 
     return icon({
       focused: true,
-      color: 'red',
+      color: isFocused ? Colors.Blue : Colors.Gray,
       size: defaultIconSize,
     });
   };
@@ -68,7 +69,7 @@ export default function TabBarItem({ tabBarOptions, index }: TabBarItemProps): R
       Animated.timing(
         translateYAnim,
         {
-          toValue: -10,
+          toValue: -5,
           useNativeDriver: false,
           duration: 100,
         }
@@ -77,7 +78,7 @@ export default function TabBarItem({ tabBarOptions, index }: TabBarItemProps): R
       Animated.timing(
         translateYAnim,
         {
-          toValue: -5,
+          toValue: 0,
           useNativeDriver: false,
           duration: 100,
         }
@@ -91,7 +92,6 @@ export default function TabBarItem({ tabBarOptions, index }: TabBarItemProps): R
       accessibilityState={isFocused ? { selected: true } : {}}
       onPress={onPress}
       onLongPress={onLongPress}
-      style={{ flex: 1 }}
     >
       <Animated.View style={{
         transform: [ {
@@ -100,9 +100,17 @@ export default function TabBarItem({ tabBarOptions, index }: TabBarItemProps): R
       }}>
         {renderIcon()}
       </Animated.View>
-      <Text style={{ color: isFocused ? '#673ab7' : '#222' }}>
+      <Animated.Text
+        style={{
+          marginTop: 5,
+          color: translateYAnim.interpolate({
+            inputRange: [-5, -0],
+            outputRange: [Colors.Black, Colors.Gray],
+          }),
+        }}
+      >
         {options.title}
-      </Text>
+      </Animated.Text>
     </TabButton>
   );
 }
