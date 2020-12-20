@@ -3,14 +3,35 @@ import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { Animated, Pressable } from 'react-native';
 import React, { useRef } from 'react';
 import Colors from '../styles/colors';
+import { StyledFonts } from '../styles/textStyles';
 
 const TabButton = styled(Pressable)`
   align-items: center;
   flex: 1;
+  padding-top: 20px;
+  padding-bottom: 3px;
 `;
 
+const RouteCaption = styled.Text<{focused: boolean}>`
+  margin-top: 5px;
+  ${StyledFonts.uiWebRegular};
+  line-height: 18px;
+  font-size: 12px;
+  ${p => p.focused && 'text-decoration: underline;'}
+`;
+
+/**
+ * Props for Tab bar item
+ */
 interface TabBarItemProps {
-  tabBarOptions: BottomTabBarProps;
+  /**
+   * Main tab bar props
+   */
+  tabBarProps: BottomTabBarProps;
+
+  /**
+   * Tab bar item index
+   */
   index: number;
 }
 
@@ -19,10 +40,10 @@ interface TabBarItemProps {
  *
  * @param props - props for component rendering
  */
-export default function TabBarItem({ tabBarOptions, index }: TabBarItemProps): React.ReactElement {
-  const route = tabBarOptions.state.routes[index];
-  const { options } = tabBarOptions.descriptors[route.key];
-  const isFocused = tabBarOptions.state.index === index;
+export default function TabBarItem({ tabBarProps, index }: TabBarItemProps): React.ReactElement {
+  const route = tabBarProps.state.routes[index];
+  const { options } = tabBarProps.descriptors[route.key];
+  const isFocused = tabBarProps.state.index === index;
 
   const translateYAnim = useRef(new Animated.Value(0)).current;
 
@@ -45,23 +66,19 @@ export default function TabBarItem({ tabBarOptions, index }: TabBarItemProps): R
     });
   };
 
+  /**
+   * On press event handler
+   */
   const onPress = (): void => {
-    const event = tabBarOptions.navigation.emit({
+    const event = tabBarProps.navigation.emit({
       type: 'tabPress',
       target: route.key,
       canPreventDefault: true,
     });
 
     if (!isFocused && !event.defaultPrevented) {
-      tabBarOptions.navigation.navigate(route.name);
+      tabBarProps.navigation.navigate(route.name);
     }
-  };
-
-  const onLongPress = (): void => {
-    tabBarOptions.navigation.emit({
-      type: 'tabLongPress',
-      target: route.key,
-    });
   };
 
   React.useEffect(() => {
@@ -91,7 +108,6 @@ export default function TabBarItem({ tabBarOptions, index }: TabBarItemProps): R
       accessibilityRole="button"
       accessibilityState={isFocused ? { selected: true } : {}}
       onPress={onPress}
-      onLongPress={onLongPress}
     >
       <Animated.View style={{
         transform: [ {
@@ -100,17 +116,18 @@ export default function TabBarItem({ tabBarOptions, index }: TabBarItemProps): R
       }}>
         {renderIcon()}
       </Animated.View>
-      <Animated.Text
+      <RouteCaption
+        as={Animated.Text}
         style={{
-          marginTop: 5,
           color: translateYAnim.interpolate({
             inputRange: [-5, -0],
             outputRange: [Colors.Black, Colors.Gray],
           }),
         }}
+        focused={isFocused}
       >
         {options.title}
-      </Animated.Text>
+      </RouteCaption>
     </TabButton>
   );
 }

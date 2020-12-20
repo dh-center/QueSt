@@ -10,6 +10,8 @@ const TabBarContainer = styled.SafeAreaView`
   border-top-right-radius: 15px;
   background-color: white;
   bottom: 0;
+  elevation: ${8};
+  box-shadow: 0 4px 4.35px black;
 `;
 
 /**
@@ -29,7 +31,7 @@ export default function TabBar({ state, descriptors, navigation }: BottomTabBarP
       {state.routes.map((route, index) => {
         return (
           <TabBarItem
-            tabBarOptions={{
+            tabBarProps={{
               state,
               descriptors,
               navigation,
