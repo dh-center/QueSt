@@ -12,7 +12,7 @@ const TabButton = styled(Pressable)`
 `;
 
 const RouteCaption = styled.Text`
-  margin-top: 5px;
+  margin-top: 3px;
   ${StyledFonts.uiWebRegular};
   line-height: 18px;
   font-size: 12px;
