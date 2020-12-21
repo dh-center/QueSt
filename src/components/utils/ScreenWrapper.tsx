@@ -1,7 +1,7 @@
 import React, { ReactElement, ReactNode } from 'react';
 import styled from 'styled-components/native';
 import Colors from '../../styles/colors';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, StyleProp, View, ViewStyle } from 'react-native';
 
 /**
  * Styled SafeAreaView component
@@ -44,6 +44,11 @@ interface ScreenWrapperProps {
    * Children components in wrapper
    */
   children?: ReactNode;
+
+  /**
+   * Custom styles
+   */
+  style?: StyleProp<ViewStyle>
 }
 
 /**
@@ -54,7 +59,7 @@ interface ScreenWrapperProps {
 export default function ScreenWrapper(props: ScreenWrapperProps): ReactElement {
   if (props.scrollable) {
     return (
-      <Body>
+      <Body style={props.style}>
         <CustomScrollView>
           { props.children }
         </CustomScrollView>
@@ -62,7 +67,7 @@ export default function ScreenWrapper(props: ScreenWrapperProps): ReactElement {
     );
   } else {
     return (
-      <BodyWithoutScrollView>
+      <BodyWithoutScrollView style={props.style}>
         { props.children }
       </BodyWithoutScrollView>
     );
