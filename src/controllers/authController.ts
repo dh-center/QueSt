@@ -115,8 +115,6 @@ class AuthController {
       photo: userData.has_photo ? userData.photo_200 : undefined,
     });
 
-    console.log(queryString);
-
     const response = await fetch(`${API_ENDPOINT}/oauth/vk/callback?${queryString}`, {
       method: 'POST',
     });
