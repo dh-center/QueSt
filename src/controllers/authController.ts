@@ -104,13 +104,15 @@ class AuthController {
   public async authWithVK(): Promise<void> {
     const data = await VKLogin.login(['friends', 'photos', 'email', 'offline']);
 
-    const userData = await (await fetch(`https://api.vk.com/method/account.getProfileInfo?v=5.126&access_token=${data.access_token}`)).json();
+    const userDataResponse = await (await fetch(`https://api.vk.com/method/users.get?v=5.126&fields=photo_200,has_photo&access_token=${data.access_token}`)).json();
 
+    const userData = userDataResponse.response.pop();
     const queryString = this.objToQueryString({
       accessToken: data.access_token,
       userId: data.user_id,
-      firstName: userData.response.first_name,
-      lastName: userData.response.last_name,
+      firstName: userData.first_name,
+      lastName: userData.last_name,
+      photo: userData.has_photo ? userData.photo_200 : undefined,
     });
 
     const response = await fetch(`${API_ENDPOINT}/oauth/vk/callback?${queryString}`, {

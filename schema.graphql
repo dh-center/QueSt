@@ -39,6 +39,22 @@ directive @specifiedBy(
   url: String!
 ) on SCALAR
 
+input AddArchitectInput {
+  """Location instance id"""
+  locationInstanceId: GlobalId!
+
+  """Architect for adding"""
+  architectId: GlobalId!
+}
+
+type AddArchitectPayload {
+  """New relation id"""
+  recordId: GlobalId!
+
+  """New relation"""
+  record: Relation!
+}
+
 """Location address representation"""
 type Address {
   """Country data"""
@@ -168,23 +184,23 @@ type CreateLocationPayload {
 }
 
 input CreatePersonInput {
-  """Person's first name"""
-  firstName: String
-
   """Person's last name"""
-  lastName: String
+  lastName: MultilingualString
+
+  """Person's first name"""
+  firstName: MultilingualString
 
   """Person's patronymic"""
-  patronymic: String
+  patronymic: MultilingualString
 
   """Person's pseudonym"""
-  pseudonym: String
+  pseudonym: MultilingualString
 
-  """Person's profession"""
-  profession: String
+  """Person's professions"""
+  professions: [String!]
 
   """Person's description"""
-  description: String
+  description: MultilingualString
 
   """Person's birth date"""
   birthDate: String
@@ -241,6 +257,9 @@ input CreateRelationInput {
 
   """Quote about relation"""
   quote: MultilingualString!
+
+  """Link to quote"""
+  link: MultilingualString!
 }
 
 type CreateRelationPayload {
@@ -256,7 +275,7 @@ input CreateRelationTypeInput {
   name: MultilingualString!
 
   """Relation type synonyms"""
-  synonyms: [MultilingualString]!
+  synonyms: [String!]
 }
 
 type CreateRelationTypePayload {
@@ -461,6 +480,12 @@ type LocationInstanceMutations {
   """Create location instance"""
   create(input: CreateLocationInstanceInput!): CreateLocationInstancePayload!
 
+  """Add architect to location instance"""
+  addArchitect(input: AddArchitectInput!): AddArchitectPayload!
+
+  """Remove architects from location instance"""
+  removeArchitect(input: RemoveArchitectInput!): RemoveArchitectPayload!
+
   """Update location instance"""
   update(input: UpdateLocationInstanceInput!): UpdateLocationInstancePayload!
 
@@ -557,22 +582,22 @@ type Person implements Node {
   id: ID!
 
   """Person's first name"""
-  firstName: String
+  firstName: MultilingualString
 
   """Person's last name"""
-  lastName: String
+  lastName: MultilingualString
 
   """Person's patronymic"""
-  patronymic: String
+  patronymic: MultilingualString
 
   """Person's pseudonym"""
-  pseudonym: String
+  pseudonym: MultilingualString
 
-  """Person's profession"""
-  profession: String
+  """Person's professions"""
+  professions: [String]
 
   """Person's description"""
-  description: String
+  description: MultilingualString
 
   """Person's birth date"""
   birthDate: String
@@ -888,7 +913,10 @@ type Relation implements Node {
   relationType: RelationType
 
   """Relation's quote"""
-  quote: String
+  quote: MultilingualString
+
+  """Link to quote source"""
+  link: MultilingualString
 }
 
 """Model for representing list of relations"""
@@ -932,7 +960,7 @@ type RelationType implements Node {
   name: MultilingualString!
 
   """Relation type synonyms"""
-  synonyms: [MultilingualString]!
+  synonyms: [String!]!
 }
 
 """Model for representing list of relation types"""
@@ -965,6 +993,19 @@ type RelationTypeMutations {
 
   """Delete relation type"""
   delete(id: GlobalId!): DeleteRelationTypePayload!
+}
+
+input RemoveArchitectInput {
+  """Location instance id"""
+  locationInstanceId: GlobalId!
+
+  """Architect for removing"""
+  architectId: GlobalId!
+}
+
+type RemoveArchitectPayload {
+  """Deleted relation id"""
+  recordId: GlobalId!
 }
 
 """Route between locations"""
@@ -1095,11 +1136,11 @@ input UpdatePersonInput {
   """ID of person for updating"""
   id: GlobalId!
 
-  """Person's first name"""
-  firstName: String
-
   """Person's last name"""
   lastName: String
+
+  """Person's first name"""
+  firstName: String
 
   """Person's patronymic"""
   patronymic: String
@@ -1107,8 +1148,8 @@ input UpdatePersonInput {
   """Person's pseudonym"""
   pseudonym: String
 
-  """Person's profession"""
-  profession: String
+  """Person's professions"""
+  professions: [String!]
 
   """Person's description"""
   description: String
@@ -1174,6 +1215,9 @@ input UpdateRelationInput {
 
   """Quote about relation"""
   quote: MultilingualString
+
+  """Link to quote"""
+  link: MultilingualString
 }
 
 type UpdateRelationPayload {
@@ -1192,7 +1236,7 @@ input UpdateRelationTypeInput {
   name: MultilingualString
 
   """Relation type synonyms"""
-  synonyms: [MultilingualString]
+  synonyms: [String!]
 }
 
 type UpdateRelationTypePayload {
@@ -1215,5 +1259,13 @@ type User implements Node {
 
   """User liked routes"""
   likedRoutes: [Route!]!
-}
 
+  """User profile photo url"""
+  photo: String
+
+  """User first name"""
+  firstName: String
+
+  """User last name"""
+  lastName: String
+}
