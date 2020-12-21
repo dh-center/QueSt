@@ -120,25 +120,14 @@ const styles = StyleSheet.create({
   },
   answersView: {
     paddingTop: 30,
-    paddingRight: 15,
+    paddingHorizontal: 15,
     paddingBottom: 75,
-    paddingLeft: 15,
   },
   headerText: {
     marginTop: 30,
     color: Colors.Black,
     fontSize: 22,
     lineHeight: 22,
-  },
-  blackAnswerText: {
-    fontSize: 18,
-    lineHeight: 22,
-    color: Colors.Black,
-  },
-  whiteAnswerText: {
-    fontSize: 18,
-    lineHeight: 22,
-    color: Colors.White,
   },
   next: {
     height: 64,

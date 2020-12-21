@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
  */
 export default function Input(props: TextInputProps): ReactElement {
   return (
-    <View style={[props.style, styles.container]}>
+    <View style={[styles.container, props.style]}>
       <TextInput
         {...props}
         placeholderTextColor={'rgba(34, 34, 34, 0.5)'}
