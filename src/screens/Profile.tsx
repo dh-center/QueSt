@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import { ActivityIndicator, SafeAreaView, Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
@@ -15,6 +16,9 @@ import Collection from '../images/collection.svg';
 import Rewards from '../images/rewards.svg';
 import ProgressBlock from '../components/ProgressBlock';
 import ProfileButton from '../components/ProfileButton';
+import { graphql, QueryRenderer } from 'react-relay';
+import enviroment from '../enviroment';
+import { ProfileQuery } from './__generated__/ProfileQuery.graphql';
 
 /**
  * Type with props of screen 'Main' in ProfileStack
@@ -76,23 +80,61 @@ export default function ProfileScreen(): React.ReactElement {
   const { t } = useTranslation();
 
   return (
-    <Body>
-      <Scroll>
-        <Ellipse/>
-        <SettingsButton onPress={(): void => navigation.navigate('Settings')}>
-          <Settings/>
-        </SettingsButton>
-        <AvatarView>
-          <Avatar source={require('../images/lapki.jpg')}/>
-        </AvatarView>
-        <Name>Соня</Name>
-        <ProgressBlock totalExp={200} currentExp={153}/>
-        <ProfileButton icon={Friends} buttonText={t('profile.friends')}/>
-        <ProfileButton icon={Rating} buttonText={t('profile.rating')}/>
-        <ProfileButton icon={Achievements} buttonText={t('profile.achievements')}/>
-        <ProfileButton icon={Collection} buttonText={t('profile.cards')}/>
-        <ProfileButton icon={Rewards} buttonText={t('profile.rewards')}/>
-      </Scroll>
-    </Body>
+    <QueryRenderer<ProfileQuery>
+      environment={enviroment}
+      query={graphql`
+        query ProfileQuery {
+            user: me {
+              id
+              username
+              photo
+              firstName
+            }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          return (
+            <Body>
+              <Text>Something went wrong</Text>
+            </Body>
+          );
+        }
+
+        if (!props) {
+          return (
+            <SafeAreaView>
+              <ActivityIndicator size="large"/>
+            </SafeAreaView>
+          );
+        }
+
+        const imageSource = props.user.photo
+          ? { uri: props.user.photo }
+          : require('../images/lapki.jpg');
+
+        return (
+          <Body>
+            <Scroll>
+              <Ellipse/>
+              <SettingsButton onPress={(): void => navigation.navigate('Settings')}>
+                <Settings/>
+              </SettingsButton>
+              <AvatarView>
+                <Avatar source={imageSource}/>
+              </AvatarView>
+              <Name>{props.user.firstName || props.user.username}</Name>
+              <ProgressBlock totalExp={200} currentExp={153}/>
+              <ProfileButton icon={Friends} buttonText={t('profile.friends')}/>
+              <ProfileButton icon={Rating} buttonText={t('profile.rating')}/>
+              <ProfileButton icon={Achievements} buttonText={t('profile.achievements')}/>
+              <ProfileButton icon={Collection} buttonText={t('profile.cards')}/>
+              <ProfileButton icon={Rewards} buttonText={t('profile.rewards')}/>
+            </Scroll>
+          </Body>
+        );
+      }}
+      variables={{}}
+    />
   );
 }

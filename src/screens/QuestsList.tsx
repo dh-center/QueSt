@@ -4,9 +4,9 @@ import { Spinner } from 'native-base';
 import { graphql, QueryRenderer } from 'react-relay';
 import env from '../enviroment';
 import {
-  QuestsQuery,
-  QuestsQueryResponse
-} from './__generated__/QuestsQuery.graphql';
+  QuestsListQuery,
+  QuestsListQueryResponse
+} from './__generated__/QuestsListQuery.graphql';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
@@ -63,7 +63,7 @@ const ErrorText = styled.Text`
  *
  * @param props - data with query results
  */
-function QuestsListScreen(props: QuestsQueryResponse & {retry: (() => void) | null}): React.ReactElement {
+function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) | null}): React.ReactElement {
   const navigation = useNavigation<ListScreenNavigationProp>();
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
@@ -105,7 +105,7 @@ function QuestsListScreen(props: QuestsQueryResponse & {retry: (() => void) | nu
 }
 
 const query = graphql`
-  query QuestsQuery {
+  query QuestsListQuery {
     quests {
       edges {
         node {
@@ -123,7 +123,7 @@ const query = graphql`
  */
 export default function Quests(): React.ReactElement {
   return (
-    <QueryRenderer<QuestsQuery>
+    <QueryRenderer<QuestsListQuery>
       environment={env}
       query={query}
       variables={{}}

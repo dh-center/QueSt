@@ -3,8 +3,8 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
-export type QuestsQueryVariables = {};
-export type QuestsQueryResponse = {
+export type QuestsListQueryVariables = {};
+export type QuestsListQueryResponse = {
     readonly quests: {
         readonly edges: ReadonlyArray<{
             readonly node: {
@@ -15,15 +15,15 @@ export type QuestsQueryResponse = {
         }>;
     };
 };
-export type QuestsQuery = {
-    readonly response: QuestsQueryResponse;
-    readonly variables: QuestsQueryVariables;
+export type QuestsListQuery = {
+    readonly response: QuestsListQueryResponse;
+    readonly variables: QuestsListQueryVariables;
 };
 
 
 
 /*
-query QuestsQuery {
+query QuestsListQuery {
   quests {
     edges {
       node {
@@ -98,7 +98,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "QuestsQuery",
+    "name": "QuestsListQuery",
     "selections": (v0/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -107,18 +107,18 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "QuestsQuery",
+    "name": "QuestsListQuery",
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "a73cc8c97b8dd2b63ac45f3c7aff7c23",
+    "cacheID": "97b5f43537aa14993f13d117ac9ae01c",
     "id": null,
     "metadata": {},
-    "name": "QuestsQuery",
+    "name": "QuestsListQuery",
     "operationKind": "query",
-    "text": "query QuestsQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n      }\n    }\n  }\n}\n"
+    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'd9b01503035d33fa3e32c309c40b3c14';
+(node as any).hash = 'bb156d7a0695835d977af41a1787f206';
 export default node;
