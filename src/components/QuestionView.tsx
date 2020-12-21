@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import Colors from '../styles/colors';
 import Input from '../components/ui/Input';
