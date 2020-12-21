@@ -11,12 +11,11 @@ const TabButton = styled(Pressable)`
   padding-bottom: 3px;
 `;
 
-const RouteCaption = styled.Text<{focused: boolean}>`
+const RouteCaption = styled.Text`
   margin-top: 5px;
   ${StyledFonts.uiWebRegular};
   line-height: 18px;
   font-size: 12px;
-  ${p => p.focused && 'text-decoration: underline;'}
 `;
 
 const AnimatedView = styled.View`
@@ -128,7 +127,6 @@ export default function TabBarItem({ tabBarProps, index }: TabBarItemProps): Rea
               outputRange: [Colors.Black, Colors.Gray],
             }),
           }}
-          focused={isFocused}
         >
           {options.title}
         </RouteCaption>
