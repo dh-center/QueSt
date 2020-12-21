@@ -97,9 +97,10 @@ const styles = StyleSheet.create({
  */
 export default function QuestionView(): React.ReactElement {
   const [answer, setAnswer] = useState('');
+  const [isAnswered, setIsAnswered] = useState<boolean>();
   let questionIcon;
 
-  if (answer === undefined) {
+  if (isAnswered === undefined) {
     /**
      * Question component, if question is active
      */
@@ -108,7 +109,7 @@ export default function QuestionView(): React.ReactElement {
     /**
      * RightAnswer or WrongAnswer component, according the user answer
      */
-    questionIcon = (answer) ? <RightAnswer/> : <WrongAnswer/>;
+    questionIcon = (isAnswered) ? <RightAnswer/> : <WrongAnswer/>;
   }
 
   return (
@@ -125,8 +126,8 @@ export default function QuestionView(): React.ReactElement {
             value={answer}
             onChangeText={text => setAnswer(text)}
           />
-          {answer &&
-          <TouchableOpacity>
+          {(answer !== '') &&
+          <TouchableOpacity onPress={() => setIsAnswered(answer === testQuestion.answer)}>
             <Next style={styles.next}/>
           </TouchableOpacity>
           }
