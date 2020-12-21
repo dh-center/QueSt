@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import { MAPBOX_ACCESS_TOKEN } from '@env';
 import TestView from '../components/TestView';
+import QuestionView from '../components/QuestionView';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { TabParamList } from '../navigation/mainTabs';
 
@@ -35,7 +36,7 @@ export default function MapScreen({ route }: Props): React.ReactElement {
   return (
     <View style={styles.page}>
       <MapboxGL.MapView style={styles.map} />
-      {route.params?.questId && <TestView />}
+      {route.params?.questId && <QuestionView />}
     </View>
   );
 }
