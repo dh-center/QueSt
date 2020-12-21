@@ -6,7 +6,6 @@ import Colors from '../styles/colors';
 import { StyledFonts } from '../styles/textStyles';
 
 const TabButton = styled(Pressable)`
-  align-items: center;
   flex: 1;
   padding-top: 20px;
   padding-bottom: 3px;
@@ -18,6 +17,10 @@ const RouteCaption = styled.Text<{focused: boolean}>`
   line-height: 18px;
   font-size: 12px;
   ${p => p.focused && 'text-decoration: underline;'}
+`;
+
+const AnimatedView = styled.View`
+  align-items: center;
 `;
 
 /**
@@ -109,25 +112,27 @@ export default function TabBarItem({ tabBarProps, index }: TabBarItemProps): Rea
       accessibilityState={isFocused ? { selected: true } : {}}
       onPress={onPress}
     >
-      <Animated.View style={{
-        transform: [ {
-          translateY: translateYAnim,
-        } ],
-      }}>
-        {renderIcon()}
-      </Animated.View>
-      <RouteCaption
-        as={Animated.Text}
+      <AnimatedView
+        as={Animated.View}
         style={{
-          color: translateYAnim.interpolate({
-            inputRange: [-5, -0],
-            outputRange: [Colors.Black, Colors.Gray],
-          }),
-        }}
-        focused={isFocused}
-      >
-        {options.title}
-      </RouteCaption>
+          transform: [ {
+            translateY: translateYAnim,
+          } ],
+        }}>
+        {renderIcon()}
+        <RouteCaption
+          as={Animated.Text}
+          style={{
+            color: translateYAnim.interpolate({
+              inputRange: [-5, -0],
+              outputRange: [Colors.Black, Colors.Gray],
+            }),
+          }}
+          focused={isFocused}
+        >
+          {options.title}
+        </RouteCaption>
+      </AnimatedView>
     </TabButton>
   );
 }
