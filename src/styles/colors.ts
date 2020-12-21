@@ -41,6 +41,11 @@ enum Colors {
    * White color
    */
   White = '#FFFFFF',
+
+  /**
+   * Gray color
+   */
+  Gray = '#A9AAB5'
 }
 
 export default Colors;
