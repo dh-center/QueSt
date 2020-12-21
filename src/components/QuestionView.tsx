@@ -1,18 +1,13 @@
-import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  ScrollView,
-  View,
-  TouchableOpacity
-} from 'react-native';
+import React, { useRef, useState } from 'react';
+import { TouchableOpacity } from 'react-native';
 import Colors from '../styles/colors';
 import Input from '../components/ui/Input';
 import Question from '../images/questionWrite.svg';
 import RightAnswer from '../images/rightAnswer.svg';
 import WrongAnswer from '../images/wrongAnswer.svg';
 import Next from '../images/nextButton.svg';
-import ScreenWrapper from './utils/ScreenWrapper';
+import styled from 'styled-components/native';
+import { StyledFonts } from '../styles/textStyles';
 
 /**
  * Props for test question
@@ -34,63 +29,48 @@ const testQuestion: Question = {
   answer: 'Есенищина',
 };
 
-const styles = StyleSheet.create({
-  body: {
-    position: 'absolute',
-    height: '100%',
-  },
-  view: {
-    backgroundColor: Colors.Background,
-  },
-  headerBlock: {
-    backgroundColor: Colors.White,
-    paddingTop: 74,
-    paddingRight: 15,
-    paddingBottom: 30,
-    paddingLeft: 15,
-    borderBottomRightRadius: 15,
-    borderBottomLeftRadius: 15,
-    elevation: 4,
-    shadowColor: '#414366',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  answersView: {
-    paddingTop: 30,
-    paddingHorizontal: 15,
-    paddingBottom: 75,
-  },
-  headerText: {
-    marginTop: 30,
-    color: Colors.Black,
-    fontSize: 22,
-    lineHeight: 22,
-  },
-  input: {
-    marginBottom: 10,
-  },
-  next: {
-    height: 64,
-    width: 64,
-    marginVertical: 15,
-    borderRadius: 32,
-    elevation: 10,
-    alignSelf: 'center',
-    shadowColor: '#414366',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 20,
-  },
-});
+const Body = styled.ScrollView`
+  position: absolute;
+  height: 100%;
+  background-color: ${Colors.Background};
+`;
+
+const Header = styled.View`
+  background-color: ${Colors.White};
+  padding: 74px 15px 30px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  elevation: ${4};
+  box-shadow: 0 2px 2.62px rgba(0,0,0,0.1);
+  align-items: center;
+`;
+
+const HeaderText = styled.Text`
+  ${StyledFonts.uiWebMedium};
+  font-size: 22px;
+  line-height: 22px;
+  color: ${Colors.Black};
+  margin-top: 30px;
+`;
+
+const Answer = styled.View`
+  padding: 30px 15px 75px;
+`;
+
+const NextButton = styled(Next)`
+  height: 64px;
+  width: 64px;
+  margin: 15px 0;
+  border-radius: 32px;
+  elevation: ${8};
+  box-shadow: 0 4px 4.65px rgba(0,0,0,0.2);
+  align-self: center;
+`;
+
+const AnswerInput = styled(Input)<{ customBackground: string }>`
+  background-color: ${(props) => props.customBackground};
+  margin-bottom: 10px;
+`;
 
 /**
  * Displays test
@@ -99,40 +79,60 @@ export default function QuestionView(): React.ReactElement {
   const [answer, setAnswer] = useState('');
   const [isAnswered, setIsAnswered] = useState<boolean>();
   let questionIcon;
+  let background;
+  let textColor = Colors.Black;
 
   if (isAnswered === undefined) {
     /**
      * Question component, if question is active
      */
     questionIcon = <Question/>;
+
+    /**
+     * Background color for input, if question is active
+     */
+    background = Colors.White;
   } else {
     /**
      * RightAnswer or WrongAnswer component, according the user answer
      */
     questionIcon = (isAnswered) ? <RightAnswer/> : <WrongAnswer/>;
+
+    /**
+     * Background color for input, according the user answer
+     */
+    background = (isAnswered) ? Colors.Green : Colors.Red;
+
+    /**
+     * Background color for input, according the user answer
+     */
+    textColor = Colors.White;
   }
 
   return (
-    <View style={styles.body}>
-      <ScrollView style={styles.view}>
-        <View style={styles.headerBlock}>
-          {questionIcon}
-          <Text style={styles.headerText}>{testQuestion.question}</Text>
-        </View>
-        <View style={styles.answersView}>
-          <Input
-            placeholder={'Введите ответ'}
-            style={styles.input}
-            value={answer}
-            onChangeText={text => setAnswer(text)}
-          />
-          {(answer !== '') &&
+    <Body>
+      <Header>
+        {questionIcon}
+        <HeaderText>{testQuestion.question}</HeaderText>
+      </Header>
+      <Answer>
+        <AnswerInput
+          customBackground={background}
+          textStyle={{
+            color: textColor,
+            borderBottomColor: textColor,
+          }}
+          placeholder={'Введите ответ'}
+          value={answer}
+          onChangeText={text => setAnswer(text)}
+          editable={isAnswered === undefined}
+        />
+        {(answer !== '') &&
           <TouchableOpacity onPress={() => setIsAnswered(answer === testQuestion.answer)}>
-            <Next style={styles.next}/>
+            <NextButton/>
           </TouchableOpacity>
-          }
-        </View>
-      </ScrollView>
-    </View>
+        }
+      </Answer>
+    </Body>
   );
 }

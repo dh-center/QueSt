@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { StyleSheet, TextInput, TextInputProps, View } from 'react-native';
+import { StyleSheet, TextInput, TextInputProps, TextStyle, View } from 'react-native';
 import textStyles from '../../styles/textStyles';
 import Colors from '../../styles/colors';
 
@@ -66,17 +66,27 @@ const styles = StyleSheet.create({
 });
 
 /**
+ * Props for input text
+ */
+export interface TextProps {
+  /**
+   * Text style
+   */
+  textStyle: TextStyle;
+}
+
+/**
  * Text input with custom style
  *
  * @param props - input props
  */
-export default function Input(props: TextInputProps): ReactElement {
+export default function Input(props: TextInputProps & TextProps): ReactElement {
   return (
     <View style={[styles.container, props.style]}>
       <TextInput
         {...props}
         placeholderTextColor={'rgba(34, 34, 34, 0.5)'}
-        style={styles.textInput}
+        style={[styles.textInput, props.textStyle]}
         underlineColorAndroid={props.underlineColorAndroid || 'transparent'}
         spellCheck={props.spellCheck || false}
         autoCorrect={props.autoCorrect || false}
