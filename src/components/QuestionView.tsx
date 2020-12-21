@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
  * Displays test
  */
 export default function QuestionView(): React.ReactElement {
-  const [answer, setAnswer] = useState<boolean>();
+  const [answer, setAnswer] = useState('');
   let questionIcon;
 
   if (answer === undefined) {
@@ -122,8 +122,10 @@ export default function QuestionView(): React.ReactElement {
           <Input
             placeholder={'Введите ответ'}
             style={styles.input}
+            value={answer}
+            onChangeText={text => setAnswer(text)}
           />
-          {(answer !== undefined) &&
+          {answer &&
           <TouchableOpacity>
             <Next style={styles.next}/>
           </TouchableOpacity>
