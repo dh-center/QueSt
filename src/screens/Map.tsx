@@ -34,7 +34,19 @@ const styles = StyleSheet.create({
 export default function MapScreen({ route }: Props): React.ReactElement {
   return (
     <View style={styles.page}>
-      <MapboxGL.MapView style={styles.map} />
+      <MapboxGL.MapView style={styles.map}>
+        <MapboxGL.Camera
+          defaultSettings={{
+            centerCoordinate: [30.3462, 59.9296],
+            zoomLevel: 9,
+          }}
+          maxBounds={{
+            ne: [31.263740364566985, 60.282501691026226],
+            sw: [29.281524984914313, 59.62023377214044],
+          }}
+          minZoomLevel={8.5}
+        />
+      </MapboxGL.MapView>
       {route.params?.questId && <TestView />}
     </View>
   );
