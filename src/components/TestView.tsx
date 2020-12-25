@@ -48,15 +48,7 @@ const testQuestion: Question = {
 };
 
 const styles = StyleSheet.create({
-  body: {
-    position: 'absolute',
-    height: '100%',
-  },
-  view: {
-    backgroundColor: Colors.Background,
-  },
   headerBlock: {
-    backgroundColor: Colors.White,
     paddingTop: 74,
     paddingRight: 15,
     paddingBottom: 30,
@@ -186,54 +178,52 @@ export default function TestView(): React.ReactElement {
   }
 
   return (
-    <View style={styles.body}>
-      <ScrollView style={styles.view}>
-        <View style={styles.headerBlock}>
-          {questionIcon}
-          <Text style={styles.headerText}>{testQuestion.question}</Text>
-        </View>
-        <View style={styles.answersView}>
-          {
-            testQuestion.answers.map((answer, index) => {
-              let buttonState: AnswerButtonState = 'disabled';
+    <View>
+      <View style={styles.headerBlock}>
+        {questionIcon}
+        <Text style={styles.headerText}>{testQuestion.question}</Text>
+      </View>
+      <View style={styles.answersView}>
+        {
+          testQuestion.answers.map((answer, index) => {
+            let buttonState: AnswerButtonState = 'disabled';
 
-              switch (selectedAnswer) {
-                case undefined:
-                  buttonState = 'active';
-                  break;
+            switch (selectedAnswer) {
+              case undefined:
+                buttonState = 'active';
+                break;
 
-                case testQuestion.correctAnswerIndex:
-                  buttonState = index === testQuestion.correctAnswerIndex ? 'selectedCorrect' : 'disabled';
-                  break;
+              case testQuestion.correctAnswerIndex:
+                buttonState = index === testQuestion.correctAnswerIndex ? 'selectedCorrect' : 'disabled';
+                break;
 
-                default:
-                  if (index === testQuestion.correctAnswerIndex) {
-                    buttonState = 'unselectedCorrect';
-                  } else if (index === selectedAnswer) {
-                    buttonState = 'selectedWrong';
-                  }
-              }
-
-              return <AnswerButton
-                answerButtonState={buttonState}
-                buttonText={answer}
-                disabled={selectedAnswer !== undefined}
-                key={index.toString()}
-                activeOpacity={0.5}
-                onPress={(): void => {
-                  setSelectedAnswer(index);
-                }}
-              />;
+              default:
+                if (index === testQuestion.correctAnswerIndex) {
+                  buttonState = 'unselectedCorrect';
+                } else if (index === selectedAnswer) {
+                  buttonState = 'selectedWrong';
+                }
             }
-            )
+
+            return <AnswerButton
+              answerButtonState={buttonState}
+              buttonText={answer}
+              disabled={selectedAnswer !== undefined}
+              key={index.toString()}
+              activeOpacity={0.5}
+              onPress={(): void => {
+                setSelectedAnswer(index);
+              }}
+            />;
           }
-          {(selectedAnswer !== undefined) &&
+          )
+        }
+        {(selectedAnswer !== undefined) &&
           <TouchableOpacity>
             <Next style={styles.next}/>
           </TouchableOpacity>
-          }
-        </View>
-      </ScrollView>
+        }
+      </View>
       {testQuestion.picture &&
       <Modal
         supportedOrientations={['portrait', 'landscape']}
