@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { graphql, QueryRenderer } from 'react-relay';
 import enviroment from '../enviroment';
@@ -6,7 +6,7 @@ import MapboxGL from '@react-native-mapbox-gl/maps';
 import Colors from '../styles/colors';
 import { QuestWalkthroughRendererQuery } from './__generated__/QuestWalkthroughRendererQuery.graphql';
 import { Modalize } from 'react-native-modalize';
-import TestView from './TestView';
+import TestView from './questBlocks/TestView';
 
 const styles = StyleSheet.create({
   page: {
@@ -25,6 +25,11 @@ const styles = StyleSheet.create({
   },
 });
 
+interface AbstractBlockData {
+  type: string;
+  [key: string]: unknown;
+}
+
 interface QuestWalkthroughRendererProps {
   questId: string;
 }
@@ -36,6 +41,7 @@ interface QuestWalkthroughRendererProps {
  */
 export default function QuestWalkthroughRenderer({ questId }: QuestWalkthroughRendererProps): React.ReactElement {
   const modalizeRef = useRef<Modalize>(null);
+  const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
 
   return (
     <QueryRenderer<QuestWalkthroughRendererQuery>
@@ -60,6 +66,34 @@ export default function QuestWalkthroughRenderer({ questId }: QuestWalkthroughRe
           return <Text>Loading</Text>;
         }
 
+        const questData = props.quest?.data?.blocks as AbstractBlockData[];
+
+        if (!questData) {
+          return <Text>No quest data</Text>;
+        }
+
+        const set = new Set();
+
+        questData.forEach(block => set.add(block.type));
+
+        console.log(set);
+
+        const currentBlock = questData[currentBlockIndex];
+
+        let component;
+
+        switch (currentBlock.type) {
+          case 'locationInstance':
+            component = <Text>locationInstance</Text>;
+            break;
+          case 'header':
+            console.log(currentBlock);
+            component = <Text>{currentBlock}</Text>;
+            break;
+          default:
+            component = <Text>Unknown block type</Text>;
+        }
+
         return (
           <View>
             <MapboxGL.MapView style={styles.map}>
@@ -81,7 +115,7 @@ export default function QuestWalkthroughRenderer({ questId }: QuestWalkthroughRe
               alwaysOpen={150}
               modalStyle={styles.testModal}
             >
-              <TestView/>
+              {component}
             </Modalize>
           </View>
         );
