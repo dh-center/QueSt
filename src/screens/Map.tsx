@@ -1,12 +1,11 @@
-import React, { useRef } from 'react';
+import React  from 'react';
 import { View, StyleSheet } from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import { MAPBOX_ACCESS_TOKEN } from '@env';
-import TestView from '../components/TestView';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { TabParamList } from '../navigation/mainTabs';
-import { Modalize } from 'react-native-modalize';
 import Colors from '../styles/colors';
+import QuestWalkthroughRenderer from '../components/QuestWalkthroughRenderer';
 
 /**
  * Type with props of screen 'Map' in BottomTabNavigator
@@ -37,19 +36,13 @@ const styles = StyleSheet.create({
  *
  * @param props - props for component rendering
  */
-export default function MapScreen({ route: _route }: Props): React.ReactElement {
-  const modalizeRef = useRef<Modalize>(null);
+export default function MapScreen({ route }: Props): React.ReactElement {
+  if (route.params?.questId) {
+    return <QuestWalkthroughRenderer questId={route.params.questId}/>;
+  }
 
   return (
     <View style={styles.page}>
-      <Modalize
-        handlePosition={'inside'}
-        ref={modalizeRef}
-        alwaysOpen={150}
-        modalStyle={styles.testModal}
-      >
-        <TestView/>
-      </Modalize>
       <MapboxGL.MapView style={styles.map}>
         <MapboxGL.Camera
           defaultSettings={{
