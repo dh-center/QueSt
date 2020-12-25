@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { View, StyleSheet } from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import { MAPBOX_ACCESS_TOKEN } from '@env';
 import TestView from '../components/TestView';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { TabParamList } from '../navigation/mainTabs';
+import { Modalize } from 'react-native-modalize';
 
 /**
  * Type with props of screen 'Map' in BottomTabNavigator
@@ -31,9 +32,19 @@ const styles = StyleSheet.create({
  *
  * @param props - props for component rendering
  */
-export default function MapScreen({ route }: Props): React.ReactElement {
+export default function MapScreen({ route: _route }: Props): React.ReactElement {
+  const modalizeRef = useRef<Modalize>(null);
+
   return (
     <View style={styles.page}>
+      <MapboxGL.MapView style={styles.map} />
+      <Modalize
+        handlePosition={'inside'}
+        ref={modalizeRef}
+        alwaysOpen={150}
+      >
+        <TestView/>
+      </Modalize>
       <MapboxGL.MapView style={styles.map}>
         <MapboxGL.Camera
           defaultSettings={{
@@ -47,7 +58,6 @@ export default function MapScreen({ route }: Props): React.ReactElement {
           minZoomLevel={8.5}
         />
       </MapboxGL.MapView>
-      {route.params?.questId && <TestView />}
     </View>
   );
 }
