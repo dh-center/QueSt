@@ -39,6 +39,7 @@ export default function MapScreen({ route: _route }: Props): React.ReactElement 
     <View style={styles.page}>
       <MapboxGL.MapView style={styles.map} />
       <Modalize
+        handlePosition={'inside'}
         ref={modalizeRef}
         alwaysOpen={150}
       >
