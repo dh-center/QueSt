@@ -48,6 +48,7 @@ const testQuestion: Question = {
 
 const styles = StyleSheet.create({
   headerBlock: {
+    backgroundColor: Colors.White,
     paddingTop: 74,
     paddingRight: 15,
     paddingBottom: 30,
