@@ -6,6 +6,7 @@ import TestView from '../components/TestView';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { TabParamList } from '../navigation/mainTabs';
 import { Modalize } from 'react-native-modalize';
+import Colors from '../styles/colors';
 
 /**
  * Type with props of screen 'Map' in BottomTabNavigator
@@ -25,6 +26,10 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
+  testModal: {
+    overflow: 'hidden',
+    backgroundColor: Colors.Background,
+  },
 });
 
 /**
@@ -37,14 +42,27 @@ export default function MapScreen({ route: _route }: Props): React.ReactElement 
 
   return (
     <View style={styles.page}>
-      <MapboxGL.MapView style={styles.map} />
       <Modalize
         handlePosition={'inside'}
         ref={modalizeRef}
         alwaysOpen={150}
+        modalStyle={styles.testModal}
       >
         <TestView/>
       </Modalize>
+      <MapboxGL.MapView style={styles.map}>
+        <MapboxGL.Camera
+          defaultSettings={{
+            centerCoordinate: [30.3462, 59.9296],
+            zoomLevel: 9,
+          }}
+          maxBounds={{
+            ne: [31.263740364566985, 60.282501691026226],
+            sw: [29.281524984914313, 59.62023377214044],
+          }}
+          minZoomLevel={8.5}
+        />
+      </MapboxGL.MapView>
     </View>
   );
 }
