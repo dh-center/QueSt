@@ -6,7 +6,7 @@ import TestView from '../components/TestView';
 import { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { TabParamList } from '../navigation/mainTabs';
 import { Modalize } from 'react-native-modalize';
-import Colors from "../styles/colors";
+import Colors from '../styles/colors';
 
 /**
  * Type with props of screen 'Map' in BottomTabNavigator
