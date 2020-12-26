@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import enviroment from '../enviroment';
-import MapboxGL from '@react-native-mapbox-gl/maps';
 import Colors from '../styles/colors';
 import { QuestWalkthroughRendererQuery } from './__generated__/QuestWalkthroughRendererQuery.graphql';
 import { Modalize } from 'react-native-modalize';
@@ -84,6 +83,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       default:
         next();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questData, currentBlockIndex]);
 
   if (!questData) {
@@ -111,17 +111,6 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
   return (
     <View>
       <MapView>
-        <MapboxGL.Camera
-          defaultSettings={{
-            centerCoordinate: [30.3462, 59.9296],
-            zoomLevel: 9,
-          }}
-          maxBounds={{
-            ne: [31.263740364566985, 60.282501691026226],
-            sw: [29.281524984914313, 59.62023377214044],
-          }}
-          minZoomLevel={8.5}
-        />
         {currentTarget && <QuestLocationInstanceBlock locationInstanceId={currentTarget}/>}
       </MapView>
       <Modalize
