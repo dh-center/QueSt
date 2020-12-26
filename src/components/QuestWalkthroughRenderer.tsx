@@ -10,19 +10,10 @@ import { QuestWalkthroughRenderer_quest } from './__generated__/QuestWalkthrough
 import { QuestBlock, TextQuestBlock } from '../types/questData';
 import QuestTextBlock from './questBlocks/Text';
 import QuestLocationInstanceBlock from './questBlocks/LocationInstance';
+import MapView from './MapView';
 
 const styles = StyleSheet.create({
-  page: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  map: {
-    height: '100%',
-    width: '100%',
-  },
-  testModal: {
+  modal: {
     overflow: 'hidden',
     backgroundColor: Colors.Background,
   },
@@ -59,13 +50,12 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
   const [currentTextData, setCurrentTextData] = useState<TextQuestBlock[]>([]);
 
   const questData = props.quest?.data?.blocks as QuestBlock[];
+  /**
+   * Go to next quest block
+   */
+  const next = (): void => setCurrentBlockIndex(currentBlockIndex + 1);
 
   useEffect(() => {
-    /**
-     * Go to next quest block
-     */
-    const next = (): void => setCurrentBlockIndex(currentBlockIndex + 1);
-
     if (!questData) {
       return;
     }
@@ -94,7 +84,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       default:
         next();
     }
-  }, [questData, currentBlockIndex, currentTextData]);
+  }, [questData, currentBlockIndex]);
 
   if (!questData) {
     return <Text>No quest data</Text>;
@@ -120,7 +110,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
 
   return (
     <View>
-      <MapboxGL.MapView style={styles.map}>
+      <MapView>
         <MapboxGL.Camera
           defaultSettings={{
             centerCoordinate: [30.3462, 59.9296],
@@ -133,12 +123,12 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
           minZoomLevel={8.5}
         />
         {currentTarget && <QuestLocationInstanceBlock locationInstanceId={currentTarget}/>}
-      </MapboxGL.MapView>
+      </MapView>
       <Modalize
         handlePosition={'inside'}
         ref={modalizeRef}
         alwaysOpen={150}
-        modalStyle={styles.testModal}
+        modalStyle={styles.modal}
       >
         {component}
       </Modalize>
