@@ -9,6 +9,7 @@ import { Modalize } from 'react-native-modalize';
 import { QuestWalkthroughRenderer_quest } from './__generated__/QuestWalkthroughRenderer_quest.graphql';
 import { QuestBlock, TextQuestBlock } from '../types/questData';
 import QuestTextBlock from './questBlocks/Text';
+import QuestLocationInstanceBlock from './questBlocks/LocationInstance';
 
 const styles = StyleSheet.create({
   page: {
@@ -39,7 +40,7 @@ const QuestWalkthroughContentFragmentContainer = createFragmentContainer<QuestWa
   const modalizeRef = useRef<Modalize>(null);
 
   const currentTask = useState('');
-  const [currentTarget, setCurrentTarget] = useState<any>();
+  const [currentTarget, setCurrentTarget] = useState<string>();
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
   const [currentTextData, setCurrentTextData] = useState<TextQuestBlock[]>([]);
 
@@ -58,7 +59,7 @@ const QuestWalkthroughContentFragmentContainer = createFragmentContainer<QuestWa
 
     switch (currentBlock.type) {
       case 'locationInstance':
-        setCurrentTarget(currentBlock);
+        setCurrentTarget(currentBlock.data.locationInstanceId);
         next();
         break;
       case 'header':
@@ -123,6 +124,7 @@ const QuestWalkthroughContentFragmentContainer = createFragmentContainer<QuestWa
           }}
           minZoomLevel={8.5}
         />
+        {currentTarget && <QuestLocationInstanceBlock locationInstanceId={currentTarget}/>}
       </MapboxGL.MapView>
       <Modalize
         handlePosition={'inside'}
