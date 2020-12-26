@@ -3,16 +3,13 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type QuestWalkthroughRendererQueryVariables = {
     questId: unknown;
 };
 export type QuestWalkthroughRendererQueryResponse = {
     readonly quest: {
-        readonly data: {
-            readonly blocks: ReadonlyArray<unknown>;
-            readonly time: unknown | null;
-            readonly version: string | null;
-        } | null;
+        readonly " $fragmentRefs": FragmentRefs<"QuestWalkthroughRenderer_quest">;
     } | null;
 };
 export type QuestWalkthroughRendererQuery = {
@@ -27,12 +24,17 @@ query QuestWalkthroughRendererQuery(
   $questId: GlobalId!
 ) {
   quest(id: $questId) {
-    data {
-      blocks
-      time
-      version
-    }
+    ...QuestWalkthroughRenderer_quest
     id
+  }
+}
+
+fragment QuestWalkthroughRenderer_quest on Quest {
+  id
+  data {
+    blocks
+    time
+    version
   }
 }
 */
@@ -51,39 +53,7 @@ v1 = [
     "name": "id",
     "variableName": "questId"
   }
-],
-v2 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "EditorData",
-  "kind": "LinkedField",
-  "name": "data",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "blocks",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "time",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "version",
-      "storageKey": null
-    }
-  ],
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -99,7 +69,11 @@ return {
         "name": "quest",
         "plural": false,
         "selections": [
-          (v2/*: any*/)
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "QuestWalkthroughRenderer_quest"
+          }
         ],
         "storageKey": null
       }
@@ -121,12 +95,43 @@ return {
         "name": "quest",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "id",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "EditorData",
+            "kind": "LinkedField",
+            "name": "data",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "blocks",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "time",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "version",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           }
         ],
@@ -135,14 +140,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "763ffb4fe4d06769eba836ed34fe3700",
+    "cacheID": "715de4c98d1e366418d8cbdb27d7d6da",
     "id": null,
     "metadata": {},
     "name": "QuestWalkthroughRendererQuery",
     "operationKind": "query",
-    "text": "query QuestWalkthroughRendererQuery(\n  $questId: GlobalId!\n) {\n  quest(id: $questId) {\n    data {\n      blocks\n      time\n      version\n    }\n    id\n  }\n}\n"
+    "text": "query QuestWalkthroughRendererQuery(\n  $questId: GlobalId!\n) {\n  quest(id: $questId) {\n    ...QuestWalkthroughRenderer_quest\n    id\n  }\n}\n\nfragment QuestWalkthroughRenderer_quest on Quest {\n  id\n  data {\n    blocks\n    time\n    version\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'e4c60452e7b032a3592dfa2e73b43f93';
+(node as any).hash = 'e6a6bac6c3ac0679954d23fed305eb3c';
 export default node;
