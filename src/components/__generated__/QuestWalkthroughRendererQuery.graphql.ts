@@ -33,8 +33,6 @@ fragment QuestWalkthroughRenderer_quest on Quest {
   id
   data {
     blocks
-    time
-    version
   }
 }
 */
@@ -116,20 +114,6 @@ return {
                 "kind": "ScalarField",
                 "name": "blocks",
                 "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "time",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "version",
-                "storageKey": null
               }
             ],
             "storageKey": null
@@ -140,12 +124,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "715de4c98d1e366418d8cbdb27d7d6da",
+    "cacheID": "c0f32972c9cc4ad801086177c2773b98",
     "id": null,
     "metadata": {},
     "name": "QuestWalkthroughRendererQuery",
     "operationKind": "query",
-    "text": "query QuestWalkthroughRendererQuery(\n  $questId: GlobalId!\n) {\n  quest(id: $questId) {\n    ...QuestWalkthroughRenderer_quest\n    id\n  }\n}\n\nfragment QuestWalkthroughRenderer_quest on Quest {\n  id\n  data {\n    blocks\n    time\n    version\n  }\n}\n"
+    "text": "query QuestWalkthroughRendererQuery(\n  $questId: GlobalId!\n) {\n  quest(id: $questId) {\n    ...QuestWalkthroughRenderer_quest\n    id\n  }\n}\n\nfragment QuestWalkthroughRenderer_quest on Quest {\n  id\n  data {\n    blocks\n  }\n}\n"
   }
 };
 })();

@@ -28,29 +28,44 @@ const styles = StyleSheet.create({
   },
 });
 
+/**
+ * Props for renderer component
+ */
 interface QuestWalkthroughRendererProps {
+  /**
+   * Quest id for rendering
+   */
   questId: string;
 }
 
+/**
+ * Props for walkthrough component
+ */
 interface QuestWalkthroughContentProps {
+  /**
+   * Quest data for rendering
+   */
   quest?: QuestWalkthroughRenderer_quest | null;
 }
 
-const QuestWalkthroughContentFragmentContainer = createFragmentContainer<QuestWalkthroughContentProps>((props) => {
+/**
+ * Component for rendering quest blocks
+ */
+const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentProps>((props) => {
   const modalizeRef = useRef<Modalize>(null);
 
-  const currentTask = useState('');
   const [currentTarget, setCurrentTarget] = useState<string>();
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
   const [currentTextData, setCurrentTextData] = useState<TextQuestBlock[]>([]);
 
   const questData = props.quest?.data?.blocks as QuestBlock[];
 
-  const next = () => {
-    setCurrentBlockIndex(currentBlockIndex + 1);
-  };
-
   useEffect(() => {
+    /**
+     * Go to next quest block
+     */
+    const next = (): void => setCurrentBlockIndex(currentBlockIndex + 1);
+
     if (!questData) {
       return;
     }
@@ -79,23 +94,16 @@ const QuestWalkthroughContentFragmentContainer = createFragmentContainer<QuestWa
       default:
         next();
     }
-  }, [questData, currentBlockIndex]);
+  }, [questData, currentBlockIndex, currentTextData]);
 
   if (!questData) {
     return <Text>No quest data</Text>;
   }
 
-  const set = new Set();
-
-  questData.forEach(block => set.add(block.type));
-
-  console.log(set);
-
   const currentBlock = questData[currentBlockIndex];
 
   let component;
 
-  console.log(currentBlock);
   switch (currentBlock.type) {
     case 'locationInstance':
       component = <Text>locationInstance</Text>;
@@ -142,15 +150,13 @@ const QuestWalkthroughContentFragmentContainer = createFragmentContainer<QuestWa
       id
       data {
         blocks
-        time
-        version
       }
     }
   `,
 });
 
 /**
- * Component that renders quest blocks
+ * Component that fetches and renders quest blocks
  *
  * @param props - props for component rendering
  */
@@ -174,7 +180,7 @@ export default function QuestWalkthroughRenderer({ questId }: QuestWalkthroughRe
           return <Text>Loading</Text>;
         }
 
-        return <QuestWalkthroughContentFragmentContainer quest={props.quest}/>;
+        return <QuestWalkthroughContent quest={props.quest}/>;
       }}
       variables={{
         questId,

@@ -2,7 +2,13 @@ import React from 'react';
 import { TextQuestBlock } from '../../types/questData';
 import { View, Text } from 'react-native';
 
+/**
+ * Props for QuestTextBlock
+ */
 interface QuestTextBlockProps {
+  /**
+   * Blocks for rendering text data
+   */
   data: (TextQuestBlock)[]
 }
 

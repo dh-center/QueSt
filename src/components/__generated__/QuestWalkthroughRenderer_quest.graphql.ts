@@ -8,8 +8,6 @@ export type QuestWalkthroughRenderer_quest = {
     readonly id: string;
     readonly data: {
         readonly blocks: ReadonlyArray<unknown>;
-        readonly time: unknown | null;
-        readonly version: string | null;
     } | null;
     readonly " $refType": "QuestWalkthroughRenderer_quest";
 };
@@ -48,20 +46,6 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "blocks",
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "time",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "version",
-          "storageKey": null
         }
       ],
       "storageKey": null
@@ -70,5 +54,5 @@ const node: ReaderFragment = {
   "type": "Quest",
   "abstractKey": null
 };
-(node as any).hash = '169f1f1db1a832c884ac2f8a9ab86883';
+(node as any).hash = 'b59d161681b55dff46899710d7c9f35e';
 export default node;

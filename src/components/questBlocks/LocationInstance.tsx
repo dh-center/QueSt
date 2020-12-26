@@ -4,12 +4,20 @@ import { graphql, QueryRenderer } from 'react-relay';
 import enviroment from '../../enviroment';
 import { LocationInstanceQuestBlockQuery } from './__generated__/LocationInstanceQuestBlockQuery.graphql';
 
+/**
+ * Props for QuestLocationInstanceBlock component
+ */
 interface QuestLocationInstanceBlockProps {
+  /**
+   * Location instance id to fetch and display
+   */
   locationInstanceId: string;
 }
 
 /**
- * @param props
+ * Renders location pointer on map
+ *
+ * @param props - props for component rendering
  */
 export default function QuestLocationInstanceBlock({ locationInstanceId }: QuestLocationInstanceBlockProps): React.ReactElement | null {
   console.log(locationInstanceId);
@@ -21,6 +29,7 @@ export default function QuestLocationInstanceBlock({ locationInstanceId }: Quest
         query LocationInstanceQuestBlockQuery($id: GlobalId!) {
             locationInstance(id: $id) {
               id
+              name
               location {
                 id
                 latitude
@@ -48,8 +57,8 @@ export default function QuestLocationInstanceBlock({ locationInstanceId }: Quest
 
         return (
           <MapboxGL.PointAnnotation
-            id={'we'}
-            title="Test"
+            id={props.locationInstance.id}
+            title={props.locationInstance.name || ''}
             coordinate={[location.longitude, location.latitude]}
           />
         );

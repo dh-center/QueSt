@@ -9,6 +9,7 @@ export type LocationInstanceQuestBlockQueryVariables = {
 export type LocationInstanceQuestBlockQueryResponse = {
     readonly locationInstance: {
         readonly id: string;
+        readonly name: string | null;
         readonly location: {
             readonly id: string;
             readonly latitude: number | null;
@@ -29,6 +30,7 @@ query LocationInstanceQuestBlockQuery(
 ) {
   locationInstance(id: $id) {
     id
+    name
     location {
       id
       latitude
@@ -69,6 +71,13 @@ v2 = [
     "plural": false,
     "selections": [
       (v1/*: any*/),
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "name",
+        "storageKey": null
+      },
       {
         "alias": null,
         "args": null,
@@ -117,14 +126,14 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "e553fb7c424a2f944708c86a28bf189a",
+    "cacheID": "09282540e8866dd5938af61e6e3b5ff5",
     "id": null,
     "metadata": {},
     "name": "LocationInstanceQuestBlockQuery",
     "operationKind": "query",
-    "text": "query LocationInstanceQuestBlockQuery(\n  $id: GlobalId!\n) {\n  locationInstance(id: $id) {\n    id\n    location {\n      id\n      latitude\n      longitude\n    }\n  }\n}\n"
+    "text": "query LocationInstanceQuestBlockQuery(\n  $id: GlobalId!\n) {\n  locationInstance(id: $id) {\n    id\n    name\n    location {\n      id\n      latitude\n      longitude\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '2685f2d878593167f2b080996c77860a';
+(node as any).hash = '0cc89cb0f6ed07d64ba7a12fb2ba5e75';
 export default node;
