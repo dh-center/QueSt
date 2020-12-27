@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import { MAPBOX_ACCESS_TOKEN } from '@env';
@@ -33,12 +33,34 @@ const styles = StyleSheet.create({
 });
 
 /**
+ * Function for request location permission
+ */
+export async function requestLocationPermission(): Promise<boolean> {
+  try {
+    return await MapboxGL.requestAndroidLocationPermissions();
+  } catch (err) {
+    return false;
+  }
+}
+
+/**
  * Renders map for quests
  *
  * @param props - props for component rendering
  */
 export default function MapScreen({ route: _route }: Props): React.ReactElement {
   const modalizeRef = useRef<Modalize>(null);
+  const [permission, setPermission] = useState(false);
+
+  useEffect(() => {
+    const task = async (): Promise<void> => {
+      const per = await requestLocationPermission();
+
+      setPermission(per);
+    };
+
+    task().then();
+  }, []);
 
   return (
     <View style={styles.page}>
@@ -62,6 +84,7 @@ export default function MapScreen({ route: _route }: Props): React.ReactElement 
           }}
           minZoomLevel={8.5}
         />
+        {permission && <MapboxGL.UserLocation/>}
       </MapboxGL.MapView>
     </View>
   );
