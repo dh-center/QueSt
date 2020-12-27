@@ -61,6 +61,10 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
 
     const currentBlock = questData[currentBlockIndex];
 
+    if (!currentBlock) {
+      return;
+    }
+
     switch (currentBlock.type) {
       case 'locationInstance':
         setCurrentTarget(currentBlock.data.locationInstanceId);
@@ -94,18 +98,22 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
 
   let component;
 
-  switch (currentBlock.type) {
-    case 'locationInstance':
-      component = <Text>locationInstance</Text>;
-      break;
-    case 'header':
-    case 'quote':
-    case 'paragraph':
-    case 'delimiter':
-      component = <QuestTextBlock data={currentTextData}/>;
-      break;
-    default:
-      component = <Text>Unknown block type</Text>;
+  if (!currentBlock) {
+    component = <Text>Quest ended</Text>;
+  } else {
+    switch (currentBlock.type) {
+      case 'locationInstance':
+        component = <Text>locationInstance</Text>;
+        break;
+      case 'header':
+      case 'quote':
+      case 'paragraph':
+      case 'delimiter':
+        component = <QuestTextBlock data={currentTextData}/>;
+        break;
+      default:
+        component = <Text>Unknown block type</Text>;
+    }
   }
 
   return (
