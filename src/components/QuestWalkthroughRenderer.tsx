@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import enviroment from '../enviroment';
 import Colors from '../styles/colors';
@@ -10,12 +10,28 @@ import { QuestBlock, TextQuestBlock } from '../types/questData';
 import QuestTextBlock from './questBlocks/Text';
 import QuestLocationInstanceBlock from './questBlocks/LocationInstance';
 import MapView from './MapView';
+import Next from '../images/nextButton.svg';
 
 const styles = StyleSheet.create({
   modal: {
     overflow: 'hidden',
     backgroundColor: Colors.White,
     paddingTop: 50,
+  },
+  next: {
+    height: 64,
+    width: 64,
+    alignSelf: 'center',
+    marginBottom: 105,
+    borderRadius: 32,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 4.65,
   },
 });
 
@@ -66,6 +82,10 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       return;
     }
 
+    console.log(currentBlockIndex);
+    console.log(currentBlock.type);
+    console.log(currentBlock);
+
     switch (currentBlock.type) {
       case 'locationInstance':
         setCurrentTarget(currentBlock.data.locationInstanceId);
@@ -84,6 +104,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         break;
       }
       case 'delimiter':
+        next();
         break;
       default:
         next();
@@ -129,6 +150,13 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         modalStyle={styles.modal}
       >
         {component}
+        <TouchableOpacity onPress={() => {
+          console.log('Press:', currentBlockIndex);
+          setCurrentTextData([]);
+          next();
+        }}>
+          <Next style={styles.next}/>
+        </TouchableOpacity>
       </Modalize>
     </View>
   );

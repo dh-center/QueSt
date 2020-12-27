@@ -1,12 +1,12 @@
 import React from 'react';
 import { TextQuestBlock } from '../../types/questData';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Colors from '../../styles/colors';
 import textStyles from '../../styles/textStyles';
+import Next from '../../images/nextButton.svg';
 
 const styles = StyleSheet.create({
   body: {
-    paddingBottom: 75,
     paddingHorizontal: 15,
   },
   blockView: {
@@ -45,9 +45,7 @@ const styles = StyleSheet.create({
   paragraph: {
     ...textStyles.default,
   },
-  delimiter: {
-    backgroundColor: Colors.Green,
-  },
+  delimiter: {},
 });
 
 /**
