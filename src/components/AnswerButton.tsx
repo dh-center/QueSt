@@ -32,6 +32,7 @@ const buttonStyles = StyleSheet.create({
   disabled: {
     ...button.button,
     backgroundColor: Colors.White,
+    opacity: 0.6,
   },
   unselectedCorrect: {
     ...button.button,

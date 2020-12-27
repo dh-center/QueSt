@@ -11,6 +11,7 @@ import QuestTextBlock from './questBlocks/Text';
 import QuestLocationInstanceBlock from './questBlocks/LocationInstance';
 import MapView from './MapView';
 import Next from '../images/nextButton.svg';
+import TestView from './questBlocks/TestView';
 
 const styles = StyleSheet.create({
   modal: {
@@ -106,6 +107,8 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       case 'delimiter':
         next();
         break;
+      case 'test':
+        break;
       default:
         next();
     }
@@ -133,6 +136,9 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       case 'delimiter':
         component = <QuestTextBlock data={currentTextData}/>;
         break;
+      case 'test':
+        component = <TestView data={currentBlock}/>;
+        break;
       default:
         component = <Text>Unknown block type</Text>;
     }
@@ -150,13 +156,15 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         modalStyle={styles.modal}
       >
         {component}
-        <TouchableOpacity onPress={() => {
-          console.log('Press:', currentBlockIndex);
-          setCurrentTextData([]);
-          next();
-        }}>
-          <Next style={styles.next}/>
-        </TouchableOpacity>
+        {currentBlock.type !== 'test' &&
+          <TouchableOpacity onPress={() => {
+            console.log('Press:', currentBlockIndex);
+            setCurrentTextData([]);
+            next();
+          }}>
+            <Next style={styles.next}/>
+          </TouchableOpacity>
+        }
       </Modalize>
     </View>
   );

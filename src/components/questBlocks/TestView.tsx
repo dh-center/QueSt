@@ -13,43 +13,15 @@ import Question from '../../images/question.svg';
 import RightAnswer from '../../images/rightAnswer.svg';
 import WrongAnswer from '../../images/wrongAnswer.svg';
 import Next from '../../images/nextButton.svg';
-
-/**
- * Props for test question
- */
-interface Question {
-  /**
-   * Question to answer
-   */
-  question: string;
-
-  /**
-   * Array of answers to choose from
-   */
-  answers: string[];
-
-  /**
-   * Index of right answer
-   */
-  correctAnswerIndex: number;
-
-  /**
-   * Picture attachment for the test
-   */
-  picture?: string;
-}
-
-const testQuestion: Question = {
-  question: 'Как называл Маяковский упадочное настроение среди молодежи?',
-  answers: ['Солжиница', 'Есенищина', 'Гумильвица', 'Сологубщина'],
-  correctAnswerIndex: 1,
-  picture: 'https://n1s1.hsmedia.ru/44/f1/e9/44f1e97b200859547e74cbe459e18dab/620x413_1_7b996db83cf408ba5a9d88c735ec94fc@2121x1414_0xac120003_18959742231606980285.jpg',
-};
+import { TestBlock } from '../../types/questData';
 
 const styles = StyleSheet.create({
+  body: {
+    backgroundColor: Colors.Background,
+  },
   headerBlock: {
     backgroundColor: Colors.White,
-    paddingTop: 74,
+    paddingTop: 24,
     paddingRight: 15,
     paddingBottom: 30,
     paddingLeft: 15,
@@ -113,7 +85,6 @@ const styles = StyleSheet.create({
   answersView: {
     paddingTop: 30,
     paddingRight: 15,
-    paddingBottom: 75,
     paddingLeft: 15,
   },
   headerText: {
@@ -135,7 +106,8 @@ const styles = StyleSheet.create({
   next: {
     height: 64,
     width: 64,
-    marginVertical: 15,
+    marginTop: 30,
+    marginBottom: 105,
     borderRadius: 32,
     elevation: 10,
     alignSelf: 'center',
@@ -150,20 +122,33 @@ const styles = StyleSheet.create({
 });
 
 /**
- * Displays test
+ * Props for TestView
  */
-export default function TestView(): React.ReactElement {
+interface TestViewProps {
+  /**
+   * Data for rendering test
+   */
+  data: TestBlock
+}
+
+/**
+ * Displays test
+ *
+ * @param props - test data
+ */
+export default function TestView(props: TestViewProps): React.ReactElement {
   const [selectedAnswer, setSelectedAnswer] = useState<number>();
   const [modalVisible, setModalVisible] = useState(false);
+  const test = props.data.data;
   let questionIcon;
 
-  if (testQuestion.picture) {
+  if (test.picture) {
     /**
-     * Image component, if testQuestion has picture uri
+     * Image component, if TestBlock has picture uri
      */
     questionIcon =
       <TouchableOpacity style={styles.imageView} onPress={(): void => setModalVisible(true)}>
-        <Image source={{ uri: testQuestion.picture }} style={styles.image}/>
+        <Image source={{ uri: test.picture }} style={styles.image}/>
       </TouchableOpacity>;
   } else if (selectedAnswer === undefined) {
     /**
@@ -174,18 +159,18 @@ export default function TestView(): React.ReactElement {
     /**
      * RightAnswer or WrongAnswer component, according the user answer
      */
-    questionIcon = (selectedAnswer === testQuestion.correctAnswerIndex) ? <RightAnswer/> : <WrongAnswer/>;
+    questionIcon = (selectedAnswer === test.correctAnswerIndex) ? <RightAnswer/> : <WrongAnswer/>;
   }
 
   return (
-    <View>
+    <View style={styles.body}>
       <View style={styles.headerBlock}>
         {questionIcon}
-        <Text style={styles.headerText}>{testQuestion.question}</Text>
+        <Text style={styles.headerText}>{test.question}</Text>
       </View>
       <View style={styles.answersView}>
         {
-          testQuestion.answers.map((answer, index) => {
+          test.answers.map((answer, index) => {
             let buttonState: AnswerButtonState = 'disabled';
 
             switch (selectedAnswer) {
@@ -193,12 +178,12 @@ export default function TestView(): React.ReactElement {
                 buttonState = 'active';
                 break;
 
-              case testQuestion.correctAnswerIndex:
-                buttonState = index === testQuestion.correctAnswerIndex ? 'selectedCorrect' : 'disabled';
+              case test.correctAnswerIndex:
+                buttonState = index === test.correctAnswerIndex ? 'selectedCorrect' : 'disabled';
                 break;
 
               default:
-                if (index === testQuestion.correctAnswerIndex) {
+                if (index === test.correctAnswerIndex) {
                   buttonState = 'unselectedCorrect';
                 } else if (index === selectedAnswer) {
                   buttonState = 'selectedWrong';
@@ -224,7 +209,7 @@ export default function TestView(): React.ReactElement {
           </TouchableOpacity>
         }
       </View>
-      {testQuestion.picture &&
+      {test.picture &&
       <Modal
         supportedOrientations={['portrait', 'landscape']}
         animationType="fade"
@@ -235,7 +220,7 @@ export default function TestView(): React.ReactElement {
       >
         <TouchableOpacity style={styles.modalView} onPress={(): void => setModalVisible(false)}>
           <View style={styles.modalImageView}>
-            <Image source={{ uri: testQuestion.picture }} style={styles.modalImage}/>
+            <Image source={{ uri: test.picture }} style={styles.modalImage}/>
           </View>
         </TouchableOpacity>
       </Modal>
