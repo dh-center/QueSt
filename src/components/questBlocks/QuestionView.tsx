@@ -1,30 +1,16 @@
 import React, { useState } from 'react';
 import { TouchableOpacity } from 'react-native';
-import Colors from '../styles/colors';
-import Input from '../components/ui/Input';
-import Question from '../images/questionWrite.svg';
-import RightAnswer from '../images/rightAnswer.svg';
-import WrongAnswer from '../images/wrongAnswer.svg';
-import Next from '../images/nextButton.svg';
+import Colors from '../../styles/colors';
+import Input from '../ui/Input';
+import Question from '../../images/questionWrite.svg';
+import RightAnswer from '../../images/rightAnswer.svg';
+import WrongAnswer from '../../images/wrongAnswer.svg';
+import Next from '../../images/nextButton.svg';
 import styled from 'styled-components/native';
-import { StyledFonts } from '../styles/textStyles';
+import { StyledFonts } from '../../styles/textStyles';
+import { useTranslation } from 'react-i18next';
 
-/**
- * Props for test question
- */
-interface Question {
-  /**
-   * Question to answer
-   */
-  question: string;
-
-  /**
-   * Correct answer
-   */
-  answer: string;
-}
-
-const testQuestion: Question = {
+const testQuestion = {
   question: 'Как называл Маяковский упадочное настроение среди молодежи?',
   answer: 'Есенищина',
 };
@@ -77,12 +63,13 @@ const AnswerInput = styled(Input)<{ customBackground: string }>`
  */
 export default function QuestionView(): React.ReactElement {
   const [answer, setAnswer] = useState('');
-  const [isAnswered, setIsAnswered] = useState<boolean>();
+  const [isCorrectlyAnswered, setIsCorrectlyAnswered] = useState<boolean>();
+  const { t } = useTranslation();
   let questionIcon;
   let background;
   let textColor = Colors.Black;
 
-  if (isAnswered === undefined) {
+  if (isCorrectlyAnswered === undefined) {
     /**
      * Question component, if question is active
      */
@@ -96,12 +83,12 @@ export default function QuestionView(): React.ReactElement {
     /**
      * RightAnswer or WrongAnswer component, according the user answer
      */
-    questionIcon = (isAnswered) ? <RightAnswer/> : <WrongAnswer/>;
+    questionIcon = (isCorrectlyAnswered) ? <RightAnswer/> : <WrongAnswer/>;
 
     /**
      * Background color for input, according the user answer
      */
-    background = (isAnswered) ? Colors.Green : Colors.Red;
+    background = (isCorrectlyAnswered) ? Colors.Green : Colors.Red;
 
     /**
      * Background color for input, according the user answer
@@ -122,13 +109,13 @@ export default function QuestionView(): React.ReactElement {
             color: textColor,
             borderBottomColor: textColor,
           }}
-          placeholder={'Введите ответ'}
+          placeholder={t('quests.enterAnswer')}
           value={answer}
           onChangeText={text => setAnswer(text)}
-          editable={isAnswered === undefined}
+          editable={isCorrectlyAnswered === undefined}
         />
         {(answer !== '') &&
-          <TouchableOpacity onPress={() => setIsAnswered(answer === testQuestion.answer)}>
+          <TouchableOpacity onPress={() => setIsCorrectlyAnswered(answer === testQuestion.answer)}>
             <NextButton/>
           </TouchableOpacity>
         }
