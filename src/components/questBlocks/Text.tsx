@@ -1,9 +1,8 @@
 import React from 'react';
 import { TextQuestBlock } from '../../types/questData';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import Colors from '../../styles/colors';
 import textStyles from '../../styles/textStyles';
-import Next from '../../images/nextButton.svg';
 
 const styles = StyleSheet.create({
   body: {
