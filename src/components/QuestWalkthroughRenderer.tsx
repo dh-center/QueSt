@@ -14,7 +14,8 @@ import MapView from './MapView';
 const styles = StyleSheet.create({
   modal: {
     overflow: 'hidden',
-    backgroundColor: Colors.Background,
+    backgroundColor: Colors.White,
+    paddingTop: 50,
   },
 });
 

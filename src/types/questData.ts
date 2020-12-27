@@ -34,6 +34,12 @@ export interface HeaderBlock {
  */
 export interface ParagraphBlock {
   type: 'paragraph';
+  data: {
+    /**
+     * Paragraph text
+     */
+    text: string;
+  }
 }
 
 /**
@@ -41,6 +47,14 @@ export interface ParagraphBlock {
  */
 export interface QuoteBlock {
   type: 'quote';
+  data: {
+    /**
+     * Quote text
+     */
+    text: string;
+
+    caption: string;
+  }
 }
 
 /**
@@ -48,6 +62,12 @@ export interface QuoteBlock {
  */
 export interface DelimiterBlock {
   type: 'delimiter';
+  data: {
+    /**
+     * Delimiter text
+     */
+    text: string;
+  }
 }
 
 /**
