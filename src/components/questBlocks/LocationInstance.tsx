@@ -20,8 +20,6 @@ interface QuestLocationInstanceBlockProps {
  * @param props - props for component rendering
  */
 export default function QuestLocationInstanceBlock({ locationInstanceId }: QuestLocationInstanceBlockProps): React.ReactElement | null {
-  console.log(locationInstanceId);
-
   return (
     <QueryRenderer<LocationInstanceQuestBlockQuery>
       environment={enviroment}
