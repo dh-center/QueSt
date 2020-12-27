@@ -6,6 +6,7 @@ import { TabParamList } from '../navigation/mainTabs';
 import QuestWalkthroughRenderer from '../components/QuestWalkthroughRenderer';
 import styled from 'styled-components/native';
 import MapView from '../components/MapView';
+import Colors from '../styles/colors';
 
 /**
  * Type with props of screen 'Map' in BottomTabNavigator
@@ -18,7 +19,7 @@ const Page = styled.View`
   flex: 1;
   justify-content: center;
   align-items: center;
-  background-color: #F5FCFF;
+  background-color: ${Colors.Background};
 `;
 
 /**

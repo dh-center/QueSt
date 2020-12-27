@@ -50,7 +50,7 @@ export default function QuestLocationInstanceBlock({ locationInstanceId }: Quest
         const location = props.locationInstance.location;
 
         if (!location.latitude || !location.longitude) {
-          return;
+          return null;
         }
 
         return (
