@@ -1,6 +1,7 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useState, useEffect } from 'react';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import styled from 'styled-components/native';
+import { Alert } from 'react-native';
 
 const MapboxView = styled(MapboxGL.MapView)`
   height: 100%;
@@ -8,11 +9,36 @@ const MapboxView = styled(MapboxGL.MapView)`
 `;
 
 /**
+ * Function for request location permission
+ */
+export async function requestLocationPermission(): Promise<boolean> {
+  try {
+    return await MapboxGL.requestAndroidLocationPermissions();
+  } catch (err) {
+    Alert.alert('Something went wrong :c');
+
+    return false;
+  }
+}
+
+/**
  * Component that renders map
  *
  * @param props - props for component rendering
  */
 export default function MapView(props: PropsWithChildren<unknown>): React.ReactElement {
+  const [permission, setPermission] = useState(false);
+
+  useEffect(() => {
+    const task = async (): Promise<void> => {
+      const per = await requestLocationPermission();
+
+      setPermission(per);
+    };
+
+    task().then();
+  }, []);
+
   return (
     <MapboxView>
       <MapboxGL.Camera
@@ -26,6 +52,7 @@ export default function MapView(props: PropsWithChildren<unknown>): React.ReactE
         }}
         minZoomLevel={8.5}
       />
+      {permission && <MapboxGL.UserLocation/>}
       {props.children}
     </MapboxView>
   );
