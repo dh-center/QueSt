@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useState, useEffect } from 'react';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import styled from 'styled-components/native';
-import { Alert } from 'react-native';
+import {Alert, Platform} from 'react-native';
 
 const MapboxView = styled(MapboxGL.MapView)`
   height: 100%;
@@ -30,6 +30,11 @@ export default function MapView(props: PropsWithChildren<unknown>): React.ReactE
   const [permission, setPermission] = useState(false);
 
   useEffect(() => {
+    if (Platform.OS === 'ios') {
+      setPermission(true);
+
+      return;
+    }
     const task = async (): Promise<void> => {
       const per = await requestLocationPermission();
 
