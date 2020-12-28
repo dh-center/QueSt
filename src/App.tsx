@@ -3,6 +3,7 @@ import { StatusBar } from 'react-native';
 import MainTabsNavigation from './navigation/mainTabs';
 import authController from './controllers/authController';
 import VKLogin from 'react-native-vkontakte-login';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { VK_APP_ID } from '@env';
 
 /**
@@ -38,7 +39,9 @@ function App(): React.ReactElement {
   return (
     <>
       <StatusBar backgroundColor="transparent" barStyle="dark-content" translucent={true}/>
-      <MainTabsNavigation/>
+      <SafeAreaProvider>
+        <MainTabsNavigation/>
+      </SafeAreaProvider>
     </>
   );
 }
