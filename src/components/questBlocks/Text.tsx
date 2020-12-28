@@ -1,51 +1,50 @@
 import React from 'react';
 import { TextQuestBlock } from '../../types/questData';
-import { View, Text, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import Colors from '../../styles/colors';
-import textStyles from '../../styles/textStyles';
+import { StyledFonts } from '../../styles/textStyles';
+import styled from 'styled-components/native';
 
-const styles = StyleSheet.create({
-  body: {
-    paddingHorizontal: 15,
-  },
-  blockView: {
-    flexDirection: 'row',
-    marginBottom: 30,
-  },
-  header: {
-    ...textStyles.ptRootMedium,
-    fontSize: 22,
-  },
-  quoteLine: {
-    backgroundColor: Colors.Blue,
-    width: 5,
-    borderRadius: 5,
-    marginHorizontal: 10,
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 4.65,
-  },
-  quote: {
-    ...textStyles.default,
-    flex: 1,
-  },
-  line: {
-    width: 50,
-    height: 0.1,
-    borderTopWidth: 1,
-    borderTopColor: Colors.DarkBlue,
-    marginVertical: 15,
-  },
-  paragraph: {
-    ...textStyles.default,
-  },
-  delimiter: {},
-});
+const Body = styled.View`
+  padding: 0 15px;
+`;
+
+const BlockView = styled.View`
+  flex-direction: row;
+  margin-bottom: 30px;
+`;
+
+const Header = styled.Text`
+  ${StyledFonts.uiWebMedium};
+  font-size: 22px;
+  line-height: 22px;
+  color: ${Colors.Black};
+`;
+
+const QuoteLine = styled.View`
+  background-color: ${Colors.Blue};
+  width: 5px;
+  border-radius: 5px;
+  margin: 0 10px;
+  elevation: ${8};
+  box-shadow: 0 4px 4.65px rgba(0,0,0,0.2);
+`;
+
+const Paragraph = styled.Text`
+  ${StyledFonts.uiWebRegular};
+  font-size: 18px;
+  line-height: 22px;
+  color: ${Colors.Black};
+  flex: 1;
+`;
+
+const Line = styled.View`
+  width: 50px;
+  height: 0.1px;
+  border-top-width: 1px;
+  border-top-color: ${Colors.DarkBlue};
+  margin: 15px 0;
+`;
 
 /**
  * Props for QuestTextBlock
@@ -64,23 +63,38 @@ interface QuestTextBlockProps {
  */
 export default function QuestTextBlock(props: QuestTextBlockProps): React.ReactElement {
   return (
-    <View style={styles.body}>
+    <Body>
       {props.data.map((block, index) => {
+        let component;
+
+        switch (block.type) {
+          case 'header':
+            component = <Header>{block.data.text}</Header>;
+            break;
+          case 'quote':
+            component =
+              <>
+                <QuoteLine/>
+                <View>
+                  <Paragraph>{block.data.text}</Paragraph>
+                  <Line/>
+                  <Paragraph>{block.data.caption}</Paragraph>
+                </View>
+              </>;
+            break;
+          case 'paragraph':
+            component = <Paragraph>{block.data.text}</Paragraph>;
+            break;
+          case 'delimiter':
+            break;
+        }
+
         return (
-          <View style={styles.blockView} key={index}>
-            {block.type === 'quote' && <View style={styles.quoteLine}/>}
-            <View>
-              <Text style={styles[block.type]}>{block.data.text}</Text>
-              {block.type === 'quote' && block.data.caption &&
-                <>
-                  <View style={styles.line}/>
-                  <Text style={styles[block.type]}>{block.data.caption}</Text>
-                </>
-              }
-            </View>
-          </View>
+          <BlockView key={index}>
+            {component}
+          </BlockView>
         );
       })}
-    </View>
+    </Body>
   );
 }

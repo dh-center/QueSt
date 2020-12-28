@@ -11,7 +11,7 @@ const TabBarContainer = styled.SafeAreaView`
   background-color: white;
   bottom: 0;
   elevation: ${8};
-  box-shadow: 0 4px 4.35px rgba(1,1,1,0.30);
+  box-shadow: 0 4px 4.65px rgba(0,0,0,0.2);
 `;
 
 /**
