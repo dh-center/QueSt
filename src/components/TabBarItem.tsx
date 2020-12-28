@@ -7,7 +7,6 @@ import { StyledFonts } from '../styles/textStyles';
 
 const TabButton = styled(Pressable)`
   flex: 1;
-  padding-top: 20px;
   padding-bottom: 3px;
 `;
 
