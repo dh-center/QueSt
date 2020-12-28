@@ -15,17 +15,17 @@ const MapboxView = styled(MapboxGL.MapView)`
  * @param props - props for component rendering
  */
 export default function MapView(props: PropsWithChildren<unknown>): React.ReactElement {
-  const [permission, setPermission] = useState(false);
+  const [hasPermission, setHasPermission] = useState(false);
   const { t } = useTranslation();
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
-      setPermission(true);
+      setHasPermission(true);
 
       return;
     }
     MapboxGL.requestAndroidLocationPermissions()
-      .then(per => setPermission(per))
+      .then(per => setHasPermission(per))
       .catch(() => Alert.alert(t('map.permissionDenied')));
   }, [ t ]);
 
@@ -42,7 +42,7 @@ export default function MapView(props: PropsWithChildren<unknown>): React.ReactE
         }}
         minZoomLevel={8.5}
       />
-      {permission && <MapboxGL.UserLocation/>}
+      {hasPermission && <MapboxGL.UserLocation/>}
       {props.children}
     </MapboxView>
   );
