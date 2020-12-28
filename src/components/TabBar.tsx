@@ -30,7 +30,7 @@ export default function TabBar({ state, descriptors, navigation, style }: Bottom
     return null;
   }
 
-  let height: string | number = 78;
+  let height = '78';
 
   if (style && 'height' in style && style.height) {
     height = style.height.toString();
