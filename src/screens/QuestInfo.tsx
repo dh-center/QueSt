@@ -8,7 +8,7 @@ import Button from '../components/ui/Button';
 import CollectionCard from '../components/CollectionCard';
 import Colors from '../styles/colors';
 import textStyles from '../styles/textStyles';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import BackArrow from '../images/back.svg';
 import Walker from '../images/walker.svg';
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.White,
     paddingHorizontal: 15,
     paddingTop: 30,
-    paddingBottom: 105,
   },
   routeLength: {
     marginTop: 30,
@@ -112,6 +111,8 @@ const styles = StyleSheet.create({
  */
 export default function QuestInfoScreen({ route }: Props): React.ReactElement {
   const navigation = useNavigation<MapScreenNavigationProp>();
+  const tabBarHeight = useBottomTabBarHeight();
+
   const { t } = useTranslation();
 
   return (
@@ -130,7 +131,14 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
         </ScrollView>
       </View>
       <View style={styles.scrollContainer}>
-        <ScrollView contentContainerStyle={styles.questInfo}>
+        <ScrollView
+          contentContainerStyle={[
+            styles.questInfo,
+            {
+              paddingBottom: tabBarHeight + 30,
+            },
+          ]}
+        >
           <Text style={textStyles.default}>{route.params.description}</Text>
           <View style={styles.routeLength}>
             <Walker style={styles.walker}/>
