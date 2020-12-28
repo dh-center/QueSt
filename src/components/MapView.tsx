@@ -1,25 +1,13 @@
 import React, { PropsWithChildren, useState, useEffect } from 'react';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import styled from 'styled-components/native';
-import {Alert, Platform} from 'react-native';
+import { Alert, Platform } from 'react-native';
+import { useTranslation } from 'react-i18next';
 
 const MapboxView = styled(MapboxGL.MapView)`
   height: 100%;
   width: 100%;
 `;
-
-/**
- * Function for request location permission
- */
-export async function requestLocationPermission(): Promise<boolean> {
-  try {
-    return await MapboxGL.requestAndroidLocationPermissions();
-  } catch (err) {
-    Alert.alert('Something went wrong :c');
-
-    return false;
-  }
-}
 
 /**
  * Component that renders map
@@ -28,6 +16,7 @@ export async function requestLocationPermission(): Promise<boolean> {
  */
 export default function MapView(props: PropsWithChildren<unknown>): React.ReactElement {
   const [permission, setPermission] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
@@ -35,14 +24,10 @@ export default function MapView(props: PropsWithChildren<unknown>): React.ReactE
 
       return;
     }
-    const task = async (): Promise<void> => {
-      const per = await requestLocationPermission();
-
-      setPermission(per);
-    };
-
-    task().then();
-  }, []);
+    MapboxGL.requestAndroidLocationPermissions()
+      .then(per => setPermission(per))
+      .catch(() => Alert.alert(t('map.permissionDenied')));
+  }, [ t ]);
 
   return (
     <MapboxView>
