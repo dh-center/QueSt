@@ -66,6 +66,39 @@ interface QuestTextBlockProps {
 }
 
 /**
+ * Props for Quote
+ */
+interface QuoteProps {
+  /**
+   * Quote text
+   */
+  text: string;
+
+  /**
+   * Caption indicating the source of the quote
+   */
+  caption: string;
+}
+
+/**
+ * Renders quote of TextBlock
+ *
+ * @param props - props for quote rendering
+ */
+function Quote(props: QuoteProps): React.ReactElement {
+  return (
+    <>
+      <QuoteLine/>
+      <FlexView>
+        <Paragraph>{props.text}</Paragraph>
+        <Line/>
+        <Paragraph>{props.caption}</Paragraph>
+      </FlexView>
+    </>
+  );
+}
+
+/**
  * Renders text blocks of quest
  *
  * @param props - props for component rendering
@@ -85,15 +118,7 @@ export default function QuestTextBlock(props: QuestTextBlockProps): React.ReactE
             component = <Header>{block.data.text}</Header>;
             break;
           case 'quote':
-            component =
-              <>
-                <QuoteLine/>
-                <FlexView>
-                  <Paragraph>{block.data.text}</Paragraph>
-                  <Line/>
-                  <Paragraph>{block.data.caption}</Paragraph>
-                </FlexView>
-              </>;
+            component = <Quote text={block.data.text} caption={block.data.caption}/>;
             break;
           case 'paragraph':
             component = <Paragraph>{block.data.text}</Paragraph>;
