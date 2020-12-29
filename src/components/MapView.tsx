@@ -37,8 +37,8 @@ export default function MapView(props: PropsWithChildren<unknown>): React.ReactE
           zoomLevel: 9,
         }}
         maxBounds={{
-          ne: [30.46089254557087, 59.97371271137828],
-          sw: [30.21311562311429, 59.89092922151755],
+          ne: [31.263740364566985, 60.282501691026226],
+          sw: [29.281524984914313, 59.62023377214044],
         }}
         minZoomLevel={8.5}
       />
