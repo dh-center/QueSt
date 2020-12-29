@@ -1,11 +1,12 @@
 import React from 'react';
-import { TextQuestBlock } from '../../types/questData';
-import Colors from '../../styles/colors';
-import { StyledFonts } from '../../styles/textStyles';
+import { TextQuestBlock } from '../../../types/questData';
+import Colors from '../../../styles/colors';
+import { StyledFonts } from '../../../styles/textStyles';
 import styled from 'styled-components/native';
-import NextButton from '../ui/NextButton';
+import NextButton from '../../ui/NextButton';
 import { Spinner } from 'native-base';
-import decodeHTMLEntities from '../utils/decodingHTMLEntities';
+import decodeHTMLEntities from '../../utils/decodingHTMLEntities';
+import Quote from './Quote';
 
 const Body = styled.View`
   padding: 0 15px;
@@ -16,10 +17,6 @@ const BlockView = styled.View`
   margin-bottom: 30px;
 `;
 
-const FlexView = styled.View`
-  flex: 1;
-`;
-
 const Header = styled.Text`
   ${StyledFonts.uiWebMedium};
   font-size: 22px;
@@ -27,28 +24,11 @@ const Header = styled.Text`
   color: ${Colors.Black};
 `;
 
-const QuoteLine = styled.View`
-  background-color: ${Colors.Blue};
-  width: 5px;
-  border-radius: 5px;
-  margin: 0 10px;
-  elevation: ${8};
-  box-shadow: 0 4px 4.65px rgba(0,0,0,0.2);
-`;
-
 const Paragraph = styled.Text`
   ${StyledFonts.uiWebRegular};
   font-size: 18px;
   line-height: 22px;
   color: ${Colors.Black};
-`;
-
-const Line = styled.View`
-  width: 50px;
-  height: 0.1px;
-  border-top-width: 1px;
-  border-top-color: ${Colors.DarkBlue};
-  margin: 15px 0;
 `;
 
 /**
@@ -64,39 +44,6 @@ interface QuestTextBlockProps {
    * Function to go to the next block
    */
   nextCallback: () => void;
-}
-
-/**
- * Props for Quote
- */
-interface QuoteProps {
-  /**
-   * Quote text
-   */
-  text: string;
-
-  /**
-   * Caption indicating the source of the quote
-   */
-  caption: string;
-}
-
-/**
- * Renders quote of TextBlock
- *
- * @param props - props for quote rendering
- */
-function Quote(props: QuoteProps): React.ReactElement {
-  return (
-    <>
-      <QuoteLine/>
-      <FlexView>
-        <Paragraph>{props.text}</Paragraph>
-        <Line/>
-        <Paragraph>{props.caption}</Paragraph>
-      </FlexView>
-    </>
-  );
 }
 
 /**
@@ -121,7 +68,7 @@ export default function TextBlock(props: QuestTextBlockProps): React.ReactElemen
             component = <Header>{text}</Header>;
             break;
           case 'quote':
-            component = <Quote text={text} caption={decodeHTMLEntities(block.data.caption)}/>;
+            component = <Quote block={block}/>;
             break;
           case 'paragraph':
             component = <Paragraph>{text}</Paragraph>;
