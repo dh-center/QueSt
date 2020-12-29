@@ -5,6 +5,7 @@ import Colors from '../../styles/colors';
 import { StyledFonts } from '../../styles/textStyles';
 import styled from 'styled-components/native';
 import NextButton from '../ui/NextButton';
+import { Spinner } from 'native-base';
 
 const Body = styled.View`
   padding: 0 15px;
@@ -68,6 +69,10 @@ interface QuestTextBlockProps {
  * @param props - props for component rendering
  */
 export default function QuestTextBlock(props: QuestTextBlockProps): React.ReactElement {
+  if (props.data.length === 0) {
+    return <Spinner color={Colors.DarkBlue}/>;
+  }
+
   return (
     <Body>
       {props.data.map((block, index) => {
@@ -101,9 +106,7 @@ export default function QuestTextBlock(props: QuestTextBlockProps): React.ReactE
           </BlockView>
         );
       })}
-      <NextButton onPress={() => {
-        props.nextFunction();
-      }} />
+      <NextButton onPress={() => props.nextFunction()} />
     </Body>
   );
 }

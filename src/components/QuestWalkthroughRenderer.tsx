@@ -7,7 +7,7 @@ import { QuestWalkthroughRendererQuery } from './__generated__/QuestWalkthroughR
 import { Modalize } from 'react-native-modalize';
 import { QuestWalkthroughRenderer_quest } from './__generated__/QuestWalkthroughRenderer_quest.graphql';
 import { QuestBlock, TextQuestBlock } from '../types/questData';
-import QuestTextBlock from './questBlocks/Text';
+import QuestTextBlock from './questBlocks/QuestTextBlock';
 import QuestLocationInstanceBlock from './questBlocks/LocationInstance';
 import MapView from './MapView';
 import TestView from './questBlocks/TestView';
@@ -111,9 +111,6 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
     component = <Text>Quest ended</Text>;
   } else {
     switch (currentBlock.type) {
-      case 'locationInstance':
-        component = <Text>locationInstance</Text>;
-        break;
       case 'header':
       case 'quote':
       case 'paragraph':
@@ -124,11 +121,12 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
           }
         }/>;
         break;
+      case 'test':
+        component = <TestView data={currentBlock} nextFunction={next}/>;
+        break;
+      case 'locationInstance':
       case 'delimiter':
         component = <Spinner color={Colors.DarkBlue}/>;
-        break;
-      case 'test':
-        component = <TestView data={currentBlock}/>;
         break;
       default:
         component = <Text>Unknown block type</Text>;

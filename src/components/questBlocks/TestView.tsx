@@ -12,8 +12,8 @@ import AnswerButton, { AnswerButtonState } from '../AnswerButton';
 import Question from '../../images/question.svg';
 import RightAnswer from '../../images/rightAnswer.svg';
 import WrongAnswer from '../../images/wrongAnswer.svg';
-import Next from '../../images/nextButton.svg';
 import { TestBlock } from '../../types/questData';
+import NextButton from '../ui/NextButton';
 
 const styles = StyleSheet.create({
   body: {
@@ -103,22 +103,6 @@ const styles = StyleSheet.create({
     lineHeight: 22,
     color: Colors.White,
   },
-  next: {
-    height: 64,
-    width: 64,
-    marginTop: 30,
-    marginBottom: 105,
-    borderRadius: 32,
-    elevation: 10,
-    alignSelf: 'center',
-    shadowColor: '#414366',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 20,
-  },
 });
 
 /**
@@ -129,6 +113,11 @@ interface TestViewProps {
    * Data for rendering test
    */
   data: TestBlock
+
+  /**
+   * Function to go to the next block
+   */
+  nextFunction: () => void;
 }
 
 /**
@@ -204,9 +193,7 @@ export default function TestView(props: TestViewProps): React.ReactElement {
           )
         }
         {(selectedAnswer !== undefined) &&
-          <TouchableOpacity>
-            <Next style={styles.next}/>
-          </TouchableOpacity>
+        <NextButton onPress={() => props.nextFunction()} />
         }
       </View>
       {test.picture &&
