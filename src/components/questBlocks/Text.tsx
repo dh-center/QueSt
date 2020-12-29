@@ -4,6 +4,7 @@ import { View } from 'react-native';
 import Colors from '../../styles/colors';
 import { StyledFonts } from '../../styles/textStyles';
 import styled from 'styled-components/native';
+import NextButton from '../ui/NextButton';
 
 const Body = styled.View`
   padding: 0 15px;
@@ -54,6 +55,11 @@ interface QuestTextBlockProps {
    * Blocks for rendering text data
    */
   data: (TextQuestBlock)[]
+
+  /**
+   * Function to go to the next block
+   */
+  nextFunction: () => void;
 }
 
 /**
@@ -95,6 +101,9 @@ export default function QuestTextBlock(props: QuestTextBlockProps): React.ReactE
           </BlockView>
         );
       })}
+      <NextButton onPress={() => {
+        props.nextFunction();
+      }} />
     </Body>
   );
 }

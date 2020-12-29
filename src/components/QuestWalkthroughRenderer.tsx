@@ -10,9 +10,9 @@ import { QuestBlock, TextQuestBlock } from '../types/questData';
 import QuestTextBlock from './questBlocks/Text';
 import QuestLocationInstanceBlock from './questBlocks/LocationInstance';
 import MapView from './MapView';
-import NextButton from './ui/NextButton';
 import TestView from './questBlocks/TestView';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { Spinner } from 'native-base';
 
 const styles = StyleSheet.create({
   modal: {
@@ -71,10 +71,6 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       return;
     }
 
-    console.log(currentBlockIndex);
-    console.log(currentBlock.type);
-    console.log(currentBlock);
-
     switch (currentBlock.type) {
       case 'locationInstance':
         setCurrentTarget(currentBlock.data.locationInstanceId);
@@ -121,8 +117,15 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       case 'header':
       case 'quote':
       case 'paragraph':
+        component = <QuestTextBlock data={currentTextData} nextFunction={
+          () => {
+            setCurrentTextData([]);
+            next();
+          }
+        }/>;
+        break;
       case 'delimiter':
-        component = <QuestTextBlock data={currentTextData}/>;
+        component = <Spinner color={Colors.DarkBlue}/>;
         break;
       case 'test':
         component = <TestView data={currentBlock}/>;
@@ -145,13 +148,6 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       >
         <View style={{ marginBottom: tabBarHeight }}>
           {component}
-          {currentBlock.type !== 'test' &&
-          <NextButton onPress={() => {
-            console.log('Press:', currentBlockIndex);
-            setCurrentTextData([]);
-            next();
-          }} />
-          }
         </View>
       </Modalize>
     </View>
