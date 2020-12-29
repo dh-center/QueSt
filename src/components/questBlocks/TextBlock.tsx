@@ -104,7 +104,7 @@ function Quote(props: QuoteProps): React.ReactElement {
  *
  * @param props - props for component rendering
  */
-export default function QuestTextBlock(props: QuestTextBlockProps): React.ReactElement {
+export default function TextBlock(props: QuestTextBlockProps): React.ReactElement {
   if (props.data.length === 0) {
     return <Spinner color={Colors.DarkBlue}/>;
   }

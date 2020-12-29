@@ -7,7 +7,7 @@ import { QuestWalkthroughRendererQuery } from './__generated__/QuestWalkthroughR
 import { Modalize } from 'react-native-modalize';
 import { QuestWalkthroughRenderer_quest } from './__generated__/QuestWalkthroughRenderer_quest.graphql';
 import { QuestBlock, TextQuestBlock } from '../types/questData';
-import QuestTextBlock from './questBlocks/TextBlock';
+import TextBlock from './questBlocks/TextBlock';
 import QuestLocationInstanceBlock from './questBlocks/LocationInstance';
 import MapView from './MapView';
 import TestView from './questBlocks/TestView';
@@ -114,7 +114,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       case 'header':
       case 'quote':
       case 'paragraph':
-        component = <QuestTextBlock data={currentTextData} nextCallback={
+        component = <TextBlock data={currentTextData} nextCallback={
           () => {
             setCurrentTextData([]);
             next();
