@@ -1,4 +1,6 @@
 /**
+ * Decoding HTML entities
+ *
  * @param str - string to decode
  */
 export default function decodeHTMLEntities(str: string): string {
