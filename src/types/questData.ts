@@ -34,6 +34,12 @@ export interface HeaderBlock {
  */
 export interface ParagraphBlock {
   type: 'paragraph';
+  data: {
+    /**
+     * Paragraph text
+     */
+    text: string;
+  }
 }
 
 /**
@@ -41,6 +47,17 @@ export interface ParagraphBlock {
  */
 export interface QuoteBlock {
   type: 'quote';
+  data: {
+    /**
+     * Quote text
+     */
+    text: string;
+
+    /**
+     * Caption indicating the source of the quote
+     */
+    caption: string;
+  }
 }
 
 /**
@@ -48,6 +65,50 @@ export interface QuoteBlock {
  */
 export interface DelimiterBlock {
   type: 'delimiter';
+  data: {
+    /**
+     * Delimiter text
+     */
+    text: string;
+  }
+}
+
+/**
+ * Text delimiter block data
+ */
+export interface TestBlock {
+  type: 'test';
+  data: {
+    /**
+     * Question to answer
+     */
+    question: string;
+
+    /**
+     * Array of answers to choose from
+     */
+    answers: string[];
+
+    /**
+     * Index of right answer
+     */
+    correctAnswerIndex: number;
+
+    /**
+     * Message for right answer
+     */
+    rightAnswerMessage: string;
+
+    /**
+     * Message for wrong answer
+     */
+    wrongAnswerMessage: string;
+
+    /**
+     * Picture attachment for the test
+     */
+    picture?: string;
+  }
 }
 
 /**
@@ -64,4 +125,5 @@ export type TextQuestBlock =
  */
 export type QuestBlock =
   | LocationInstanceBlock
-  | TextQuestBlock;
+  | TextQuestBlock
+  | TestBlock;

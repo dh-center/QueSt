@@ -7,14 +7,18 @@ import { QuestWalkthroughRendererQuery } from './__generated__/QuestWalkthroughR
 import { Modalize } from 'react-native-modalize';
 import { QuestWalkthroughRenderer_quest } from './__generated__/QuestWalkthroughRenderer_quest.graphql';
 import { QuestBlock, TextQuestBlock } from '../types/questData';
-import QuestTextBlock from './questBlocks/Text';
+import TextBlock from './questBlocks/Text/TextBlock';
 import QuestLocationInstanceBlock from './questBlocks/LocationInstance';
 import MapView from './MapView';
+import TestView from './questBlocks/TestView';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { Spinner } from 'native-base';
 
 const styles = StyleSheet.create({
   modal: {
     overflow: 'hidden',
-    backgroundColor: Colors.Background,
+    backgroundColor: Colors.White,
+    paddingTop: 50,
   },
 });
 
@@ -43,6 +47,8 @@ interface QuestWalkthroughContentProps {
  */
 const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentProps>((props) => {
   const modalizeRef = useRef<Modalize>(null);
+  const tabBarHeight = useBottomTabBarHeight();
+  const BOTTOM_SHEET_TOP = 40 + tabBarHeight;
 
   const [currentTarget, setCurrentTarget] = useState<string>();
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
@@ -83,6 +89,9 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         break;
       }
       case 'delimiter':
+        next();
+        break;
+      case 'test':
         break;
       default:
         next();
@@ -102,14 +111,22 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
     component = <Text>Quest ended</Text>;
   } else {
     switch (currentBlock.type) {
-      case 'locationInstance':
-        component = <Text>locationInstance</Text>;
-        break;
       case 'header':
       case 'quote':
       case 'paragraph':
+        component = <TextBlock data={currentTextData} nextCallback={
+          () => {
+            setCurrentTextData([]);
+            next();
+          }
+        }/>;
+        break;
+      case 'test':
+        component = <TestView data={currentBlock} nextCallback={next}/>;
+        break;
+      case 'locationInstance':
       case 'delimiter':
-        component = <QuestTextBlock data={currentTextData}/>;
+        component = <Spinner color={Colors.DarkBlue}/>;
         break;
       default:
         component = <Text>Unknown block type</Text>;
@@ -124,10 +141,12 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       <Modalize
         handlePosition={'inside'}
         ref={modalizeRef}
-        alwaysOpen={150}
+        alwaysOpen={BOTTOM_SHEET_TOP}
         modalStyle={styles.modal}
       >
-        {component}
+        <View style={{ marginBottom: tabBarHeight }}>
+          {component}
+        </View>
       </Modalize>
     </View>
   );
