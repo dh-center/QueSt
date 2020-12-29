@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingRight: 15,
     paddingLeft: 15,
+    paddingBottom: 20,
   },
   headerText: {
     marginTop: 30,
@@ -192,10 +193,10 @@ export default function TestView(props: TestViewProps): React.ReactElement {
           }
           )
         }
-        {(selectedAnswer !== undefined) &&
-        <NextButton onPress={() => props.nextFunction()} />
-        }
       </View>
+      {(selectedAnswer !== undefined) &&
+      <NextButton onPress={() => props.nextFunction()} />
+      }
       {test.picture &&
       <Modal
         supportedOrientations={['portrait', 'landscape']}

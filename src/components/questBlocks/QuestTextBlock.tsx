@@ -1,6 +1,5 @@
 import React from 'react';
 import { TextQuestBlock } from '../../types/questData';
-import { View } from 'react-native';
 import Colors from '../../styles/colors';
 import { StyledFonts } from '../../styles/textStyles';
 import styled from 'styled-components/native';
@@ -14,6 +13,10 @@ const Body = styled.View`
 const BlockView = styled.View`
   flex-direction: row;
   margin-bottom: 30px;
+`;
+
+const FlexView = styled.View`
+  flex: 1;
 `;
 
 const Header = styled.Text`
@@ -37,7 +40,6 @@ const Paragraph = styled.Text`
   font-size: 18px;
   line-height: 22px;
   color: ${Colors.Black};
-  flex: 1;
 `;
 
 const Line = styled.View`
@@ -86,11 +88,11 @@ export default function QuestTextBlock(props: QuestTextBlockProps): React.ReactE
             component =
               <>
                 <QuoteLine/>
-                <View>
+                <FlexView>
                   <Paragraph>{block.data.text}</Paragraph>
                   <Line/>
                   <Paragraph>{block.data.caption}</Paragraph>
-                </View>
+                </FlexView>
               </>;
             break;
           case 'paragraph':
