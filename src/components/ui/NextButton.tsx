@@ -14,7 +14,7 @@ const NextButtonView = styled(TouchableOpacity)`
 `;
 
 /**
- * Custom button with light blue background
+ * Custom button with next arrow
  *
  * @param props - component props
  */

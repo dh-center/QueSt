@@ -53,6 +53,9 @@ export interface QuoteBlock {
      */
     text: string;
 
+    /**
+     * Caption indicating the source of the quote
+     */
     caption: string;
   }
 }
