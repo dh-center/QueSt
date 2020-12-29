@@ -118,7 +118,7 @@ interface TestViewProps {
   /**
    * Function to go to the next block
    */
-  nextFunction: () => void;
+  nextCallback: () => void;
 }
 
 /**
@@ -195,7 +195,7 @@ export default function TestView(props: TestViewProps): React.ReactElement {
         }
       </View>
       {(selectedAnswer !== undefined) &&
-      <NextButton onPress={() => props.nextFunction()} />
+      <NextButton onPress={() => props.nextCallback()} />
       }
       {test.picture &&
       <Modal

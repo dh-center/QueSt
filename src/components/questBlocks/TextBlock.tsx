@@ -62,7 +62,7 @@ interface QuestTextBlockProps {
   /**
    * Function to go to the next block
    */
-  nextFunction: () => void;
+  nextCallback: () => void;
 }
 
 /**
@@ -108,7 +108,7 @@ export default function QuestTextBlock(props: QuestTextBlockProps): React.ReactE
           </BlockView>
         );
       })}
-      <NextButton onPress={() => props.nextFunction()} />
+      <NextButton onPress={() => props.nextCallback()} />
     </Body>
   );
 }
