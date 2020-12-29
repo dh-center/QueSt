@@ -12,6 +12,7 @@ import QuestLocationInstanceBlock from './questBlocks/LocationInstance';
 import MapView from './MapView';
 import Next from '../images/nextButton.svg';
 import TestView from './questBlocks/TestView';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 const styles = StyleSheet.create({
   modal: {
@@ -61,6 +62,8 @@ interface QuestWalkthroughContentProps {
  */
 const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentProps>((props) => {
   const modalizeRef = useRef<Modalize>(null);
+  const tabBarHeight = useBottomTabBarHeight();
+  const BOTTOM_SHEET_TOP = 40 + tabBarHeight;
 
   const [currentTarget, setCurrentTarget] = useState<string>();
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
@@ -152,7 +155,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       <Modalize
         handlePosition={'inside'}
         ref={modalizeRef}
-        alwaysOpen={150}
+        alwaysOpen={BOTTOM_SHEET_TOP}
         modalStyle={styles.modal}
       >
         {component}

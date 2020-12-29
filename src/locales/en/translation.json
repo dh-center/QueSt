@@ -15,7 +15,8 @@
     "rewards": "Rewards"
   },
   "map": {
-    "title": "Map"
+    "title": "Map",
+    "permissionDenied": "Failed to get your location to display on the map"
   },
   "settings": {
     "title": "Settings",

@@ -10,6 +10,7 @@ import Map from '../images/navigation/map.svg';
 import Account from '../images/navigation/account.svg';
 import Quests from '../images/navigation/quests.svg';
 import TabBar from '../components/TabBar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 /**
  * Type with params of screens and their props in BottomTabNavigator
@@ -36,10 +37,22 @@ const Icon = styled.View<{color: string}>`
  */
 export default function MainTabsNavigation(): React.ReactElement {
   const { t } = useTranslation();
+  const insets = useSafeAreaInsets();
+
+  const TAB_BAR_OWM_HEIGHT = 78;
+  const TAB_BAR_FULL_HEIGHT = insets.bottom + TAB_BAR_OWM_HEIGHT;
 
   return (
     <NavigationContainer>
-      <Tab.Navigator initialRouteName="Map" tabBar={props => <TabBar {...props} />}>
+      <Tab.Navigator
+        initialRouteName="Map"
+        tabBar={props => <TabBar {...props} />}
+        tabBarOptions={{
+          style: {
+            height: TAB_BAR_FULL_HEIGHT,
+          },
+        }}
+      >
         <Tab.Screen
           name="Map"
           options={{
