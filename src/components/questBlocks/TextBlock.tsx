@@ -5,6 +5,7 @@ import { StyledFonts } from '../../styles/textStyles';
 import styled from 'styled-components/native';
 import NextButton from '../ui/NextButton';
 import { Spinner } from 'native-base';
+import decodeHTMLEntities from '../utils/decodingHTMLEntities';
 
 const Body = styled.View`
   padding: 0 15px;
@@ -113,15 +114,17 @@ export default function QuestTextBlock(props: QuestTextBlockProps): React.ReactE
       {props.data.map((block, index) => {
         let component;
 
+        const text = decodeHTMLEntities(block.data.text);
+
         switch (block.type) {
           case 'header':
-            component = <Header>{block.data.text}</Header>;
+            component = <Header>{text}</Header>;
             break;
           case 'quote':
-            component = <Quote text={block.data.text} caption={block.data.caption}/>;
+            component = <Quote text={text} caption={decodeHTMLEntities(block.data.caption)}/>;
             break;
           case 'paragraph':
-            component = <Paragraph>{block.data.text}</Paragraph>;
+            component = <Paragraph>{text}</Paragraph>;
             break;
           case 'delimiter':
             break;
