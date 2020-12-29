@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import enviroment from '../enviroment';
 import Colors from '../styles/colors';
@@ -10,7 +10,7 @@ import { QuestBlock, TextQuestBlock } from '../types/questData';
 import QuestTextBlock from './questBlocks/Text';
 import QuestLocationInstanceBlock from './questBlocks/LocationInstance';
 import MapView from './MapView';
-import Next from '../images/nextButton.svg';
+import NextButton from './ui/NextButton';
 import TestView from './questBlocks/TestView';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
@@ -19,21 +19,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     backgroundColor: Colors.White,
     paddingTop: 50,
-  },
-  next: {
-    height: 64,
-    width: 64,
-    alignSelf: 'center',
-    marginBottom: 105,
-    borderRadius: 32,
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 4,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 4.65,
   },
 });
 
@@ -158,16 +143,16 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         alwaysOpen={BOTTOM_SHEET_TOP}
         modalStyle={styles.modal}
       >
-        {component}
-        {currentBlock.type !== 'test' &&
-          <TouchableOpacity onPress={() => {
+        <View style={{ marginBottom: tabBarHeight }}>
+          {component}
+          {currentBlock.type !== 'test' &&
+          <NextButton onPress={() => {
             console.log('Press:', currentBlockIndex);
             setCurrentTextData([]);
             next();
-          }}>
-            <Next style={styles.next}/>
-          </TouchableOpacity>
-        }
+          }} />
+          }
+        </View>
       </Modalize>
     </View>
   );
