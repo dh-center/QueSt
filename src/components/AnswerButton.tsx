@@ -1,18 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from 'react-native';
 import Colors from '../styles/colors';
+import textStyles from '../styles/textStyles';
 
 const button = StyleSheet.create({
   button: {
     minHeight: 60,
     marginBottom: 10,
     borderRadius: 15,
+    paddingHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
   buttonText: {
-    fontSize: 18,
-    lineHeight: 22,
+    ...textStyles.default,
+    textAlign: 'center',
   },
 });
 
@@ -32,6 +34,7 @@ const buttonStyles = StyleSheet.create({
   disabled: {
     ...button.button,
     backgroundColor: Colors.White,
+    opacity: 0.6,
   },
   unselectedCorrect: {
     ...button.button,
