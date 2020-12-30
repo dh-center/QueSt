@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { ReactElement, useState } from 'react';
+import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Input from '../components/ui/Input';
 import textStyles from '../styles/textStyles';
 import Button from '../components/ui/Button';
@@ -9,6 +9,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import { useNavigation } from '@react-navigation/native';
 import ScreenWrapper from '../components/utils/ScreenWrapper';
+import authController from '../controllers/authController';
 
 /**
  * Styles for registration screen component
@@ -78,7 +79,29 @@ type RegistrationScreenNavigationProp = StackNavigationProp<ProfileStackParamLis
  */
 export default function RegistrationScreen(): ReactElement {
   const { t } = useTranslation();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatedPassword, setRepeatedPassword] = useState('');
   const navigation = useNavigation<RegistrationScreenNavigationProp>();
+
+  /**
+   * Performs registration via email and password
+   */
+  const register = async (): Promise<void> => {
+    if (repeatedPassword !== password) {
+      Alert.alert(t('signUp.passwordsDontMatch'));
+
+      return;
+    }
+
+    try {
+      await authController.registerWithEmailAndPassword(email, password);
+      Alert.alert(t('signUp.successful'));
+      navigation.navigate('Login');
+    } catch (e) {
+      Alert.alert(t([`errors.${e.message}`, 'errors.unspecific']));
+    }
+  };
 
   return (
     <ScreenWrapper scrollable>
@@ -97,8 +120,10 @@ export default function RegistrationScreen(): ReactElement {
         autoCompleteType="username"
         keyboardType="email-address"
         placeholder="E-mail"
-        textContentType="username"
+        textContentType="emailAddress"
         style={styles.input}
+        value={email}
+        onChangeText={val => setEmail(val)}
       />
       <Input
         autoCompleteType="password"
@@ -106,6 +131,8 @@ export default function RegistrationScreen(): ReactElement {
         textContentType="newPassword"
         secureTextEntry={true}
         style={styles.input}
+        value={password}
+        onChangeText={val => setPassword(val)}
       />
       <Input
         autoCompleteType="password"
@@ -113,10 +140,12 @@ export default function RegistrationScreen(): ReactElement {
         textContentType="newPassword"
         secureTextEntry={true}
         style={styles.input}
+        value={repeatedPassword}
+        onChangeText={val => setRepeatedPassword(val)}
       />
       <Button
         title={t('signUp.registration')}
-        onPress={(): void => console.log('Registration')}
+        onPress={register}
         style={styles.registrationButton}
       />
     </ScreenWrapper>
