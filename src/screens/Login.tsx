@@ -1,5 +1,5 @@
-import React, { ReactElement } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { ReactElement, useState } from 'react';
+import { Alert, StyleSheet, Text, View } from 'react-native';
 import Input from '../components/ui/Input';
 import textStyles from '../styles/textStyles';
 import Button from '../components/ui/Button';
@@ -12,6 +12,7 @@ import ScreenWrapper from '../components/utils/ScreenWrapper';
 import FacebookAuth from '../components/auth/Facebook';
 import VkAuth from '../components/auth/Vk';
 import GoogleAuth from '../components/auth/Google';
+import authController from '../controllers/authController';
 
 /**
  * Styles for login view
@@ -94,6 +95,19 @@ type LoginScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Log
 export default function LoginScreen(): ReactElement {
   const { t } = useTranslation();
   const navigation = useNavigation<LoginScreenNavigationProp>();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  /**
+   * Performs login via email and password
+   */
+  const login = async (): Promise<void> => {
+    try {
+      await authController.loginWithEmailAndPassword(email, password);
+    } catch (e) {
+      Alert.alert(t([`errors.${e.message}`, 'errors.unspecific']));
+    }
+  };
 
   return (
     <ScreenWrapper scrollable>
@@ -110,8 +124,10 @@ export default function LoginScreen(): ReactElement {
         autoCompleteType="username"
         keyboardType="email-address"
         placeholder="E-mail"
-        textContentType="username"
+        textContentType="emailAddress"
         style={styles.input}
+        value={email}
+        onChangeText={val => setEmail(val)}
       />
       <Input
         autoCompleteType="password"
@@ -119,10 +135,12 @@ export default function LoginScreen(): ReactElement {
         textContentType="password"
         secureTextEntry={true}
         style={styles.input}
+        value={password}
+        onChangeText={val => setPassword(val)}
       />
       <Button
         title={t('signIn.logIn')}
-        onPress={(): void => console.log('Login')}
+        onPress={login}
         style={styles.mb30}
       />
       <UnderlinedButton

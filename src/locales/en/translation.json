@@ -38,11 +38,16 @@
   "signUp": {
     "registration": "Registration",
     "password": "Password",
-    "repeatPassword": "Repeat password"
+    "repeatPassword": "Repeat password",
+    "successful": "Registration completed successfully",
+    "passwordsDontMatch": "Passwords don't match"
   },
   "errors": {
     "WRONG_AUTH_DATA": "Authorization failed due to wrong auth data",
     "MISSING_AUTH_CODE": "Can't perform auth due to missing server auth code",
+    "USERNAME_DUPLICATION": "User with this e-mail already exists",
+    "WRONG_USER_PASSWORD": "Invalid e-mail or password",
+    "NO_USER_WITH_SUCH_USERNAME": "Invalid e-mail or password",
     "unspecific": "Something went wrong"
   }
 }
