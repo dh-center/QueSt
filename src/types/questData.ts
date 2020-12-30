@@ -74,7 +74,7 @@ export interface DelimiterBlock {
 }
 
 /**
- * Text delimiter block data
+ * Test block data
  */
 export interface TestBlock {
   type: 'test';
@@ -112,6 +112,34 @@ export interface TestBlock {
 }
 
 /**
+ * Question block data
+ */
+export interface QuestionBlock {
+  type: 'question';
+  data: {
+    /**
+     * Question to answer
+     */
+    question: string;
+
+    /**
+     * Correct answer
+     */
+    answer: string;
+
+    /**
+     * Message for right answer
+     */
+    rightAnswerMessage: string;
+
+    /**
+     * Message for wrong answer
+     */
+    wrongAnswerMessage: string;
+  }
+}
+
+/**
  * All text blocks
  */
 export type TextQuestBlock =
@@ -126,4 +154,5 @@ export type TextQuestBlock =
 export type QuestBlock =
   | LocationInstanceBlock
   | TextQuestBlock
-  | TestBlock;
+  | TestBlock
+  | QuestionBlock;
