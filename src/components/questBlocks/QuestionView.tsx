@@ -12,7 +12,7 @@ import NextButton from '../ui/NextButton';
 
 const Body = styled.View`
   background-color: ${Colors.Background};
-  min-height: 100%;
+  flex: 1;
 `;
 
 const Header = styled.View`
