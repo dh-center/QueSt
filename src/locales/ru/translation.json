@@ -4,7 +4,8 @@
     "advice": "Мы советуем Вам воспользоваться электросамокатом или велосипедом",
     "achievements": "Достижения",
     "cards": "Коллекционные карточки",
-    "startQuest": "Начать квест"
+    "startQuest": "Начать квест",
+    "enterAnswer": "Введите ответ"
   },
   "profile": {
     "title": "Профиль",
@@ -37,11 +38,16 @@
   "signUp": {
     "registration": "Регистрация",
     "password": "Пароль",
-    "repeatPassword": "Повторите пароль"
+    "repeatPassword": "Повторите пароль",
+    "successful": "Регистрация успешно завершена",
+    "passwordsDontMatch": "Пароли не совпадают"
   },
   "errors": {
     "WRONG_AUTH_DATA": "Не удалось авторизоваться (данные авторизации невалидны)",
     "MISSING_AUTH_CODE": "Авторизация не удалась (сервер не выдал код авторизации)",
+    "USERNAME_DUPLICATION": "Пользователь с таким e-mail уже существует",
+    "WRONG_USER_PASSWORD": "Неверный e-mail или пароль",
+    "NO_USER_WITH_SUCH_USERNAME": "Неверный e-mail или пароль",
     "unspecific": "Что-то пошло не так"
   }
 }

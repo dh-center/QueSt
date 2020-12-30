@@ -30,13 +30,13 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
     borderBottomLeftRadius: 15,
     elevation: 4,
-    shadowColor: '#414366',
+    shadowColor: 'black',
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 2,
     },
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
+    shadowOpacity: 0.1,
+    shadowRadius: 2.62,
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -86,24 +86,14 @@ const styles = StyleSheet.create({
   },
   answersView: {
     paddingTop: 30,
-    paddingRight: 15,
-    paddingLeft: 15,
+    paddingHorizontal: 15,
+    paddingBottom: 20,
   },
   headerText: {
     marginTop: 30,
     color: Colors.Black,
     fontSize: 22,
     lineHeight: 22,
-  },
-  blackAnswerText: {
-    fontSize: 18,
-    lineHeight: 22,
-    color: Colors.Black,
-  },
-  whiteAnswerText: {
-    fontSize: 18,
-    lineHeight: 22,
-    color: Colors.White,
   },
 });
 

@@ -85,20 +85,6 @@ class AuthController {
   }
 
   /**
-   * Process user login
-   *
-   * @param username - username to login with
-   * @param password - user password
-   */
-  public async login(username: string, password: string): Promise<void> {
-    const response = await fetch(
-      `${API_ENDPOINT}login?username=${username}&password=${password}`
-    );
-
-    await this.setTokens(await response.json());
-  }
-
-  /**
    * Performs authorization via VKontakte
    */
   public async authWithVK(): Promise<void> {
@@ -172,6 +158,48 @@ class AuthController {
     } else {
       throw new Error('MISSING_AUTH_CODE');
     }
+  }
+
+  /**
+   * Performs user registration via email and password
+   *
+   * @param email - email for registration
+   * @param password - password for registration
+   */
+  public async registerWithEmailAndPassword(email: string, password: string): Promise<void> {
+    const response = await fetch(`${API_ENDPOINT}/sign-up`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
+
+    if (response.status !== 201) {
+      this.checkApiErrors(await response.json());
+    }
+  }
+
+  /**
+   * Performs user login via email and password
+   *
+   * @param email - user's email
+   * @param password - user's password
+   */
+  public async loginWithEmailAndPassword(email: string, password: string): Promise<void> {
+    const response = await fetch(`${API_ENDPOINT}/login?${this.objToQueryString({
+      email,
+      password,
+    })}`);
+
+    const data = await response.json();
+
+    this.checkApiErrors(data);
+
+    await this.setTokens(data);
   }
 
   /**

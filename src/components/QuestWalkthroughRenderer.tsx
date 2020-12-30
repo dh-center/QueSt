@@ -11,6 +11,7 @@ import TextBlock from './questBlocks/Text/TextBlock';
 import QuestLocationInstanceBlock from './questBlocks/LocationInstance';
 import MapView from './MapView';
 import TestView from './questBlocks/TestView';
+import QuestionView from './questBlocks/QuestionView';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Spinner } from 'native-base';
 
@@ -92,6 +93,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         next();
         break;
       case 'test':
+      case 'question':
         break;
       default:
         next();
@@ -124,6 +126,9 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       case 'test':
         component = <TestView data={currentBlock} nextCallback={next}/>;
         break;
+      case 'question':
+        component = <QuestionView data={currentBlock} nextCallback={next}/>;
+        break;
       case 'locationInstance':
       case 'delimiter':
         component = <Spinner color={Colors.DarkBlue}/>;
@@ -144,7 +149,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         alwaysOpen={BOTTOM_SHEET_TOP}
         modalStyle={styles.modal}
       >
-        <View style={{ marginBottom: tabBarHeight }}>
+        <View style={{ paddingBottom: tabBarHeight }}>
           {component}
         </View>
       </Modalize>
