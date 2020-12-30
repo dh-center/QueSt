@@ -1,29 +1,23 @@
 import React, { useState } from 'react';
-import { TouchableOpacity } from 'react-native';
 import Colors from '../../styles/colors';
 import Input from '../ui/Input';
 import Question from '../../images/questionWrite.svg';
 import RightAnswer from '../../images/rightAnswer.svg';
 import WrongAnswer from '../../images/wrongAnswer.svg';
-import Next from '../../images/nextButton.svg';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../../styles/textStyles';
 import { useTranslation } from 'react-i18next';
+import { QuestionBlock } from '../../types/questData';
+import NextButton from '../ui/NextButton';
 
-const testQuestion = {
-  question: 'Как называл Маяковский упадочное настроение среди молодежи?',
-  answer: 'Есенищина',
-};
-
-const Body = styled.ScrollView`
-  position: absolute;
-  height: 100%;
+const Body = styled.View`
   background-color: ${Colors.Background};
+  min-height: 100%;
 `;
 
 const Header = styled.View`
   background-color: ${Colors.White};
-  padding: 74px 15px 30px;
+  padding: 24px 15px 30px;
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
   elevation: ${4};
@@ -40,29 +34,44 @@ const HeaderText = styled.Text`
 `;
 
 const Answer = styled.View`
-  padding: 30px 15px 75px;
-`;
-
-const NextButton = styled(Next)`
-  height: 64px;
-  width: 64px;
-  margin: 15px 0;
-  border-radius: 32px;
-  elevation: ${8};
-  box-shadow: 0 4px 4.65px rgba(0,0,0,0.2);
-  align-self: center;
+  padding: 30px 15px;
 `;
 
 const AnswerInput = styled(Input)<{ customBackground: string }>`
   background-color: ${(props) => props.customBackground};
-  margin-bottom: 10px;
+`;
+
+const RightAnswerText = styled.Text`
+  ${StyledFonts.uiWebRegular};
+  font-size: 18px;
+  line-height: 22px;
+  color: ${Colors.Green};
+  margin-top: 15px;
+  margin-left: 30px;
 `;
 
 /**
- * Displays test
+ * Props for QuestionView
  */
-export default function QuestionView(): React.ReactElement {
-  const [answer, setAnswer] = useState('');
+interface QuestionViewProps {
+  /**
+   * Data for rendering question
+   */
+  data: QuestionBlock;
+
+  /**
+   * Function to go to the next block
+   */
+  nextCallback: () => void;
+}
+
+/**
+ * Displays question
+ *
+ * @param props - question data
+ */
+export default function QuestionView(props: QuestionViewProps): React.ReactElement {
+  const [userAnswer, setUserAnswer] = useState('');
   const [isCorrectlyAnswered, setIsCorrectlyAnswered] = useState<boolean>();
   const { t } = useTranslation();
   let questionIcon;
@@ -100,7 +109,7 @@ export default function QuestionView(): React.ReactElement {
     <Body>
       <Header>
         {questionIcon}
-        <HeaderText>{testQuestion.question}</HeaderText>
+        <HeaderText>{props.data.data.question}</HeaderText>
       </Header>
       <Answer>
         <AnswerInput
@@ -110,16 +119,20 @@ export default function QuestionView(): React.ReactElement {
             borderBottomColor: textColor,
           }}
           placeholder={t('quests.enterAnswer')}
-          value={answer}
-          onChangeText={text => setAnswer(text)}
+          value={userAnswer}
+          onChangeText={text => setUserAnswer(text)}
           editable={isCorrectlyAnswered === undefined}
         />
-        {(answer !== '') &&
-          <TouchableOpacity onPress={() => setIsCorrectlyAnswered(answer === testQuestion.answer)}>
-            <NextButton/>
-          </TouchableOpacity>
+        {(isCorrectlyAnswered === false) &&
+          <RightAnswerText>Ответ: {props.data.data.answer}</RightAnswerText>
         }
       </Answer>
+      {(userAnswer !== '') && (isCorrectlyAnswered === undefined) &&
+        <NextButton onPress={() => setIsCorrectlyAnswered(userAnswer === props.data.data.answer)} />
+      }
+      {(isCorrectlyAnswered !== undefined) &&
+        <NextButton onPress={() => props.nextCallback()} />
+      }
     </Body>
   );
 }
