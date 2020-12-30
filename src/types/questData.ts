@@ -139,6 +139,16 @@ export interface QuestionBlock {
   }
 }
 
+export interface CurrentTaskBlock {
+  type: 'currentQuestTask';
+  data: {
+    /**
+     * Information about current quest task
+     */
+    currentQuestTask: string;
+  }
+}
+
 /**
  * All text blocks
  */
@@ -155,4 +165,5 @@ export type QuestBlock =
   | LocationInstanceBlock
   | TextQuestBlock
   | TestBlock
-  | QuestionBlock;
+  | QuestionBlock
+  | CurrentTaskBlock;
