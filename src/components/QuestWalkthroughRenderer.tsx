@@ -93,7 +93,6 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         next();
         break;
       case 'test':
-        break;
       case 'question':
         break;
       default:
