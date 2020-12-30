@@ -14,6 +14,8 @@ import RightAnswer from '../../images/rightAnswer.svg';
 import WrongAnswer from '../../images/wrongAnswer.svg';
 import { TestBlock } from '../../types/questData';
 import NextButton from '../ui/NextButton';
+import styled from 'styled-components/native';
+import { StyledFonts } from '../../styles/textStyles';
 
 const styles = StyleSheet.create({
   body: {
@@ -86,7 +88,6 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     paddingRight: 15,
     paddingLeft: 15,
-    paddingBottom: 20,
   },
   headerText: {
     marginTop: 30,
@@ -105,6 +106,14 @@ const styles = StyleSheet.create({
     color: Colors.White,
   },
 });
+
+const MessageText = styled.Text<{color: string}>`
+  ${StyledFonts.uiWebRegular};
+  font-size: 18px;
+  line-height: 22px;
+  color: ${(props): string => props.color};
+  margin: 5px 25px 30px;
+`;
 
 /**
  * Props for TestView
@@ -195,23 +204,29 @@ export default function TestView(props: TestViewProps): React.ReactElement {
         }
       </View>
       {(selectedAnswer !== undefined) &&
-      <NextButton onPress={() => props.nextCallback()} />
+        <>
+          {selectedAnswer === test.correctAnswerIndex
+            ? <MessageText color={Colors.Green}>{props.data.data.rightAnswerMessage}</MessageText>
+            : <MessageText color={Colors.Red}>{props.data.data.wrongAnswerMessage}</MessageText>
+          }
+          <NextButton onPress={() => props.nextCallback()} />
+        </>
       }
       {test.picture &&
-      <Modal
-        supportedOrientations={['portrait', 'landscape']}
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={(): void => setModalVisible(false)}
-        statusBarTranslucent={true}
-      >
-        <TouchableOpacity style={styles.modalView} onPress={(): void => setModalVisible(false)}>
-          <View style={styles.modalImageView}>
-            <Image source={{ uri: test.picture }} style={styles.modalImage}/>
-          </View>
-        </TouchableOpacity>
-      </Modal>
+        <Modal
+          supportedOrientations={['portrait', 'landscape']}
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={(): void => setModalVisible(false)}
+          statusBarTranslucent={true}
+        >
+          <TouchableOpacity style={styles.modalView} onPress={(): void => setModalVisible(false)}>
+            <View style={styles.modalImageView}>
+              <Image source={{ uri: test.picture }} style={styles.modalImage}/>
+            </View>
+          </TouchableOpacity>
+        </Modal>
       }
     </View>
   );
