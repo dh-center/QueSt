@@ -94,6 +94,9 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         break;
       case 'test':
       case 'question':
+        if (modalizeRef.current) {
+          modalizeRef.current.open('top');
+        }
         break;
       default:
         next();
