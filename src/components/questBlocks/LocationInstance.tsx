@@ -54,11 +54,18 @@ export default function QuestLocationInstanceBlock({ locationInstanceId }: Quest
         }
 
         return (
-          <MapboxGL.PointAnnotation
-            id={props.locationInstance.id}
-            title={props.locationInstance.name || ''}
-            coordinate={[location.longitude, location.latitude]}
-          />
+          <>
+            <MapboxGL.PointAnnotation
+              id={props.locationInstance.id}
+              title={props.locationInstance.name || ''}
+              coordinate={[location.longitude, location.latitude]}
+            />
+            <MapboxGL.Camera
+              animationDuration={1000}
+              centerCoordinate={[location.longitude, location.latitude]}
+              zoomLevel={14}
+            />
+          </>
         );
       }}
       variables={{
