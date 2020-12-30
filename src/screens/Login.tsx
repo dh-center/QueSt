@@ -98,6 +98,9 @@ export default function LoginScreen(): ReactElement {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  /**
+   * Performs login via email and password
+   */
   const login = async (): Promise<void> => {
     try {
       await authController.loginWithEmailAndPassword(email, password);
