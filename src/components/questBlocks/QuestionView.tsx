@@ -41,13 +41,12 @@ const AnswerInput = styled(Input)<{ customBackground: string }>`
   background-color: ${(props) => props.customBackground};
 `;
 
-const RightAnswerText = styled.Text`
+const MessageText = styled.Text<{color: string}>`
   ${StyledFonts.uiWebRegular};
   font-size: 18px;
   line-height: 22px;
-  color: ${Colors.Green};
-  margin-top: 15px;
-  margin-left: 30px;
+  color: ${(props): string => props.color};
+  margin: 15px 25px 0;
 `;
 
 /**
@@ -123,8 +122,10 @@ export default function QuestionView(props: QuestionViewProps): React.ReactEleme
           onChangeText={text => setUserAnswer(text)}
           editable={isCorrectlyAnswered === undefined}
         />
-        {(isCorrectlyAnswered === false) &&
-          <RightAnswerText>Ответ: {props.data.data.answer}</RightAnswerText>
+        {(isCorrectlyAnswered !== undefined) &&
+          (isCorrectlyAnswered
+            ? <MessageText color={Colors.Green}>{props.data.data.rightAnswerMessage}</MessageText>
+            : <MessageText color={Colors.Red}>{props.data.data.wrongAnswerMessage}</MessageText>)
         }
       </Answer>
       {(userAnswer !== '') && (isCorrectlyAnswered === undefined) &&
