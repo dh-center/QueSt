@@ -74,6 +74,12 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
 
     switch (currentBlock.type) {
       case 'locationInstance':
+        /**
+         * Minimize bottom sheet panel
+         */
+        if (modalizeRef.current) {
+          modalizeRef.current.close('alwaysOpen');
+        }
         setCurrentTarget(currentBlock.data.locationInstanceId);
         next();
         break;
