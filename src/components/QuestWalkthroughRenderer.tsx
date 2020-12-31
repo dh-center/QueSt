@@ -6,7 +6,7 @@ import Colors from '../styles/colors';
 import { QuestWalkthroughRendererQuery } from './__generated__/QuestWalkthroughRendererQuery.graphql';
 import { Modalize } from 'react-native-modalize';
 import { QuestWalkthroughRenderer_quest } from './__generated__/QuestWalkthroughRenderer_quest.graphql';
-import { QuestBlock, TextQuestBlock } from '../types/questData';
+import { CurrentTaskBlock, QuestBlock, TextQuestBlock } from '../types/questData';
 import TextBlock from './questBlocks/Text/TextBlock';
 import QuestLocationInstanceBlock from './questBlocks/LocationInstance';
 import MapView from './MapView';
@@ -14,6 +14,7 @@ import TestView from './questBlocks/TestView';
 import QuestionView from './questBlocks/QuestionView';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Spinner } from 'native-base';
+import CurrentTask from './questBlocks/CurrentTask';
 
 const styles = StyleSheet.create({
   modal: {
@@ -54,6 +55,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
   const [currentTarget, setCurrentTarget] = useState<string>();
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
   const [currentTextData, setCurrentTextData] = useState<TextQuestBlock[]>([]);
+  const [currentTaskBlock, setCurrentTaskBlock] = useState<CurrentTaskBlock>();
 
   const questData = props.quest?.data?.blocks as QuestBlock[];
   /**
@@ -81,6 +83,10 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
           modalizeRef.current.close('alwaysOpen');
         }
         setCurrentTarget(currentBlock.data.locationInstanceId);
+        next();
+        break;
+      case 'currentQuestTask':
+        setCurrentTaskBlock(currentBlock);
         next();
         break;
       case 'header':
@@ -152,6 +158,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
 
   return (
     <View>
+      {currentTaskBlock && <CurrentTask block={currentTaskBlock}/>}
       <MapView>
         {currentTarget && <QuestLocationInstanceBlock locationInstanceId={currentTarget}/>}
       </MapView>
