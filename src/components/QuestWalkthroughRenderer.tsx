@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
-import enviroment from '../enviroment';
+import environment from '../environment';
 import Colors from '../styles/colors';
 import { QuestWalkthroughRendererQuery } from './__generated__/QuestWalkthroughRendererQuery.graphql';
 import { Modalize } from 'react-native-modalize';
@@ -193,7 +193,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
 export default function QuestWalkthroughRenderer({ questId }: QuestWalkthroughRendererProps): React.ReactElement {
   return (
     <QueryRenderer<QuestWalkthroughRendererQuery>
-      environment={enviroment}
+      environment={environment}
       query={graphql`
             query QuestWalkthroughRendererQuery($questId: GlobalId!) {
                 quest(id: $questId) {

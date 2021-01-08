@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import { Spinner } from 'native-base';
 import { graphql, QueryRenderer } from 'react-relay';
-import env from '../enviroment';
+import env from '../environment';
 import {
   QuestsListQuery,
   QuestsListQueryResponse
