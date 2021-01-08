@@ -48,6 +48,7 @@
     "USERNAME_DUPLICATION": "Пользователь с таким e-mail уже существует",
     "WRONG_USER_PASSWORD": "Неверный e-mail или пароль",
     "NO_USER_WITH_SUCH_USERNAME": "Неверный e-mail или пароль",
+    "INVALID_ACCESS_TOKEN": "Неверный токен авторизации",
     "unspecific": "Что-то пошло не так"
   }
 }

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import VKLogin from 'react-native-vkontakte-login';
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 import { GoogleSignin } from '@react-native-community/google-signin';
-import hasOwnProperty from '../utils/hasOwnProperty';
+import checkApiErrors from '../utils/checkApiErrors';
 
 /**
  * Represents response of the auth server in case of success
@@ -15,21 +15,6 @@ interface AuthServerResponse {
      * Access login to interact with API
      */
     accessToken: string;
-  };
-}
-
-/**
- * Server error representation
- */
-interface AuthServerError {
-  /**
-   * Error extensions
-   */
-  extensions: {
-    /**
-     * Error code
-     */
-    code: string;
   };
 }
 
@@ -107,7 +92,7 @@ class AuthController {
 
     const requestData = await response.json();
 
-    this.checkApiErrors(requestData);
+    checkApiErrors(requestData);
 
     await this.setTokens(requestData);
   }
@@ -130,7 +115,7 @@ class AuthController {
 
     const requestData = await response.json();
 
-    this.checkApiErrors(requestData);
+    checkApiErrors(requestData);
 
     await this.setTokens(requestData);
   }
@@ -179,7 +164,7 @@ class AuthController {
     });
 
     if (response.status !== 201) {
-      this.checkApiErrors(await response.json());
+      checkApiErrors(await response.json());
     }
   }
 
@@ -197,7 +182,7 @@ class AuthController {
 
     const data = await response.json();
 
-    this.checkApiErrors(data);
+    checkApiErrors(data);
 
     await this.setTokens(data);
   }
@@ -240,19 +225,6 @@ class AuthController {
     this.listeners.forEach((listener) => {
       listener(newState);
     });
-  }
-
-  /**
-   * Check if there is any errors form API
-   *
-   * @param apiResult - result to check
-   */
-  private checkApiErrors(apiResult: unknown): void {
-    if (typeof apiResult === 'object' && apiResult !== null && hasOwnProperty(apiResult, 'errors')) {
-      const errors = apiResult.errors as AuthServerError[];
-
-      throw new Error(errors.pop()?.extensions.code);
-    }
   }
 
   /**
