@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, StyleSheet, Text, View, Animated, ScrollView } from 'react-native';
 import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import environment from '../environment';
 import Colors from '../styles/colors';
@@ -20,7 +20,6 @@ const styles = StyleSheet.create({
   modal: {
     overflow: 'hidden',
     backgroundColor: Colors.White,
-    paddingTop: 50,
   },
 });
 
@@ -163,15 +162,25 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         {currentTarget && <QuestLocationInstanceBlock locationInstanceId={currentTarget}/>}
       </MapView>
       <Modalize
+        avoidKeyboardLikeIOS
         handlePosition={'inside'}
         ref={modalizeRef}
+        keyboardAvoidingBehavior={'padding'}
         alwaysOpen={BOTTOM_SHEET_TOP}
         modalStyle={styles.modal}
-      >
-        <View style={{ paddingBottom: tabBarHeight }}>
+        customRenderer={<Animated.ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            backgroundColor: 'red',
+            flexGrow: 1,
+          }}
+          style={{
+            marginTop: 50,
+          }}
+        >
           {component}
-        </View>
-      </Modalize>
+        </Animated.ScrollView>}
+      />
     </View>
   );
 }, {

@@ -7,9 +7,11 @@ import NextButton from '../../ui/NextButton';
 import { Spinner } from 'native-base';
 import decodeHTMLEntities from '../../utils/decodingHTMLEntities';
 import Quote from './Quote';
+import BlockBody from '../BlockBody';
 
-const Body = styled.View`
-  padding: 0 15px;
+const Body = styled(BlockBody)`
+  padding-left: 15px;
+  padding-right: 15px;
 `;
 
 const BlockView = styled.View`

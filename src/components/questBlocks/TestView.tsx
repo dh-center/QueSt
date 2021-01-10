@@ -20,6 +20,7 @@ import { StyledFonts } from '../../styles/textStyles';
 const styles = StyleSheet.create({
   body: {
     backgroundColor: Colors.Background,
+    flex: 1,
   },
   headerBlock: {
     backgroundColor: Colors.White,

@@ -9,10 +9,10 @@ import { StyledFonts } from '../../styles/textStyles';
 import { useTranslation } from 'react-i18next';
 import { QuestionBlock } from '../../types/questData';
 import NextButton from '../ui/NextButton';
+import BlockBody from './BlockBody';
 
-const Body = styled.View`
+const Body = styled(BlockBody)`
   background-color: ${Colors.Background};
-  flex: 1;
 `;
 
 const Header = styled.View`
