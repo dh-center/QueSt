@@ -19,9 +19,8 @@ import styled from 'styled-components/native';
 
 const styles = StyleSheet.create({
   modal: {
-    // overflow: 'hidden',
-    backgroundColor: Colors.Blue,
-    flex: 1
+    backgroundColor: Colors.White,
+    flex: 1,
   },
 });
 
