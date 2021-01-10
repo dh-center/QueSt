@@ -17,7 +17,7 @@ import Rewards from '../images/rewards.svg';
 import ProgressBlock from '../components/ProgressBlock';
 import ProfileButton from '../components/ProfileButton';
 import { graphql, QueryRenderer } from 'react-relay';
-import enviroment from '../enviroment';
+import environment from '../environment';
 import { ProfileQuery } from './__generated__/ProfileQuery.graphql';
 import ScreenWrapper from '../components/utils/ScreenWrapper';
 import checkApiErrors from '../utils/checkApiErrors';
@@ -81,7 +81,7 @@ export default function ProfileScreen(): React.ReactElement {
 
   return (
     <QueryRenderer<ProfileQuery>
-      environment={enviroment}
+      environment={environment}
       query={graphql`
         query ProfileQuery {
             user: me {
