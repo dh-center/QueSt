@@ -48,6 +48,7 @@
     "USERNAME_DUPLICATION": "User with this e-mail already exists",
     "WRONG_USER_PASSWORD": "Invalid e-mail or password",
     "NO_USER_WITH_SUCH_USERNAME": "Invalid e-mail or password",
+    "INVALID_ACCESS_TOKEN": "Invalid access token",
     "unspecific": "Something went wrong"
   }
 }

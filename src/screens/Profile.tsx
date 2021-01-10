@@ -20,6 +20,9 @@ import { graphql, QueryRenderer } from 'react-relay';
 import enviroment from '../enviroment';
 import { ProfileQuery } from './__generated__/ProfileQuery.graphql';
 import ScreenWrapper from '../components/utils/ScreenWrapper';
+import checkApiErrors from '../utils/checkApiErrors';
+import authController from '../controllers/authController';
+import Button from '../components/ui/Button';
 
 /**
  * Type with props of screen 'Main' in ProfileStack
@@ -91,9 +94,22 @@ export default function ProfileScreen(): React.ReactElement {
       `}
       render={({ error, props }) => {
         if (error) {
+          let errorMessage = t('errors.unspecific');
+
+          try {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            checkApiErrors((error as any).source);
+          } catch (e) {
+            errorMessage = t([`errors.${e.message}`, 'errors.unspecific']);
+            if (e.message === 'INVALID_ACCESS_TOKEN') {
+              authController.logout();
+            }
+          }
+
           return (
             <ScreenWrapper>
-              <Text>Something went wrong</Text>
+              <Text>{errorMessage}</Text>
+              <Button title={'Logout'} onPress={authController.logout}/>
             </ScreenWrapper>
           );
         }
