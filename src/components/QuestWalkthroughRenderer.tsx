@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { KeyboardAvoidingView, Platform, StyleSheet, Text, View, Animated, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Animated } from 'react-native';
 import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import environment from '../environment';
 import Colors from '../styles/colors';
@@ -15,6 +15,7 @@ import QuestionView from './questBlocks/QuestionView';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Spinner } from 'native-base';
 import CurrentTask from './questBlocks/CurrentTask';
+import styled from 'styled-components/native';
 
 const styles = StyleSheet.create({
   modal: {
@@ -22,6 +23,16 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.White,
   },
 });
+
+const ModalScrollView = styled(Animated.ScrollView)
+  .attrs(() => ({
+    showsVerticalScrollIndicator: false,
+    contentContainerStyle: {
+      flexGrow: 1,
+    },
+  }))`
+  margin-top: 50px;
+`;
 
 /**
  * Props for renderer component
@@ -168,18 +179,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         keyboardAvoidingBehavior={'padding'}
         alwaysOpen={BOTTOM_SHEET_TOP}
         modalStyle={styles.modal}
-        customRenderer={<Animated.ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            backgroundColor: 'red',
-            flexGrow: 1,
-          }}
-          style={{
-            marginTop: 50,
-          }}
-        >
-          {component}
-        </Animated.ScrollView>}
+        customRenderer={<ModalScrollView>{component}</ModalScrollView>}
       />
     </View>
   );
