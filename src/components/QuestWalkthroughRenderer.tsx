@@ -19,8 +19,9 @@ import styled from 'styled-components/native';
 
 const styles = StyleSheet.create({
   modal: {
-    overflow: 'hidden',
-    backgroundColor: Colors.White,
+    // overflow: 'hidden',
+    backgroundColor: Colors.Blue,
+    flex: 1
   },
 });
 
@@ -177,6 +178,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         handlePosition={'inside'}
         ref={modalizeRef}
         keyboardAvoidingBehavior={'padding'}
+        keyboardAvoidingOffset={-100} // magic value that fixes bottom padding if keyboard is open
         alwaysOpen={BOTTOM_SHEET_TOP}
         modalStyle={styles.modal}
         customRenderer={<ModalScrollView>{component}</ModalScrollView>}
