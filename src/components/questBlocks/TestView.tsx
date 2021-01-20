@@ -16,11 +16,13 @@ import { TestBlock } from '../../types/questData';
 import NextButton from '../ui/NextButton';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../../styles/textStyles';
+import BlockBody from './BlockBody';
+
+const Body = styled(BlockBody)`
+  background-color: ${Colors.Background};
+`;
 
 const styles = StyleSheet.create({
-  body: {
-    backgroundColor: Colors.Background,
-  },
   headerBlock: {
     backgroundColor: Colors.White,
     paddingTop: 24,
@@ -152,7 +154,7 @@ export default function TestView(props: TestViewProps): React.ReactElement {
   }
 
   return (
-    <View style={styles.body}>
+    <Body>
       <View style={styles.headerBlock}>
         {questionIcon}
         <Text style={styles.headerText}>{test.question}</Text>
@@ -218,6 +220,6 @@ export default function TestView(props: TestViewProps): React.ReactElement {
           </TouchableOpacity>
         </Modal>
       }
-    </View>
+    </Body>
   );
 }

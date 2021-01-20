@@ -3,16 +3,18 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  StyleProp,
-  NativeSyntheticEvent, NativeTouchEvent, ViewStyle
+  NativeSyntheticEvent,
+  NativeTouchEvent,
+  ViewStyle
 } from 'react-native';
 import Colors from '../../styles/colors';
 import textStyles from '../../styles/textStyles';
+import WithStyles from '../../types/withStyles';
 
 /**
  * Custom button props
  */
-export interface CustomButtonProps {
+export interface CustomButtonProps extends WithStyles<ViewStyle> {
   /**
    * Text on button
    */
@@ -24,11 +26,6 @@ export interface CustomButtonProps {
    * @param ev - event object
    */
   onPress: (ev: NativeSyntheticEvent<NativeTouchEvent>) => void;
-
-  /**
-   * View styles
-   */
-  style?: StyleProp<ViewStyle>;
 }
 
 /**

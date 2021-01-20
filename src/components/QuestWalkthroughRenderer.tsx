@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Animated } from 'react-native';
 import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import environment from '../environment';
 import Colors from '../styles/colors';
@@ -15,14 +15,24 @@ import QuestionView from './questBlocks/QuestionView';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Spinner } from 'native-base';
 import CurrentTask from './questBlocks/CurrentTask';
+import styled from 'styled-components/native';
 
 const styles = StyleSheet.create({
   modal: {
-    overflow: 'hidden',
     backgroundColor: Colors.White,
-    paddingTop: 50,
+    flex: 1,
   },
 });
+
+const ModalScrollView = styled(Animated.ScrollView)
+  .attrs(() => ({
+    showsVerticalScrollIndicator: false,
+    contentContainerStyle: {
+      flexGrow: 1,
+    },
+  }))`
+  margin-top: 50px;
+`;
 
 /**
  * Props for renderer component
@@ -163,15 +173,15 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         {currentTarget && <QuestLocationInstanceBlock locationInstanceId={currentTarget}/>}
       </MapView>
       <Modalize
+        avoidKeyboardLikeIOS
         handlePosition={'inside'}
         ref={modalizeRef}
+        keyboardAvoidingBehavior={'padding'}
+        keyboardAvoidingOffset={-100} // magic value that fixes bottom padding if keyboard is open
         alwaysOpen={BOTTOM_SHEET_TOP}
         modalStyle={styles.modal}
-      >
-        <View style={{ paddingBottom: tabBarHeight }}>
-          {component}
-        </View>
-      </Modalize>
+        customRenderer={<ModalScrollView>{component}</ModalScrollView>}
+      />
     </View>
   );
 }, {
