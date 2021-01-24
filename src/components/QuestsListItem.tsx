@@ -4,6 +4,7 @@ import Colors from '../styles/colors';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../styles/textStyles';
 import Human from '../images/human.svg';
+import Puzzle from '../images/puzzle.svg';
 import Next from '../images/next.svg';
 
 const QuestItem = styled.TouchableOpacity`
@@ -46,6 +47,11 @@ export interface QuestItemProps {
    * Quests name
    */
   name: string;
+
+  /**
+   * Quests type
+   */
+  type: string;
 }
 
 /**
@@ -53,11 +59,11 @@ export interface QuestItemProps {
  *
  * @param props - props for item
  */
-export default function QuestsListItem({ style: _style, name, ...rest }: TouchableOpacityProps & QuestItemProps): React.ReactElement {
+export default function QuestsListItem({ style: _style, name, type, ...rest }: TouchableOpacityProps & QuestItemProps): React.ReactElement {
   return (
     <QuestItem {...rest}>
       <IconView>
-        <Human/>
+        {type === 'ROUTE' ? <Human/> : <Puzzle/>}
       </IconView>
       <QuestName>{name}</QuestName>
       <Next/>
