@@ -3,6 +3,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+export type TaskTypes = "QUIZ" | "ROUTE" | "%future added value";
 export type QuestsListQueryVariables = {};
 export type QuestsListQueryResponse = {
     readonly quests: {
@@ -11,6 +12,7 @@ export type QuestsListQueryResponse = {
                 readonly id: string;
                 readonly name: string;
                 readonly description: string | null;
+                readonly type: TaskTypes;
             };
         }>;
     };
@@ -30,6 +32,7 @@ query QuestsListQuery {
         id
         name
         description
+        type
       }
     }
   }
@@ -82,6 +85,13 @@ var v0 = [
                 "kind": "ScalarField",
                 "name": "description",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "type",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -111,14 +121,14 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "97b5f43537aa14993f13d117ac9ae01c",
+    "cacheID": "8c296ce8daaa3616ae18171eb3c55b61",
     "id": null,
     "metadata": {},
     "name": "QuestsListQuery",
     "operationKind": "query",
-    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n      }\n    }\n  }\n}\n"
+    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n        type\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'bb156d7a0695835d977af41a1787f206';
+(node as any).hash = '30be6a40b8520336f5a93c19a2760325';
 export default node;

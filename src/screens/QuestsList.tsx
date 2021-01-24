@@ -84,6 +84,7 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
               })
               }
               name={item.node.name}
+              type={item.node.type}
             />
           </>
         )}
@@ -112,6 +113,7 @@ const query = graphql`
           id
           name
           description
+          type
         }
       }
     }
