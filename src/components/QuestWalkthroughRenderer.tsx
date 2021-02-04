@@ -168,8 +168,8 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
 
   return (
     <View>
-      {currentTaskBlock && <CurrentTask block={currentTaskBlock}/>}
       <MapView>
+        {currentTaskBlock && <CurrentTask block={currentTaskBlock}/>}
         {currentTarget && <QuestLocationInstanceBlock locationInstanceId={currentTarget}/>}
       </MapView>
       <Modalize
