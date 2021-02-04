@@ -55,7 +55,6 @@ export default function MapView(props: PropsWithChildren<unknown>): React.ReactE
         />
         {hasPermission && <MapboxGL.UserLocation/>}
       </MapboxView>
-      {props.children}
       <HeaderGradient
         height={insets.top + 40}
         start={{
@@ -69,6 +68,7 @@ export default function MapView(props: PropsWithChildren<unknown>): React.ReactE
         locations={[0.3, 1]}
         colors={['#FFF', 'rgba(255, 255, 255, 0)']}
       />
+      {props.children}
     </>
   );
 }
