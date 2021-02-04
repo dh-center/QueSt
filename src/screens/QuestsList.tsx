@@ -81,10 +81,12 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
                 id: item.node.id,
                 title: item.node.name,
                 description: item.node.description,
+                locked: item.node.questProgressState === 'LOCKED',
               })
               }
               name={item.node.name}
               type={item.node.type}
+              progressState={item.node.questProgressState}
             />
           </>
         )}
@@ -114,6 +116,7 @@ const query = graphql`
           name
           description
           type
+          questProgressState
         }
       }
     }

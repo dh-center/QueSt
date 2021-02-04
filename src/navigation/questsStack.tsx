@@ -8,7 +8,7 @@ import QuestInfoScreen from '../screens/QuestInfo';
  */
 export type QuestsStackParamList = {
   List: undefined;
-  Description: {id: string; title: string; description: string | null};
+  Description: {id: string; title: string; description: string | null, locked: boolean};
 };
 
 const QuestsStack = createStackNavigator<QuestsStackParamList>();
