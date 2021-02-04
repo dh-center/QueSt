@@ -54,8 +54,8 @@ export default function MapView(props: PropsWithChildren<unknown>): React.ReactE
           minZoomLevel={8.5}
         />
         {hasPermission && <MapboxGL.UserLocation/>}
-        {props.children}
       </MapboxView>
+      {props.children}
       <HeaderGradient
         height={insets.top + 40}
         start={{
