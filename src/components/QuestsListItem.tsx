@@ -10,18 +10,18 @@ import Passed from '../images/passed.svg';
 import Lock from '../images/lock.svg';
 
 const PassedQuestItemView = styled.View`
-  margin: 5px 15px 10px;
+  margin: 0 15px 15px;
   opacity: 0.5;
 `;
 
 const AvailableQuestItemView = styled.View`
-  margin: 5px 15px 10px;
+  margin: 0 15px 15px;
   elevation: ${4};
   box-shadow: 0 2px 2.62px rgba(0,0,0,0.1);
 `;
 
 const LockedQuestItemView = styled.View<{ state: string }>`
-  margin: 5px 15px 10px;
+  margin: 0 15px 15px;
   background-color: #E4E7EA;
   border-radius: 15px;
 `;
@@ -65,7 +65,8 @@ const AvailableCondition = styled.Text`
 const PassedTick = styled(Passed)`
   position: absolute;
   right: 15px;
-  bottom: 4px;
+  bottom: 9px;
+  border-radius: 16px;
   elevation: ${5};
   box-shadow: 0 2px 3.84px rgba(0,0,0,0.25);
 `;

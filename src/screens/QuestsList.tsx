@@ -47,7 +47,7 @@ const Title = styled.Text`
   font-size: 28px;
   line-height: 28px;
   color: ${Colors.Black};
-  margin: 74px 15px 25px;
+  margin: 74px 15px 30px;
 `;
 
 const ErrorText = styled.Text`
