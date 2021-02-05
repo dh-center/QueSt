@@ -20,7 +20,7 @@ const AvailableQuestItemView = styled.View`
   box-shadow: 0 2px 2.62px rgba(0,0,0,0.1);
 `;
 
-const LockedQuestItemView = styled.View<{ state: string }>`
+const LockedQuestItemView = styled.View`
   margin: 0 15px 15px;
   background-color: #E4E7EA;
   border-radius: 15px;
