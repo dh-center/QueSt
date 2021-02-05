@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, RefreshControl, ScrollView } from 'react-native';
 import { Spinner } from 'native-base';
 import { graphql, QueryRenderer } from 'react-relay';
 import env from '../environment';
@@ -47,7 +47,7 @@ const Title = styled.Text`
   font-size: 28px;
   line-height: 28px;
   color: ${Colors.Black};
-  margin: 74px 15px 25px;
+  margin: 74px 15px 30px;
 `;
 
 const ErrorText = styled.Text`
@@ -81,10 +81,12 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
                 id: item.node.id,
                 title: item.node.name,
                 description: item.node.description,
+                locked: item.node.questProgressState === 'LOCKED',
               })
               }
               name={item.node.name}
               type={item.node.type}
+              progressState={item.node.questProgressState}
             />
           </>
         )}
@@ -105,6 +107,38 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
   );
 }
 
+/**
+ * Component of the error screen
+ *
+ * @param props - data with query results
+ */
+function ErrorScreen(props: {retry: (() => void) | null}): React.ReactElement {
+  const [isLoading, setIsLoading] = useState(false);
+
+  return (
+    <Body>
+      <ScrollView>
+        <RefreshControl refreshing={isLoading} onRefresh={(): void => {
+          setIsLoading(true);
+          if (props.retry) {
+            props.retry();
+          }
+          /**
+           * @todo set false only when receiving data
+           */
+          setIsLoading(false);
+        }}/>
+        <Title>
+        К сожалению, произошла ошибка 😔
+        </Title>
+        <ErrorText>
+        Пожалуйста, попробуйте повторить попытку спустя некоторое время
+        </ErrorText>
+      </ScrollView>
+    </Body>
+  );
+}
+
 const query = graphql`
   query QuestsListQuery {
     quests {
@@ -114,6 +148,7 @@ const query = graphql`
           name
           description
           type
+          questProgressState
         }
       }
     }
@@ -132,14 +167,7 @@ export default function Quests(): React.ReactElement {
       render={({ error, props, retry }): React.ReactElement => {
         if (error) {
           return (
-            <Body>
-              <Title>
-                К сожалению, произошла ошибка 😔
-              </Title>
-              <ErrorText>
-                Пожалуйста, попробуйте повторить попытку спустя некоторое время
-              </ErrorText>
-            </Body>
+            <ErrorScreen retry={retry}/>
           );
         }
         if (props) {
