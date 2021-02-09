@@ -86,6 +86,7 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
               }
               name={item.node.name}
               type={item.node.type}
+              minLevel={item.node.minLevel}
               progressState={item.node.questProgressState}
             />
           </>
@@ -148,6 +149,7 @@ const query = graphql`
           name
           description
           type
+          minLevel
           questProgressState
         }
       }

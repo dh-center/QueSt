@@ -86,6 +86,11 @@ export interface QuestItemProps {
   type: string;
 
   /**
+   * The minimum level required by the user to complete this quest
+   */
+  minLevel: number;
+
+  /**
    * Quest progress state
    */
   progressState: 'PASSED' | 'AVAILABLE' | 'LOCKED';
@@ -96,7 +101,7 @@ export interface QuestItemProps {
  *
  * @param props - props for item
  */
-export default function QuestsListItem({ style: _style, name, type, progressState, ...rest }: TouchableOpacityProps & QuestItemProps): React.ReactElement {
+export default function QuestsListItem({ style: _style, name, type, minLevel, progressState, ...rest }: TouchableOpacityProps & QuestItemProps): React.ReactElement {
   let iconViewColor;
   let Wrapper;
 
@@ -126,7 +131,7 @@ export default function QuestsListItem({ style: _style, name, type, progressStat
           {progressState === 'LOCKED' && <Lock/>}
           {progressState === 'AVAILABLE' && <Next/>}
         </QuestItem>
-        {progressState === 'LOCKED' && <AvailableCondition>Достигните 7 уровня</AvailableCondition>}
+        {progressState === 'LOCKED' && <AvailableCondition>Достигните {minLevel} уровня</AvailableCondition>}
       </Wrapper>
       {progressState === 'PASSED' && <PassedTick/>}
     </>

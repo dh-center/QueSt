@@ -14,6 +14,7 @@ export type QuestsListQueryResponse = {
                 readonly name: string;
                 readonly description: string | null;
                 readonly type: TaskTypes;
+                readonly minLevel: number;
                 readonly questProgressState: QuestUserProgressStates;
             };
         }>;
@@ -35,6 +36,7 @@ query QuestsListQuery {
         name
         description
         type
+        minLevel
         questProgressState
       }
     }
@@ -100,6 +102,13 @@ var v0 = [
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "minLevel",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "questProgressState",
                 "storageKey": null
               }
@@ -131,14 +140,14 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "f220d8a368e09febbce841a723524ccc",
+    "cacheID": "1cdfd497b85afa35757646f76bc617ca",
     "id": null,
     "metadata": {},
     "name": "QuestsListQuery",
     "operationKind": "query",
-    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n        type\n        questProgressState\n      }\n    }\n  }\n}\n"
+    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n        type\n        minLevel\n        questProgressState\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '906b9da165853041b918ec1e2ce2da39';
+(node as any).hash = 'bb1d6f16a9999e08cfc0d64268c5f868';
 export default node;
