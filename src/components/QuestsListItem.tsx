@@ -8,6 +8,7 @@ import Puzzle from '../images/puzzle.svg';
 import Next from '../images/next.svg';
 import Passed from '../images/passed.svg';
 import Lock from '../images/lock.svg';
+import { Trans } from 'react-i18next';
 
 const PassedQuestItemView = styled.View`
   margin: 0 15px 15px;
@@ -131,7 +132,13 @@ export default function QuestsListItem({ style: _style, name, type, minLevel, pr
           {progressState === 'LOCKED' && <Lock/>}
           {progressState === 'AVAILABLE' && <Next/>}
         </QuestItem>
-        {progressState === 'LOCKED' && <AvailableCondition>Достигните {minLevel} уровня</AvailableCondition>}
+        {progressState === 'LOCKED' &&
+          <Trans
+            i18nKey="quests.condition"
+            values={{ minLevel: minLevel }}
+            components={{ Text: <AvailableCondition/> }}
+          />
+        }
       </Wrapper>
       {progressState === 'PASSED' && <PassedTick/>}
     </>

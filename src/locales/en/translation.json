@@ -1,6 +1,7 @@
 {
   "quests": {
     "title": "Quests",
+    "condition": "<Text>Reach level {{minLevel}}</Text>",
     "advice": "We advise you to use an electric scooter or bicycle",
     "achievements": "Achievements",
     "cards": "Collection cards",
