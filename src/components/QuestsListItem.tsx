@@ -135,7 +135,7 @@ export default function QuestsListItem({ style: _style, name, type, minLevel, pr
           {progressState === 'LOCKED' && <Lock/>}
           {progressState === 'AVAILABLE' && <Next/>}
         </QuestItem>
-        {progressState === 'LOCKED' && <AvailableCondition>{t('quests.condition', { minLevel: minLevel })}</AvailableCondition>}
+        {progressState === 'LOCKED' && <AvailableCondition>{t('quests.condition', { minLevel })}</AvailableCondition>}
       </Wrapper>
       {progressState === 'PASSED' && <PassedTick/>}
     </>
