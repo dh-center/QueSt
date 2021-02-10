@@ -17,6 +17,8 @@ const PassedQuestItemView = styled.View`
 
 const AvailableQuestItemView = styled.View`
   margin: 0 15px 15px;
+  background-color: ${Colors.White};
+  border-radius: 15px;
   elevation: ${4};
   box-shadow: 0 2px 2.62px rgba(0,0,0,0.1);
 `;
