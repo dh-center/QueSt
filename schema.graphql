@@ -254,6 +254,9 @@ input CreateQuestInput {
   """Quest type (quiz, route, etc.)"""
   type: TaskTypes! = ROUTE
 
+  """The minimum level required by the user to complete this quest"""
+  minLevel: Int!
+
   """Quest data"""
   data: EditorDataInput!
 }
@@ -878,6 +881,9 @@ type Quest implements Node {
   """Quest rewards"""
   rewards: [JSON!]!
 
+  """The minimum level required by the user to complete this quest"""
+  minLevel: Int!
+
   """Quest progress states (passed, available, blocked)"""
   questProgressState: QuestUserProgressStates!
 }
@@ -1242,6 +1248,9 @@ input UpdateQuestInput {
 
   """Quest type (quiz, route, etc.)"""
   type: TaskTypes
+
+  """The minimum level required by the user to complete this quest"""
+  minLevel: Int
 
   """Quest data"""
   data: EditorDataInput

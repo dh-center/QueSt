@@ -8,6 +8,7 @@ import Puzzle from '../images/puzzle.svg';
 import Next from '../images/next.svg';
 import Passed from '../images/passed.svg';
 import Lock from '../images/lock.svg';
+import { useTranslation } from 'react-i18next';
 
 const PassedQuestItemView = styled.View`
   margin: 0 15px 15px;
@@ -16,6 +17,8 @@ const PassedQuestItemView = styled.View`
 
 const AvailableQuestItemView = styled.View`
   margin: 0 15px 15px;
+  background-color: ${Colors.White};
+  border-radius: 15px;
   elevation: ${4};
   box-shadow: 0 2px 2.62px rgba(0,0,0,0.1);
 `;
@@ -86,6 +89,11 @@ export interface QuestItemProps {
   type: string;
 
   /**
+   * The minimum level required by the user to complete this quest
+   */
+  minLevel: number;
+
+  /**
    * Quest progress state
    */
   progressState: 'PASSED' | 'AVAILABLE' | 'LOCKED';
@@ -96,7 +104,8 @@ export interface QuestItemProps {
  *
  * @param props - props for item
  */
-export default function QuestsListItem({ style: _style, name, type, progressState, ...rest }: TouchableOpacityProps & QuestItemProps): React.ReactElement {
+export default function QuestsListItem({ style: _style, name, type, minLevel, progressState, ...rest }: TouchableOpacityProps & QuestItemProps): React.ReactElement {
+  const { t } = useTranslation();
   let iconViewColor;
   let Wrapper;
 
@@ -126,7 +135,7 @@ export default function QuestsListItem({ style: _style, name, type, progressStat
           {progressState === 'LOCKED' && <Lock/>}
           {progressState === 'AVAILABLE' && <Next/>}
         </QuestItem>
-        {progressState === 'LOCKED' && <AvailableCondition>Достигните 7 уровня</AvailableCondition>}
+        {progressState === 'LOCKED' && <AvailableCondition>{t('quests.condition', { minLevel })}</AvailableCondition>}
       </Wrapper>
       {progressState === 'PASSED' && <PassedTick/>}
     </>
