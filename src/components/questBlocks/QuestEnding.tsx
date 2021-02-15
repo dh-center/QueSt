@@ -5,6 +5,14 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
 import { commitMutation, graphql } from 'react-relay';
 import env from '../../environment';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { QuestsStackParamList } from '../../navigation/questsStack';
+import { useNavigation } from '@react-navigation/native';
+
+/**
+ * Type with props of screen 'List' in QuestsStackScreen
+ */
+type QuestScreenNavigationProp = StackNavigationProp<QuestsStackParamList, 'List'>;
 
 const Body = styled(BlockBody)`
   justify-content: center;
@@ -45,6 +53,7 @@ const mutation = graphql`
  * @param props - id of current quest
  */
 export default function QuestEnding(props: QuestEndingProps): React.ReactElement {
+  const navigation = useNavigation<QuestScreenNavigationProp>();
   const { t } = useTranslation();
 
   return (
@@ -60,6 +69,7 @@ export default function QuestEnding(props: QuestEndingProps): React.ReactElement
               onError: err => console.error(err),
             }
           );
+          navigation.navigate('List');
         }}
       />
     </Body>
