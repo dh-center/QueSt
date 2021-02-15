@@ -42,7 +42,7 @@ const mutation = graphql`
 /**
  * Renders text ending of quest
  *
- * @param props
+ * @param props - id of current quest
  */
 export default function QuestEnding(props: QuestEndingProps): React.ReactElement {
   const { t } = useTranslation();

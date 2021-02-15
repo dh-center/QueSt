@@ -68,6 +68,9 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
 
+  /**
+   * The order in which the quests should be reflected
+   */
   enum StatesOrder {
     PASSED,
     AVAILABLE,
