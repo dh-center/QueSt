@@ -68,11 +68,31 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
 
+  enum States {
+    PASSED,
+    AVAILABLE,
+    LOCKED,
+  }
+
+  const data = [ ...props.quests.edges ].sort(
+    (a, b) => {
+      return States[a.node.questProgressState] - States[b.node.questProgressState];
+    }
+  ).sort(
+    (a, b) => {
+      if (a.node.questProgressState === b.node.questProgressState) {
+        return a.node.minLevel - b.node.minLevel;
+      }
+
+      return 0;
+    }
+  );
+
   return (
     <Body>
       <Circle/>
       <FlatList
-        data={props.quests.edges}
+        data={data}
         renderItem={({ item, index }): React.ReactElement => (
           <>
             {(index === 0) && <Title>{t('quests.title')}</Title>}

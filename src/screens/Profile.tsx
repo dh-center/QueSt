@@ -89,6 +89,8 @@ export default function ProfileScreen(): React.ReactElement {
               username
               photo
               firstName
+              level
+              exp
             }
         }
       `}
@@ -132,7 +134,11 @@ export default function ProfileScreen(): React.ReactElement {
               <Avatar source={imageSource}/>
             </AvatarView>
             <Name>{props.user.firstName || props.user.username}</Name>
-            <ProgressBlock totalExp={200} currentExp={153}/>
+            <ProgressBlock
+              level={props.user.level}
+              totalExp={100}
+              currentExp={props.user.exp - props.user.level * 100}
+            />
             <ProfileButton icon={Friends} buttonText={t('profile.friends')}/>
             <ProfileButton icon={Rating} buttonText={t('profile.rating')}/>
             <ProfileButton icon={Achievements} buttonText={t('profile.achievements')}/>

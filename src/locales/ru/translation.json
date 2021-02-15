@@ -6,7 +6,8 @@
     "achievements": "Достижения",
     "cards": "Коллекционные карточки",
     "startQuest": "Начать квест",
-    "enterAnswer": "Введите ответ"
+    "enterAnswer": "Введите ответ",
+    "endQuest": "Завершить квест"
   },
   "profile": {
     "title": "Профиль",

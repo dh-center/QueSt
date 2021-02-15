@@ -52,6 +52,11 @@ const ProgressFill = styled.View<{ customWidth: number }>`
  */
 export interface ProgressProps {
   /**
+   * User level
+   */
+  level: number;
+
+  /**
    * Maximum level experience
    */
   totalExp: number;
@@ -67,13 +72,13 @@ export interface ProgressProps {
  *
  * @param props - props for component
  */
-export default function ProgressBlock({ totalExp, currentExp }: ProgressProps): React.ReactElement {
+export default function ProgressBlock({ level, totalExp, currentExp }: ProgressProps): React.ReactElement {
   const progress = currentExp * 100 / totalExp;
 
   return (
     <LevelView>
       <Progress>{currentExp}/{totalExp}</Progress>
-      <Level>LV. 5</Level>
+      <Level>LV. {level}</Level>
       <ProgressBar/>
       <ProgressFill customWidth={progress}/>
     </LevelView>

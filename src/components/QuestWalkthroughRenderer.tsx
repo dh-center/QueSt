@@ -16,6 +16,7 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Spinner } from 'native-base';
 import CurrentTask from './questBlocks/CurrentTask';
 import styled from 'styled-components/native';
+import QuestEnding from './questBlocks/QuestEnding';
 
 const styles = StyleSheet.create({
   modal: {
@@ -138,7 +139,12 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
   let component;
 
   if (!currentBlock) {
-    component = <Text>Quest ended</Text>;
+    const questId = props.quest?.id;
+
+    if (!questId) {
+      return <Text>No quest id</Text>;
+    }
+    component = <QuestEnding questId={questId}/>;
   } else {
     switch (currentBlock.type) {
       case 'header':
