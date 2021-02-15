@@ -9,6 +9,7 @@ import Next from '../images/next.svg';
 import Passed from '../images/passed.svg';
 import Lock from '../images/lock.svg';
 import { useTranslation } from 'react-i18next';
+import { QuestUserProgressStates } from '../screens/__generated__/QuestsListQuery.graphql';
 
 const PassedQuestItemView = styled.View`
   margin: 0 15px 15px;
@@ -96,7 +97,7 @@ export interface QuestItemProps {
   /**
    * Quest progress state
    */
-  progressState: 'PASSED' | 'AVAILABLE' | 'LOCKED';
+  progressState: QuestUserProgressStates;
 }
 
 /**

@@ -1,3 +1,6 @@
+"""Directive for applying default values to nullable fields"""
+directive @default(value: String!) on FIELD_DEFINITION
+
 """Converts MongoDB ObjectId value to the Global Unique ID"""
 directive @toGlobalId(type: String!) on FIELD_DEFINITION
 
@@ -256,6 +259,9 @@ input CreateQuestInput {
 
   """The minimum level required by the user to complete this quest"""
   minLevel: Int!
+
+  """The experience that the user will receive by completing this quest"""
+  earnedExp: Int!
 
   """Quest data"""
   data: EditorDataInput!
@@ -599,6 +605,7 @@ type Mutation {
   relation: RelationMutations!
   relationType: RelationTypeMutations!
   quest: QuestMutations!
+  user: UserMutations!
 }
 
 """An object with a Globally Unique ID"""
@@ -883,6 +890,9 @@ type Quest implements Node {
 
   """The minimum level required by the user to complete this quest"""
   minLevel: Int!
+
+  """The experience that the user will receive by completing this quest"""
+  earnedExp: Int!
 
   """Quest progress states (passed, available, blocked)"""
   questProgressState: QuestUserProgressStates!
@@ -1252,6 +1262,9 @@ input UpdateQuestInput {
   """The minimum level required by the user to complete this quest"""
   minLevel: Int
 
+  """The experience that the user will receive by completing this quest"""
+  earnedExp: Int
+
   """Quest data"""
   data: EditorDataInput
 }
@@ -1332,5 +1345,27 @@ type User implements Node {
 
   """User last name"""
   lastName: String
+
+  """Quests that user complete"""
+  completedQuests: [Quest!]!
+
+  """User experience"""
+  exp: Int!
+
+  """User level"""
+  level: Int!
+}
+
+type UserCompleteQuestPayload {
+  """User id"""
+  recordId: GlobalId!
+
+  """User completed quest"""
+  record: User!
+}
+
+type UserMutations {
+  """Complete quest"""
+  completeQuest(questId: GlobalId!): UserCompleteQuestPayload!
 }
 

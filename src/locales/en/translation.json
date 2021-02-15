@@ -6,7 +6,8 @@
     "achievements": "Achievements",
     "cards": "Collection cards",
     "startQuest": "Start quest",
-    "enterAnswer": "Enter your answer"
+    "enterAnswer": "Enter your answer",
+    "endQuest": "Complete the quest"
   },
   "profile": {
     "title": "Profile",
