@@ -186,6 +186,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         keyboardAvoidingOffset={-100} // magic value that fixes bottom padding if keyboard is open
         alwaysOpen={BOTTOM_SHEET_TOP}
         modalStyle={styles.modal}
+        rootStyle={{ elevation: 5 }}
         customRenderer={<ModalScrollView>{component}</ModalScrollView>}
       />
     </View>
