@@ -69,7 +69,7 @@ export default function QuestEnding(props: QuestEndingProps): React.ReactElement
               onError: err => console.error(err),
             }
           );
-          navigation.navigate('List');
+          navigation.navigate('List', { needRefresh: true });
         }}
       />
     </Body>
