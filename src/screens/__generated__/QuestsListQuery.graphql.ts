@@ -5,7 +5,9 @@
 import { ConcreteRequest } from "relay-runtime";
 export type QuestUserProgressStates = "AVAILABLE" | "LOCKED" | "PASSED";
 export type TaskTypes = "QUIZ" | "ROUTE";
-export type QuestsListQueryVariables = {};
+export type QuestsListQueryVariables = {
+    userDontAuthorized?: boolean | null;
+};
 export type QuestsListQueryResponse = {
     readonly quests: {
         readonly edges: ReadonlyArray<{
@@ -15,7 +17,7 @@ export type QuestsListQueryResponse = {
                 readonly description: string | null;
                 readonly type: TaskTypes;
                 readonly minLevel: number;
-                readonly questProgressState: QuestUserProgressStates;
+                readonly questProgressState?: QuestUserProgressStates;
             };
         }>;
     };
@@ -28,7 +30,9 @@ export type QuestsListQuery = {
 
 
 /*
-query QuestsListQuery {
+query QuestsListQuery(
+  $userDontAuthorized: Boolean = false
+) {
   quests {
     edges {
       node {
@@ -37,7 +41,7 @@ query QuestsListQuery {
         description
         type
         minLevel
-        questProgressState
+        questProgressState @skip(if: $userDontAuthorized)
       }
     }
   }
@@ -46,6 +50,13 @@ query QuestsListQuery {
 
 const node: ConcreteRequest = (function(){
 var v0 = [
+  {
+    "defaultValue": false,
+    "kind": "LocalArgument",
+    "name": "userDontAuthorized"
+  }
+],
+v1 = [
   {
     "alias": null,
     "args": null,
@@ -106,11 +117,18 @@ var v0 = [
                 "storageKey": null
               },
               {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "questProgressState",
-                "storageKey": null
+                "condition": "userDontAuthorized",
+                "kind": "Condition",
+                "passingValue": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "questProgressState",
+                    "storageKey": null
+                  }
+                ]
               }
             ],
             "storageKey": null
@@ -124,30 +142,30 @@ var v0 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "QuestsListQuery",
-    "selections": (v0/*: any*/),
+    "selections": (v1/*: any*/),
     "type": "Query",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "QuestsListQuery",
-    "selections": (v0/*: any*/)
+    "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "1cdfd497b85afa35757646f76bc617ca",
+    "cacheID": "936c7b7bf4041d3f84a800501eb36508",
     "id": null,
     "metadata": {},
     "name": "QuestsListQuery",
     "operationKind": "query",
-    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n        type\n        minLevel\n        questProgressState\n      }\n    }\n  }\n}\n"
+    "text": "query QuestsListQuery(\n  $userDontAuthorized: Boolean = false\n) {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n        type\n        minLevel\n        questProgressState @skip(if: $userDontAuthorized)\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'bb1d6f16a9999e08cfc0d64268c5f868';
+(node as any).hash = '6aace9b74f2e9522bfaebb94aed4dac1';
 export default node;

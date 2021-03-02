@@ -10,6 +10,7 @@ import {
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
+import { useAuthState } from '../controllers/authController';
 import { QuestsStackParamList } from '../navigation/questsStack';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../styles/textStyles';
@@ -103,7 +104,7 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
         /**
          * Sort by states
          */
-        return StatesOrder[a.node.questProgressState] - StatesOrder[b.node.questProgressState];
+        return (a.node.questProgressState && b.node.questProgressState) ? StatesOrder[a.node.questProgressState] - StatesOrder[b.node.questProgressState] : 0;
       }
     );
 
@@ -126,7 +127,7 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
               name={item.node.name}
               type={item.node.type}
               minLevel={item.node.minLevel}
-              progressState={item.node.questProgressState}
+              progressState={item.node.questProgressState || 'LOCKED'}
             />
           </>
         )}
@@ -180,7 +181,7 @@ function ErrorScreen(props: {retry: (() => void) | null}): React.ReactElement {
 }
 
 const query = graphql`
-  query QuestsListQuery {
+  query QuestsListQuery($userDontAuthorized: Boolean = false) {
     quests {
       edges {
         node {
@@ -189,7 +190,7 @@ const query = graphql`
           description
           type
           minLevel
-          questProgressState
+          questProgressState @skip(if: $userDontAuthorized)
         }
       }
     }
@@ -206,7 +207,7 @@ export default function Quests({ route }: Props): React.ReactElement {
     <QueryRenderer<QuestsListQuery>
       environment={env}
       query={query}
-      variables={{}}
+      variables={{ userDontAuthorized: !useAuthState().accessToken }}
       render={({ error, props, retry }): React.ReactElement => {
         if (error) {
           return (
