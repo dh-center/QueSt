@@ -75,7 +75,7 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
 
   useEffect(() => {
     if (props.retry && props.needRefresh) {
-      setIsLoading(props.needRefresh);
+      setIsLoading(true);
       props.retry();
       setIsLoading(false);
     }
