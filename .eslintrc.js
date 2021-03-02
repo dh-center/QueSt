@@ -8,6 +8,7 @@ module.exports = {
   ],
   rules: {
     'prettier/prettier': 'off',
+    'react-hooks/exhaustive-deps': 'off',
     'eslint-comments/no-unlimited-disable': 'off',
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': 'off',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, ScrollView } from 'react-native';
 import { Spinner } from 'native-base';
 import { graphql, QueryRenderer } from 'react-relay';
@@ -7,7 +7,7 @@ import {
   QuestsListQuery,
   QuestsListQueryResponse
 } from './__generated__/QuestsListQuery.graphql';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { QuestsStackParamList } from '../navigation/questsStack';
@@ -21,6 +21,11 @@ import QuestsListItem from '../components/QuestsListItem';
  * Type with props of screen 'List' in QuestsStackScreen
  */
 type ListScreenNavigationProp = StackNavigationProp<QuestsStackParamList, 'List'>;
+
+/**
+ * Type with props of screen 'List' in QuestsStackScreen
+ */
+type Props = StackScreenProps<QuestsStackParamList, 'List'>;
 
 const Body = styled.View`
   background-color: ${Colors.Background};
@@ -63,10 +68,18 @@ const ErrorText = styled.Text`
  *
  * @param props - data with query results
  */
-function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) | null}): React.ReactElement {
+function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) | null, needRefresh: boolean}): React.ReactElement {
   const navigation = useNavigation<ListScreenNavigationProp>();
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (props.retry && props.needRefresh) {
+      setIsLoading(true);
+      props.retry();
+      setIsLoading(false);
+    }
+  }, [ props.needRefresh ]);
 
   /**
    * The order in which the quests should be shown
@@ -185,8 +198,10 @@ const query = graphql`
 
 /**
  * Functional component of the query result
+ *
+ * @param route - route props of screen 'List'
  */
-export default function Quests(): React.ReactElement {
+export default function Quests({ route }: Props): React.ReactElement {
   return (
     <QueryRenderer<QuestsListQuery>
       environment={env}
@@ -199,7 +214,7 @@ export default function Quests(): React.ReactElement {
           );
         }
         if (props) {
-          return <QuestsListScreen {...props} retry={retry} />;
+          return <QuestsListScreen {...props} retry={retry} needRefresh={route.params?.needRefresh || false}/>;
         }
 
         return (
