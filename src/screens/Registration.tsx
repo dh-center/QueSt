@@ -10,6 +10,8 @@ import { ProfileStackParamList } from '../navigation/profileStack';
 import { useNavigation } from '@react-navigation/native';
 import ScreenWrapper from '../components/utils/ScreenWrapper';
 import authController from '../controllers/authController';
+import Colors from '../styles/colors';
+import Logo from "../images/fullLogo.svg";
 
 /**
  * Styles for registration screen component
@@ -37,21 +39,14 @@ const styles = StyleSheet.create({
    * Logo placeholder styles
    */
   logo: {
-    ...textStyles.default,
-    backgroundColor: '#C4C4C4',
-    width: 110,
-    height: 110,
-    textAlignVertical: 'center',
-    textAlign: 'center',
-    borderRadius: 55,
-    marginBottom: 30,
+    marginVertical: 15,
   },
 
   /**
    * Registration text block
    */
   registrationTitleContainer: {
-    marginBottom: 30,
+    marginVertical: 30,
   },
   registrationTitle: {
     ...textStyles.robotoMedium,
@@ -63,6 +58,8 @@ const styles = StyleSheet.create({
    */
   input: {
     marginBottom: 15,
+    shadowColor: Colors.Background,
+    elevation: 0,
   },
   registrationButton: {
     marginVertical: 15,
@@ -110,7 +107,7 @@ export default function RegistrationScreen(): ReactElement {
       >
         <BackArrow/>
       </TouchableOpacity>
-      <Text style={styles.logo}>Logo</Text>
+      <Logo style={styles.logo}/>
       <View style={styles.registrationTitleContainer}>
         <Text style={styles.registrationTitle}>
           {t('signUp.registration')}
