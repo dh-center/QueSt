@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     shadowColor: Colors.Background,
     elevation: 0,
+    borderColor: 'transparent',
   },
   registrationButton: {
     marginVertical: 15,
@@ -107,7 +108,7 @@ export default function RegistrationScreen(): ReactElement {
       >
         <BackArrow/>
       </TouchableOpacity>
-      <Logo style={styles.logo}/>
+      <Logo style={styles.logo} height={80} width={144}/>
       <View style={styles.registrationTitleContainer}>
         <Text style={styles.registrationTitle}>
           {t('signUp.registration')}

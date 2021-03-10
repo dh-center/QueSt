@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     marginBottom: 15,
     shadowColor: Colors.Background,
     elevation: 0,
+    borderColor: 'transparent',
   },
   recoverPasswordButton: {
     opacity: 0.5,
@@ -108,7 +109,7 @@ export default function LoginScreen(): ReactElement {
 
   return (
     <ScreenWrapper scrollable>
-      <Logo style={styles.logo}/>
+      <Logo style={styles.logo} height={80} width={144}/>
       <View style={styles.welcomeTextContainer}>
         <Text style={styles.welcomeTextMedium}>
           {t('signIn.welcomeHeader')}
