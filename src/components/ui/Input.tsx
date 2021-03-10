@@ -72,7 +72,7 @@ export interface TextProps {
   /**
    * Text style
    */
-  textStyle: TextStyle;
+  textStyle?: TextStyle;
 }
 
 /**

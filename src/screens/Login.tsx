@@ -13,6 +13,8 @@ import FacebookAuth from '../components/auth/Facebook';
 import VkAuth from '../components/auth/Vk';
 import GoogleAuth from '../components/auth/Google';
 import authController from '../controllers/authController';
+import Logo from '../images/fullLogo.svg';
+import Colors from '../styles/colors';
 
 /**
  * Styles for login view
@@ -22,21 +24,14 @@ const styles = StyleSheet.create({
    * Logo placeholder styles
    */
   logo: {
-    ...textStyles.default,
-    backgroundColor: '#C4C4C4',
-    width: 110,
-    height: 110,
-    textAlignVertical: 'center',
-    textAlign: 'center',
-    borderRadius: 55,
-    marginBottom: 30,
+    marginVertical: 15,
   },
 
   /**
    * Welcome text block
    */
   welcomeTextContainer: {
-    marginBottom: 30,
+    marginVertical: 30,
   },
   welcomeText: {
     ...textStyles.default,
@@ -52,6 +47,9 @@ const styles = StyleSheet.create({
    */
   input: {
     marginBottom: 15,
+    shadowColor: Colors.Background,
+    elevation: 0,
+    borderColor: 'transparent',
   },
   recoverPasswordButton: {
     opacity: 0.5,
@@ -111,7 +109,7 @@ export default function LoginScreen(): ReactElement {
 
   return (
     <ScreenWrapper scrollable>
-      <Text style={styles.logo}>Logo</Text>
+      <Logo style={styles.logo} height={80} width={144}/>
       <View style={styles.welcomeTextContainer}>
         <Text style={styles.welcomeTextMedium}>
           {t('signIn.welcomeHeader')}
