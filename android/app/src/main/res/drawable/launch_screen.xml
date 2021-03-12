@@ -8,8 +8,8 @@
 
   <item
     android:width="240dp"
-    android:height="128dp"
-    android:top="175dp"
+    android:height="134dp"
+    android:top="174dp"
     android:gravity="center_horizontal"
     android:drawable="@mipmap/splash_logo">
   </item>
