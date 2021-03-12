@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {Platform, StatusBar} from 'react-native';
+import { Platform, StatusBar } from 'react-native';
 import MainTabsNavigation from './navigation/mainTabs';
 import authController from './controllers/authController';
 import VKLogin from 'react-native-vkontakte-login';
