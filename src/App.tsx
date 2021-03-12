@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Platform, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import MainTabsNavigation from './navigation/mainTabs';
 import authController from './controllers/authController';
 import VKLogin from 'react-native-vkontakte-login';
@@ -23,9 +23,7 @@ function App(): React.ReactElement {
   };
 
   useEffect(() => {
-    if (Platform.OS === 'android') {
-      SplashScreen.hide();
-    }
+    SplashScreen.hide();
     initApp().finally(() => setIsAppInitialized(true));
     VKLogin.initialize(VK_APP_ID);
   }, []);
