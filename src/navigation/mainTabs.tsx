@@ -45,7 +45,7 @@ export default function MainTabsNavigation(): React.ReactElement {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="Map"
+        initialRouteName="Profile"
         tabBar={props => <TabBar {...props} />}
         tabBarOptions={{
           style: {

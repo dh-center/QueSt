@@ -45,6 +45,7 @@
     "react-native-safe-area-context": "^3.1.9",
     "react-native-screens": "^2.16.1",
     "react-native-sensitive-info": "^6.0.0-alpha.9",
+    "react-native-splash-screen": "^3.2.0",
     "react-native-svg": "^12.1.0",
     "react-native-vector-icons": "^7.0.0",
     "react-native-vkontakte-login": "^1.0.1",

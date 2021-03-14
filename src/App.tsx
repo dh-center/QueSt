@@ -5,6 +5,7 @@ import authController from './controllers/authController';
 import VKLogin from 'react-native-vkontakte-login';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { VK_APP_ID } from '@env';
+import SplashScreen from 'react-native-splash-screen';
 
 /**
  * Imports i18next plugin to react native app
@@ -22,6 +23,7 @@ function App(): React.ReactElement {
   };
 
   useEffect(() => {
+    SplashScreen.hide();
     initApp().finally(() => setIsAppInitialized(true));
     VKLogin.initialize(VK_APP_ID);
   }, []);
