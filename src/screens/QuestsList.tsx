@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, ScrollView } from 'react-native';
 import { Spinner } from 'native-base';
 import { graphql, QueryRenderer } from 'react-relay';
-import env from '../environment';
 import {
   QuestsListQuery,
   QuestsListQueryResponse
@@ -16,6 +15,7 @@ import { StyledFonts } from '../styles/textStyles';
 import Colors from '../styles/colors';
 import BlueCircle from '../images/blueCircle15.svg';
 import QuestsListItem from '../components/QuestsListItem';
+import { useRelayEnvironment } from 'react-relay/hooks';
 
 /**
  * Type with props of screen 'List' in QuestsStackScreen
@@ -202,9 +202,11 @@ const query = graphql`
  * @param route - route props of screen 'List'
  */
 export default function Quests({ route }: Props): React.ReactElement {
+  const environment = useRelayEnvironment();
+
   return (
     <QueryRenderer<QuestsListQuery>
-      environment={env}
+      environment={environment}
       query={query}
       variables={{}}
       render={({ error, props, retry }): React.ReactElement => {

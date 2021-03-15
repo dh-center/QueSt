@@ -17,12 +17,12 @@ import Rewards from '../images/rewards.svg';
 import ProgressBlock from '../components/ProgressBlock';
 import ProfileButton from '../components/ProfileButton';
 import { graphql, QueryRenderer } from 'react-relay';
-import environment from '../environment';
 import { ProfileQuery } from './__generated__/ProfileQuery.graphql';
 import ScreenWrapper from '../components/utils/ScreenWrapper';
 import checkApiErrors from '../utils/checkApiErrors';
-import authController from '../controllers/authController';
 import Button from '../components/ui/Button';
+import { useAuthContext } from '../contexts/AuthProvider';
+import { useRelayEnvironment } from 'react-relay/hooks';
 
 /**
  * Type with props of screen 'Main' in ProfileStack
@@ -76,8 +76,10 @@ const Loader = (): React.ReactElement => (
  * Displays user's profile
  */
 export default function ProfileScreen(): React.ReactElement {
+  const authContext = useAuthContext();
   const navigation = useNavigation<MainScreenNavigationProp>();
   const { t } = useTranslation();
+  const environment = useRelayEnvironment();
 
   return (
     <QueryRenderer<ProfileQuery>
@@ -104,14 +106,14 @@ export default function ProfileScreen(): React.ReactElement {
           } catch (e) {
             errorMessage = t([`errors.${e.message}`, 'errors.unspecific']);
             if (e.message === 'INVALID_ACCESS_TOKEN') {
-              authController.logout();
+              authContext.actions.logout();
             }
           }
 
           return (
             <ScreenWrapper>
               <Text>{errorMessage}</Text>
-              <Button title={'Logout'} onPress={authController.logout}/>
+              <Button title={'Logout'} onPress={authContext.actions.logout}/>
             </ScreenWrapper>
           );
         }

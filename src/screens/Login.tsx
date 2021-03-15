@@ -12,9 +12,9 @@ import ScreenWrapper from '../components/utils/ScreenWrapper';
 import FacebookAuth from '../components/auth/Facebook';
 import VkAuth from '../components/auth/Vk';
 import GoogleAuth from '../components/auth/Google';
-import authController from '../controllers/authController';
 import Logo from '../images/fullLogo.svg';
 import Colors from '../styles/colors';
+import { useAuthContext } from '../contexts/AuthProvider';
 
 /**
  * Styles for login view
@@ -91,6 +91,7 @@ type LoginScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Log
  * Login view
  */
 export default function LoginScreen(): ReactElement {
+  const authContext = useAuthContext();
   const { t } = useTranslation();
   const navigation = useNavigation<LoginScreenNavigationProp>();
   const [email, setEmail] = useState('');
@@ -101,7 +102,7 @@ export default function LoginScreen(): ReactElement {
    */
   const login = async (): Promise<void> => {
     try {
-      await authController.loginWithEmailAndPassword(email, password);
+      await authContext.actions.loginWithEmailAndPassword(email, password);
     } catch (e) {
       Alert.alert(t([`errors.${e.message}`, 'errors.unspecific']));
     }
