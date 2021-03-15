@@ -7,8 +7,8 @@ import QuestInfoScreen from '../screens/QuestInfo';
  * Type with params of screens and their props in QuestsStackScreen
  */
 export type QuestsStackParamList = {
-  List: undefined;
-  Description: {id: string; title: string; description: string | null};
+  List: { needRefresh: boolean };
+  Description: {id: string; title: string; description: string | null, locked: boolean};
 };
 
 const QuestsStack = createStackNavigator<QuestsStackParamList>();

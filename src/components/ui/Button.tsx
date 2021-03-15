@@ -3,16 +3,18 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  StyleProp,
-  NativeSyntheticEvent, NativeTouchEvent, ViewStyle
+  NativeSyntheticEvent,
+  NativeTouchEvent,
+  ViewStyle, TouchableOpacityProps
 } from 'react-native';
 import Colors from '../../styles/colors';
 import textStyles from '../../styles/textStyles';
+import WithStyles from '../../types/withStyles';
 
 /**
  * Custom button props
  */
-export interface CustomButtonProps {
+export interface CustomButtonProps extends WithStyles<ViewStyle> {
   /**
    * Text on button
    */
@@ -24,11 +26,6 @@ export interface CustomButtonProps {
    * @param ev - event object
    */
   onPress: (ev: NativeSyntheticEvent<NativeTouchEvent>) => void;
-
-  /**
-   * View styles
-   */
-  style?: StyleProp<ViewStyle>;
 }
 
 /**
@@ -77,9 +74,9 @@ const styles = StyleSheet.create({
  *
  * @param props - component props
  */
-export default function Button(props: CustomButtonProps): ReactElement {
+export default function Button(props: TouchableOpacityProps & CustomButtonProps): ReactElement {
   return (
-    <TouchableOpacity onPress={props.onPress} style={[styles.button, props.style]}>
+    <TouchableOpacity onPress={props.onPress} style={[styles.button, props.style]} disabled={props.disabled}>
       <Text style={styles.buttonText}>{props.title}</Text>
     </TouchableOpacity>
   );

@@ -17,9 +17,12 @@ import Rewards from '../images/rewards.svg';
 import ProgressBlock from '../components/ProgressBlock';
 import ProfileButton from '../components/ProfileButton';
 import { graphql, QueryRenderer } from 'react-relay';
-import enviroment from '../enviroment';
 import { ProfileQuery } from './__generated__/ProfileQuery.graphql';
 import ScreenWrapper from '../components/utils/ScreenWrapper';
+import checkApiErrors from '../utils/checkApiErrors';
+import Button from '../components/ui/Button';
+import { useAuthContext } from '../contexts/AuthProvider';
+import { useRelayEnvironment } from 'react-relay/hooks';
 
 /**
  * Type with props of screen 'Main' in ProfileStack
@@ -73,12 +76,14 @@ const Loader = (): React.ReactElement => (
  * Displays user's profile
  */
 export default function ProfileScreen(): React.ReactElement {
+  const authContext = useAuthContext();
   const navigation = useNavigation<MainScreenNavigationProp>();
   const { t } = useTranslation();
+  const environment = useRelayEnvironment();
 
   return (
     <QueryRenderer<ProfileQuery>
-      environment={enviroment}
+      environment={environment}
       query={graphql`
         query ProfileQuery {
             user: me {
@@ -86,14 +91,29 @@ export default function ProfileScreen(): React.ReactElement {
               username
               photo
               firstName
+              level
+              exp
             }
         }
       `}
       render={({ error, props }) => {
         if (error) {
+          let errorMessage = t('errors.unspecific');
+
+          try {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            checkApiErrors((error as any).source);
+          } catch (e) {
+            errorMessage = t([`errors.${e.message}`, 'errors.unspecific']);
+            if (e.message === 'INVALID_ACCESS_TOKEN') {
+              authContext.actions.logout();
+            }
+          }
+
           return (
             <ScreenWrapper>
-              <Text>Something went wrong</Text>
+              <Text>{errorMessage}</Text>
+              <Button title={'Logout'} onPress={authContext.actions.logout}/>
             </ScreenWrapper>
           );
         }
@@ -116,7 +136,11 @@ export default function ProfileScreen(): React.ReactElement {
               <Avatar source={imageSource}/>
             </AvatarView>
             <Name>{props.user.firstName || props.user.username}</Name>
-            <ProgressBlock totalExp={200} currentExp={153}/>
+            <ProgressBlock
+              level={props.user.level}
+              totalExp={100}
+              currentExp={props.user.exp - props.user.level * 100}
+            />
             <ProfileButton icon={Friends} buttonText={t('profile.friends')}/>
             <ProfileButton icon={Rating} buttonText={t('profile.rating')}/>
             <ProfileButton icon={Achievements} buttonText={t('profile.achievements')}/>

@@ -1,3 +1,6 @@
+"""Directive for applying default values to nullable fields"""
+directive @default(value: String!) on FIELD_DEFINITION
+
 """Converts MongoDB ObjectId value to the Global Unique ID"""
 directive @toGlobalId(type: String!) on FIELD_DEFINITION
 
@@ -79,11 +82,6 @@ type Address {
   postcode: MultilingualString
 }
 
-input Coordinates {
-  longitude: Float!
-  latitude: Float!
-}
-
 """Country data in address of location"""
 type Country implements Node {
   """Country identifier"""
@@ -142,6 +140,9 @@ input CreateLocationInstanceInput {
   """Location's description"""
   description: MultilingualString!
 
+  """Location style id"""
+  locationStyleId: GlobalId
+
   """Link for location info"""
   wikiLink: String
 
@@ -165,6 +166,9 @@ input CreateLocationInstanceInput {
 
   """Location id to which this instance below"""
   locationId: GlobalId!
+
+  """Source of information about location instance"""
+  source: MultilingualString!
 }
 
 type CreateLocationInstancePayload {
@@ -183,6 +187,20 @@ type CreateLocationPayload {
   record: Location!
 }
 
+"""Input for create mutation"""
+input CreateLocationStyleInput {
+  name: MultilingualString!
+}
+
+"""Payload of create mutation response"""
+type CreateLocationStylePayload {
+  """New record id"""
+  recordId: GlobalId!
+
+  """Location style object"""
+  record: LocationStyle!
+}
+
 input CreatePersonInput {
   """Person's last name"""
   lastName: MultilingualString
@@ -196,6 +214,9 @@ input CreatePersonInput {
   """Person's pseudonym"""
   pseudonym: MultilingualString
 
+  """Link with main photo"""
+  mainPhotoLink: String
+
   """Person's professions"""
   professions: [String!]
 
@@ -207,6 +228,9 @@ input CreatePersonInput {
 
   """Person's death date"""
   deathDate: String
+
+  """Contains links with person's photos"""
+  photoLinks: [String!]
 
   """Person's info link"""
   wikiLink: String
@@ -232,6 +256,12 @@ input CreateQuestInput {
 
   """Quest type (quiz, route, etc.)"""
   type: TaskTypes! = ROUTE
+
+  """The minimum level required by the user to complete this quest"""
+  minLevel: Int!
+
+  """The experience that the user will receive by completing this quest"""
+  earnedExp: Int!
 
   """Quest data"""
   data: EditorDataInput!
@@ -260,6 +290,12 @@ input CreateRelationInput {
 
   """Link to quote"""
   link: MultilingualString!
+
+  """Date of relation start"""
+  startDate: String!
+
+  """Date of relation end"""
+  endDate: String!
 }
 
 type CreateRelationPayload {
@@ -295,6 +331,12 @@ type DeleteLocationInstancePayload {
 
 type DeleteLocationPayload {
   """Deleted location id"""
+  recordId: GlobalId!
+}
+
+"""Payload of delete mutation"""
+type DeleteLocationStylePayload {
+  """Deleted record id"""
   recordId: GlobalId!
 }
 
@@ -422,6 +464,9 @@ type LocationInstance implements Node {
   """Array of location's types"""
   locationTypes: [LocationType]
 
+  """Location style"""
+  locationStyle: LocationStyle
+
   """Contains links with location's photos"""
   photoLinks: [String!]
 
@@ -445,6 +490,9 @@ type LocationInstance implements Node {
 
   """Array of architects"""
   architects: [Person]
+
+  """Source of information about location instance"""
+  source: MultilingualString
 }
 
 input LocationInstanceInput {
@@ -504,6 +552,27 @@ type LocationMutations {
   delete(id: GlobalId!): DeleteLocationPayload!
 }
 
+"""Location style"""
+type LocationStyle implements Node {
+  """LoactionStyle ID"""
+  id: ID!
+
+  """LocationStyle name"""
+  name: String
+}
+
+"""Location style mutations"""
+type LocationStyleMutations {
+  """Creates new location style"""
+  create(input: CreateLocationStyleInput!): CreateLocationStylePayload!
+
+  """Updates existed location style"""
+  update(input: UpdateLocationStyleInput!): UpdateLocationStylePayload!
+
+  """Deletes location style by id"""
+  delete(id: GlobalId!): DeleteLocationStylePayload!
+}
+
 """Location type to add it to Location"""
 type LocationType implements Node {
   """LocationType's ID"""
@@ -530,23 +599,13 @@ type Mutation {
   """Unused field to let extend this type"""
   _: Boolean
   person: PersonMutations
+  locationStyles: LocationStyleMutations!
   location: LocationMutations!
   locationInstances: LocationInstanceMutations!
   relation: RelationMutations!
   relationType: RelationTypeMutations!
-
-  """Save route to user"""
-  saveRoute(routeId: String!): User!
-
-  """Unsave route from user"""
-  deleteRouteFromSaved(routeId: String!): User!
-
-  """Add route to user liked routes"""
-  likeRoute(routeId: String!): User!
-
-  """Dislike route"""
-  dislikeRoute(routeId: String!): User!
   quest: QuestMutations!
+  user: UserMutations!
 }
 
 """An object with a Globally Unique ID"""
@@ -722,6 +781,9 @@ type Query {
   """Returns list of all location types"""
   locationTypes: [LocationType!]!
 
+  """Returns list of all location styles"""
+  locationStyles: [LocationStyle!]!
+
   """Get specific relation"""
   relation(
     """Relation id"""
@@ -771,30 +833,6 @@ type Query {
     """
     last: Int
   ): RelationTypeConnection!
-
-  """Get all routes"""
-  routes(
-    """Search filter"""
-    filter: RoutesFilter
-  ): [Route!]!
-
-  """Get nearest routes"""
-  nearestRoutes(
-    """Center coordinates"""
-    center: Coordinates!
-
-    """Search radius (in metres)"""
-    radius: Float = 4000
-
-    """Search filter"""
-    filter: RoutesFilter
-  ): [Route!]!
-
-  """Get specific route by id"""
-  route(
-    """Route id"""
-    id: GlobalId!
-  ): Route
 
   """Get info about user"""
   me: User!
@@ -849,6 +887,15 @@ type Quest implements Node {
 
   """Quest rewards"""
   rewards: [JSON!]!
+
+  """The minimum level required by the user to complete this quest"""
+  minLevel: Int!
+
+  """The experience that the user will receive by completing this quest"""
+  earnedExp: Int!
+
+  """Quest progress states (passed, available, blocked)"""
+  questProgressState: QuestUserProgressStates!
 }
 
 """Model for representing list of quests"""
@@ -881,6 +928,18 @@ type QuestMutations {
 
   """Delete quest"""
   delete(id: GlobalId!): DeleteQuestPayload!
+}
+
+"""Possible quest states"""
+enum QuestUserProgressStates {
+  """Quest is passed"""
+  PASSED
+
+  """Quest is available"""
+  AVAILABLE
+
+  """Quest is locked"""
+  LOCKED
 }
 
 """Region data in address of location"""
@@ -917,6 +976,12 @@ type Relation implements Node {
 
   """Link to quote source"""
   link: MultilingualString
+
+  """Date of relation start"""
+  startDate: String
+
+  """Date of relation end"""
+  endDate: String
 }
 
 """Model for representing list of relations"""
@@ -1008,30 +1073,6 @@ type RemoveArchitectPayload {
   recordId: GlobalId!
 }
 
-"""Route between locations"""
-type Route implements Node {
-  """Route id"""
-  id: ID!
-
-  """Route name"""
-  name: String
-
-  """Route locations"""
-  locationsInstance: [LocationInstance]!
-
-  """Route description"""
-  description: String
-
-  """Route photo"""
-  photoLink: String
-}
-
-"""Input to search routes"""
-input RoutesFilter {
-  """String for searching in all languages"""
-  contains: String!
-}
-
 """Possible task types"""
 enum TaskTypes {
   """Task type quiz"""
@@ -1094,6 +1135,9 @@ input UpdateLocationInstanceInput {
   """Location's description"""
   description: MultilingualString!
 
+  """Location style id"""
+  locationStyleId: GlobalId
+
   """Link for location info"""
   wikiLink: String
 
@@ -1114,6 +1158,9 @@ input UpdateLocationInstanceInput {
 
   """End of period"""
   endDate: String
+
+  """Source of information about location instance"""
+  source: MultilingualString!
 }
 
 type UpdateLocationInstancePayload {
@@ -1132,6 +1179,24 @@ type UpdateLocationPayload {
   record: Location!
 }
 
+"""Input for update mutation"""
+input UpdateLocationStyleInput {
+  """Location style id"""
+  id: GlobalId!
+
+  """Location style name"""
+  name: MultilingualString!
+}
+
+"""Payload of update mutation"""
+type UpdateLocationStylePayload {
+  """Updated record id"""
+  recordId: GlobalId!
+
+  """Location style object"""
+  record: LocationStyle!
+}
+
 input UpdatePersonInput {
   """ID of person for updating"""
   id: GlobalId!
@@ -1148,6 +1213,9 @@ input UpdatePersonInput {
   """Person's pseudonym"""
   pseudonym: String
 
+  """Link with main photo"""
+  mainPhotoLink: String
+
   """Person's professions"""
   professions: [String!]
 
@@ -1159,6 +1227,9 @@ input UpdatePersonInput {
 
   """Person's death date"""
   deathDate: String
+
+  """Contains links with person's photos"""
+  photoLinks: [String!]
 
   """Person's info link"""
   wikiLink: String
@@ -1187,6 +1258,12 @@ input UpdateQuestInput {
 
   """Quest type (quiz, route, etc.)"""
   type: TaskTypes
+
+  """The minimum level required by the user to complete this quest"""
+  minLevel: Int
+
+  """The experience that the user will receive by completing this quest"""
+  earnedExp: Int
 
   """Quest data"""
   data: EditorDataInput
@@ -1218,6 +1295,12 @@ input UpdateRelationInput {
 
   """Link to quote"""
   link: MultilingualString
+
+  """Date of relation start"""
+  startDate: String
+
+  """Date of relation end"""
+  endDate: String
 }
 
 type UpdateRelationPayload {
@@ -1254,12 +1337,6 @@ type User implements Node {
   """Username"""
   username: String!
 
-  """User saved routes"""
-  savedRoutes: [Route!]!
-
-  """User liked routes"""
-  likedRoutes: [Route!]!
-
   """User profile photo url"""
   photo: String
 
@@ -1268,4 +1345,27 @@ type User implements Node {
 
   """User last name"""
   lastName: String
+
+  """Quests that user complete"""
+  completedQuests: [Quest!]!
+
+  """User experience"""
+  exp: Int!
+
+  """User level"""
+  level: Int!
 }
+
+type UserCompleteQuestPayload {
+  """User id"""
+  recordId: GlobalId!
+
+  """User completed quest"""
+  record: User!
+}
+
+type UserMutations {
+  """Complete quest"""
+  completeQuest(questId: GlobalId!): UserCompleteQuestPayload!
+}
+

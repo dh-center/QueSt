@@ -112,7 +112,6 @@ const styles = StyleSheet.create({
 export default function QuestInfoScreen({ route }: Props): React.ReactElement {
   const navigation = useNavigation<MapScreenNavigationProp>();
   const tabBarHeight = useBottomTabBarHeight();
-
   const { t } = useTranslation();
 
   return (
@@ -160,10 +159,15 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
           </View>
           <Button
             title={t('quests.startQuest')}
-            style={styles.startButton}
+            // eslint-disable-next-line react-native/no-inline-styles
+            style={{
+              ...styles.startButton,
+              opacity: route.params.locked ? 0.5 : 1,
+            }}
             onPress={(): void => navigation.navigate('Map', {
               questId: route.params.id,
             })}
+            disabled={route.params.locked}
           />
         </ScrollView>
       </View>

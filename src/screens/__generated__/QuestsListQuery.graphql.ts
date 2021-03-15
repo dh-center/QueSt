@@ -3,6 +3,8 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+export type QuestUserProgressStates = "AVAILABLE" | "LOCKED" | "PASSED";
+export type TaskTypes = "QUIZ" | "ROUTE";
 export type QuestsListQueryVariables = {};
 export type QuestsListQueryResponse = {
     readonly quests: {
@@ -11,6 +13,9 @@ export type QuestsListQueryResponse = {
                 readonly id: string;
                 readonly name: string;
                 readonly description: string | null;
+                readonly type: TaskTypes;
+                readonly minLevel: number;
+                readonly questProgressState: QuestUserProgressStates;
             };
         }>;
     };
@@ -30,6 +35,9 @@ query QuestsListQuery {
         id
         name
         description
+        type
+        minLevel
+        questProgressState
       }
     }
   }
@@ -82,6 +90,27 @@ var v0 = [
                 "kind": "ScalarField",
                 "name": "description",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "type",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "minLevel",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "questProgressState",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -111,14 +140,14 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "97b5f43537aa14993f13d117ac9ae01c",
+    "cacheID": "1cdfd497b85afa35757646f76bc617ca",
     "id": null,
     "metadata": {},
     "name": "QuestsListQuery",
     "operationKind": "query",
-    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n      }\n    }\n  }\n}\n"
+    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n        type\n        minLevel\n        questProgressState\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'bb156d7a0695835d977af41a1787f206';
+(node as any).hash = 'bb1d6f16a9999e08cfc0d64268c5f868';
 export default node;

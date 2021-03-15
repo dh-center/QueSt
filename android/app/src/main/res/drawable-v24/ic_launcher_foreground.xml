@@ -1,0 +1,38 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+  <group android:scaleX="0.068554685"
+      android:scaleY="0.068554685"
+      android:translateX="18.9"
+      android:translateY="18.9">
+    <path
+        android:pathData="M508.3,180.15C374.2,180.15 265.48,288.9 265.48,423.05C265.48,601.1 442.46,778.03 506.44,841.99L508.3,843.85L510.33,841.82C579.7,772.47 751.12,601.1 751.12,423.05C751.12,288.9 642.41,180.15 508.3,180.15Z">
+      <aapt:attr name="android:fillColor">
+        <gradient 
+            android:startY="256.232"
+            android:startX="331.043"
+            android:endY="1430.66"
+            android:endX="1494.14"
+            android:type="linear">
+          <item android:offset="0" android:color="#FF68DFDF"/>
+          <item android:offset="0.0644046" android:color="#FF68C6DF"/>
+          <item android:offset="0.458041" android:color="#FF686DDF"/>
+        </gradient>
+      </aapt:attr>
+    </path>
+    <path
+        android:pathData="M621.62,452.1C621.62,514.69 570.88,565.42 508.3,565.42C445.72,565.42 394.99,514.69 394.99,452.1C394.99,389.52 445.72,338.79 508.3,338.79C570.88,338.79 621.62,389.52 621.62,452.1Z"
+        android:fillColor="#ffffff"/>
+    <path
+        android:pathData="M508.3,351.74C452.87,351.74 407.94,396.68 407.94,452.11C407.94,507.54 452.87,552.47 508.3,552.47C563.73,552.47 608.67,507.54 608.67,452.11C608.67,396.68 563.73,351.74 508.3,351.74ZM382.04,452.11C382.04,382.37 438.57,325.84 508.3,325.84C578.04,325.84 634.57,382.37 634.57,452.11C634.57,521.84 578.04,578.37 508.3,578.37C438.57,578.37 382.04,521.84 382.04,452.11Z"
+        android:fillColor="#55556B"
+        android:fillType="evenOdd"/>
+    <path
+        android:pathData="M621.62,565.42L548.77,492.57L567.09,474.26L639.93,547.1L621.62,565.42Z"
+        android:fillColor="#55556B"
+        android:fillType="evenOdd"/>
+  </group>
+</vector>

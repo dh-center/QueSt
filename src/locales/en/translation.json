@@ -1,11 +1,13 @@
 {
   "quests": {
     "title": "Quests",
+    "condition": "Reach level {{minLevel}}",
     "advice": "We advise you to use an electric scooter or bicycle",
     "achievements": "Achievements",
     "cards": "Collection cards",
     "startQuest": "Start quest",
-    "enterAnswer": "Enter your answer"
+    "enterAnswer": "Enter your answer",
+    "endQuest": "Complete the quest"
   },
   "profile": {
     "title": "Profile",
@@ -48,6 +50,7 @@
     "USERNAME_DUPLICATION": "User with this e-mail already exists",
     "WRONG_USER_PASSWORD": "Invalid e-mail or password",
     "NO_USER_WITH_SUCH_USERNAME": "Invalid e-mail or password",
+    "INVALID_ACCESS_TOKEN": "Invalid access token",
     "unspecific": "Something went wrong"
   }
 }

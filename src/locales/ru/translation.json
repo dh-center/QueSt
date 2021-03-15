@@ -1,11 +1,13 @@
 {
   "quests": {
     "title": "Квесты",
+    "condition": "Достигните {{minLevel}} уровня",
     "advice": "Мы советуем Вам воспользоваться электросамокатом или велосипедом",
     "achievements": "Достижения",
     "cards": "Коллекционные карточки",
     "startQuest": "Начать квест",
-    "enterAnswer": "Введите ответ"
+    "enterAnswer": "Введите ответ",
+    "endQuest": "Завершить квест"
   },
   "profile": {
     "title": "Профиль",
@@ -48,6 +50,7 @@
     "USERNAME_DUPLICATION": "Пользователь с таким e-mail уже существует",
     "WRONG_USER_PASSWORD": "Неверный e-mail или пароль",
     "NO_USER_WITH_SUCH_USERNAME": "Неверный e-mail или пароль",
+    "INVALID_ACCESS_TOKEN": "Неверный токен авторизации",
     "unspecific": "Что-то пошло не так"
   }
 }
