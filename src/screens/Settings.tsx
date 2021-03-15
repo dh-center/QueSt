@@ -3,8 +3,8 @@ import { Image, StyleSheet, Text, ScrollView, View, TouchableOpacity, Switch, Sa
 import { useTranslation } from 'react-i18next';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import authController from '../controllers/authController';
 import { ProfileStackParamList } from '../navigation/profileStack';
+import { useAuthContext } from '../contexts/AuthProvider';
 
 /**
  * Type with props of screen 'Settings' in ProfileStackScreen
@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
 export default function SettingsScreen(): React.ReactElement {
   const navigation = useNavigation<SettingsScreenNavigationProp>();
   const { t } = useTranslation();
+  const authContext = useAuthContext();
 
   const [isEnabled, setIsEnabled] = useState(false);
   const toggleSwitch = (): void => setIsEnabled(previousState => !previousState);
@@ -106,7 +107,7 @@ export default function SettingsScreen(): React.ReactElement {
           />
         </View>
         <View style={styles.logoutBlock}>
-          <TouchableOpacity onPress={(): Promise<void> => authController.logout()}>
+          <TouchableOpacity onPress={(): Promise<void> => authContext.actions.logout()}>
             <Text style={styles.logoutText}>{t('settings.logout')}</Text>
           </TouchableOpacity>
         </View>

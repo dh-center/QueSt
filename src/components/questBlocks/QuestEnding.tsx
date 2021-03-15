@@ -4,10 +4,10 @@ import Button from '../ui/Button';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
 import { commitMutation, graphql } from 'react-relay';
-import env from '../../environment';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { QuestsStackParamList } from '../../navigation/questsStack';
 import { useNavigation } from '@react-navigation/native';
+import {useRelayEnvironment} from "react-relay/hooks";
 
 /**
  * Type with props of screen 'List' in QuestsStackScreen
@@ -54,6 +54,8 @@ const mutation = graphql`
  */
 export default function QuestEnding(props: QuestEndingProps): React.ReactElement {
   const navigation = useNavigation<QuestScreenNavigationProp>();
+  const environment = useRelayEnvironment();
+
   const { t } = useTranslation();
 
   return (
@@ -62,7 +64,7 @@ export default function QuestEnding(props: QuestEndingProps): React.ReactElement
         title={t('quests.endQuest')}
         onPress={(): void => {
           commitMutation(
-            env,
+            environment,
             {
               mutation,
               variables: { questId: props.questId },

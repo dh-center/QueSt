@@ -1,8 +1,8 @@
 import React from 'react';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import { graphql, QueryRenderer } from 'react-relay';
-import environment from '../../environment';
 import { LocationInstanceQuestBlockQuery } from './__generated__/LocationInstanceQuestBlockQuery.graphql';
+import {useRelayEnvironment} from "react-relay/hooks";
 
 /**
  * Props for QuestLocationInstanceBlock component
@@ -20,6 +20,8 @@ interface QuestLocationInstanceBlockProps {
  * @param props - props for component rendering
  */
 export default function QuestLocationInstanceBlock({ locationInstanceId }: QuestLocationInstanceBlockProps): React.ReactElement | null {
+  const environment = useRelayEnvironment();
+
   return (
     <QueryRenderer<LocationInstanceQuestBlockQuery>
       environment={environment}

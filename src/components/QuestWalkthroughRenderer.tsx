@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet, Text, View, Animated } from 'react-native';
 import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
-import environment from '../environment';
 import Colors from '../styles/colors';
 import { QuestWalkthroughRendererQuery } from './__generated__/QuestWalkthroughRendererQuery.graphql';
 import { Modalize } from 'react-native-modalize';
@@ -17,6 +16,7 @@ import { Spinner } from 'native-base';
 import CurrentTask from './questBlocks/CurrentTask';
 import styled from 'styled-components/native';
 import QuestEnding from './questBlocks/QuestEnding';
+import {useRelayEnvironment} from "react-relay/hooks";
 
 const styles = StyleSheet.create({
   modal: {
@@ -61,6 +61,7 @@ interface QuestWalkthroughContentProps {
 const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentProps>((props) => {
   const modalizeRef = useRef<Modalize>(null);
   const tabBarHeight = useBottomTabBarHeight();
+  const environment = useRelayEnvironment();
   const BOTTOM_SHEET_TOP = 40 + tabBarHeight;
 
   const [currentTarget, setCurrentTarget] = useState<string>();
@@ -208,6 +209,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
  * @param props - props for component rendering
  */
 export default function QuestWalkthroughRenderer({ questId }: QuestWalkthroughRendererProps): React.ReactElement {
+  const environment = useRelayEnvironment();
   return (
     <QueryRenderer<QuestWalkthroughRendererQuery>
       environment={environment}
