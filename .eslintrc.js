@@ -4,7 +4,7 @@ module.exports = {
   plugins: [ '@typescript-eslint' ],
   extends: [
     '@react-native-community',
-    'codex',
+    'codex/ts',
   ],
   rules: {
     'prettier/prettier': 'off',
