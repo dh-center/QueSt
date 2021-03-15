@@ -15,7 +15,7 @@ import { StyledFonts } from '../styles/textStyles';
 import Colors from '../styles/colors';
 import BlueCircle from '../images/blueCircle15.svg';
 import QuestsListItem from '../components/QuestsListItem';
-import {useRelayEnvironment} from "react-relay/hooks";
+import { useRelayEnvironment } from 'react-relay/hooks';
 
 /**
  * Type with props of screen 'List' in QuestsStackScreen

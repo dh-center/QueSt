@@ -159,6 +159,7 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
           </View>
           <Button
             title={t('quests.startQuest')}
+            // eslint-disable-next-line react-native/no-inline-styles
             style={{
               ...styles.startButton,
               opacity: route.params.locked ? 0.5 : 1,

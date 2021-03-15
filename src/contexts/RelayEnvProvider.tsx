@@ -22,6 +22,8 @@ class GraphQLClient {
   public authContext: AuthContextValue;
 
   /**
+   * Creates client instance
+   *
    * @param authContext - application auth context
    */
   constructor(authContext: AuthContextValue) {

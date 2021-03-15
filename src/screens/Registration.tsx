@@ -11,7 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import ScreenWrapper from '../components/utils/ScreenWrapper';
 import Colors from '../styles/colors';
 import Logo from '../images/fullLogo.svg';
-import {useAuthContext} from "../contexts/AuthProvider";
+import { useAuthContext } from '../contexts/AuthProvider';
 
 /**
  * Styles for registration screen component

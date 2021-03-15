@@ -3,23 +3,39 @@ import SInfo from 'react-native-sensitive-info';
 
 
 /**
- *
+ * Controller for working with app storage
  */
 class StorageController {
+  /**
+   * Caches access token
+   */
   public accessToken: string | null = null;
+
+  /**
+   * Caches refresh token
+   */
   public refreshToken: string | null = null;
 
+  /**
+   * Key for storing access token
+   */
   private readonly ACCESS_TOKEN_KEY = 'access-token';
+
+  /**
+   * Key for storing refresh token
+   */
   private readonly REFRESH_TOKEN_KEY = 'refresh-token';
 
-
+  /**
+   * Storage options
+   */
   private readonly sensitiveInfoOptions = {
     sharedPreferencesName: 'questSharedPrefs',
     keychainService: 'questKeychain',
   };
 
   /**
-   *
+   * Restores tokens from storage
    */
   public async restoreTokens(): Promise<TokenPair> {
     const accessToken = await SInfo.getItem(this.ACCESS_TOKEN_KEY, this.sensitiveInfoOptions);
@@ -35,7 +51,9 @@ class StorageController {
   }
 
   /**
-   * @param tokens
+   * Saves tokens to storage
+   *
+   * @param tokens - tokens to save
    */
   public async saveTokens(tokens: TokenPair): Promise<void> {
     if (tokens.accessToken && tokens.refreshToken) {
@@ -47,7 +65,7 @@ class StorageController {
   }
 
   /**
-   *
+   * Removes tokens from storage
    */
   public async deleteTokens(): Promise<void> {
     await SInfo.deleteItem(this.ACCESS_TOKEN_KEY, this.sensitiveInfoOptions);

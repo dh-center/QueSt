@@ -4,7 +4,7 @@ import ProfileScreen from '../screens/Profile';
 import LoginScreen from '../screens/Login';
 import SettingsScreen from '../screens/Settings';
 import RegistrationScreen from '../screens/Registration';
-import {useAuthContext} from "../contexts/AuthProvider";
+import { useAuthContext } from '../contexts/AuthProvider';
 
 /**
  * Type with params of screens and their props in ProfileStackScreen

@@ -2,7 +2,7 @@ import React from 'react';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import { graphql, QueryRenderer } from 'react-relay';
 import { LocationInstanceQuestBlockQuery } from './__generated__/LocationInstanceQuestBlockQuery.graphql';
-import {useRelayEnvironment} from "react-relay/hooks";
+import { useRelayEnvironment } from 'react-relay/hooks';
 
 /**
  * Props for QuestLocationInstanceBlock component

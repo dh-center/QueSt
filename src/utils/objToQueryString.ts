@@ -1,4 +1,3 @@
-
 /**
  * Converts object to query string
  *

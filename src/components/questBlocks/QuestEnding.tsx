@@ -7,7 +7,7 @@ import { commitMutation, graphql } from 'react-relay';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { QuestsStackParamList } from '../../navigation/questsStack';
 import { useNavigation } from '@react-navigation/native';
-import {useRelayEnvironment} from "react-relay/hooks";
+import { useRelayEnvironment } from 'react-relay/hooks';
 
 /**
  * Type with props of screen 'List' in QuestsStackScreen

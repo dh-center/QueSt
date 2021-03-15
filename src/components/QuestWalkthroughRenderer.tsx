@@ -16,12 +16,15 @@ import { Spinner } from 'native-base';
 import CurrentTask from './questBlocks/CurrentTask';
 import styled from 'styled-components/native';
 import QuestEnding from './questBlocks/QuestEnding';
-import {useRelayEnvironment} from "react-relay/hooks";
+import { useRelayEnvironment } from 'react-relay/hooks';
 
 const styles = StyleSheet.create({
   modal: {
     backgroundColor: Colors.White,
     flex: 1,
+  },
+  root: {
+    elevation: 5,
   },
 });
 
@@ -61,7 +64,6 @@ interface QuestWalkthroughContentProps {
 const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentProps>((props) => {
   const modalizeRef = useRef<Modalize>(null);
   const tabBarHeight = useBottomTabBarHeight();
-  const environment = useRelayEnvironment();
   const BOTTOM_SHEET_TOP = 40 + tabBarHeight;
 
   const [currentTarget, setCurrentTarget] = useState<string>();
@@ -128,7 +130,6 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       default:
         next();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questData, currentBlockIndex]);
 
   if (!questData) {
@@ -187,7 +188,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         keyboardAvoidingOffset={-100} // magic value that fixes bottom padding if keyboard is open
         alwaysOpen={BOTTOM_SHEET_TOP}
         modalStyle={styles.modal}
-        rootStyle={{ elevation: 5 }}
+        rootStyle={styles.root}
         customRenderer={<ModalScrollView>{component}</ModalScrollView>}
       />
     </View>
@@ -210,6 +211,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
  */
 export default function QuestWalkthroughRenderer({ questId }: QuestWalkthroughRendererProps): React.ReactElement {
   const environment = useRelayEnvironment();
+
   return (
     <QueryRenderer<QuestWalkthroughRendererQuery>
       environment={environment}

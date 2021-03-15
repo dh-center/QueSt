@@ -63,6 +63,8 @@ class AuthContextActions {
   private readonly dispatch: Dispatch<AuthStateActionTypes>;
 
   /**
+   * Creates instance
+   *
    * @param state - application auth state
    * @param dispatch - dispatch function for modifying application auth state
    */
