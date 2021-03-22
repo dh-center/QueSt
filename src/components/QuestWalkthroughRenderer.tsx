@@ -146,7 +146,14 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
     if (!questId) {
       return <Text>No quest id</Text>;
     }
-    component = <QuestEnding questId={questId}/>;
+
+    return (
+      <View>
+        <MapView />
+        <QuestEnding questId={questId}/>
+      </View>
+    );
+    // component = <QuestEnding questId={questId}/>;
   } else {
     switch (currentBlock.type) {
       case 'header':
