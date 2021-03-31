@@ -1,13 +1,9 @@
-import {
-  Image,
-  ImageSourcePropType,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { ImageSourcePropType } from 'react-native';
 import React from 'react';
-import textStyles from '../styles/textStyles';
+import { StyledFonts } from '../styles/textStyles';
 import Colors from '../styles/colors';
+import styled from 'styled-components/native';
+import LockSVG from '../images/lock.svg';
 
 /**
  * Card props
@@ -21,40 +17,41 @@ export interface CollectionCardProps {
   /**
    * Path to image
    */
-  imgSource: ImageSourcePropType;
+  imgSource?: ImageSourcePropType;
 }
 
-const styles = StyleSheet.create({
-  card: {
-    flex: 1,
-    marginHorizontal: 4.5,
-    backgroundColor: Colors.White,
-    borderWidth: 0.5,
-    borderStyle: 'solid',
-    borderColor: '#E0E0E0',
-    borderRadius: 15,
-    elevation: 4,
-    shadowColor: '#414366',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-  },
-  cardImage: {
-    borderTopRightRadius: 15,
-    borderTopLeftRadius: 15,
-    width: '100%',
-    height: 250,
-    resizeMode: 'cover',
-  },
-  cardText: {
-    ...textStyles.default,
-    textAlign: 'center',
-    padding: 10,
-  },
-});
+const Card = styled.View<{passed?: boolean}>`
+  flex: 1;
+  background-color: ${Colors.White};
+  margin: 0 4.5px ${props => props.passed ? 0 : 7}px;
+  border: 0.5px solid #E0E0E0;
+  border-radius: 15px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  elevation: ${2};
+`;
+
+const CardImage = styled.Image`
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  width: 100%;
+  height: 250px;
+  resize-mode: cover;
+`;
+
+const CardText = styled.Text<{passed?: boolean}>`
+  ${StyledFonts.uiWebRegular};
+  font-size: 18px;
+  line-height: 22px;
+  color: ${Colors.Black};
+  text-align: center;
+  padding: ${props => props.passed ? 10 : 15}px;
+`;
+
+const Lock = styled(LockSVG)`
+  position: absolute;
+  bottom: -7px;
+  right: 4px;
+`;
 
 /**
  * Component of the card
@@ -63,9 +60,10 @@ const styles = StyleSheet.create({
  */
 export default function CollectionCard(props: CollectionCardProps): React.ReactElement {
   return (
-    <View style={styles.card}>
-      <Image source={props.imgSource} style={styles.cardImage}/>
-      <Text style={styles.cardText}>{props.text}</Text>
-    </View>
+    <Card passed={!!props.imgSource}>
+      {props.imgSource && <CardImage source={props.imgSource}/>}
+      <CardText passed={!!props.imgSource}>{props.text}</CardText>
+      {!props.imgSource && <Lock/>}
+    </Card>
   );
 }

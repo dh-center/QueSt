@@ -120,7 +120,9 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
                 id: item.node.id,
                 title: item.node.name,
                 description: item.node.description,
-                locked: item.node.questProgressState === 'LOCKED',
+                state: item.node.questProgressState,
+                exp: item.node.earnedExp,
+                credits: item.node.credits?.blocks,
               })
               }
               name={item.node.name}
@@ -190,6 +192,10 @@ const query = graphql`
           type
           minLevel
           questProgressState
+          earnedExp
+          credits {
+            blocks
+          }
         }
       }
     }

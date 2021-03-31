@@ -36,6 +36,9 @@ directive @authCheck on FIELD_DEFINITION
 """Directive for checking admin permissions"""
 directive @adminCheck on FIELD_DEFINITION
 
+"""Directive for checking editor permissions"""
+directive @editorCheck on FIELD_DEFINITION
+
 """Exposes a URL that specifies the behaviour of this scalar."""
 directive @specifiedBy(
   """The URL that specifies the behaviour of this scalar."""
@@ -234,6 +237,9 @@ input CreatePersonInput {
 
   """Person's info link"""
   wikiLink: String
+
+  """Person tags"""
+  tagIds: [String!]!
 }
 
 type CreatePersonPayload {
@@ -265,6 +271,12 @@ input CreateQuestInput {
 
   """Quest data"""
   data: EditorDataInput!
+
+  """Information about quest authors"""
+  credits: EditorDataInput!
+
+  """Quest tags"""
+  tagIds: [String!]!
 }
 
 type CreateQuestPayload {
@@ -322,6 +334,19 @@ type CreateRelationTypePayload {
   record: RelationType!
 }
 
+input CreateTagInput {
+  """Value of tag"""
+  value: MultilingualString!
+}
+
+type CreateTagPayload {
+  """Created tag id"""
+  recordId: GlobalId!
+
+  """Created tag object"""
+  record: Tag!
+}
+
 scalar Cursor
 
 type DeleteLocationInstancePayload {
@@ -357,6 +382,11 @@ type DeleteRelationPayload {
 
 type DeleteRelationTypePayload {
   """Deleted relation type id"""
+  recordId: GlobalId!
+}
+
+type DeleteTagPayload {
+  """Deleted tag id"""
   recordId: GlobalId!
 }
 
@@ -493,6 +523,9 @@ type LocationInstance implements Node {
 
   """Source of information about location instance"""
   source: MultilingualString
+
+  """Location instance tags"""
+  tags: [Tag!]!
 }
 
 input LocationInstanceInput {
@@ -522,6 +555,9 @@ input LocationInstanceInput {
 
   """End of period"""
   endDate: String
+
+  """Location instance tags"""
+  tagIds: [String!]
 }
 
 type LocationInstanceMutations {
@@ -605,7 +641,10 @@ type Mutation {
   relation: RelationMutations!
   relationType: RelationTypeMutations!
   quest: QuestMutations!
+
+  """Mutations for users"""
   user: UserMutations!
+  tag: TagMutations!
 }
 
 """An object with a Globally Unique ID"""
@@ -675,6 +714,9 @@ type Person implements Node {
 
   """Person's photos links"""
   photoLinks: [String]
+
+  """Person tags"""
+  tags: [Tag!]!
 }
 
 """Model for representing list of persons"""
@@ -837,6 +879,31 @@ type Query {
   """Get info about user"""
   me: User!
 
+  """Get specific User"""
+  user(
+    """User id"""
+    id: GlobalId!
+  ): User
+
+  """Returns connection with all users"""
+  users(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): UserConnection!
+
   """Get specific Quest"""
   quest(
     """Quest id"""
@@ -861,6 +928,31 @@ type Query {
     """
     last: Int
   ): QuestConnection!
+
+  """Get specific tag"""
+  tag(
+    """Tag id"""
+    id: GlobalId!
+  ): Tag
+
+  """List of available tags"""
+  tags(
+    """The cursor after which we take the data"""
+    after: Cursor
+
+    """The cursor after before we take the data"""
+    before: Cursor
+
+    """
+    Number of requested nodes after a node with a cursor in the after argument
+    """
+    first: Int
+
+    """
+    Number of requested nodes before a node with a cursor in the before argument
+    """
+    last: Int
+  ): TagConnection!
 }
 
 type Quest implements Node {
@@ -885,6 +977,9 @@ type Quest implements Node {
   """Quest data"""
   data: EditorData
 
+  """Information about quest authors"""
+  credits: EditorData
+
   """Quest rewards"""
   rewards: [JSON!]!
 
@@ -896,6 +991,9 @@ type Quest implements Node {
 
   """Quest progress states (passed, available, blocked)"""
   questProgressState: QuestUserProgressStates!
+
+  """Quest tags"""
+  tags: [Tag!]!
 }
 
 """Model for representing list of quests"""
@@ -1073,6 +1171,50 @@ type RemoveArchitectPayload {
   recordId: GlobalId!
 }
 
+"""Tag of person or location instance"""
+type Tag implements Node {
+  """Tag id"""
+  id: ID!
+
+  """
+  Tag value
+  Can be multilingual
+  """
+  value: MultilingualString!
+}
+
+"""Model for representing page of tags"""
+type TagConnection {
+  """List of tags on current page"""
+  edges: [TagEdge!]!
+
+  """Information about current page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges on current page"""
+  totalCount: Int!
+}
+
+"""Information about specific tag in connection"""
+type TagEdge {
+  """Cursor of current tag"""
+  cursor: Cursor!
+
+  """Tag object"""
+  node: Tag!
+}
+
+type TagMutations {
+  """Creates tag"""
+  create(input: CreateTagInput!): CreateTagPayload!
+
+  """Updates existing tag"""
+  update(input: UpdateTagInput!): UpdateTagPayload!
+
+  """Deletes existing tag"""
+  delete(id: GlobalId!): DeleteTagPayload!
+}
+
 """Possible task types"""
 enum TaskTypes {
   """Task type quiz"""
@@ -1233,6 +1375,9 @@ input UpdatePersonInput {
 
   """Person's info link"""
   wikiLink: String
+
+  """Person tags"""
+  tagIds: [String!]!
 }
 
 type UpdatePersonPayload {
@@ -1267,6 +1412,12 @@ input UpdateQuestInput {
 
   """Quest data"""
   data: EditorDataInput
+
+  """Information about quest authors"""
+  credits: EditorDataInput
+
+  """Quest tags"""
+  tagIds: [String!]!
 }
 
 type UpdateQuestPayload {
@@ -1330,6 +1481,38 @@ type UpdateRelationTypePayload {
   record: RelationType!
 }
 
+input UpdateTagInput {
+  """Tag id for updating"""
+  id: GlobalId!
+
+  """New tag value"""
+  value: MultilingualString!
+}
+
+type UpdateTagPayload {
+  """Updated tag id"""
+  recordId: GlobalId!
+
+  """Updated tag object"""
+  record: Tag!
+}
+
+input UpdateUserInput {
+  """Id of the user to update"""
+  id: GlobalId!
+
+  """New persmissions"""
+  permissions: [String!]!
+}
+
+type UpdateUserPayload {
+  """Updated user id"""
+  recordId: GlobalId!
+
+  """Updated user"""
+  record: User!
+}
+
 type User implements Node {
   """User's ID"""
   id: ID!
@@ -1354,6 +1537,9 @@ type User implements Node {
 
   """User level"""
   level: Int!
+
+  """Array of user permission"""
+  permissions: [String!]!
 }
 
 type UserCompleteQuestPayload {
@@ -1364,8 +1550,33 @@ type UserCompleteQuestPayload {
   record: User!
 }
 
+"""Model for representing list of persons"""
+type UserConnection {
+  """List of persons edges"""
+  edges: [UserEdge!]!
+
+  """Information about this page"""
+  pageInfo: PageInfo!
+
+  """Number of available edges"""
+  totalCount: Int!
+}
+
+"""Information about specific person in connection"""
+type UserEdge {
+  """Cursor of this person"""
+  cursor: Cursor!
+
+  """Person info"""
+  node: User!
+}
+
+"""Mutations for users"""
 type UserMutations {
   """Complete quest"""
   completeQuest(questId: GlobalId!): UserCompleteQuestPayload!
+
+  """Updates user data"""
+  update(input: UpdateUserInput!): UpdateUserPayload!
 }
 

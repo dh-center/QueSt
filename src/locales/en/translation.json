@@ -2,10 +2,14 @@
   "quests": {
     "title": "Quests",
     "condition": "Reach level {{minLevel}}",
+    "mileage": "mileage",
+    "received": "received",
     "advice": "We advise you to use an electric scooter or bicycle",
     "achievements": "Achievements",
+    "achievements_passed": "Progress in achievements",
     "cards": "Collection cards",
     "startQuest": "Start quest",
+    "repeatQuest": "Repeat quest",
     "enterAnswer": "Enter your answer",
     "endQuest": "Complete the quest"
   },
