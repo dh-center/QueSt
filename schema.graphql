@@ -172,6 +172,9 @@ input CreateLocationInstanceInput {
 
   """Source of information about location instance"""
   source: MultilingualString!
+
+  """Location instance tags"""
+  tagIds: [GlobalId!]!
 }
 
 type CreateLocationInstancePayload {
@@ -239,7 +242,7 @@ input CreatePersonInput {
   wikiLink: String
 
   """Person tags"""
-  tagIds: [String!]!
+  tagIds: [GlobalId!]!
 }
 
 type CreatePersonPayload {
@@ -276,7 +279,7 @@ input CreateQuestInput {
   credits: EditorDataInput!
 
   """Quest tags"""
-  tagIds: [String!]!
+  tagIds: [GlobalId!]!
 }
 
 type CreateQuestPayload {
@@ -492,7 +495,7 @@ type LocationInstance implements Node {
   wikiLink: String
 
   """Array of location's types"""
-  locationTypes: [LocationType]
+  locationTypes: [LocationType!]
 
   """Location style"""
   locationStyle: LocationStyle
@@ -519,7 +522,7 @@ type LocationInstance implements Node {
   relations: [Relation!]!
 
   """Array of architects"""
-  architects: [Person]
+  architects: [Person!]!
 
   """Source of information about location instance"""
   source: MultilingualString
@@ -557,7 +560,7 @@ input LocationInstanceInput {
   endDate: String
 
   """Location instance tags"""
-  tagIds: [String!]
+  tagIds: [GlobalId!]
 }
 
 type LocationInstanceMutations {
@@ -692,7 +695,7 @@ type Person implements Node {
   pseudonym: MultilingualString
 
   """Person's professions"""
-  professions: [String]
+  professions: [String!]
 
   """Person's description"""
   description: MultilingualString
@@ -713,7 +716,7 @@ type Person implements Node {
   mainPhotoLink: String
 
   """Person's photos links"""
-  photoLinks: [String]
+  photoLinks: [String!]
 
   """Person tags"""
   tags: [Tag!]!
@@ -813,12 +816,6 @@ type Query {
 
   """Get all locationInstances"""
   locationInstances: [LocationInstance!]!
-
-  """Get relations on user request"""
-  search(
-    """The string on the basis of which the request will be made"""
-    searchString: String!
-  ): [Relation!]!
 
   """Returns list of all location types"""
   locationTypes: [LocationType!]!
@@ -928,6 +925,9 @@ type Query {
     """
     last: Int
   ): QuestConnection!
+
+  """Search for entities by search query"""
+  search(input: SearchInput!): [SearchResult!]!
 
   """Get specific tag"""
   tag(
@@ -1171,6 +1171,24 @@ type RemoveArchitectPayload {
   recordId: GlobalId!
 }
 
+"""Search query input"""
+input SearchInput {
+  """Query string"""
+  query: String!
+
+  """Start of search range"""
+  startYear: Int!
+
+  """End of search range"""
+  endYear: Int!
+
+  """Entity category"""
+  category: [String!]
+}
+
+"""Possible data types that the search might return"""
+union SearchResult = LocationInstance | Person | Quest
+
 """Tag of person or location instance"""
 type Tag implements Node {
   """Tag id"""
@@ -1303,6 +1321,9 @@ input UpdateLocationInstanceInput {
 
   """Source of information about location instance"""
   source: MultilingualString!
+
+  """Location instance tags"""
+  tagIds: [GlobalId!]!
 }
 
 type UpdateLocationInstancePayload {
@@ -1377,7 +1398,7 @@ input UpdatePersonInput {
   wikiLink: String
 
   """Person tags"""
-  tagIds: [String!]!
+  tagIds: [GlobalId!]!
 }
 
 type UpdatePersonPayload {
@@ -1417,7 +1438,7 @@ input UpdateQuestInput {
   credits: EditorDataInput
 
   """Quest tags"""
-  tagIds: [String!]!
+  tagIds: [GlobalId!]
 }
 
 type UpdateQuestPayload {

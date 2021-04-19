@@ -131,6 +131,11 @@ const BasicText = styled.Text<{margined?: boolean, count?: boolean}>`
   margin-left: ${props => props.count ? 15 : 0}px;
 `;
 
+const AdviceText = styled(BasicText)`
+  color: ${Colors.DarkBlue};
+  text-align: center;
+`;
+
 const HeadersText = styled.Text<{margined?: boolean}>`
   ${StyledFonts.uiWebMedium};
   font-size: 22px;
@@ -146,8 +151,20 @@ const CreditsText = styled.Text`
   color: ${Colors.Black};
 `;
 
+const Subtitle = styled(CreditsText)`
+  font-size: 22px;
+  margin-bottom: 15px;
+`;
+
 const TextRow = styled.View`
   flex-direction: row;
+`;
+
+const CardsView = styled.View`
+  flex: 1;
+  margin: 0 -4.5px;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const CreditsImage = styled.Image`
@@ -159,15 +176,9 @@ const CreditsImage = styled.Image`
 `;
 
 const styles = StyleSheet.create({
-  questInfo: {
-    borderRadius: 15,
-  },
   routeLength: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  walker: {
-    marginRight: 10,
   },
   advice: {
     backgroundColor: 'rgba(104,198,223, 0.15)',
@@ -176,30 +187,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     borderRadius: 15,
   },
-  adviceText: {
-    ...textStyles.default,
-    color: Colors.DarkBlue,
-    textAlign: 'center',
-  },
-  line: {
-    marginVertical: 30,
-    borderTopWidth: 0.5,
-    borderStyle: 'solid',
-    borderColor: Colors.Blue,
-  },
-  descriptionTitleText: {
-    ...textStyles.ptRootMedium,
-    fontSize: 22,
-    marginBottom: 15,
-  },
   achievementsView: {
     marginBottom: 20,
-  },
-  cardView: {
-    flex: 1,
-    marginHorizontal: -4.5,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
   },
   startButton: {
     height: 44,
@@ -301,11 +290,11 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
               {route.params.state !== 'PASSED' &&
               <>
                 <View style={styles.routeLength}>
-                  <Walker style={styles.walker}/>
+                  <Icon as={Walker}/>
                   <BasicText>7,8 км ~ 90 мин</BasicText>
                 </View>
                 <View style={styles.advice}>
-                  <Text style={styles.adviceText}>{t('quests.advice')}</Text>
+                  <AdviceText>{t('quests.advice')}</AdviceText>
                 </View>
               </>
               }
@@ -313,9 +302,9 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
             {(!!route.params.description || route.params.state !== 'PASSED') && <Line/>}
             <Block>
               <TextRow>
-                <Text style={styles.descriptionTitleText}>
-                  {route.params.state === 'PASSED' ? t('quests.achievements_passed') : t('quests.achievements')}
-                </Text>
+                <Subtitle>
+                  {route.params.state === 'PASSED' ? t('quests.achievementsPassed') : t('quests.achievements')}
+                </Subtitle>
                 {route.params.state !== 'PASSED' &&
                 <BasicText count>2</BasicText>
                 }
@@ -325,15 +314,15 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
                 <Achievement text={'Друг Достоевского'}/>
               </View>
               <TextRow>
-                <Text style={styles.descriptionTitleText}>{t('quests.cards')}</Text>
+                <Subtitle>{t('quests.cards')}</Subtitle>
                 {route.params.state !== 'PASSED' &&
                 <BasicText count>2</BasicText>
                 }
               </TextRow>
-              <View style={styles.cardView}>
+              <CardsView>
                 <CollectionCard imgSource={route.params.state === 'PASSED' && require('../images/Dostoevsky.png')} text={'Федор\nДостоевский'}/>
                 <CollectionCard imgSource={route.params.state === 'PASSED' && require('../images/Belinsky.png')} text={'Виссарион\nБелинский'}/>
-              </View>
+              </CardsView>
             </Block>
             {(creditsInfo || creditsImage) &&
               <>
@@ -348,7 +337,6 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
             }
             <Button
               title={route.params.state === 'PASSED' ? t('quests.repeatQuest') : t('quests.startQuest')}
-              // {route.params.state === 'PASSED' ? t('quests.achievements_passed') : t('quests.achievements')}
               // eslint-disable-next-line react-native/no-inline-styles
               style={{
                 ...styles.startButton,
