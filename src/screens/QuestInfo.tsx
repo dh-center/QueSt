@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { StackScreenProps } from '@react-navigation/stack';
 import { TabParamList } from '../navigation/mainTabs';
@@ -8,7 +8,7 @@ import Button from '../components/ui/Button';
 import CollectionCard from '../components/CollectionCard';
 import Colors from '../styles/colors';
 import textStyles, { StyledFonts } from '../styles/textStyles';
-import { BottomTabNavigationProp, useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import BackArrow from '../images/back.svg';
 import Walker from '../images/walker.svg';
@@ -19,8 +19,9 @@ import Exp from '../images/exp.svg';
 import AchievementIcon from '../images/achievement.svg';
 import Cards from '../images/cards.svg';
 import Passed from '../images/passed.svg';
-import LinearGradient from 'react-native-linear-gradient';
+import WhiteGradient from '../components/WhiteGradient';
 import decodeHTMLEntities from '../components/utils/decodingHTMLEntities';
+import TabBarHeight from '../components/utils/tabBarHeight';
 
 /**
  * Type with props of screen 'Map' in BottomTabNavigator
@@ -86,14 +87,6 @@ const Info = styled.ScrollView
   margin-bottom: ${props => props.tabBarHeight}px;
 `;
 
-const Gradient = styled(LinearGradient)`
-  height: 30px;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  z-index: 999;
-`;
-
 const Block = styled.View<{isEmpty?: boolean}>`
   margin: ${props => props.isEmpty ? 0 : 30}px 0;
 `;
@@ -114,7 +107,7 @@ const Cell = styled.View<{vertical?: boolean}>`
 
 const Line = styled.View<{vertical?: boolean}>`
   height: ${props => props.vertical ? 50 : 1}px;
-  width: ${props => props.vertical ? 1 : Dimensions.get('screen').width - 30}px;
+  width: ${props => props.vertical ? '1px' : '100%'};
   background-color: ${Colors.Blue};
 `;
 
@@ -204,7 +197,7 @@ const styles = StyleSheet.create({
  */
 export default function QuestInfoScreen({ route }: Props): React.ReactElement {
   const navigation = useNavigation<MapScreenNavigationProp>();
-  const tabBarHeight = useBottomTabBarHeight();
+  const tabBarHeight = TabBarHeight();
   const { t } = useTranslation();
   let creditsInfo;
   let creditsImage;
@@ -238,18 +231,7 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
           </PassedView>
         }
         <Container>
-          <Gradient
-            start={{
-              x: 0.5,
-              y: 0,
-            }}
-            end={{
-              x: 0.5,
-              y: 1,
-            }}
-            // locations={[0.2, 1]}
-            colors={['#ffffff', 'rgba(255, 255, 255, 0)']}
-          />
+          <WhiteGradient/>
           <Info tabBarHeight={tabBarHeight}>
             {route.params.state !== 'PASSED' &&
             <Row>
