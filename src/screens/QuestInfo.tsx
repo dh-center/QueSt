@@ -202,7 +202,7 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
   let creditsInfo;
   let creditsImage;
 
-  if (route.params.credits) {
+  if (route.params.credits?.length) {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     creditsInfo = route.params.credits.find(item => item.type === 'paragraph').data.text;
