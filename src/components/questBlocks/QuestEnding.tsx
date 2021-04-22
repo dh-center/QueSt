@@ -1,17 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import BlockBody from './BlockBody';
-import Button from '../ui/Button';
-import { useTranslation } from 'react-i18next';
 import styled from 'styled-components/native';
 import { commitMutation, graphql } from 'react-relay';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { QuestsStackParamList } from '../../navigation/questsStack';
 import { useNavigation } from '@react-navigation/native';
 import { useRelayEnvironment } from 'react-relay/hooks';
-import Congratulations from '../../images/congratulations.svg';
-import { StyledFonts } from '../../styles/textStyles';
-import Colors from '../../styles/colors';
 import { Modal } from 'react-native';
+import ReceivedExp from './ReceivedExp';
+import ReceivedCards from './ReceivedCards';
+import ReceivedAchievements from './ReceivedAchievements';
+import Congratulation from './Congratulation';
 
 /**
  * Type with props of screen 'List' in QuestsStackScreen
@@ -34,32 +33,6 @@ const Container = styled.View`
   height: 80%;
   justify-content: center;
   align-items: center;
-`;
-
-const CongratulationsText = styled.Text`
-  ${StyledFonts.roboto};
-  font-size: 28px;
-  line-height: 28px;
-  margin-top: 30px;
-  color: ${Colors.White};
-`;
-
-const EndingText = styled.Text`
-  ${StyledFonts.uiWebRegular};
-  font-size: 18px;
-  line-height: 22px;
-  margin-bottom: 50px;
-  color: ${Colors.White};
-`;
-
-const Delimiter = styled.View`
-  width: 110px;
-  border: 0.5px solid ${Colors.White};
-  margin: 10px 0;
-`;
-
-const GetButton = styled(Button)`
-  width: 100%;
 `;
 
 /**
@@ -98,27 +71,36 @@ const mutation = graphql`
 export default function QuestEnding(props: QuestEndingProps): React.ReactElement {
   const navigation = useNavigation<QuestScreenNavigationProp>();
   const environment = useRelayEnvironment();
-
-  const { t } = useTranslation();
+  const [step, setStep] = useState('congratulations');
+  const [visibility, setVisibility] = useState(true);
 
   return (
     <Body>
       <Modal
-        supportedOrientations={['portrait', 'landscape']}
-        animationType="fade"
         transparent={true}
-        visible={true}
+        visible={visibility}
         statusBarTranslucent={true}
       >
-        <ModalView activeOpacity={1}>
+        <ModalView
+          activeOpacity={1}
+          onPress={() => {
+            switch (step) {
+              case 'exp':
+                setStep('cards');
+                break;
+              case 'cards':
+                setStep('achievements');
+                break;
+              case 'achievements':
+                setVisibility(false);
+                navigation.navigate('List', { needRefresh: true });
+                break;
+            }
+          }}
+        >
           <Container>
-            <Congratulations/>
-            <CongratulationsText>Поздравляем!</CongratulationsText>
-            <Delimiter/>
-            <EndingText>Вы прошли квест</EndingText>
-            <GetButton
-              title={t('quests.endQuest')}
-              onPress={(): void => {
+            {step === 'congratulations' &&
+              <Congratulation onPress={(): void => {
                 commitMutation(
                   environment,
                   {
@@ -127,9 +109,18 @@ export default function QuestEnding(props: QuestEndingProps): React.ReactElement
                     onError: err => console.error(err),
                   }
                 );
-                navigation.navigate('List', { needRefresh: true });
-              }}
-            />
+                setStep('exp');
+              }}/>
+            }
+            {step === 'exp' &&
+              <ReceivedExp exp={90}/>
+            }
+            {step === 'cards' &&
+              <ReceivedCards/>
+            }
+            {step === 'achievements' &&
+              <ReceivedAchievements/>
+            }
           </Container>
         </ModalView>
       </Modal>

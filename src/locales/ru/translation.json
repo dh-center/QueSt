@@ -7,6 +7,10 @@
     "cards": "Коллекционные карточки",
     "startQuest": "Начать квест",
     "enterAnswer": "Введите ответ",
+    "congratulations": "Поздравляем!",
+    "passed": "Вы прошли квест",
+    "experience": "Опыт",
+    "received": "Получено",
     "endQuest": "Получить награду"
   },
   "profile": {
