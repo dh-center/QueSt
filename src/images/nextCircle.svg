@@ -1,0 +1,5 @@
+<svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="15" cy="15" r="15" transform="rotate(90 15 15)" fill="white"/>
+<circle cx="15" cy="15" r="15" transform="rotate(90 15 15)" fill="#8EB2BC" fill-opacity="0.1"/>
+<path d="M12 19.9273L13.0617 21L19 15L13.0617 9L12 10.0727L16.8766 15L12 19.9273Z" fill="#55556B"/>
+</svg>
