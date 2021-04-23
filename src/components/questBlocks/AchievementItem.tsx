@@ -15,7 +15,7 @@ const AchievementText = styled.Text`
 `;
 
 /**
- * Props for ReceivedAchievement component
+ * Props for AchievementItem component
  */
 export interface AchievementProps {
   /**
@@ -29,7 +29,7 @@ export interface AchievementProps {
  *
  * @param props - component props
  */
-export default function ReceivedAchievement(props: AchievementProps): React.ReactElement {
+export default function AchievementItem(props: AchievementProps): React.ReactElement {
   return (
     <>
       <Stars/>

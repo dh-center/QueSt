@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import ReceivedAchievement from './ReceivedAchievement';
+import AchievementItem from './AchievementItem';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../../styles/textStyles';
 import Colors from '../../styles/colors';
@@ -22,8 +22,8 @@ export default function ReceivedAchievements(): React.ReactElement {
   return (
     <>
       <Title>{t('quests.achievements')}</Title>
-      <ReceivedAchievement text={'Петербургская интеллигенция'}/>
-      <ReceivedAchievement text={'Друг Достоевского'}/>
+      <AchievementItem text={'Петербургская интеллигенция'}/>
+      <AchievementItem text={'Друг Достоевского'}/>
     </>
   );
 }
