@@ -7,7 +7,11 @@
     "cards": "Collection cards",
     "startQuest": "Start quest",
     "enterAnswer": "Enter your answer",
-    "endQuest": "Complete the quest"
+    "congratulations": "Congratulations!",
+    "passed": "You have completed the quest",
+    "experience": "Experience",
+    "received": "Received",
+    "endQuest": "Get an award"
   },
   "profile": {
     "title": "Profile",
