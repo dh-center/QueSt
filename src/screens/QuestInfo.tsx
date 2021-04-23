@@ -163,8 +163,8 @@ const CardsView = styled.View`
 const CreditsImage = styled.Image`
   align-self: center;
   margin: 15px 75px 0;
-  width: 60%;
-  height: 200px;
+  width: 70%;
+  aspect-ratio: 1;
   resize-mode: contain;
 `;
 
