@@ -1,9 +1,9 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 /**
- *
+ * Returns bottom tabbar height
  */
-export default function TabBarHeight(): number {
+export default function useTabBarHeight(): number {
   const insets = useSafeAreaInsets();
   const TAB_BAR_OWM_HEIGHT = 78;
 

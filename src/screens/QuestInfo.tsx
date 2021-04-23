@@ -21,7 +21,7 @@ import Cards from '../images/cards.svg';
 import Passed from '../images/passed.svg';
 import WhiteGradient from '../components/WhiteGradient';
 import decodeHTMLEntities from '../components/utils/decodingHTMLEntities';
-import TabBarHeight from '../components/utils/tabBarHeight';
+import useTabBarHeight from '../components/utils/useTabBarHeight';
 
 /**
  * Type with props of screen 'Map' in BottomTabNavigator
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
  */
 export default function QuestInfoScreen({ route }: Props): React.ReactElement {
   const navigation = useNavigation<MapScreenNavigationProp>();
-  const tabBarHeight = TabBarHeight();
+  const tabBarHeight = useTabBarHeight();
   const { t } = useTranslation();
   let creditsInfo;
   let creditsImage;
