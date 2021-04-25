@@ -33,7 +33,7 @@ const Icon = styled.View`
 
 const Next = styled(NextCircle)<{rotated?: boolean}>`
   margin-left: auto;
-  transform: ${props => props.rotated ? 'rotate(90deg)' : ''};
+  ${p => p.rotated && `transform: rotate(90deg)`};
 `;
 
 /**
