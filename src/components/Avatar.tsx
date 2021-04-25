@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components/native';
 import { ImageSourcePropType } from 'react-native';
 
-const BlurView = styled.Image<{size: number}>`
+const BlurView = styled.Image<{size: number, offset: number}>`
   position: absolute;
   height: ${props => props.size * 2}px;
   width: ${props => props.size * 2}px;
   align-self: center;
-  top: -${props => props.size / 2 - 3}px;
+  top: -${props => props.offset}px;
   resize-mode: contain;
 `;
 
@@ -38,15 +38,22 @@ interface AvatarProps {
 }
 
 /**
+ * Component for rendering avatar with blue shadow
+ *
  * @param props - props for component rendering
  */
 export default function Avatar(props: AvatarProps): React.ReactElement {
+  const offset = props.size / 2 - 3;
+
   return (
-    <>
-      <AvatarView size={props.size}>
-        <BlurView source={require('../images/blueCircle.png')} blurRadius={20} size={props.size}/>
-        <AvatarImage source={props.source} size={props.size}/>
-      </AvatarView>
-    </>
+    <AvatarView size={props.size}>
+      <BlurView
+        source={require('../images/blueCircle.png')}
+        blurRadius={20}
+        size={props.size}
+        offset={offset}
+      />
+      <AvatarImage source={props.source} size={props.size}/>
+    </AvatarView>
   );
 }
