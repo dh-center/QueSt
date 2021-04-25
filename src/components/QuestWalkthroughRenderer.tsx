@@ -72,6 +72,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
   const [currentTaskBlock, setCurrentTaskBlock] = useState<CurrentTaskBlock>();
 
   const questData = props.quest?.data?.blocks as QuestBlock[];
+
   /**
    * Go to next quest block
    */
@@ -146,7 +147,13 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
     if (!questId) {
       return <Text>No quest id</Text>;
     }
-    component = <QuestEnding questId={questId}/>;
+
+    return (
+      <View>
+        <MapView />
+        <QuestEnding questId={questId}/>
+      </View>
+    );
   } else {
     switch (currentBlock.type) {
       case 'header':
