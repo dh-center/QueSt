@@ -22,6 +22,7 @@ import Passed from '../images/passed.svg';
 import WhiteGradient from '../components/WhiteGradient';
 import decodeHTMLEntities from '../components/utils/decodingHTMLEntities';
 import useTabBarHeight from '../components/utils/useTabBarHeight';
+import { CreditBlock } from '../types/questData';
 
 /**
  * Type with props of screen 'Map' in BottomTabNavigator
@@ -160,12 +161,12 @@ const CardsView = styled.View`
   justify-content: space-between;
 `;
 
-const CreditsImage = styled.Image`
+const CreditsImage = styled.Image<{margined?: boolean}>`
   align-self: center;
-  margin: 15px 75px 0;
   width: 70%;
   aspect-ratio: 1;
   resize-mode: contain;
+  margin-top: ${props => props.margined ? '15' : '0'}px;
 `;
 
 const styles = StyleSheet.create({
@@ -199,17 +200,21 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
   const navigation = useNavigation<MapScreenNavigationProp>();
   const tabBarHeight = useTabBarHeight();
   const { t } = useTranslation();
+  const creditsData = route.params.credits as CreditBlock[];
+
   let creditsInfo;
   let creditsImage;
 
-  if (route.params.credits?.length) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    creditsInfo = route.params.credits.find(item => item.type === 'paragraph').data.text;
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    creditsImage = route.params.credits.find(item => item.type === 'image').data.file.url;
-  }
+  creditsData.forEach(item => {
+    switch (item.type) {
+      case 'paragraph':
+        creditsInfo = item.data.text;
+        break;
+      case 'image':
+        creditsImage = item.data.file.url;
+        break;
+    }
+  });
 
   return (
     <Body>
@@ -306,14 +311,12 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
                 <CollectionCard imgSource={route.params.state === 'PASSED' && require('../images/Belinsky.png')} text={'Виссарион\nБелинский'}/>
               </CardsView>
             </Block>
-            {(creditsInfo || creditsImage) &&
+            {creditsData &&
               <>
                 <Line/>
                 <Block>
-                  <BasicText>
-                    Квест создан в соавторстве с {<CreditsText>{decodeHTMLEntities(creditsInfo)}</CreditsText>}
-                  </BasicText>
-                  <CreditsImage source={{ uri: creditsImage }} />
+                  {creditsInfo && <CreditsText>{decodeHTMLEntities(creditsInfo)}</CreditsText>}
+                  {creditsImage && <CreditsImage source={{ uri: creditsImage }} margined={creditsInfo}/>}
                 </Block>
               </>
             }
