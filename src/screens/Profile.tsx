@@ -15,7 +15,7 @@ import Achievements from '../images/achievements.svg';
 import Collection from '../images/collection.svg';
 import Rewards from '../images/rewards.svg';
 import ProgressBlock from '../components/ProgressBlock';
-import ProfileButton from '../components/ProfileButton';
+import ListButton from '../components/ListButton';
 import { graphql, QueryRenderer } from 'react-relay';
 import { ProfileQuery } from './__generated__/ProfileQuery.graphql';
 import ScreenWrapper from '../components/utils/ScreenWrapper';
@@ -23,6 +23,7 @@ import checkApiErrors from '../utils/checkApiErrors';
 import Button from '../components/ui/Button';
 import { useAuthContext } from '../contexts/AuthProvider';
 import { useRelayEnvironment } from 'react-relay/hooks';
+import Avatar from '../components/Avatar';
 
 /**
  * Type with props of screen 'Main' in ProfileStack
@@ -38,20 +39,6 @@ const SettingsButton = styled.TouchableOpacity`
   position: absolute;
   top: 74px;
   right: 15px;
-`;
-
-const AvatarView = styled.View`
-  height: 110px;
-  width: 110px;
-  border-radius: 60px;
-  elevation: ${8};
-  box-shadow: 0 4px 4.65px rgba(0,0,0,0.2);
-`;
-
-const Avatar = styled.Image`
-  height: 110px;
-  width: 110px;
-  border-radius: 60px;
 `;
 
 const Name = styled.Text`
@@ -129,23 +116,25 @@ export default function ProfileScreen(): React.ReactElement {
         return (
           <ScreenWrapper scrollable>
             <Ellipse/>
-            <SettingsButton onPress={(): void => navigation.navigate('Settings')}>
+            <SettingsButton onPress={(): void => navigation.navigate('Settings', {
+              avatar: imageSource,
+              name: props.user.firstName || props.user.username,
+              username: props.user.username,
+            })}>
               <Settings/>
             </SettingsButton>
-            <AvatarView>
-              <Avatar source={imageSource}/>
-            </AvatarView>
+            <Avatar size={110} source={imageSource}/>
             <Name>{props.user.firstName || props.user.username}</Name>
             <ProgressBlock
               level={props.user.level}
               totalExp={100}
               currentExp={props.user.exp - props.user.level * 100}
             />
-            <ProfileButton icon={Friends} buttonText={t('profile.friends')}/>
-            <ProfileButton icon={Rating} buttonText={t('profile.rating')}/>
-            <ProfileButton icon={Achievements} buttonText={t('profile.achievements')}/>
-            <ProfileButton icon={Collection} buttonText={t('profile.cards')}/>
-            <ProfileButton icon={Rewards} buttonText={t('profile.rewards')}/>
+            <ListButton icon={Friends} buttonText={t('profile.friends')}/>
+            <ListButton icon={Rating} buttonText={t('profile.rating')}/>
+            <ListButton icon={Achievements} buttonText={t('profile.achievements')}/>
+            <ListButton icon={Collection} buttonText={t('profile.cards')}/>
+            <ListButton icon={Rewards} buttonText={t('profile.rewards')}/>
           </ScreenWrapper>
         );
       }}

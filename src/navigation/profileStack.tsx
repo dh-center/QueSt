@@ -5,6 +5,7 @@ import LoginScreen from '../screens/Login';
 import SettingsScreen from '../screens/Settings';
 import RegistrationScreen from '../screens/Registration';
 import { useAuthContext } from '../contexts/AuthProvider';
+import { ImageSourcePropType } from 'react-native';
 
 /**
  * Type with params of screens and their props in ProfileStackScreen
@@ -18,7 +19,7 @@ export type ProfileStackParamList = {
   /**
    * Settings screen props
    */
-  Settings: undefined;
+  Settings: { avatar: ImageSourcePropType, name: string, username: string };
 
   /**
    * Login screen props
