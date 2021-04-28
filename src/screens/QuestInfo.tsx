@@ -205,16 +205,18 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
   let creditsInfo;
   let creditsImage;
 
-  creditsData.forEach(item => {
-    switch (item.type) {
-      case 'paragraph':
-        creditsInfo = item.data.text;
-        break;
-      case 'image':
-        creditsImage = item.data.file.url;
-        break;
-    }
-  });
+  if (creditsData !== undefined) {
+    creditsData.forEach(item => {
+      switch (item.type) {
+        case 'paragraph':
+          creditsInfo = item.data.text;
+          break;
+        case 'image':
+          creditsImage = item.data.file.url;
+          break;
+      }
+    });
+  }
 
   return (
     <Body>
@@ -311,12 +313,12 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
                 <CollectionCard imgSource={route.params.state === 'PASSED' && require('../images/Belinsky.png')} text={'Виссарион\nБелинский'}/>
               </CardsView>
             </Block>
-            {creditsData &&
+            {creditsData && !!creditsData.length &&
               <>
                 <Line/>
                 <Block>
-                  {creditsInfo && <CreditsText>{decodeHTMLEntities(creditsInfo)}</CreditsText>}
-                  {creditsImage && <CreditsImage source={{ uri: creditsImage }} margined={creditsInfo}/>}
+                  {creditsInfo !== undefined && <CreditsText>{decodeHTMLEntities(creditsInfo)}</CreditsText>}
+                  {creditsImage !== undefined && <CreditsImage source={{ uri: creditsImage }} margined={creditsInfo}/>}
                 </Block>
               </>
             }
