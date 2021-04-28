@@ -149,6 +149,23 @@ export interface CurrentTaskBlock {
   }
 }
 
+export interface ImageBlock {
+  type: 'image';
+  data: {
+    /**
+     * Information about image
+     */
+    caption?: string;
+
+    /**
+     * Url of image
+     */
+    file: {
+      url: string
+    };
+  }
+}
+
 /**
  * All text blocks
  */
@@ -167,3 +184,10 @@ export type QuestBlock =
   | TestBlock
   | QuestionBlock
   | CurrentTaskBlock;
+
+/**
+ * All credit blocks
+ */
+export type CreditBlock =
+  | ParagraphBlock
+  | ImageBlock;

@@ -16,6 +16,10 @@ export type QuestsListQueryResponse = {
                 readonly type: TaskTypes;
                 readonly minLevel: number;
                 readonly questProgressState: QuestUserProgressStates;
+                readonly earnedExp: number;
+                readonly credits: {
+                    readonly blocks: ReadonlyArray<unknown>;
+                } | null;
             };
         }>;
     };
@@ -38,6 +42,10 @@ query QuestsListQuery {
         type
         minLevel
         questProgressState
+        earnedExp
+        credits {
+          blocks
+        }
       }
     }
   }
@@ -111,6 +119,31 @@ var v0 = [
                 "kind": "ScalarField",
                 "name": "questProgressState",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "earnedExp",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "EditorData",
+                "kind": "LinkedField",
+                "name": "credits",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "blocks",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -140,14 +173,14 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "1cdfd497b85afa35757646f76bc617ca",
+    "cacheID": "0712ad7c37ee9262a6edacab80519dcb",
     "id": null,
     "metadata": {},
     "name": "QuestsListQuery",
     "operationKind": "query",
-    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n        type\n        minLevel\n        questProgressState\n      }\n    }\n  }\n}\n"
+    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n        type\n        minLevel\n        questProgressState\n        earnedExp\n        credits {\n          blocks\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'bb1d6f16a9999e08cfc0d64268c5f868';
+(node as any).hash = '109a7c168ee39281fd885572d2ec5fc4';
 export default node;
