@@ -205,7 +205,7 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
   let creditsInfo;
   let creditsImage;
 
-  if (creditsData !== undefined) {
+  if (creditsData) {
     creditsData.forEach(item => {
       switch (item.type) {
         case 'paragraph':
