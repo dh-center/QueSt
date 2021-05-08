@@ -19,6 +19,7 @@ const AvatarView = styled.View<{size: number}>`
 
 const AvatarImage = styled.Image<{size: number}>`
   flex: 1;
+  aspect-ratio: 1;
   border-radius: ${props => props.size / 2}px;
 `;
 
