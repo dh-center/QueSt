@@ -3,6 +3,7 @@ import MapboxGL from '@react-native-mapbox-gl/maps';
 import { graphql, QueryRenderer } from 'react-relay';
 import { LocationInstanceQuestBlockQuery } from './__generated__/LocationInstanceQuestBlockQuery.graphql';
 import { useRelayEnvironment } from 'react-relay/hooks';
+import CustomMarker from '../../images/customMarker.svg';
 
 /**
  * Props for QuestLocationInstanceBlock component
@@ -61,7 +62,9 @@ export default function QuestLocationInstanceBlock({ locationInstanceId }: Quest
               id={props.locationInstance.id}
               title={props.locationInstance.name || ''}
               coordinate={[location.longitude, location.latitude]}
-            />
+            >
+              <CustomMarker style={{marginBottom: '50%'}}/>
+            </MapboxGL.PointAnnotation>
             <MapboxGL.Camera
               animationDuration={1000}
               centerCoordinate={[location.longitude, location.latitude]}
