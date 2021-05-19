@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { ImageSourcePropType } from 'react-native';
+import { ImageSourcePropType, Platform } from 'react-native';
 
 const BlurView = styled.Image<{size: number, offset: number}>`
   position: absolute;
@@ -49,7 +49,7 @@ export default function Avatar(props: AvatarProps): React.ReactElement {
     <AvatarView size={props.size}>
       <BlurView
         source={require('../images/blueCircle.png')}
-        blurRadius={20}
+        blurRadius={Platform.OS === 'android' ? 5 : 20}
         size={props.size}
         offset={offset}
       />
