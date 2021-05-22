@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, Suspense } from 'react';
 import { StyleSheet, Text, View, Animated } from 'react-native';
 import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import Colors from '../styles/colors';
@@ -11,12 +11,13 @@ import QuestLocationInstanceBlock from './questBlocks/LocationInstance';
 import MapView from './MapView';
 import TestView from './questBlocks/TestView';
 import QuestionView from './questBlocks/QuestionView';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Spinner } from 'native-base';
 import CurrentTask from './questBlocks/CurrentTask';
 import styled from 'styled-components/native';
 import QuestEnding from './questBlocks/QuestEnding';
 import { useRelayEnvironment } from 'react-relay/hooks';
+import { TargetLocationProvider } from '../contexts/TargetLocationContext';
+import useTabBarHeight from './utils/useTabBarHeight';
 
 const styles = StyleSheet.create({
   modal: {
@@ -63,8 +64,8 @@ interface QuestWalkthroughContentProps {
  */
 const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentProps>((props) => {
   const modalizeRef = useRef<Modalize>(null);
-  const tabBarHeight = useBottomTabBarHeight();
-  const BOTTOM_SHEET_TOP = 40 + tabBarHeight;
+  const tabBarHeight = useTabBarHeight();
+  const BOTTOM_SHEET_TOP = tabBarHeight + 40;
 
   const [currentTarget, setCurrentTarget] = useState<string>();
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
@@ -182,23 +183,25 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
   }
 
   return (
-    <View>
-      <MapView>
-        {currentTarget && <QuestLocationInstanceBlock locationInstanceId={currentTarget}/>}
-      </MapView>
-      {currentTaskBlock && <CurrentTask block={currentTaskBlock}/>}
-      <Modalize
-        avoidKeyboardLikeIOS
-        handlePosition={'inside'}
-        ref={modalizeRef}
-        keyboardAvoidingBehavior={'padding'}
-        keyboardAvoidingOffset={-100} // magic value that fixes bottom padding if keyboard is open
-        alwaysOpen={BOTTOM_SHEET_TOP}
-        modalStyle={styles.modal}
-        rootStyle={styles.root}
-        customRenderer={<ModalScrollView>{component}</ModalScrollView>}
-      />
-    </View>
+    <TargetLocationProvider>
+      <Suspense fallback={<Spinner color={Colors.DarkBlue}/>}>
+        <MapView>
+          {currentTarget && <QuestLocationInstanceBlock locationInstanceId={currentTarget}/>}
+        </MapView>
+        {currentTaskBlock && <CurrentTask block={currentTaskBlock}/>}
+        <Modalize
+          avoidKeyboardLikeIOS
+          handlePosition={'inside'}
+          ref={modalizeRef}
+          keyboardAvoidingBehavior={'padding'}
+          keyboardAvoidingOffset={-100} // magic value that fixes bottom padding if keyboard is open
+          alwaysOpen={BOTTOM_SHEET_TOP}
+          modalStyle={styles.modal}
+          rootStyle={styles.root}
+          customRenderer={<ModalScrollView>{component}</ModalScrollView>}
+        />
+      </Suspense>
+    </TargetLocationProvider>
   );
 }, {
   quest: graphql`

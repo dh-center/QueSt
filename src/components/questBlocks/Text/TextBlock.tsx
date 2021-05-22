@@ -8,6 +8,7 @@ import { Spinner } from 'native-base';
 import decodeHTMLEntities from '../../utils/decodingHTMLEntities';
 import Quote from './Quote';
 import BlockBody from '../BlockBody';
+import useTargetLocationContext from '../../../contexts/TargetLocationContext';
 
 const Body = styled(BlockBody)`
   padding-left: 15px;
@@ -54,6 +55,8 @@ interface QuestTextBlockProps {
  * @param props - props for component rendering
  */
 export default function TextBlock(props: QuestTextBlockProps): React.ReactElement {
+  const { isUserNearLocation } = useTargetLocationContext();
+
   if (props.data.length === 0) {
     return <Spinner color={Colors.DarkBlue}/>;
   }
@@ -85,7 +88,7 @@ export default function TextBlock(props: QuestTextBlockProps): React.ReactElemen
           </BlockView>
         );
       })}
-      <NextButton onPress={() => props.nextCallback()} />
+      {isUserNearLocation && <NextButton onPress={() => props.nextCallback()}/>}
     </Body>
   );
 }
