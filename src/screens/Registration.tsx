@@ -39,14 +39,15 @@ const styles = StyleSheet.create({
    * Logo placeholder styles
    */
   logo: {
-    marginVertical: 15,
+    marginTop: -15,
   },
 
   /**
    * Registration text block
    */
   registrationTitleContainer: {
-    marginVertical: 30,
+    marginTop: 45,
+    marginBottom: 15,
   },
   registrationTitle: {
     ...textStyles.robotoMedium,
@@ -57,13 +58,13 @@ const styles = StyleSheet.create({
    * Inputs styles
    */
   input: {
-    marginBottom: 15,
+    marginTop: 15,
     shadowColor: Colors.Background,
     elevation: 0,
     borderColor: 'transparent',
   },
   registrationButton: {
-    marginVertical: 15,
+    marginVertical: 30,
   },
 });
 
