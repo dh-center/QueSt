@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, RefreshControl, ScrollView } from 'react-native';
+import { FlatList, RefreshControl, ScrollView, View } from 'react-native';
 import { Spinner } from 'native-base';
 import { graphql, QueryRenderer } from 'react-relay';
 import {
@@ -116,7 +116,7 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
       <FlatList
         style={{ paddingTop: 15 }}
         data={data}
-        renderItem={({ item }): React.ReactElement => (
+        renderItem={({ item, index }): React.ReactElement => (
           <>
             <QuestsListItem
               onPress={(): void => navigation.navigate('Description', {
@@ -133,6 +133,7 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
               minLevel={item.node.minLevel}
               progressState={item.node.questProgressState}
             />
+            {index === data.length - 1 && <View style={{ height: 15 }}/>}
           </>
         )}
         refreshing={isLoading}
