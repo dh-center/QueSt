@@ -5,7 +5,6 @@ import { LocationInstanceQuestBlockQuery } from './__generated__/LocationInstanc
 import { useLazyLoadQuery } from 'react-relay/hooks';
 import CustomMarker from '../../images/customMarker.svg';
 import useTargetLocationContext from '../../contexts/TargetLocationContext';
-import styled from 'styled-components/native';
 
 /**
  * Props for QuestLocationInstanceBlock component
@@ -16,10 +15,6 @@ interface QuestLocationInstanceBlockProps {
    */
   locationInstanceId: string;
 }
-
-const TargetLocationMarker = styled(CustomMarker)`
-  margin-bottom: 50%;
-`;
 
 /**
  * Renders location pointer on map
@@ -72,7 +67,7 @@ export default function QuestLocationInstanceBlock({ locationInstanceId }: Quest
         title={data.locationInstance.name || ''}
         coordinate={[location.longitude, location.latitude]}
       >
-        <TargetLocationMarker/>
+        <CustomMarker style={{ transform: [ { translateY: -21.5 } ] }}/>
       </MapboxGL.PointAnnotation>
       <MapboxGL.Camera
         animationDuration={1000}
