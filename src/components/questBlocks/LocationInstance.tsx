@@ -41,6 +41,9 @@ export default function QuestLocationInstanceBlock({ locationInstanceId }: Quest
       id: locationInstanceId,
     });
 
+  // offset custom marker to display it correctly
+  const markerOffset = -21.5;
+
   useEffect(() => {
     if (location.latitude && location.longitude) {
       setTargetLocation({
@@ -67,7 +70,7 @@ export default function QuestLocationInstanceBlock({ locationInstanceId }: Quest
         title={data.locationInstance.name || ''}
         coordinate={[location.longitude, location.latitude]}
       >
-        <CustomMarker style={{ transform: [ { translateY: -21.5 } ] }}/>
+        <CustomMarker style={{ transform: [ { translateY: markerOffset } ] }}/>
       </MapboxGL.PointAnnotation>
       <MapboxGL.Camera
         animationDuration={1000}

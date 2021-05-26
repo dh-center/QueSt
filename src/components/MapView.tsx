@@ -28,7 +28,11 @@ export default function MapView(props: PropsWithChildren<unknown>): React.ReactE
   const [hasPermission, setHasPermission] = useState(false);
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
+
+  // bottom margin for mapbox info
   const bottomOffset = useTabBarHeight() - insets.bottom + (props.children ? 50 :  10);
+  // top margin for compass
+  const topOffset = Platform.OS === 'ios' ? 20 : insets.top + 20;
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
@@ -45,7 +49,7 @@ export default function MapView(props: PropsWithChildren<unknown>): React.ReactE
     <>
       <MapboxView attributionPosition={{ bottom: bottomOffset,
         left: 10 }} compassViewMargins={{ x: 10,
-        y: Platform.OS === 'ios' ? 20 : insets.top + 20 }}
+        y: topOffset }}
       >
         <MapboxGL.Camera
           defaultSettings={{
