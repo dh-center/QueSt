@@ -28,7 +28,7 @@ const TargetLocationContext = createContext<TargetLocationContextValue | undefin
  * @param end - second location
  */
 function isUserInRadius(start: LocationCoords, end: LocationCoords): boolean {
-  return haversine(start, end, { threshold: 15,
+  return haversine(start, end, { threshold: 25,
     unit: 'meter' });
 }
 
