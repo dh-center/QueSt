@@ -10,6 +10,7 @@ import { useTranslation } from 'react-i18next';
 import { QuestionBlock } from '../../types/questData';
 import NextButton from '../ui/NextButton';
 import BlockBody from './BlockBody';
+import useTargetLocationContext from '../../contexts/TargetLocationContext';
 
 const Body = styled(BlockBody)`
   background-color: ${Colors.Background};
@@ -70,6 +71,7 @@ interface QuestionViewProps {
  * @param props - question data
  */
 export default function QuestionView(props: QuestionViewProps): React.ReactElement {
+  const { isUserNearLocation, targetLocation } = useTargetLocationContext();
   const [userAnswer, setUserAnswer] = useState('');
   const [isCorrectlyAnswered, setIsCorrectlyAnswered] = useState<boolean>();
   const { t } = useTranslation();
@@ -128,10 +130,10 @@ export default function QuestionView(props: QuestionViewProps): React.ReactEleme
             : <MessageText color={Colors.Red}>{props.data.data.wrongAnswerMessage}</MessageText>)
         }
       </Answer>
-      {(userAnswer !== '') && (isCorrectlyAnswered === undefined) &&
+      {userAnswer !== '' && isCorrectlyAnswered === undefined &&
         <NextButton onPress={() => setIsCorrectlyAnswered(userAnswer === props.data.data.answer)} />
       }
-      {(isCorrectlyAnswered !== undefined) &&
+      {(isCorrectlyAnswered !== undefined && isUserNearLocation || !targetLocation) &&
         <NextButton onPress={() => props.nextCallback()} />
       }
     </Body>
