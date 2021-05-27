@@ -5,6 +5,7 @@ import { Alert, Platform } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import LinearGradient from 'react-native-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import useTabBarHeight from './utils/useTabBarHeight';
 
 const MapboxView = styled(MapboxGL.MapView)`
   height: 100%;
@@ -28,6 +29,11 @@ export default function MapView(props: PropsWithChildren<unknown>): React.ReactE
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
 
+  // bottom margin for mapbox info
+  const bottomOffset = useTabBarHeight() - insets.bottom + (props.children ? 50 :  10);
+  // top margin for compass
+  const topOffset = Platform.OS === 'ios' ? 20 : insets.top + 20;
+
   useEffect(() => {
     if (Platform.OS === 'ios') {
       setHasPermission(true);
@@ -41,7 +47,10 @@ export default function MapView(props: PropsWithChildren<unknown>): React.ReactE
 
   return (
     <>
-      <MapboxView>
+      <MapboxView attributionPosition={{ bottom: bottomOffset,
+        left: 10 }} compassViewMargins={{ x: 10,
+        y: topOffset }}
+      >
         <MapboxGL.Camera
           defaultSettings={{
             centerCoordinate: [30.3462, 59.9296],
@@ -53,7 +62,9 @@ export default function MapView(props: PropsWithChildren<unknown>): React.ReactE
           }}
           minZoomLevel={8.5}
         />
-        {hasPermission && <MapboxGL.UserLocation/>}
+        {hasPermission && <MapboxGL.UserLocation
+          showsUserHeadingIndicator={true}
+        />}
         {props.children}
       </MapboxView>
       <HeaderGradient

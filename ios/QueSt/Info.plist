@@ -77,6 +77,10 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string></string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -99,6 +103,10 @@
 		<string>PTRootUIWeb-Medium.ttf</string>
 		<string>PTRootUIWeb-Regular.ttf</string>
 		<string>Roboto-Medium.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
