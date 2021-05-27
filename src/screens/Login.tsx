@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
    * Logo placeholder styles
    */
   logo: {
-    marginVertical: 15,
+    marginTop: -15,
+    marginBottom: 15,
   },
 
   /**

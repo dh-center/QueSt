@@ -2,6 +2,7 @@ import React, { ReactElement, ReactNode } from 'react';
 import styled from 'styled-components/native';
 import Colors from '../../styles/colors';
 import { ScrollView, StyleProp, View, ViewStyle } from 'react-native';
+import useTabBarHeight from './useTabBarHeight';
 
 /**
  * Styled SafeAreaView component
@@ -14,8 +15,8 @@ const Body = styled(View)`
 /**
  * SafeAreaView component for using without ScrollView
  */
-const BodyWithoutScrollView = styled(Body)`
-  padding: 74px 15px 75px;
+const BodyWithoutScrollView = styled(Body)<{tabBarHeight: number}>`
+  padding: 74px 15px ${props => props.tabBarHeight}px;
   align-items: center;
 `;
 
@@ -27,9 +28,10 @@ const CustomScrollView = styled(ScrollView).attrs(() => ({
     alignItems: 'center',
     paddingTop: 74,
     paddingHorizontal: 15,
-    paddingBottom: 75,
   },
-}))``;
+}))<{tabBarHeight: number}>`
+  margin-bottom: ${props => props.tabBarHeight}px;
+`;
 
 /**
  * Props of ScreenWrapper component
@@ -57,17 +59,19 @@ interface ScreenWrapperProps {
  * @param props - props of component
  */
 export default function ScreenWrapper(props: ScreenWrapperProps): ReactElement {
+  const tabBarHeight = useTabBarHeight();
+
   if (props.scrollable) {
     return (
       <Body style={props.style}>
-        <CustomScrollView>
+        <CustomScrollView tabBarHeight={tabBarHeight}>
           { props.children }
         </CustomScrollView>
       </Body>
     );
   } else {
     return (
-      <BodyWithoutScrollView style={props.style}>
+      <BodyWithoutScrollView style={props.style} tabBarHeight={tabBarHeight}>
         { props.children }
       </BodyWithoutScrollView>
     );
