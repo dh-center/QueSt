@@ -17,6 +17,7 @@ import NextButton from '../ui/NextButton';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../../styles/textStyles';
 import BlockBody from './BlockBody';
+import useTargetLocationContext from '../../contexts/TargetLocationContext';
 
 const Body = styled(BlockBody)`
   background-color: ${Colors.Background};
@@ -128,6 +129,7 @@ interface TestViewProps {
  * @param props - test data
  */
 export default function TestView(props: TestViewProps): React.ReactElement {
+  const { isUserNearLocation, targetLocation } = useTargetLocationContext();
   const [selectedAnswer, setSelectedAnswer] = useState<number>();
   const [modalVisible, setModalVisible] = useState(false);
   const test = props.data.data;
@@ -150,7 +152,7 @@ export default function TestView(props: TestViewProps): React.ReactElement {
     /**
      * RightAnswer or WrongAnswer component, according the user answer
      */
-    questionIcon = (selectedAnswer === test.correctAnswerIndex) ? <RightAnswer/> : <WrongAnswer/>;
+    questionIcon = (selectedAnswer === Number(test.correctAnswerIndex)) ? <RightAnswer/> : <WrongAnswer/>;
   }
 
   return (
@@ -169,12 +171,12 @@ export default function TestView(props: TestViewProps): React.ReactElement {
                 buttonState = 'active';
                 break;
 
-              case test.correctAnswerIndex:
-                buttonState = index === test.correctAnswerIndex ? 'selectedCorrect' : 'disabled';
+              case Number(test.correctAnswerIndex):
+                buttonState = index === Number(test.correctAnswerIndex) ? 'selectedCorrect' : 'disabled';
                 break;
 
               default:
-                if (index === test.correctAnswerIndex) {
+                if (index === Number(test.correctAnswerIndex)) {
                   buttonState = 'unselectedCorrect';
                 } else if (index === selectedAnswer) {
                   buttonState = 'selectedWrong';
@@ -197,11 +199,11 @@ export default function TestView(props: TestViewProps): React.ReactElement {
       </View>
       {(selectedAnswer !== undefined) &&
         <>
-          {selectedAnswer === test.correctAnswerIndex
+          {selectedAnswer === Number(test.correctAnswerIndex)
             ? <MessageText color={Colors.Green}>{props.data.data.rightAnswerMessage}</MessageText>
             : <MessageText color={Colors.Red}>{props.data.data.wrongAnswerMessage}</MessageText>
           }
-          <NextButton onPress={() => props.nextCallback()} />
+          {(isUserNearLocation || !targetLocation) && <NextButton onPress={() => props.nextCallback()}/>}
         </>
       }
       {test.picture &&
