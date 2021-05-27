@@ -11,12 +11,12 @@ import QuestLocationInstanceBlock from './questBlocks/LocationInstance';
 import MapView from './MapView';
 import TestView from './questBlocks/TestView';
 import QuestionView from './questBlocks/QuestionView';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { Spinner } from 'native-base';
 import CurrentTask from './questBlocks/CurrentTask';
 import styled from 'styled-components/native';
 import QuestEnding from './questBlocks/QuestEnding';
 import { useRelayEnvironment } from 'react-relay/hooks';
+import useTabBarHeight from './utils/useTabBarHeight';
 
 const styles = StyleSheet.create({
   modal: {
@@ -63,7 +63,7 @@ interface QuestWalkthroughContentProps {
  */
 const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentProps>((props) => {
   const modalizeRef = useRef<Modalize>(null);
-  const tabBarHeight = useBottomTabBarHeight();
+  const tabBarHeight = useTabBarHeight();
   const BOTTOM_SHEET_TOP = 40 + tabBarHeight;
 
   const [currentTarget, setCurrentTarget] = useState<string>();

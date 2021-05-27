@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, RefreshControl, ScrollView } from 'react-native';
+import { FlatList, RefreshControl, ScrollView, View } from 'react-native';
 import { Spinner } from 'native-base';
 import { graphql, QueryRenderer } from 'react-relay';
 import {
@@ -16,6 +16,7 @@ import Colors from '../styles/colors';
 import BlueCircle from '../images/blueCircle15.svg';
 import QuestsListItem from '../components/QuestsListItem';
 import { useRelayEnvironment } from 'react-relay/hooks';
+import useTabBarHeight from '../components/utils/useTabBarHeight';
 
 /**
  * Type with props of screen 'List' in QuestsStackScreen
@@ -27,11 +28,11 @@ type ListScreenNavigationProp = StackNavigationProp<QuestsStackParamList, 'List'
  */
 type Props = StackScreenProps<QuestsStackParamList, 'List'>;
 
-const Body = styled.View`
+const Body = styled.View<{tabBarHeight: number}>`
   background-color: ${Colors.Background};
   flex: 1;
   align-items: stretch;
-  padding-bottom: 80px;
+  padding-bottom: ${props => props.tabBarHeight}px;
 `;
 
 const SpinnerView = styled.View`
@@ -52,7 +53,7 @@ const Title = styled.Text`
   font-size: 28px;
   line-height: 28px;
   color: ${Colors.Black};
-  margin: 74px 15px 30px;
+  margin: 74px 15px 15px;
 `;
 
 const ErrorText = styled.Text`
@@ -72,6 +73,7 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
   const navigation = useNavigation<ListScreenNavigationProp>();
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
+  const tabBarHeight = useTabBarHeight();
 
   useEffect(() => {
     if (props.retry && props.needRefresh) {
@@ -108,13 +110,14 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
     );
 
   return (
-    <Body>
+    <Body tabBarHeight={tabBarHeight}>
       <Circle/>
+      <Title>{t('quests.title')}</Title>
       <FlatList
+        style={{ paddingTop: 15 }}
         data={data}
         renderItem={({ item, index }): React.ReactElement => (
           <>
-            {(index === 0) && <Title>{t('quests.title')}</Title>}
             <QuestsListItem
               onPress={(): void => navigation.navigate('Description', {
                 id: item.node.id,
@@ -130,6 +133,7 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
               minLevel={item.node.minLevel}
               progressState={item.node.questProgressState}
             />
+            {index === data.length - 1 && <View style={{ height: 15 }}/>}
           </>
         )}
         refreshing={isLoading}
@@ -156,9 +160,10 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
  */
 function ErrorScreen(props: {retry: (() => void) | null}): React.ReactElement {
   const [isLoading, setIsLoading] = useState(false);
+  const tabBarHeight = useTabBarHeight();
 
   return (
-    <Body>
+    <Body tabBarHeight={tabBarHeight}>
       <ScrollView>
         <RefreshControl refreshing={isLoading} onRefresh={(): void => {
           setIsLoading(true);
