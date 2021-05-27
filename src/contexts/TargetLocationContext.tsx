@@ -55,6 +55,7 @@ export function TargetLocationProvider(props: PropsWithChildren<unknown>): React
           if (isUserInRadius(userPos, location)) {
             Geolocation.clearWatch(watchId);
             setIsUserNear(true);
+            setLocation(undefined);
           }
         },
         (error) => {

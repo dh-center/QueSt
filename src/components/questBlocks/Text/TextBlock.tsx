@@ -55,7 +55,7 @@ interface QuestTextBlockProps {
  * @param props - props for component rendering
  */
 export default function TextBlock(props: QuestTextBlockProps): React.ReactElement {
-  const { isUserNearLocation } = useTargetLocationContext();
+  const { isUserNearLocation, targetLocation } = useTargetLocationContext();
 
   if (props.data.length === 0) {
     return <Spinner color={Colors.DarkBlue}/>;
@@ -88,7 +88,7 @@ export default function TextBlock(props: QuestTextBlockProps): React.ReactElemen
           </BlockView>
         );
       })}
-      {isUserNearLocation && <NextButton onPress={() => props.nextCallback()}/>}
+      {(isUserNearLocation || !targetLocation) && <NextButton onPress={() => props.nextCallback()}/>}
     </Body>
   );
 }
