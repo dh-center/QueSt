@@ -3,6 +3,7 @@ import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import Colors from '../styles/colors';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../styles/textStyles';
+import { StyleSheet } from 'react-native';
 
 interface ProgressCircleProps {
   /**
@@ -18,9 +19,12 @@ const PercentText = styled.Text`
   color: ${Colors.Black};
 `;
 
-const PercentCircle = styled(AnimatedCircularProgress)`
-  margin: 0 17px 0 -12px;
-`;
+const styles = StyleSheet.create({
+  percentCircle: {
+    marginRight: 17,
+    marginLeft: -12,
+  },
+});
 
 /**
  * Displays circle with percent of progress
@@ -29,7 +33,8 @@ const PercentCircle = styled(AnimatedCircularProgress)`
  */
 export default function ProgressCircle({ percent }: ProgressCircleProps): React.ReactElement {
   return (
-    <PercentCircle
+    <AnimatedCircularProgress
+      style={styles.percentCircle}
       size={35}
       width={3}
       fill={percent}
@@ -45,6 +50,6 @@ export default function ProgressCircle({ percent }: ProgressCircleProps): React.
           </PercentText>
         )
       }
-    </PercentCircle>
+    </AnimatedCircularProgress>
   );
 }
