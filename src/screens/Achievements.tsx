@@ -55,10 +55,6 @@ const BasicText = styled.Text<{inactive?: boolean, active?: boolean}>`
   color: ${Colors.Black};
 `;
 
-// const AchievementsView = styled.ScrollView`
-//   padding: 27px 15px 0;
-// `;
-
 const AchievementsView = styled(ScrollView).attrs(() => ({
   contentContainerStyle: {
     paddingTop: 27,
