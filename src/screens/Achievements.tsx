@@ -54,8 +54,7 @@ const BasicText = styled.Text<{inactive?: boolean, active?: boolean}>`
   color: ${Colors.Black};
 `;
 
-const AchievementsView = styled.ScrollView<{tabBarHeight: number}>`
-  margin-bottom: ${props => props.tabBarHeight}px;
+const AchievementsView = styled.ScrollView`
   padding: 27px 15px 0;
 `;
 
@@ -89,7 +88,7 @@ export default function AchievementsScreen({ navigation }: Props): React.ReactEl
           <BasicText inactive>В процессе</BasicText>
         </TabView>
       </Row>
-      <AchievementsView tabBarHeight={tabBarHeight}>
+      <AchievementsView>
         <ListButton buttonText={'Друг Достоевского'} type={'achievements'} percent={85}/>
         <ListButton buttonText={'Петербургская интеллигенция'} type={'achievements'} percent={30}/>
         <ListButton buttonText={'История наводнений в Санкт-Петербурге'} type={'achievements'} percent={70}/>
