@@ -31,7 +31,6 @@ type Props = StackScreenProps<QuestsStackParamList, 'List'>;
 const Body = styled.View<{tabBarHeight: number}>`
   background-color: ${Colors.Background};
   flex: 1;
-  align-items: stretch;
   padding-bottom: ${props => props.tabBarHeight}px;
 `;
 
