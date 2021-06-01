@@ -4,7 +4,7 @@ import Colors from '../styles/colors';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../styles/textStyles';
 import NextCircle from '../images/nextCircle.svg';
-import ProgressCircle from './ProgressSircle';
+import ProgressCircle from './ProgressCircle';
 
 const Button = styled.TouchableOpacity`
   width: 100%;
