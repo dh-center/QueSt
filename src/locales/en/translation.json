@@ -3,7 +3,6 @@
     "title": "Quests",
     "condition": "Reach level {{minLevel}}",
     "mileage": "mileage",
-    "received": "received",
     "advice": "We advise you to use an electric scooter or bicycle",
     "achievements": "Achievements",
     "achievementsPassed": "Progress in achievements",
@@ -16,6 +15,11 @@
     "experience": "Experience",
     "received": "Received",
     "endQuest": "Get an award"
+  },
+  "achievements": {
+    "all": "All",
+    "received": "Received",
+    "process": "In the process"
   },
   "profile": {
     "title": "Profile",

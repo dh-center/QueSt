@@ -82,14 +82,14 @@ export default function AchievementsScreen({ navigation }: Props): React.ReactEl
       </Row>
       <Row>
         <TabView>
-          <BasicText active>Все</BasicText>
+          <BasicText active>{t('achievements.all')}</BasicText>
           <Emphasis/>
         </TabView>
         <TabView>
-          <BasicText inactive>Полученные</BasicText>
+          <BasicText inactive>{t('achievements.received')}</BasicText>
         </TabView>
         <TabView>
-          <BasicText inactive>В процессе</BasicText>
+          <BasicText inactive>{t('achievements.process')}</BasicText>
         </TabView>
       </Row>
       <AchievementsView>
