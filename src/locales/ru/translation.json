@@ -3,7 +3,6 @@
     "title": "Квесты",
     "condition": "Достигните {{minLevel}} уровня",
     "mileage": "пройдено",
-    "received": "получено",
     "advice": "Мы советуем Вам воспользоваться электросамокатом или велосипедом",
     "achievements": "Достижения",
     "achievementsPassed": "Прогресс в достижениях",
@@ -16,6 +15,11 @@
     "experience": "Опыт",
     "received": "Получено",
     "endQuest": "Получить награду"
+  },
+  "achievements": {
+    "all": "Все",
+    "received": "Полученные",
+    "process": "В процессе"
   },
   "profile": {
     "title": "Профиль",

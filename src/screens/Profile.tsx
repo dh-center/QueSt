@@ -132,7 +132,7 @@ export default function ProfileScreen(): React.ReactElement {
             />
             <ListButton icon={Friends} buttonText={t('profile.friends')}/>
             <ListButton icon={Rating} buttonText={t('profile.rating')}/>
-            <ListButton icon={Achievements} buttonText={t('profile.achievements')}/>
+            <ListButton icon={Achievements} buttonText={t('profile.achievements')} onPress={(): void => navigation.navigate('Achievements')}/>
             <ListButton icon={Collection} buttonText={t('profile.cards')}/>
             <ListButton icon={Rewards} buttonText={t('profile.rewards')}/>
           </ScreenWrapper>

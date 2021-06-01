@@ -49,13 +49,13 @@ const Row = styled.View<{margined?: boolean}>`
 `;
 
 const BackButton = styled.TouchableOpacity`
-  padding: 12px 15px;
+  padding: 11px 15px;
 `;
 
 const Title = styled.Text`
   ${StyledFonts.roboto};
   font-size: 28px;
-  line-height: 35px;
+  line-height: 34px;
   color: ${Colors.Black};
 `;
 
