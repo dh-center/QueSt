@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -75,12 +75,12 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string></string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string></string>
+	<string>The location is necessary so that we can display your position on the map, find nearby quests, and also make sure that you are following the route correctly</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>The location is necessary so that we can display your position on the map, find nearby quests, and also make sure that you are following the route correctly</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>The location is necessary so that we can display your position on the map, find nearby quests, and also make sure that you are following the route correctly</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
