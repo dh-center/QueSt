@@ -130,7 +130,7 @@ interface TestViewProps {
  */
 export default function TestView(props: TestViewProps): React.ReactElement {
   const { isUserNearLocation, targetLocation } = useTargetLocationContext();
-  const [selectedAnswer, setSelectedAnswer] = useState<number>();
+  const [selectedAnswer, setSelectedAnswer] = useState<number | undefined>(undefined);
   const [modalVisible, setModalVisible] = useState(false);
   const test = props.data.data;
   let questionIcon;
@@ -203,7 +203,10 @@ export default function TestView(props: TestViewProps): React.ReactElement {
             ? <MessageText color={Colors.Green}>{props.data.data.rightAnswerMessage}</MessageText>
             : <MessageText color={Colors.Red}>{props.data.data.wrongAnswerMessage}</MessageText>
           }
-          {(isUserNearLocation || !targetLocation) && <NextButton onPress={() => props.nextCallback()}/>}
+          {(isUserNearLocation || !targetLocation) && <NextButton onPress={() => {
+            setSelectedAnswer(undefined);
+            props.nextCallback();
+          }}/>}
         </>
       }
       {test.picture &&
