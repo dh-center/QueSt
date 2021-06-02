@@ -55,13 +55,6 @@ const BasicText = styled.Text<{active?: boolean}>`
   color: ${Colors.Black};
 `;
 
-const AchievementsFlatList = styled(FlatList).attrs(() => ({
-  contentContainerStyle: {
-    paddingTop: 27,
-    paddingHorizontal: 15,
-  },
-}))``;
-
 const achievementsList = [
   {
     name: 'Друг Достоевского',
@@ -114,7 +107,11 @@ export default function AchievementsScreen({ navigation }: Props): React.ReactEl
           {currentTab === 3 && <Emphasis/>}
         </TabView>
       </Row>
-      <AchievementsFlatList
+      <FlatList
+        contentContainerStyle={{
+          paddingTop: 27,
+          paddingHorizontal: 15,
+        }}
         data={
           currentTab === 1 ? achievementsList
             : currentTab === 2 ? achievementsList.filter(achievement => achievement.progress === 100)
@@ -122,12 +119,8 @@ export default function AchievementsScreen({ navigation }: Props): React.ReactEl
         }
         renderItem={({ item }): React.ReactElement => (
           <ListButton
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             buttonText={item.name}
             type={'achievements'}
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             percent={item.progress}
           />
         )}
