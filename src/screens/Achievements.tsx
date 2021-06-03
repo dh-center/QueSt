@@ -82,6 +82,7 @@ const achievementsList = [
 export default function AchievementsScreen({ navigation }: Props): React.ReactElement {
   const { t } = useTranslation();
   const tabBarHeight = useTabBarHeight();
+  let data;
 
   enum Tabs {
     ALL,
@@ -90,6 +91,17 @@ export default function AchievementsScreen({ navigation }: Props): React.ReactEl
   }
 
   const [currentTab, setCurrentTab] = useState<Tabs>(Tabs.ALL);
+
+  switch (currentTab) {
+    case Tabs.RECEIVED:
+      data = achievementsList.filter(achievement => achievement.progress === 100);
+      break;
+    case Tabs.PROCESS:
+      data = achievementsList.filter(achievement => achievement.progress < 100);
+      break;
+    default:
+      data = achievementsList;
+  }
 
   return (
     <Body tabBarHeight={tabBarHeight}>
@@ -119,11 +131,7 @@ export default function AchievementsScreen({ navigation }: Props): React.ReactEl
           paddingTop: 27,
           paddingHorizontal: 15,
         }}
-        data={
-          currentTab === Tabs.ALL ? achievementsList
-            : currentTab === Tabs.RECEIVED ? achievementsList.filter(achievement => achievement.progress === 100)
-              : achievementsList.filter(achievement => achievement.progress < 100)
-        }
+        data={data}
         renderItem={({ item }): React.ReactElement => (
           <ListButton
             buttonText={item.name}
