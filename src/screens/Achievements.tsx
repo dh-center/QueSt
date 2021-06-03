@@ -82,7 +82,14 @@ const achievementsList = [
 export default function AchievementsScreen({ navigation }: Props): React.ReactElement {
   const { t } = useTranslation();
   const tabBarHeight = useTabBarHeight();
-  const [currentTab, setCurrentTab] = useState(1);
+
+  enum Tabs {
+    ALL,
+    RECEIVED,
+    PROCESS
+  }
+
+  const [currentTab, setCurrentTab] = useState<Tabs>(Tabs.ALL);
 
   return (
     <Body tabBarHeight={tabBarHeight}>
@@ -94,17 +101,17 @@ export default function AchievementsScreen({ navigation }: Props): React.ReactEl
         <Title>{t('profile.achievements')}</Title>
       </Row>
       <Row>
-        <TabView activeOpacity={1} onPress={() => setCurrentTab(1)}>
-          <BasicText active={currentTab === 1}>{t('achievements.all')}</BasicText>
-          {currentTab === 1 && <Emphasis/>}
+        <TabView activeOpacity={1} onPress={() => setCurrentTab(Tabs.ALL)}>
+          <BasicText active={currentTab === Tabs.ALL}>{t('achievements.all')}</BasicText>
+          {currentTab === Tabs.ALL && <Emphasis/>}
         </TabView>
-        <TabView activeOpacity={1} onPress={() => setCurrentTab(2)}>
-          <BasicText active={currentTab === 2}>{t('achievements.received')}</BasicText>
-          {currentTab === 2 && <Emphasis/>}
+        <TabView activeOpacity={1} onPress={() => setCurrentTab(Tabs.RECEIVED)}>
+          <BasicText active={currentTab === Tabs.RECEIVED}>{t('achievements.received')}</BasicText>
+          {currentTab === Tabs.RECEIVED && <Emphasis/>}
         </TabView>
-        <TabView activeOpacity={1} onPress={() => setCurrentTab(3)}>
-          <BasicText  active={currentTab === 3}>{t('achievements.process')}</BasicText>
-          {currentTab === 3 && <Emphasis/>}
+        <TabView activeOpacity={1} onPress={() => setCurrentTab(Tabs.PROCESS)}>
+          <BasicText  active={currentTab === Tabs.PROCESS}>{t('achievements.process')}</BasicText>
+          {currentTab === Tabs.PROCESS && <Emphasis/>}
         </TabView>
       </Row>
       <FlatList
@@ -113,8 +120,8 @@ export default function AchievementsScreen({ navigation }: Props): React.ReactEl
           paddingHorizontal: 15,
         }}
         data={
-          currentTab === 1 ? achievementsList
-            : currentTab === 2 ? achievementsList.filter(achievement => achievement.progress === 100)
+          currentTab === Tabs.ALL ? achievementsList
+            : currentTab === Tabs.RECEIVED ? achievementsList.filter(achievement => achievement.progress === 100)
               : achievementsList.filter(achievement => achievement.progress < 100)
         }
         renderItem={({ item }): React.ReactElement => (
