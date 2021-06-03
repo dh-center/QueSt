@@ -80,6 +80,15 @@ const flatListStyle = {
 };
 
 /**
+ * List of tabs on AchievementsScreen
+ */
+enum AchievementsScreenTabs {
+  ALL,
+  RECEIVED,
+  PROCESS
+}
+
+/**
  * Displays achievements screen
  *
  * @param props - props for component rendering
@@ -89,19 +98,13 @@ export default function AchievementsScreen({ navigation }: Props): React.ReactEl
   const tabBarHeight = useTabBarHeight();
   let data;
 
-  enum Tabs {
-    ALL,
-    RECEIVED,
-    PROCESS
-  }
-
-  const [currentTab, setCurrentTab] = useState<Tabs>(Tabs.ALL);
+  const [currentTab, setCurrentTab] = useState<AchievementsScreenTabs>(AchievementsScreenTabs.ALL);
 
   switch (currentTab) {
-    case Tabs.RECEIVED:
+    case AchievementsScreenTabs.RECEIVED:
       data = achievementsList.filter(achievement => achievement.progress === 100);
       break;
-    case Tabs.PROCESS:
+    case AchievementsScreenTabs.PROCESS:
       data = achievementsList.filter(achievement => achievement.progress < 100);
       break;
     default:
@@ -118,17 +121,17 @@ export default function AchievementsScreen({ navigation }: Props): React.ReactEl
         <Title>{t('profile.achievements')}</Title>
       </Row>
       <Row>
-        <TabView activeOpacity={1} onPress={() => setCurrentTab(Tabs.ALL)}>
-          <BasicText active={currentTab === Tabs.ALL}>{t('achievements.all')}</BasicText>
-          {currentTab === Tabs.ALL && <Emphasis/>}
+        <TabView activeOpacity={1} onPress={() => setCurrentTab(AchievementsScreenTabs.ALL)}>
+          <BasicText active={currentTab === AchievementsScreenTabs.ALL}>{t('achievements.all')}</BasicText>
+          {currentTab === AchievementsScreenTabs.ALL && <Emphasis/>}
         </TabView>
-        <TabView activeOpacity={1} onPress={() => setCurrentTab(Tabs.RECEIVED)}>
-          <BasicText active={currentTab === Tabs.RECEIVED}>{t('achievements.received')}</BasicText>
-          {currentTab === Tabs.RECEIVED && <Emphasis/>}
+        <TabView activeOpacity={1} onPress={() => setCurrentTab(AchievementsScreenTabs.RECEIVED)}>
+          <BasicText active={currentTab === AchievementsScreenTabs.RECEIVED}>{t('achievements.received')}</BasicText>
+          {currentTab === AchievementsScreenTabs.RECEIVED && <Emphasis/>}
         </TabView>
-        <TabView activeOpacity={1} onPress={() => setCurrentTab(Tabs.PROCESS)}>
-          <BasicText  active={currentTab === Tabs.PROCESS}>{t('achievements.process')}</BasicText>
-          {currentTab === Tabs.PROCESS && <Emphasis/>}
+        <TabView activeOpacity={1} onPress={() => setCurrentTab(AchievementsScreenTabs.PROCESS)}>
+          <BasicText  active={currentTab === AchievementsScreenTabs.PROCESS}>{t('achievements.process')}</BasicText>
+          {currentTab === AchievementsScreenTabs.PROCESS && <Emphasis/>}
         </TabView>
       </Row>
       <FlatList
