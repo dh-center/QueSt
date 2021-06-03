@@ -74,6 +74,11 @@ const achievementsList = [
   },
 ];
 
+const flatListStyle = {
+  paddingTop: 27,
+  paddingHorizontal: 15,
+};
+
 /**
  * Displays achievements screen
  *
@@ -127,10 +132,7 @@ export default function AchievementsScreen({ navigation }: Props): React.ReactEl
         </TabView>
       </Row>
       <FlatList
-        contentContainerStyle={{
-          paddingTop: 27,
-          paddingHorizontal: 15,
-        }}
+        contentContainerStyle={flatListStyle}
         data={data}
         renderItem={({ item }): React.ReactElement => (
           <ListButton
