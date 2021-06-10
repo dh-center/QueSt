@@ -79,8 +79,20 @@ const DefaultText = styled.Text`
 `;
 
 const LogoutButton = styled.TouchableOpacity`
-  padding: 15px;
+  background-color: ${Colors.Red};
+  border-radius: 50px;
+  padding: 11px 28px;
   align-self: flex-end;
+  align-items: center;
+  elevation: ${2};
+  box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+`;
+
+const LogoutText = styled.Text`
+  ${StyledFonts.uiWebMedium};
+  font-size: 18px;
+  line-height: 22px;
+  color: ${Colors.White};
 `;
 
 /**
@@ -114,8 +126,9 @@ export default function SettingsScreen({ route, navigation }: Props): React.Reac
       <Body>
         <ListButton buttonText={t('settings.password')} type={'settings'}/>
         <ListButton buttonText={t('settings.avatar')} type={'settings'}/>
+        <ListButton buttonText={t('settings.about')} type={'info'} onPress={() => navigation.navigate('About')}/>
         <LogoutButton onPress={(): Promise<void> => authContext.actions.logout()}>
-          <DefaultText>{t('settings.logout')}</DefaultText>
+          <LogoutText>{t('settings.logout')}</LogoutText>
         </LogoutButton>
       </Body>
     </Wrapper>
