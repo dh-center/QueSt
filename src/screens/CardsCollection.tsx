@@ -147,7 +147,7 @@ const flatColumnStyle = {
 export default function CardsCollectionScreen({ navigation }: Props): React.ReactElement {
   const { t } = useTranslation();
   const tabBarHeight = useTabBarHeight();
-  const flatListRef = useRef(null);
+  const flatListRef = useRef<FlatList>(null);
   let data;
 
   const receivedCards = useMemo(() => {
@@ -181,8 +181,6 @@ export default function CardsCollectionScreen({ navigation }: Props): React.Reac
 
   useEffect(() => {
     if (flatListRef.current) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
       flatListRef.current.scrollToIndex({ animated: false,
         index: 0 });
     }
