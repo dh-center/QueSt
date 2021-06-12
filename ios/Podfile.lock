@@ -407,10 +407,16 @@ PODS:
     - Yoga
   - RNScreens (2.18.1):
     - React-Core
+  - RNSentry (2.5.0):
+    - React-Core
+    - Sentry (= 7.0.0)
   - RNSVG (12.1.0):
     - React
   - RNVectorIcons (7.1.0):
     - React
+  - Sentry (7.0.0):
+    - Sentry/Core (= 7.0.0)
+  - Sentry/Core (7.0.0)
   - VK-ios-sdk (1.6.2)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -479,6 +485,7 @@ DEPENDENCIES:
   - RNLocalize (from `../node_modules/react-native-localize`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -505,6 +512,7 @@ SPEC REPOS:
     - Mapbox-iOS-SDK
     - MapboxMobileEvents
     - OpenSSL-Universal
+    - Sentry
     - VK-ios-sdk
     - YogaKit
 
@@ -589,6 +597,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSentry:
+    :path: "../node_modules/@sentry/react-native"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNVectorIcons:
@@ -657,8 +667,10 @@ SPEC CHECKSUMS:
   RNLocalize: 43f6c30d8e19ad92282ae434d310fb463b31f419
   RNReanimated: 5231286440b796e09df3bfa5c1b12b02bfe07664
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
+  RNSentry: c536a1f6d7e042b05b7d52c522e975458e032c7d
   RNSVG: ce9d996113475209013317e48b05c21ee988d42e
   RNVectorIcons: bc69e6a278b14842063605de32bec61f0b251a59
+  Sentry: 89d26e036063b9cb9caa59b6951dd2f8277aa13b
   VK-ios-sdk: 5bcf00a2014a7323f98db9328b603d4f96635caa
   Yoga: 4bd86afe9883422a7c4028c00e34790f560923d6
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a

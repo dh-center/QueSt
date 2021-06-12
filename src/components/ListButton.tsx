@@ -4,6 +4,7 @@ import Colors from '../styles/colors';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../styles/textStyles';
 import NextCircle from '../images/nextCircle.svg';
+import InfoCircle from '../images/info.svg';
 import ProgressCircle from './ProgressCircle';
 
 const Button = styled.TouchableOpacity`
@@ -56,7 +57,7 @@ export interface ButtonProps {
   /**
    * Type of button (settings, achievements)
    */
-  type?: 'settings' | 'achievements';
+  type?: 'settings' | 'achievements' | 'info';
 
   /**
    * Button text content
@@ -75,7 +76,8 @@ export default function ListButton({ style: _style, icon, percent, type, buttonT
       {icon && <Icon as={icon}/>}
       {type === 'achievements' && percent && <ProgressCircle percent={percent}/>}
       <ButtonText>{buttonText}</ButtonText>
-      {type && <Next rotated={type === 'achievements'}/>}
+      {type !== 'info' && <Next rotated={type === 'achievements'}/>}
+      {type === 'info' && <InfoCircle/>}
     </Button>
   );
 }

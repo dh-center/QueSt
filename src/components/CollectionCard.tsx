@@ -17,7 +17,12 @@ export interface CollectionCardProps {
   /**
    * Path to image
    */
-  imgSource?: ImageSourcePropType;
+  imgSource: ImageSourcePropType;
+
+  /**
+   * Is the card already received
+   */
+  isReceived: boolean;
 }
 
 const Card = styled.View<{passed?: boolean}>`
@@ -28,6 +33,7 @@ const Card = styled.View<{passed?: boolean}>`
   border-radius: 15px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   elevation: ${2};
+  ${props => !props.passed && 'justify-content: center;'}
 `;
 
 const CardImage = styled.Image`
@@ -60,10 +66,10 @@ const Lock = styled(LockSVG)`
  */
 export default function CollectionCard(props: CollectionCardProps): React.ReactElement {
   return (
-    <Card passed={!!props.imgSource}>
-      {props.imgSource && <CardImage source={props.imgSource}/>}
-      <CardText passed={!!props.imgSource}>{props.text}</CardText>
-      {!props.imgSource && <Lock/>}
+    <Card passed={props.isReceived}>
+      {props.isReceived && <CardImage source={props.imgSource}/>}
+      <CardText passed={props.isReceived}>{props.text}</CardText>
+      {!props.isReceived && <Lock/>}
     </Card>
   );
 }

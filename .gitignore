@@ -63,3 +63,5 @@ buck-out/
 /ios/Pods/
 
 .env
+
+app-release.aab
