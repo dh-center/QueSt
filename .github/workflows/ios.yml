@@ -10,6 +10,12 @@ jobs:
       - name: Install npm dependencies
         run: yarn install
 
+      - name: Add sentry auth token to env vars
+        run: echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> $GITHUB_ENV
+
+      - name: Add fastlane password
+        run: echo "FASTLANE_PASSWORD=${{ secrets.FASTLANE_PASSWORD }}" >> $GITHUB_ENV
+
       - name: Make envfile
         uses: ozaytsev86/create-env-file@v1
         with:
