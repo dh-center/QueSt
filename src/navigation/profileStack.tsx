@@ -8,6 +8,7 @@ import { useAuthContext } from '../contexts/AuthProvider';
 import { ImageSourcePropType } from 'react-native';
 import AchievementsScreen from '../screens/Achievements';
 import AboutScreen from '../screens/About';
+import CardsCollectionScreen from '../screens/CardsCollection';
 
 /**
  * Type with params of screens and their props in ProfileStackScreen
@@ -42,6 +43,11 @@ export type ProfileStackParamList = {
    * Props for screen with information about app
    */
   About: undefined;
+
+  /**
+   * CardsCollection screen props
+   */
+  CardsCollection: undefined;
 };
 
 const ProfileStack = createStackNavigator<ProfileStackParamList>();
@@ -60,6 +66,7 @@ export default function ProfileStackNavigation(): React.ReactElement {
           <ProfileStack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="Achievements" component={AchievementsScreen} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="About" component={AboutScreen} options={{ headerShown: false }}/>
+          <ProfileStack.Screen name="CardsCollection" component={CardsCollectionScreen} options={{ headerShown: false }}/>
         </>
         : <>
           <ProfileStack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>

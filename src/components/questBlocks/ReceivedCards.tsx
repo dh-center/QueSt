@@ -29,8 +29,8 @@ export default function ReceivedCards(): React.ReactElement {
     <>
       <Title>{t('quests.received')}</Title>
       <CardsView>
-        <CollectionCard imgSource={require('../../images/Dostoevsky.png')} text={'Федор\nДостоевский'}/>
-        <CollectionCard imgSource={require('../../images/Belinsky.png')} text={'Виссарион\nБелинский'}/>
+        <CollectionCard imgSource={require('../../images/Dostoevsky.png')} text={'Федор\nДостоевский'} isReceived/>
+        <CollectionCard imgSource={require('../../images/Belinsky.png')} text={'Виссарион\nБелинский'} isReceived/>
       </CardsView>
     </>
   );

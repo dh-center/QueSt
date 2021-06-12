@@ -309,8 +309,16 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
                 }
               </TextRow>
               <CardsView>
-                <CollectionCard imgSource={route.params.state === 'PASSED' && require('../images/Dostoevsky.png')} text={'Федор\nДостоевский'}/>
-                <CollectionCard imgSource={route.params.state === 'PASSED' && require('../images/Belinsky.png')} text={'Виссарион\nБелинский'}/>
+                <CollectionCard
+                  imgSource={require('../images/Dostoevsky.png')}
+                  text={'Федор\nДостоевский'}
+                  isReceived={route.params.state === 'PASSED'}
+                />
+                <CollectionCard
+                  imgSource={require('../images/Belinsky.png')}
+                  text={'Виссарион\nБелинский'}
+                  isReceived={route.params.state === 'PASSED'}
+                />
               </CardsView>
             </Block>
             {creditsData && !!creditsData.length &&
