@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import BlueCircle15 from '../images/blueCircle15.svg';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../styles/textStyles';
@@ -148,30 +148,32 @@ export default function CardsCollectionScreen({ navigation }: Props): React.Reac
   const { t } = useTranslation();
   const tabBarHeight = useTabBarHeight();
   let data;
+  const receivedCards = useMemo(() => {
+    const result = cardsList.filter(card => card.isReceived);
+
+    result.length % 2 === 1 && result.push(emptyCardData);
+
+    return result;
+  }, [ cardsList ]);
+  const lockedCards = useMemo(() => {
+    const result = cardsList.filter(card => !card.isReceived);
+
+    result.length % 2 === 1 && result.push(emptyCardData);
+
+    return result;
+  }, [ cardsList ]);
 
   const [currentTab, setCurrentTab] = useState<CardsScreenTabs>(CardsScreenTabs.ALL);
 
   switch (currentTab) {
     case CardsScreenTabs.RECEIVED:
-      const receivedList = cardsList.filter(card => card.isReceived);
-
-      receivedList.length % 2 === 1 && receivedList.push(emptyCardData);
-      data = receivedList;
+      data = receivedCards;
       break;
     case CardsScreenTabs.PROCESS:
-      const blockedList = cardsList.filter(card => !card.isReceived);
-
-      blockedList.length % 2 === 1 && blockedList.push(emptyCardData);
-      data = blockedList;
+      data = lockedCards;
       break;
     default:
-      const received = cardsList.filter(card => card.isReceived);
-      const locked = cardsList.filter(card => !card.isReceived);
-
-      received.length % 2 === 1 && received.push(emptyCardData);
-      locked.length % 2 === 1 && locked.push(emptyCardData);
-
-      data = received.concat(locked);
+      data = receivedCards.concat(lockedCards);
   }
 
   return (
