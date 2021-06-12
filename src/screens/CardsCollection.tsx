@@ -140,7 +140,7 @@ const flatColumnStyle = {
 };
 
 /**
- * Displays achievements screen
+ * Displays screen with collection of cards
  *
  * @param props - props for component rendering
  */
