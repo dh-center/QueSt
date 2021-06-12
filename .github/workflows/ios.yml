@@ -12,9 +12,12 @@ jobs:
 
       - name: Add sentry auth token to env vars
         run: echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> $GITHUB_ENV
+#
+#      - name: Add fastlane password
+#        run: echo "FASTLANE_PASSWORD=${{ secrets.FASTLANE_PASSWORD }}" >> $GITHUB_ENV
 
-      - name: Add fastlane password
-        run: echo "FASTLANE_PASSWORD=${{ secrets.FASTLANE_PASSWORD }}" >> $GITHUB_ENV
+      - name: Save ios api key
+        run: echo "${{ secrets.APP_STORE_API_KEY }}" >> ./ios/apikey.p8
 
       - name: Make envfile
         uses: ozaytsev86/create-env-file@v1

@@ -18,6 +18,13 @@ default_platform(:ios)
 platform :ios do
   desc "Push a new beta build to TestFlight"
   lane :beta do
+    app_store_connect_api_key(
+        key_id: "H8XN986G23",
+        issuer_id: "6e918921-8bb1-4f13-83ca-69a0c1891b06",
+        key_filepath: "./apikey.p8",
+        duration: 1200, # optional (maximum 1200)
+        in_house: false # optional but may be required if using match/sigh
+      )
     increment_build_number(xcodeproj: "QueSt.xcodeproj")
     get_certificates           # invokes cert
     get_provisioning_profile   # invokes sigh
