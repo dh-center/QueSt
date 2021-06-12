@@ -17,6 +17,10 @@ jobs:
           envkey_OAUTH_WEB_CLIENT_ID: ${{ secrets.OAUTH_WEB_CLIENT_ID }}
           envKey_API_ENDPOINT: 'https://api.stage.st-retrospect.dh-center.ru'
           envKey_VK_APP_ID: ${{ secrets.VK_APP_ID }}
+          envKey_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+
+      - name: Add sentry auth token to env vars
+        run: echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> $GITHUB_ENV
 
       - name: Build Android Release
         run: |
