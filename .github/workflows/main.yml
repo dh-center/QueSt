@@ -19,6 +19,9 @@ jobs:
           envKey_VK_APP_ID: ${{ secrets.VK_APP_ID }}
           envKey_SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
 
+      - name: Add sentry auth token to env vars
+        run: echo "SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }}" >> $GITHUB_ENV
+
       - name: Build Android Release
         run: |
           cd android && ./gradlew assembleRelease

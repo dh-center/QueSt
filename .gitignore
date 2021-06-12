@@ -64,5 +64,4 @@ buck-out/
 
 .env
 
-sentry.properties
 app-release.aab
