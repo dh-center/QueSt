@@ -262,7 +262,7 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
             <Row>
               <Cell vertical>
                 <BasicText>{t('quests.mileage')}</BasicText>
-                <HeadersText margined>7,8 км</HeadersText>
+                <HeadersText margined>{route.params.distanceInKilometers} км</HeadersText>
               </Cell>
               <Line vertical/>
               <Cell vertical>
@@ -280,11 +280,13 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
               <>
                 <View style={styles.routeLength}>
                   <Icon as={Walker}/>
-                  <BasicText>7,8 км ~ 90 мин</BasicText>
+                  <BasicText>{route.params.distanceInKilometers} км ~ {route.params.durationInMinutes} мин</BasicText>
                 </View>
-                <View style={styles.advice}>
-                  <AdviceText>{t('quests.advice')}</AdviceText>
-                </View>
+                {route.params.wayToTravel === 'WITH_TRANSPORT' &&
+                  <View style={styles.advice}>
+                    <AdviceText>{t('quests.advice')}</AdviceText>
+                  </View>
+                }
               </>
               }
             </Block>

@@ -125,6 +125,9 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
                 state: item.node.questProgressState,
                 exp: item.node.earnedExp,
                 credits: item.node.credits?.blocks,
+                wayToTravel: item.node.wayToTravel,
+                distanceInKilometers: item.node.distanceInKilometers,
+                durationInMinutes: item.node.durationInMinutes,
               })
               }
               name={item.node.name}
@@ -196,6 +199,9 @@ const query = graphql`
           minLevel
           questProgressState
           earnedExp
+          wayToTravel
+          distanceInKilometers
+          durationInMinutes
           credits {
             blocks
           }

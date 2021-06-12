@@ -14,6 +14,9 @@ export type QuestsStackParamList = {
     description: string | null,
     state: string,
     exp: number,
+    wayToTravel: string,
+    distanceInKilometers: number,
+    durationInMinutes: number,
     credits: readonly unknown[] | undefined,
   };
 };
