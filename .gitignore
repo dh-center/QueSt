@@ -63,3 +63,6 @@ buck-out/
 /ios/Pods/
 
 .env
+
+sentry.properties
+app-release.aab
