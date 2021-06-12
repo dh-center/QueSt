@@ -2,7 +2,7 @@ name: react-native-android-build-apk
 on: [push]
 
 jobs:
-  build-android:
+  build-ios:
     runs-on: macos-11
     steps:
       - uses: actions/checkout@v2

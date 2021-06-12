@@ -20,6 +20,6 @@ platform :ios do
   lane :beta do
     increment_build_number(xcodeproj: "QueSt.xcodeproj")
     build_app(workspace: "QueSt.xcworkspace", scheme: "QueSt")
-    upload_to_testflight
+ #   upload_to_testflight
   end
 end
