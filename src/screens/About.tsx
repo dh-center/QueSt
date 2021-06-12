@@ -69,7 +69,7 @@ const BackButton = styled.TouchableOpacity`
  *
  * @param props - props for component rendering
  */
-export default function AboutScreen({ route, navigation }: Props): React.ReactElement {
+export default function AboutScreen({ navigation }: Props): React.ReactElement {
   const { t } = useTranslation();
 
   return (
