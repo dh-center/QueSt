@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import BlueCircle15 from '../images/blueCircle15.svg';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../styles/textStyles';
@@ -147,7 +147,9 @@ const flatColumnStyle = {
 export default function CardsCollectionScreen({ navigation }: Props): React.ReactElement {
   const { t } = useTranslation();
   const tabBarHeight = useTabBarHeight();
+  const flatListRef = useRef(null);
   let data;
+
   const receivedCards = useMemo(() => {
     const result = cardsList.filter(card => card.isReceived);
 
@@ -155,6 +157,7 @@ export default function CardsCollectionScreen({ navigation }: Props): React.Reac
 
     return result;
   }, [ cardsList ]);
+
   const lockedCards = useMemo(() => {
     const result = cardsList.filter(card => !card.isReceived);
 
@@ -175,6 +178,15 @@ export default function CardsCollectionScreen({ navigation }: Props): React.Reac
     default:
       data = receivedCards.concat(lockedCards);
   }
+
+  useEffect(() => {
+    if (flatListRef.current) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      flatListRef.current.scrollToIndex({ animated: false,
+        index: 0 });
+    }
+  }, [ currentTab ]);
 
   return (
     <Body tabBarHeight={tabBarHeight}>
@@ -200,6 +212,7 @@ export default function CardsCollectionScreen({ navigation }: Props): React.Reac
         </TabView>
       </Row>
       <FlatList
+        ref={flatListRef}
         contentContainerStyle={flatContentStyle}
         data={data}
         horizontal={false}
