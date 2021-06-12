@@ -38,6 +38,9 @@
     "password": "Change password",
     "avatar": "Change profile photo",
     "theme": "Dark theme",
+    "about": "About the app",
+    "privacyPolicy": "Privacy Policy",
+    "feedback": "Feedback",
     "logout": "Log out"
   },
   "signIn": {
