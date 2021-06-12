@@ -18,9 +18,9 @@ jobs:
           ENV_API_ENDPOINT: 'https://api.stage.st-retrospect.dh-center.ru'
           ENV_VK_APP_ID: ${{ secrets.VK_APP_ID }}
 
-      - uses: actions/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7.2'
+          ruby-version: 2.6
       - uses: maierj/fastlane-action@v2.0.1
         with:
           lane: 'beta'
