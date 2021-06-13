@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     paddingVertical: 11,
     paddingHorizontal: 30,
     flexDirection: 'row',
+    justifyContent: 'center',
 
     /**
      * Shadows on IOS
