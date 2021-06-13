@@ -63,5 +63,5 @@ buck-out/
 /ios/Pods/
 
 .env
-
+apikey.p8
 app-release.aab
