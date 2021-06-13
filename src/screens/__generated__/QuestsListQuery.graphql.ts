@@ -4,7 +4,8 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type QuestUserProgressStates = "AVAILABLE" | "LOCKED" | "PASSED";
-export type TaskTypes = "QUIZ" | "ROUTE";
+export type TaskTypes = "QUIZ" | "ROUTE" | "STORY" | "TEST";
+export type WayToTravel = "ON_FOOT" | "WITH_TRANSPORT";
 export type QuestsListQueryVariables = {};
 export type QuestsListQueryResponse = {
     readonly quests: {
@@ -17,6 +18,9 @@ export type QuestsListQueryResponse = {
                 readonly minLevel: number;
                 readonly questProgressState: QuestUserProgressStates;
                 readonly earnedExp: number;
+                readonly wayToTravel: WayToTravel;
+                readonly distanceInKilometers: number;
+                readonly durationInMinutes: number;
                 readonly credits: {
                     readonly blocks: ReadonlyArray<unknown>;
                 } | null;
@@ -43,6 +47,9 @@ query QuestsListQuery {
         minLevel
         questProgressState
         earnedExp
+        wayToTravel
+        distanceInKilometers
+        durationInMinutes
         credits {
           blocks
         }
@@ -130,6 +137,27 @@ var v0 = [
               {
                 "alias": null,
                 "args": null,
+                "kind": "ScalarField",
+                "name": "wayToTravel",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "distanceInKilometers",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "durationInMinutes",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "concreteType": "EditorData",
                 "kind": "LinkedField",
                 "name": "credits",
@@ -173,14 +201,14 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "0712ad7c37ee9262a6edacab80519dcb",
+    "cacheID": "f5d24fb7734ea1f85a7e5dff176172c0",
     "id": null,
     "metadata": {},
     "name": "QuestsListQuery",
     "operationKind": "query",
-    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n        type\n        minLevel\n        questProgressState\n        earnedExp\n        credits {\n          blocks\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n        type\n        minLevel\n        questProgressState\n        earnedExp\n        wayToTravel\n        distanceInKilometers\n        durationInMinutes\n        credits {\n          blocks\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '109a7c168ee39281fd885572d2ec5fc4';
+(node as any).hash = '53640dc5703df2a955be113d0a9932a2';
 export default node;
