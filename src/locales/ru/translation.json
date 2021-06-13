@@ -67,5 +67,9 @@
     "NO_USER_WITH_SUCH_USERNAME": "Неверный e-mail или пароль",
     "INVALID_ACCESS_TOKEN": "Неверный токен авторизации",
     "unspecific": "Что-то пошло не так"
+  },
+  "measures": {
+    "kilometers": "км",
+    "minutes": "мин"
   }
 }
