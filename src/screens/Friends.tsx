@@ -173,11 +173,7 @@ export default function FriendsScreen({ navigation }: Props): React.ReactElement
             </Row>
             <FlatList
               contentContainerStyle={flatListStyle}
-              data={[
-                ...props.user.friends, ...props.user.friends, ...props.user.friends, ...props.user.friends,
-                ...props.user.friends, ...props.user.friends, ...props.user.friends, ...props.user.friends,
-                ...props.user.friends, ...props.user.friends, ...props.user.friends, ...props.user.friends,
-              ]}
+              data={props.user.friends}
               renderItem={({ item }): React.ReactElement => (
                 <FriendButton
                   avatar={item.photo ? { uri: item.photo } : require('../images/lapki.jpg')}
