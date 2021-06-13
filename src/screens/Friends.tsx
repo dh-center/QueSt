@@ -187,7 +187,9 @@ export default function FriendsScreen({ navigation }: Props): React.ReactElement
               tabBarHeight={tabBarHeight}
               icon={Plus}
               title={'Добавить друга'}
-              onPress={() => {}}
+              onPress={() => {
+                console.log();
+              }}
             />
           </Body>
         );
