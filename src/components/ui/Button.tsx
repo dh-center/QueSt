@@ -10,6 +10,7 @@ import {
 import Colors from '../../styles/colors';
 import textStyles from '../../styles/textStyles';
 import WithStyles from '../../types/withStyles';
+import styled from 'styled-components/native';
 
 /**
  * Custom button props
@@ -19,6 +20,11 @@ export interface CustomButtonProps extends WithStyles<ViewStyle> {
    * Text on button
    */
   title: string;
+
+  /**
+   * Text on button
+   */
+  icon?: React.ComponentType;
 
   /**
    * onPress event handler
@@ -41,6 +47,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingVertical: 11,
     paddingHorizontal: 30,
+    flexDirection: 'row',
 
     /**
      * Shadows on IOS
@@ -69,6 +76,10 @@ const styles = StyleSheet.create({
   },
 });
 
+const Icon = styled.View`
+  margin-right: 10px;
+`;
+
 /**
  * Custom button with light blue background
  *
@@ -77,6 +88,7 @@ const styles = StyleSheet.create({
 export default function Button(props: TouchableOpacityProps & CustomButtonProps): ReactElement {
   return (
     <TouchableOpacity onPress={props.onPress} style={[styles.button, props.style]} disabled={props.disabled}>
+      {props.icon && <Icon as={props.icon}/>}
       <Text style={styles.buttonText}>{props.title}</Text>
     </TouchableOpacity>
   );
