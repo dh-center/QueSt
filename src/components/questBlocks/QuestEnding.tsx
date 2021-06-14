@@ -50,6 +50,7 @@ const mutation = graphql`
     user {
       completeQuest(questId: $questId) {
         record {
+          id
           username
           exp
           level

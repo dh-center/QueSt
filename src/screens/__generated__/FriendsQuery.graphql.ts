@@ -3,24 +3,20 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+import { FragmentRefs } from "relay-runtime";
 export type FriendsQueryVariables = {};
 export type FriendsQueryResponse = {
     readonly user: {
+        readonly id: string;
         readonly username: string;
         readonly friends: ReadonlyArray<{
             readonly id: string;
-            readonly firstName: string | null;
-            readonly username: string;
-            readonly level: number;
-            readonly photo: string | null;
+            readonly " $fragmentRefs": FragmentRefs<"FriendButton_data">;
         }>;
         readonly friendRequests: ReadonlyArray<{
             readonly id: string;
-            readonly firstName: string | null;
-            readonly username: string;
-            readonly level: number;
-            readonly photo: string | null;
         }>;
+        readonly " $fragmentRefs": FragmentRefs<"FriendRequests_data">;
     };
 };
 export type FriendsQuery = {
@@ -33,22 +29,30 @@ export type FriendsQuery = {
 /*
 query FriendsQuery {
   user: me {
+    id
     username
     friends {
       id
-      firstName
-      username
-      level
-      photo
+      ...FriendButton_data
     }
     friendRequests {
       id
-      firstName
-      username
-      level
-      photo
     }
+    ...FriendRequests_data
+  }
+}
+
+fragment FriendButton_data on User {
+  firstName
+  username
+  level
+  photo
+}
+
+fragment FriendRequests_data on User {
+  friendRequests {
     id
+    ...FriendButton_data
   }
 }
 */
@@ -58,18 +62,18 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "username",
+  "name": "id",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "username",
   "storageKey": null
 },
 v2 = [
-  (v1/*: any*/),
+  (v0/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -77,7 +81,7 @@ v2 = [
     "name": "firstName",
     "storageKey": null
   },
-  (v0/*: any*/),
+  (v1/*: any*/),
   {
     "alias": null,
     "args": null,
@@ -92,27 +96,7 @@ v2 = [
     "name": "photo",
     "storageKey": null
   }
-],
-v3 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "User",
-  "kind": "LinkedField",
-  "name": "friends",
-  "plural": true,
-  "selections": (v2/*: any*/),
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "User",
-  "kind": "LinkedField",
-  "name": "friendRequests",
-  "plural": true,
-  "selections": (v2/*: any*/),
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -129,8 +113,41 @@ return {
         "plural": false,
         "selections": [
           (v0/*: any*/),
-          (v3/*: any*/),
-          (v4/*: any*/)
+          (v1/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "User",
+            "kind": "LinkedField",
+            "name": "friends",
+            "plural": true,
+            "selections": [
+              (v0/*: any*/),
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "FriendButton_data"
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "User",
+            "kind": "LinkedField",
+            "name": "friendRequests",
+            "plural": true,
+            "selections": [
+              (v0/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "FriendRequests_data"
+          }
         ],
         "storageKey": null
       }
@@ -153,23 +170,41 @@ return {
         "plural": false,
         "selections": [
           (v0/*: any*/),
-          (v3/*: any*/),
-          (v4/*: any*/),
-          (v1/*: any*/)
+          (v1/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "User",
+            "kind": "LinkedField",
+            "name": "friends",
+            "plural": true,
+            "selections": (v2/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "User",
+            "kind": "LinkedField",
+            "name": "friendRequests",
+            "plural": true,
+            "selections": (v2/*: any*/),
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "cb23291622bbf19a1564074282716053",
+    "cacheID": "e1149d794f41859797b66a3654d1149a",
     "id": null,
     "metadata": {},
     "name": "FriendsQuery",
     "operationKind": "query",
-    "text": "query FriendsQuery {\n  user: me {\n    username\n    friends {\n      id\n      firstName\n      username\n      level\n      photo\n    }\n    friendRequests {\n      id\n      firstName\n      username\n      level\n      photo\n    }\n    id\n  }\n}\n"
+    "text": "query FriendsQuery {\n  user: me {\n    id\n    username\n    friends {\n      id\n      ...FriendButton_data\n    }\n    friendRequests {\n      id\n    }\n    ...FriendRequests_data\n  }\n}\n\nfragment FriendButton_data on User {\n  firstName\n  username\n  level\n  photo\n}\n\nfragment FriendRequests_data on User {\n  friendRequests {\n    id\n    ...FriendButton_data\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '02edcb0a2a5f30a3747ead1afbaf7a89';
+(node as any).hash = '2d807e5bd9b6a66f4389068f6ad54f46';
 export default node;

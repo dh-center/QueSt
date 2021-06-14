@@ -24,6 +24,9 @@
   "profile": {
     "title": "Profile",
     "friends": "Friends",
+    "friendRequests": "Friend requests",
+    "decline": "Decline",
+    "accept": "Accept",
     "rating": "Rating",
     "achievements": "Achievements",
     "cards": "Collection of cards",

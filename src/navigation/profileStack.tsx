@@ -10,6 +10,8 @@ import AchievementsScreen from '../screens/Achievements';
 import AboutScreen from '../screens/About';
 import CardsCollectionScreen from '../screens/CardsCollection';
 import FriendsScreen from '../screens/Friends';
+import FriendRequestsScreen from '../screens/FriendRequests';
+import { FriendRequests_data$key } from '../screens/__generated__/FriendRequests_data.graphql';
 
 /**
  * Type with params of screens and their props in ProfileStackScreen
@@ -54,6 +56,11 @@ export type ProfileStackParamList = {
    * Friends screen props
    */
   Friends: undefined;
+
+  /**
+   * FriendRequests screen props
+   */
+  FriendRequests: { fragmentRef: FriendRequests_data$key };
 };
 
 const ProfileStack = createStackNavigator<ProfileStackParamList>();
@@ -72,6 +79,7 @@ export default function ProfileStackNavigation(): React.ReactElement {
           <ProfileStack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="About" component={AboutScreen} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="Friends" component={FriendsScreen} options={{ headerShown: false }}/>
+          <ProfileStack.Screen name="FriendRequests" component={FriendRequestsScreen} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="Achievements" component={AchievementsScreen} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="CardsCollection" component={CardsCollectionScreen} options={{ headerShown: false }}/>
         </>

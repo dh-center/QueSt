@@ -12,7 +12,6 @@ import FriendRequests from '../images/friendRequests.svg';
 import { graphql, QueryRenderer } from 'react-relay';
 import { useAuthContext } from '../contexts/AuthProvider';
 import { useRelayEnvironment } from 'react-relay/hooks';
-import checkApiErrors from '../utils/checkApiErrors';
 import ScreenWrapper from '../components/utils/ScreenWrapper';
 import { ActivityIndicator, FlatList, Text, TouchableOpacity } from 'react-native';
 import Button from '../components/ui/Button';
@@ -110,37 +109,22 @@ export default function FriendsScreen({ navigation }: Props): React.ReactElement
       query={graphql`
         query FriendsQuery {
             user: me {
+              id
               username
               friends {
                 id
-                firstName
-                username
-                level
-                photo
+                ...FriendButton_data
               }
               friendRequests {
-                id
-                firstName
-                username
-                level
-                photo
+               id
               }
+              ...FriendRequests_data
             }
         }
       `}
       render={({ error, props }) => {
         if (error) {
-          let errorMessage = t('errors.unspecific');
-
-          try {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            checkApiErrors((error as any).source);
-          } catch (e) {
-            errorMessage = t([`errors.${e.message}`, 'errors.unspecific']);
-            if (e.message === 'INVALID_ACCESS_TOKEN') {
-              authContext.actions.logout();
-            }
-          }
+          const errorMessage = t('errors.unspecific');
 
           return (
             <ScreenWrapper>
@@ -162,7 +146,12 @@ export default function FriendsScreen({ navigation }: Props): React.ReactElement
                 <Back/>
               </BackButton>
               <Title>{t('profile.friends')}</Title>
-              <TouchableOpacity activeOpacity={1}>
+              <TouchableOpacity
+                activeOpacity={1}
+                onPress={() => {
+                  props.user.friendRequests.length > 0 && navigation.navigate('FriendRequests', { fragmentRef: props.user });
+                }}
+              >
                 <FriendRequests/>
                 {props.user.friendRequests.length > 0 &&
                   <FriendRequestsBadge>
@@ -176,10 +165,8 @@ export default function FriendsScreen({ navigation }: Props): React.ReactElement
               data={props.user.friends}
               renderItem={({ item }): React.ReactElement => (
                 <FriendButton
-                  avatar={item.photo ? { uri: item.photo } : require('../images/lapki.jpg')}
-                  level={item.level}
-                  name={item.firstName || item.username}
-                  username={item.username}/>
+                  userData={item}
+                />
               )}
               keyExtractor={(item, index): string => index.toString()}
             />

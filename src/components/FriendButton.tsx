@@ -1,8 +1,12 @@
 import React from 'react';
-import { ImageSourcePropType, TouchableOpacityProps, View } from 'react-native';
+import { TouchableOpacityProps, View } from 'react-native';
 import Colors from '../styles/colors';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../styles/textStyles';
+import { useFragment } from 'react-relay/hooks';
+import { graphql } from 'react-relay';
+import { FriendButton_data$key } from './__generated__/FriendButton_data.graphql';
+import { useTranslation } from 'react-i18next';
 
 const Button = styled.TouchableOpacity`
   width: 100%;
@@ -14,6 +18,7 @@ const Button = styled.TouchableOpacity`
   box-shadow: 0 2px 3px rgba(0,0,0,0.2);
   flex-direction: row;
   align-items: center;
+  z-index: 999;
 `;
 
 const Avatar = styled.Image`
@@ -58,29 +63,52 @@ const LevelCircle = styled.View`
   justify-content: center;
 `;
 
+const DecideButtonsView = styled.View`
+  flex-direction: row;
+  margin-top: -15px;
+`;
+
+const DecideButton = styled.TouchableOpacity<{accept?: boolean, decline?: boolean}>`
+  flex: 1;
+  height: 64px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+  ${props => props.accept && 'background-color: #5BC378;'}
+  ${props => props.decline && 'border: 1px solid rgba(34, 34, 34, 0.3);'}
+`;
+
+const DecideButtonText = styled.Text<{accept?: boolean}>`
+  font-family: ${props => props.accept ? 'PTRootUIWeb-Regular' : 'PTRootUIWeb-Medium'};
+  color: ${props => props.accept ? Colors.White : Colors.Black};
+  font-size: 18px;
+  line-height: 22px;
+  margin-top: 31px;
+  text-align: center;
+`;
+
 /**
  * Props for ListButton component
  */
 export interface ButtonProps {
   /**
-   * User avatar
+   * Fragmet with data for component
    */
-  avatar: ImageSourcePropType;
+  userData: FriendButton_data$key;
 
   /**
-   * User first name
+   * If it is friend request
    */
-  name: string;
+  request?: boolean;
 
   /**
-   * User username
+   * onPress for Decline button
    */
-  username: string;
+  onDeclinePress?: () => void;
 
   /**
-   * User level
+   * onPress for Accept button
    */
-  level: number;
+  onAcceptPress?: () => void;
 }
 
 /**
@@ -88,20 +116,43 @@ export interface ButtonProps {
  *
  * @param props - props for button
  */
-export default function FriendButton({ style: _style, avatar, name, username, level, ...rest }: TouchableOpacityProps & ButtonProps): React.ReactElement {
+export default function FriendButton({ style: _style, userData, request, onDeclinePress, onAcceptPress, ...rest }: TouchableOpacityProps & ButtonProps): React.ReactElement {
+  const { t } = useTranslation();
+
+  const data = useFragment(graphql`
+    fragment FriendButton_data on User {
+      firstName
+      username
+      level
+      photo
+    }
+  `, userData);
+
   return (
-    <Button {...rest}>
-      <Avatar source={avatar}/>
-      <NameView>
-        <DefaultText>{name}</DefaultText>
-        <Username>@{username}</Username>
-      </NameView>
-      <View>
-        <Level>LVL</Level>
-        <LevelCircle>
-          <DefaultText white>{level}</DefaultText>
-        </LevelCircle>
-      </View>
-    </Button>
+    <>
+      <Button {...rest}>
+        <Avatar source={data.photo ? { uri: data.photo } : require('../images/lapki.jpg')}/>
+        <NameView>
+          <DefaultText>{data.firstName || data.username}</DefaultText>
+          <Username>@{data.username}</Username>
+        </NameView>
+        <View>
+          <Level>LVL</Level>
+          <LevelCircle>
+            <DefaultText white>{data.level}</DefaultText>
+          </LevelCircle>
+        </View>
+      </Button>
+      {request &&
+        <DecideButtonsView>
+          <DecideButton decline onPress={onDeclinePress}>
+            <DecideButtonText>{t('profile.decline')}</DecideButtonText>
+          </DecideButton>
+          <DecideButton accept onPress={onAcceptPress}>
+            <DecideButtonText accept>{t('profile.accept')}</DecideButtonText>
+          </DecideButton>
+        </DecideButtonsView>
+      }
+    </>
   );
 }

@@ -11,6 +11,7 @@ export type QuestEndingMutationResponse = {
     readonly user: {
         readonly completeQuest: {
             readonly record: {
+                readonly id: string;
                 readonly username: string;
                 readonly exp: number;
                 readonly level: number;
@@ -36,6 +37,7 @@ mutation QuestEndingMutation(
   user {
     completeQuest(questId: $questId) {
       record {
+        id
         username
         exp
         level
@@ -43,7 +45,6 @@ mutation QuestEndingMutation(
           id
           questProgressState
         }
-        id
       }
     }
   }
@@ -58,95 +59,82 @@ var v0 = [
     "name": "questId"
   }
 ],
-v1 = [
-  {
-    "kind": "Variable",
-    "name": "questId",
-    "variableName": "questId"
-  }
-],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "username",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "exp",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "level",
-  "storageKey": null
-},
-v5 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v6 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "Quest",
-  "kind": "LinkedField",
-  "name": "completedQuests",
-  "plural": true,
-  "selections": [
-    (v5/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "questProgressState",
-      "storageKey": null
-    }
-  ],
-  "storageKey": null
-};
-return {
-  "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
-    "kind": "Fragment",
-    "metadata": null,
-    "name": "QuestEndingMutation",
+v2 = [
+  {
+    "alias": null,
+    "args": null,
+    "concreteType": "UserMutations",
+    "kind": "LinkedField",
+    "name": "user",
+    "plural": false,
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "UserMutations",
+        "args": [
+          {
+            "kind": "Variable",
+            "name": "questId",
+            "variableName": "questId"
+          }
+        ],
+        "concreteType": "UserCompleteQuestPayload",
         "kind": "LinkedField",
-        "name": "user",
+        "name": "completeQuest",
         "plural": false,
         "selections": [
           {
             "alias": null,
-            "args": (v1/*: any*/),
-            "concreteType": "UserCompleteQuestPayload",
+            "args": null,
+            "concreteType": "User",
             "kind": "LinkedField",
-            "name": "completeQuest",
+            "name": "record",
             "plural": false,
             "selections": [
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "User",
+                "kind": "ScalarField",
+                "name": "username",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "exp",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "level",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Quest",
                 "kind": "LinkedField",
-                "name": "record",
-                "plural": false,
+                "name": "completedQuests",
+                "plural": true,
                 "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/),
-                  (v4/*: any*/),
-                  (v6/*: any*/)
+                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "questProgressState",
+                    "storageKey": null
+                  }
                 ],
                 "storageKey": null
               }
@@ -157,6 +145,16 @@ return {
         "storageKey": null
       }
     ],
+    "storageKey": null
+  }
+];
+return {
+  "fragment": {
+    "argumentDefinitions": (v0/*: any*/),
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "QuestEndingMutation",
+    "selections": (v2/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
@@ -165,56 +163,17 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "QuestEndingMutation",
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "UserMutations",
-        "kind": "LinkedField",
-        "name": "user",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": (v1/*: any*/),
-            "concreteType": "UserCompleteQuestPayload",
-            "kind": "LinkedField",
-            "name": "completeQuest",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "User",
-                "kind": "LinkedField",
-                "name": "record",
-                "plural": false,
-                "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/),
-                  (v4/*: any*/),
-                  (v6/*: any*/),
-                  (v5/*: any*/)
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ]
+    "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "0de4a745629b466bb1d4ca32cdf04c3c",
+    "cacheID": "8ca84d325019e2977a1dfbc78e70f66d",
     "id": null,
     "metadata": {},
     "name": "QuestEndingMutation",
     "operationKind": "mutation",
-    "text": "mutation QuestEndingMutation(\n  $questId: GlobalId!\n) {\n  user {\n    completeQuest(questId: $questId) {\n      record {\n        username\n        exp\n        level\n        completedQuests {\n          id\n          questProgressState\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation QuestEndingMutation(\n  $questId: GlobalId!\n) {\n  user {\n    completeQuest(questId: $questId) {\n      record {\n        id\n        username\n        exp\n        level\n        completedQuests {\n          id\n          questProgressState\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '20c5b8273c794d8415c569979bd974b4';
+(node as any).hash = '58a542da553145c4cde11231074b0cae';
 export default node;
