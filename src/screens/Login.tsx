@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { Alert, StyleSheet, Text, View } from 'react-native';
+import { Alert, Platform, StyleSheet, Text, View } from 'react-native';
 import Input from '../components/ui/Input';
 import textStyles from '../styles/textStyles';
 import Button from '../components/ui/Button';
@@ -15,6 +15,7 @@ import GoogleAuth from '../components/auth/Google';
 import Logo from '../images/fullLogo.svg';
 import Colors from '../styles/colors';
 import { useAuthContext } from '../contexts/AuthProvider';
+import AppleAuth from '../components/auth/Apple';
 
 /**
  * Styles for login view
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
    * Login with socials block
    */
   socials: {
-    width: 180,
+    width: 230,
     marginBottom: 50,
   },
   socialsText: {
@@ -156,6 +157,9 @@ export default function LoginScreen(): ReactElement {
           <FacebookAuth/>
           <VkAuth/>
           <GoogleAuth/>
+          {
+            Platform.OS === 'ios' && <AppleAuth/>
+          }
         </View>
       </View>
       <UnderlinedButton

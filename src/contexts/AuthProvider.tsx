@@ -7,6 +7,7 @@ import { GoogleSignin } from '@react-native-community/google-signin';
 import SplashScreen from 'react-native-splash-screen';
 import storageController from '../controllers/storageController';
 import objToQueryString from '../utils/objToQueryString';
+import { appleAuth } from '@invertase/react-native-apple-authentication';
 
 /**
  * Application auth state
@@ -164,6 +165,42 @@ class AuthContextActions {
       throw new Error('MISSING_AUTH_CODE');
     }
   }
+
+  /**
+   * Performs auth with Apple ID
+   */
+  public async authWithApple(): Promise<void> {
+    const appleAuthRequestResponse = await appleAuth.performRequest({
+      requestedOperation: appleAuth.Operation.LOGIN,
+      requestedScopes: [
+        appleAuth.Scope.EMAIL,
+        appleAuth.Scope.FULL_NAME,
+      ],
+    });
+
+    const credentialState = await appleAuth.getCredentialStateForUser(
+      appleAuthRequestResponse.user
+    );
+
+    // If the Auth is authorized, we call our API and pass the authorization code.
+    if (credentialState === appleAuth.State.AUTHORIZED) {
+      const queryString = objToQueryString({
+        code: appleAuthRequestResponse.authorizationCode,
+        ...appleAuthRequestResponse.fullName,
+      });
+
+      const response = await fetch(`${API_ENDPOINT}/oauth/apple/callback?${queryString}`, {
+        method: 'POST',
+      });
+
+      const requestData = await response.json();
+
+      await this.saveTokens(requestData.data);
+    } else {
+      throw new Error('MISSING_AUTH_CODE');
+    }
+  }
+
 
   /**
    * Performs user registration via email and password
