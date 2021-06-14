@@ -14,6 +14,8 @@ const Body = styled(View)`
 
 /**
  * SafeAreaView component for using without ScrollView
+ *
+ * @param props
  */
 const BodyWithoutScrollView = styled(Body)<{tabBarHeight: number}>`
   padding: 74px 15px ${props => props.tabBarHeight}px;
@@ -22,6 +24,8 @@ const BodyWithoutScrollView = styled(Body)<{tabBarHeight: number}>`
 
 /**
  * Styled ScrollView component
+ *
+ * @param props
  */
 const CustomScrollView = styled(ScrollView).attrs(() => ({
   contentContainerStyle: {
