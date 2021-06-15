@@ -24,6 +24,9 @@
   "profile": {
     "title": "Профиль",
     "friends": "Друзья",
+    "friendRequests": "Заявки в друзья",
+    "decline": "Отклонить",
+    "accept": "Принять",
     "rating": "Рейтинг",
     "achievements": "Достижения",
     "cards": "Коллекция карточек",

@@ -130,7 +130,7 @@ export default function ProfileScreen(): React.ReactElement {
               totalExp={100}
               currentExp={props.user.exp - props.user.level * 100}
             />
-            <ListButton icon={Friends} buttonText={t('profile.friends')}/>
+            <ListButton icon={Friends} buttonText={t('profile.friends')} onPress={(): void => navigation.navigate('Friends')}/>
             <ListButton icon={Rating} buttonText={t('profile.rating')}/>
             <ListButton icon={Achievements} buttonText={t('profile.achievements')} onPress={(): void => navigation.navigate('Achievements')}/>
             <ListButton icon={Collection} buttonText={t('profile.cards')} onPress={(): void => navigation.navigate('CardsCollection')}/>

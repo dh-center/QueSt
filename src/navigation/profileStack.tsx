@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import ProfileScreen from '../screens/Profile';
 import LoginScreen from '../screens/Login';
@@ -9,6 +9,11 @@ import { ImageSourcePropType } from 'react-native';
 import AchievementsScreen from '../screens/Achievements';
 import AboutScreen from '../screens/About';
 import CardsCollectionScreen from '../screens/CardsCollection';
+import FriendsScreen from '../screens/Friends';
+import FriendRequestsScreen from '../screens/FriendRequests';
+import { FriendRequests_data$key } from '../screens/__generated__/FriendRequests_data.graphql';
+import { Spinner } from 'native-base';
+import Colors from '../styles/colors';
 
 /**
  * Type with params of screens and their props in ProfileStackScreen
@@ -48,6 +53,16 @@ export type ProfileStackParamList = {
    * CardsCollection screen props
    */
   CardsCollection: undefined;
+
+  /**
+   * Friends screen props
+   */
+  Friends: undefined;
+
+  /**
+   * FriendRequests screen props
+   */
+  FriendRequests: { fragmentRef: FriendRequests_data$key };
 };
 
 const ProfileStack = createStackNavigator<ProfileStackParamList>();
@@ -64,8 +79,16 @@ export default function ProfileStackNavigation(): React.ReactElement {
         ? <>
           <ProfileStack.Screen name="Main" component={ProfileScreen} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="Achievements" component={AchievementsScreen} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="About" component={AboutScreen} options={{ headerShown: false }}/>
+          <ProfileStack.Screen name="Friends" options={{ headerShown: false }}>
+            {(props) => (
+              <Suspense fallback={<Spinner color={Colors.DarkBlue}/>}>
+                <FriendsScreen {...props}/>
+              </Suspense>
+            )}
+          </ProfileStack.Screen>
+          <ProfileStack.Screen name="FriendRequests" component={FriendRequestsScreen} options={{ headerShown: false }}/>
+          <ProfileStack.Screen name="Achievements" component={AchievementsScreen} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="CardsCollection" component={CardsCollectionScreen} options={{ headerShown: false }}/>
         </>
         : <>
