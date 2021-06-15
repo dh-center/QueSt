@@ -42,7 +42,7 @@
     "privacyPolicy": "Privacy Policy",
     "eula": "End-User License Agreement",
     "feedback": "Feedback",
-    "alert": "Failed to start mail application.\nFor communication, write to this address:",
+    "alert": "Failed to start mail application.\nYou can write to the mail to contact us:",
     "logout": "Log out"
   },
   "signIn": {
