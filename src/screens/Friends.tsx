@@ -106,7 +106,8 @@ export default function FriendsScreen({ navigation }: Props): React.ReactElement
         }
       }
     `,
-    {}
+    {},
+    { fetchPolicy: 'store-and-network' }
   );
 
   return (
