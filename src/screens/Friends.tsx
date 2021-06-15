@@ -145,7 +145,7 @@ export default function FriendsScreen({ navigation }: Props): React.ReactElement
       <AddButton
         tabBarHeight={tabBarHeight}
         icon={Plus}
-        title={'Добавить друга'}
+        title={t('profile.friendAdding')}
         onPress={() => navigation.navigate('FriendAdding')}
       />
     </Body>
