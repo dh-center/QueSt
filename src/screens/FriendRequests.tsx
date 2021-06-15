@@ -124,7 +124,6 @@ export default function FriendRequestsScreen({ route, navigation }: Props): Reac
             userData={item}
             request
             onDeclinePress={(): void => {
-              console.log('decline', item.id);
               commitMutation(
                 environment,
                 {
