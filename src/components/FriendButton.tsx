@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacityProps, View } from 'react-native';
+import { TouchableOpacityProps } from 'react-native';
 import Colors from '../styles/colors';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../styles/textStyles';
@@ -7,11 +7,11 @@ import { useFragment } from 'react-relay/hooks';
 import { graphql } from 'react-relay';
 import { FriendButton_data$key } from './__generated__/FriendButton_data.graphql';
 import { useTranslation } from 'react-i18next';
+import AddFriend from '../images/addFriend.svg';
 
 const Button = styled.TouchableOpacity`
   width: 100%;
   margin-top: 15px;
-  padding: 15px 15px;
   border-radius: 15px;
   background-color: ${Colors.White};
   elevation: ${2};
@@ -19,6 +19,13 @@ const Button = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   z-index: 999;
+`;
+
+const ButtonContent = styled.View<{add?: boolean}>`
+  padding: 15px;
+  margin-right: 45px;
+  flex-direction: row;
+  align-items: center;
 `;
 
 const Avatar = styled.Image`
@@ -44,6 +51,11 @@ const Username = styled.Text`
   margin-top: 5px;
   color: ${Colors.Black};
   opacity: 0.5;
+`;
+
+const LevelView = styled.View`
+  position: absolute;
+  right: 15px;
 `;
 
 const Level = styled.Text`
@@ -86,6 +98,19 @@ const DecideButtonText = styled.Text<{accept?: boolean}>`
   text-align: center;
 `;
 
+const AddingButton = styled.TouchableOpacity`
+  max-height: 100%;
+  height: 100%;
+  width: 60px;
+  background-color: ${Colors.Green};
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 0;
+`;
+
 /**
  * Props for FriendButton component
  */
@@ -101,6 +126,11 @@ export interface ButtonProps {
   request?: boolean;
 
   /**
+   * If it is friend adding
+   */
+  add?: boolean;
+
+  /**
    * onPress for Decline button
    */
   onDeclinePress?: () => void;
@@ -109,6 +139,11 @@ export interface ButtonProps {
    * onPress for Accept button
    */
   onAcceptPress?: () => void;
+
+  /**
+   * onPress for Add button
+   */
+  onAddPress?: () => void;
 }
 
 /**
@@ -116,7 +151,7 @@ export interface ButtonProps {
  *
  * @param props - props for button
  */
-export default function FriendButton({ style: _style, userData, request, onDeclinePress, onAcceptPress, ...rest }: TouchableOpacityProps & ButtonProps): React.ReactElement {
+export default function FriendButton({ style: _style, userData, request, add, onDeclinePress, onAcceptPress, onAddPress, ...rest }: TouchableOpacityProps & ButtonProps): React.ReactElement {
   const { t } = useTranslation();
 
   const data = useFragment(graphql`
@@ -131,17 +166,26 @@ export default function FriendButton({ style: _style, userData, request, onDecli
   return (
     <>
       <Button {...rest}>
-        <Avatar source={data.photo ? { uri: data.photo } : require('../images/lapki.jpg')}/>
-        <NameView>
-          <DefaultText>{data.firstName || data.username}</DefaultText>
-          <Username>@{data.username}</Username>
-        </NameView>
-        <View>
+        <ButtonContent add={add}>
+          <Avatar source={data.photo ? { uri: data.photo } : require('../images/lapki.jpg')}/>
+          <NameView>
+            <DefaultText>{data.firstName || data.username}</DefaultText>
+            <Username>@{data.username}</Username>
+          </NameView>
+        </ButtonContent>
+        {!add &&
+        <LevelView>
           <Level>LVL</Level>
           <LevelCircle>
             <DefaultText white>{data.level}</DefaultText>
           </LevelCircle>
-        </View>
+        </LevelView>
+        }
+        {add &&
+          <AddingButton onPress={onAddPress}>
+            <AddFriend/>
+          </AddingButton>
+        }
       </Button>
       {request &&
         <DecideButtonsView>

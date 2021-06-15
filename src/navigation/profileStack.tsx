@@ -14,6 +14,7 @@ import FriendRequestsScreen from '../screens/FriendRequests';
 import { FriendRequests_data$key } from '../screens/__generated__/FriendRequests_data.graphql';
 import { Spinner } from 'native-base';
 import Colors from '../styles/colors';
+import FriendAddingScreenWithSuspense from '../screens/FriendsAdding';
 
 /**
  * Type with params of screens and their props in ProfileStackScreen
@@ -63,6 +64,11 @@ export type ProfileStackParamList = {
    * FriendRequests screen props
    */
   FriendRequests: { fragmentRef: FriendRequests_data$key };
+
+  /**
+   * FriendAdding screen props
+   */
+  FriendAdding: undefined;
 };
 
 const ProfileStack = createStackNavigator<ProfileStackParamList>();
@@ -88,6 +94,7 @@ export default function ProfileStackNavigation(): React.ReactElement {
             )}
           </ProfileStack.Screen>
           <ProfileStack.Screen name="FriendRequests" component={FriendRequestsScreen} options={{ headerShown: false }}/>
+          <ProfileStack.Screen name="FriendAdding" component={FriendAddingScreenWithSuspense} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="Achievements" component={AchievementsScreen} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="CardsCollection" component={CardsCollectionScreen} options={{ headerShown: false }}/>
         </>
