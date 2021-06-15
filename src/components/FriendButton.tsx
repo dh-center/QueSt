@@ -91,7 +91,7 @@ const DecideButtonText = styled.Text<{accept?: boolean}>`
  */
 export interface ButtonProps {
   /**
-   * Fragmet with data for component
+   * Fragment with data for component
    */
   userData: FriendButton_data$key;
 
