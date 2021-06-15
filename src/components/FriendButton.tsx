@@ -87,7 +87,7 @@ const DecideButtonText = styled.Text<{accept?: boolean}>`
 `;
 
 /**
- * Props for ListButton component
+ * Props for FriendButton component
  */
 export interface ButtonProps {
   /**
