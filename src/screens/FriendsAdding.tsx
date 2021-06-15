@@ -131,7 +131,7 @@ function FriendAddingScreen({ navigation }: Props): React.ReactElement {
         data={data.usersSearch}
         renderItem={({ item }): React.ReactElement => (
           <FriendButton
-            add
+            forAddingScreen
             userData={item}
             onAddPress={(): void => {
               commitMutation(

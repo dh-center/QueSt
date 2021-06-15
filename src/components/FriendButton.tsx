@@ -123,12 +123,12 @@ export interface ButtonProps {
   /**
    * If it is friend request
    */
-  request?: boolean;
+  forRequestsScreen?: boolean;
 
   /**
    * If it is friend adding
    */
-  add?: boolean;
+  forAddingScreen?: boolean;
 
   /**
    * onPress for Decline button
@@ -151,7 +151,7 @@ export interface ButtonProps {
  *
  * @param props - props for button
  */
-export default function FriendButton({ style: _style, userData, request, add, onDeclinePress, onAcceptPress, onAddPress, ...rest }: TouchableOpacityProps & ButtonProps): React.ReactElement {
+export default function FriendButton({ style: _style, userData, forRequestsScreen, forAddingScreen, onDeclinePress, onAcceptPress, onAddPress, ...rest }: TouchableOpacityProps & ButtonProps): React.ReactElement {
   const { t } = useTranslation();
 
   const data = useFragment(graphql`
@@ -166,14 +166,14 @@ export default function FriendButton({ style: _style, userData, request, add, on
   return (
     <>
       <Button {...rest}>
-        <ButtonContent add={add}>
+        <ButtonContent add={forAddingScreen}>
           <Avatar source={data.photo ? { uri: data.photo } : require('../images/lapki.jpg')}/>
           <NameView>
             <DefaultText>{data.firstName || data.username}</DefaultText>
             <Username>@{data.username}</Username>
           </NameView>
         </ButtonContent>
-        {!add &&
+        {!forAddingScreen &&
         <LevelView>
           <Level>LVL</Level>
           <LevelCircle>
@@ -181,13 +181,13 @@ export default function FriendButton({ style: _style, userData, request, add, on
           </LevelCircle>
         </LevelView>
         }
-        {add &&
+        {forAddingScreen &&
           <AddingButton onPress={onAddPress}>
             <AddFriend/>
           </AddingButton>
         }
       </Button>
-      {request &&
+      {forRequestsScreen &&
         <DecideButtonsView>
           <DecideButton decline onPress={onDeclinePress}>
             <DecideButtonText>{t('profile.decline')}</DecideButtonText>
