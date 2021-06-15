@@ -42,6 +42,7 @@
     "privacyPolicy": "Privacy Policy",
     "eula": "End-User License Agreement",
     "feedback": "Feedback",
+    "alert": "Failed to start mail application.\nFor communication, write to this address:",
     "logout": "Log out"
   },
   "signIn": {
