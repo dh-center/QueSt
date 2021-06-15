@@ -83,17 +83,24 @@ export default function AboutScreen({ navigation }: Props): React.ReactElement {
       </Row>
       <StyledLogo height={80} width={144}/>
       <DefaultText note>Версия 1.3 от 08.05.2021{'\n'}© 2021 Университет ИТМО</DefaultText>
-      <Button first onPress={() => Linking.openURL('https://quest.dh-center.ru/privacy-policy.pdf')}>
+      <Button first onPress={() =>
+        Linking.openURL('https://quest.dh-center.ru/privacy-policy.pdf')
+          .catch(() => Alert.alert(`${t('settings.https_alert')} https://quest.dh-center.ru/privacy-policy.pdf`))}
+      >
         <ButtonText>{t('settings.privacyPolicy')}</ButtonText>
         <Next/>
       </Button>
-      <Button onPress={() => Linking.openURL('https://quest.dh-center.ru/eula.pdf')}>
+      <Button onPress={() =>
+        Linking.openURL('https://quest.dh-center.ru/eula.pdf')
+          .catch(() => Alert.alert(`${t('settings.https_alert')} https://quest.dh-center.ru/eula.pdf`))}
+      >
         <ButtonText>{t('settings.eula')}</ButtonText>
         <Next/>
       </Button>
       <Button onPress={() =>
         Linking.openURL('mailto:dh@itmo.ru?subject=Que.St app feedback')
-          .catch(() => Alert.alert(`${t('settings.alert')} dh@itmo.ru`))}>
+          .catch(() => Alert.alert(`${t('settings.mail_alert')} dh@itmo.ru`))}
+      >
         <ButtonText>{t('settings.feedback')}</ButtonText>
         <Next/>
       </Button>
