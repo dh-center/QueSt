@@ -9,11 +9,9 @@ import BlueCircle15 from '../images/blueCircle15.svg';
 import { StyledFonts } from '../styles/textStyles';
 import Back from '../images/back.svg';
 import FriendRequests from '../images/friendRequests.svg';
-import { graphql, QueryRenderer } from 'react-relay';
-import { useAuthContext } from '../contexts/AuthProvider';
-import { useRelayEnvironment } from 'react-relay/hooks';
-import ScreenWrapper from '../components/utils/ScreenWrapper';
-import { ActivityIndicator, FlatList, Text, TouchableOpacity } from 'react-native';
+import { graphql } from 'react-relay';
+import { useLazyLoadQuery } from 'react-relay/hooks';
+import { FlatList, TouchableOpacity } from 'react-native';
 import Button from '../components/ui/Button';
 import { FriendsQuery } from './__generated__/FriendsQuery.graphql';
 import FriendButton from '../components/FriendButton';
@@ -77,16 +75,6 @@ const AddButton = styled(Button)<{tabBarHeight: number}>`
   box-shadow: 0 4px 4.65px rgba(0,0,0,0.2);
 `;
 
-const LoaderWrapper = styled(ScreenWrapper)`
-  justify-content: center;
-`;
-
-const Loader = (): React.ReactElement => (
-  <LoaderWrapper>
-    <ActivityIndicator size="large"/>
-  </LoaderWrapper>
-);
-
 const flatListStyle = {
   paddingBottom: 75,
   paddingHorizontal: 15,
@@ -98,90 +86,70 @@ const flatListStyle = {
  * @param props - props for component rendering
  */
 export default function FriendsScreen({ navigation }: Props): React.ReactElement {
-  const authContext = useAuthContext();
-  const environment = useRelayEnvironment();
   const { t } = useTranslation();
   const tabBarHeight = useTabBarHeight();
 
+  const data = useLazyLoadQuery<FriendsQuery>(
+    graphql`
+      query FriendsQuery {
+        user: me {
+          id
+          username
+          friends {
+            id
+            ...FriendButton_data
+          }
+          friendRequests {
+            id
+          }
+          ...FriendRequests_data
+        }
+      }
+    `,
+    {}
+  );
+
   return (
-    <QueryRenderer<FriendsQuery>
-      environment={environment}
-      query={graphql`
-        query FriendsQuery {
-            user: me {
-              id
-              username
-              friends {
-                id
-                ...FriendButton_data
-              }
-              friendRequests {
-               id
-              }
-              ...FriendRequests_data
-            }
-        }
-      `}
-      render={({ error, props }) => {
-        if (error) {
-          const errorMessage = t('errors.unspecific');
-
-          return (
-            <ScreenWrapper>
-              <Text>{errorMessage}</Text>
-              <Button title={'Logout'} onPress={authContext.actions.logout}/>
-            </ScreenWrapper>
-          );
-        }
-
-        if (!props) {
-          return <Loader/>;
-        }
-
-        return (
-          <Body tabBarHeight={tabBarHeight}>
-            <BlueCircle/>
-            <Row>
-              <BackButton onPress={(): void => navigation.goBack()}>
-                <Back/>
-              </BackButton>
-              <Title>{t('profile.friends')}</Title>
-              <TouchableOpacity
-                activeOpacity={1}
-                onPress={() => {
-                  props.user.friendRequests.length > 0 && navigation.navigate('FriendRequests', { fragmentRef: props.user });
-                }}
-              >
-                <FriendRequests/>
-                {props.user.friendRequests.length > 0 &&
+    <Body tabBarHeight={tabBarHeight}>
+      <BlueCircle/>
+      <Row>
+        <BackButton onPress={(): void => navigation.goBack()}>
+          <Back/>
+        </BackButton>
+        <Title>{t('profile.friends')}</Title>
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => {
+            data.user.friendRequests.length > 0 && navigation.navigate('FriendRequests', { fragmentRef: data.user });
+          }}
+        >
+          <FriendRequests/>
+          {data.user.friendRequests.length > 0 &&
                   <FriendRequestsBadge>
-                    <BadgeText>{props.user.friendRequests.length}</BadgeText>
+                    <BadgeText>{data.user.friendRequests.length}</BadgeText>
                   </FriendRequestsBadge>
-                }
-              </TouchableOpacity>
-            </Row>
-            <FlatList
-              contentContainerStyle={flatListStyle}
-              data={props.user.friends}
-              renderItem={({ item }): React.ReactElement => (
-                <FriendButton
-                  userData={item}
-                />
-              )}
-              keyExtractor={(item, index): string => index.toString()}
-            />
-            <AddButton
-              tabBarHeight={tabBarHeight}
-              icon={Plus}
-              title={'Добавить друга'}
-              onPress={() => {
-                console.log();
-              }}
-            />
-          </Body>
-        );
-      }}
-      variables={{}}
-    />
+          }
+        </TouchableOpacity>
+      </Row>
+      <FlatList
+        contentContainerStyle={flatListStyle}
+        data={data.user.friends}
+        renderItem={({ item }): React.ReactElement => (
+          <FriendButton
+            userData={item}
+          />
+        )}
+        keyExtractor={(item, index): string => index.toString()}
+      />
+      <AddButton
+        tabBarHeight={tabBarHeight}
+        icon={Plus}
+        title={'Добавить друга'}
+        onPress={() => {
+          console.log();
+        }}
+      />
+    </Body>
   );
 }
+
