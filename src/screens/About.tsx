@@ -10,7 +10,6 @@ import { ProfileStackParamList } from '../navigation/profileStack';
 import { useTranslation } from 'react-i18next';
 import Next from '../images/next.svg';
 import { Alert, Linking } from 'react-native';
-import { alignEnum } from 'react-native-svg/lib/typescript/lib/extract/extractViewBox';
 
 /**
  * Type with props of screen 'About' in ProfileStackScreen
@@ -94,7 +93,7 @@ export default function AboutScreen({ navigation }: Props): React.ReactElement {
       </Button>
       <Button onPress={() =>
         Linking.openURL('mailto:dh@itmo.ru?subject=Que.St app feedback')
-          .catch(e => Alert.alert(`${t('settings.alert')} dh@itmo.ru`))}>
+          .catch(() => Alert.alert(`${t('settings.alert')} dh@itmo.ru`))}>
         <ButtonText>{t('settings.feedback')}</ButtonText>
         <Next/>
       </Button>
