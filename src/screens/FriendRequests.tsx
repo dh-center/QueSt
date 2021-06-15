@@ -56,12 +56,9 @@ const declineMutation = graphql`
       rejectFriendRequest(id: $userId) {
         record {
           id
-          username
           friends {
             id
-            firstName
-            username
-            level
+            ...FriendButton_data
           }
           friendRequests {
             id
@@ -78,12 +75,9 @@ const acceptMutation = graphql`
       acceptFriendRequest(id: $userId) {
         record {
           id
-          username
           friends {
             id
-            firstName
-            username
-            level
+            ...FriendButton_data
           }
           friendRequests {
             id
