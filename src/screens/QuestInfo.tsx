@@ -10,7 +10,7 @@ import Colors from '../styles/colors';
 import textStyles, { StyledFonts } from '../styles/textStyles';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
-import BackArrow from '../images/back.svg';
+import Back from '../images/back.svg';
 import Walker from '../images/walker.svg';
 import BlueCircle5 from '../images/blueCircle5.svg';
 import { QuestsStackParamList } from '../navigation/questsStack';
@@ -190,6 +190,10 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
 });
+
+const BackArrow = styled(Back)`
+  color: ${Colors.Black};
+`;
 
 /**
  * Functional component of the screen with quest info

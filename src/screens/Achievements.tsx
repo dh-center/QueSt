@@ -79,6 +79,10 @@ const flatListStyle = {
   paddingHorizontal: 15,
 };
 
+const BackArrow = styled(Back)`
+  color: ${Colors.Black};
+`;
+
 /**
  * List of tabs on AchievementsScreen
  */
@@ -116,7 +120,7 @@ export default function AchievementsScreen({ navigation }: Props): React.ReactEl
       <BlueCircle/>
       <Row margined>
         <BackButton onPress={(): void => navigation.goBack()}>
-          <Back/>
+          <BackArrow/>
         </BackButton>
         <Title>{t('profile.achievements')}</Title>
       </Row>

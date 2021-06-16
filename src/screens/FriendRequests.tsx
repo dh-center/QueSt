@@ -50,6 +50,10 @@ const flatListStyle = {
   paddingHorizontal: 15,
 };
 
+const BackArrow = styled(Back)`
+  color: ${Colors.Black};
+`;
+
 const declineMutation = graphql`
   mutation FriendRequestsDeclineMutation($userId: GlobalId!) {
     user {
@@ -112,7 +116,7 @@ export default function FriendRequestsScreen({ route, navigation }: Props): Reac
       <BlueCircle/>
       <Row>
         <BackButton onPress={(): void => navigation.goBack()}>
-          <Back/>
+          <BackArrow/>
         </BackButton>
         <Title>{t('profile.friendRequests')}</Title>
       </Row>

@@ -4,7 +4,7 @@ import Input from '../components/ui/Input';
 import textStyles, { StyledFonts } from '../styles/textStyles';
 import Button from '../components/ui/Button';
 import { useTranslation } from 'react-i18next';
-import BackArrowIcon from '../images/back.svg';
+import Back from '../images/back.svg';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import { useNavigation } from '@react-navigation/native';
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const BackArrow = styled(BackArrowIcon)`
+const BackArrow = styled(Back)`
   padding: 0 10px;
   color: ${Colors.DarkBlue};
 `;

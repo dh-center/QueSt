@@ -80,6 +80,10 @@ const flatListStyle = {
   paddingHorizontal: 15,
 };
 
+const BackArrow = styled(Back)`
+  color: ${Colors.Black};
+`;
+
 /**
  * Displays friends screen
  *
@@ -115,7 +119,7 @@ export default function FriendsScreen({ navigation }: Props): React.ReactElement
       <BlueCircle/>
       <Row>
         <BackButton onPress={(): void => navigation.goBack()}>
-          <Back/>
+          <BackArrow/>
         </BackButton>
         <Title>{t('profile.friends')}</Title>
         <TouchableOpacity

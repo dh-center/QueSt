@@ -95,6 +95,10 @@ const LogoutText = styled.Text`
   color: ${Colors.White};
 `;
 
+const BackArrow = styled(Back)`
+  color: ${Colors.Black};
+`;
+
 /**
  * Displays settings screen
  *
@@ -110,7 +114,7 @@ export default function SettingsScreen({ route, navigation }: Props): React.Reac
         <BlueCircle/>
         <Row>
           <BackButton onPress={(): void => navigation.goBack()}>
-            <Back/>
+            <BackArrow/>
           </BackButton>
           <Title>{t('settings.title')}</Title>
         </Row>

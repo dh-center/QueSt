@@ -68,6 +68,10 @@ const flatListContentStyle = {
   paddingBottom: 15,
 };
 
+const BackArrow = styled(Back)`
+  color: ${Colors.Black};
+`;
+
 const addMutation = graphql`
   mutation FriendsAddingMutation($userId: GlobalId!) {
     user {
@@ -113,7 +117,7 @@ function FriendAddingScreen({ navigation }: Props): React.ReactElement {
       <BlueCircle/>
       <Row>
         <BackButton onPress={(): void => navigation.goBack()}>
-          <Back/>
+          <BackArrow/>
         </BackButton>
         <Title>{t('profile.friendAdding')}</Title>
       </Row>

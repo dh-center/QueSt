@@ -65,6 +65,10 @@ const BackButton = styled.TouchableOpacity`
   padding: 11px 15px;
 `;
 
+const BackArrow = styled(Back)`
+  color: ${Colors.Black};
+`;
+
 /**
  * Displays screen with info about the app
  *
@@ -77,7 +81,7 @@ export default function AboutScreen({ navigation }: Props): React.ReactElement {
     <ScreenWrapper>
       <Row>
         <BackButton onPress={(): void => navigation.goBack()}>
-          <Back/>
+          <BackArrow/>
         </BackButton>
         <Title>{t('settings.about')}</Title>
       </Row>

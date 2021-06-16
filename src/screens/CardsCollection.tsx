@@ -139,6 +139,10 @@ const flatColumnStyle = {
   paddingHorizontal: 10.5,
 };
 
+const BackArrow = styled(Back)`
+  color: ${Colors.Black};
+`;
+
 /**
  * Displays screen with collection of cards
  *
@@ -191,7 +195,7 @@ export default function CardsCollectionScreen({ navigation }: Props): React.Reac
       <BlueCircle/>
       <Row margined>
         <BackButton onPress={(): void => navigation.goBack()}>
-          <Back/>
+          <BackArrow/>
         </BackButton>
         <Title>{t('profile.cards')}</Title>
       </Row>
