@@ -122,7 +122,7 @@ export default function FriendRequestsScreen({ route, navigation }: Props): Reac
         renderItem={({ item }): React.ReactElement => (
           <FriendButton
             userData={item}
-            request
+            forRequestsScreen
             onDeclinePress={(): void => {
               commitMutation(
                 environment,

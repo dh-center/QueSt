@@ -2,6 +2,7 @@ import React, { ReactElement } from 'react';
 import { StyleSheet, TextInput, TextInputProps, TextStyle, View } from 'react-native';
 import textStyles from '../../styles/textStyles';
 import Colors from '../../styles/colors';
+import styled from 'styled-components/native';
 
 /**
  * Styles for custom Input field
@@ -13,42 +14,22 @@ const styles = StyleSheet.create({
      */
     backgroundColor: Colors.White,
 
+    borderRadius: 5,
+
     /**
      * Margins and paddings
      */
     paddingVertical: 11,
     paddingHorizontal: 30,
     width: '100%',
-
-    /**
-     * Border
-     */
-    borderColor: '#E0E0E0',
-    borderRadius: 10,
-    borderStyle: 'solid',
-    borderWidth: 0.5,
-
-    /**
-     * Shadows on IOS
-     */
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    /**
-     * Shadows on Android
-     */
-    elevation: 5,
+    flexDirection: 'row',
   },
   textInput: {
     /**
      * Text styles
      */
     ...textStyles.default,
+    flex: 1,
 
     /**
      * Margins and paddings
@@ -65,6 +46,10 @@ const styles = StyleSheet.create({
   },
 });
 
+const Icon = styled.View`
+  margin: 0 10px;
+`;
+
 /**
  * Props for input text
  */
@@ -76,11 +61,21 @@ export interface TextProps {
 }
 
 /**
+ * Props for input container
+ */
+export interface InputProps {
+  /**
+   * Icon for displaying
+   */
+  icon?: React.ComponentType;
+}
+
+/**
  * Text input with custom style
  *
  * @param props - input props
  */
-export default function Input(props: TextInputProps & TextProps): ReactElement {
+export default function Input(props: TextInputProps & TextProps & InputProps): ReactElement {
   return (
     <View style={[styles.container, props.style]}>
       <TextInput
@@ -91,6 +86,7 @@ export default function Input(props: TextInputProps & TextProps): ReactElement {
         spellCheck={props.spellCheck || false}
         autoCorrect={props.autoCorrect || false}
       />
+      {props.icon && <Icon as={props.icon}/>}
     </View>
   );
 }
