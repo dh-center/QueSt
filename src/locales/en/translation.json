@@ -64,6 +64,7 @@
   },
   "signUp": {
     "registration": "Registration",
+    "name": "Your name",
     "password": "Password",
     "repeatPassword": "Repeat password",
     "successful": "Registration completed successfully",

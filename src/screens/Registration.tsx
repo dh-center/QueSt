@@ -1,10 +1,10 @@
 import React, { ReactElement, useState } from 'react';
 import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Input from '../components/ui/Input';
-import textStyles from '../styles/textStyles';
+import textStyles, { StyledFonts } from '../styles/textStyles';
 import Button from '../components/ui/Button';
 import { useTranslation } from 'react-i18next';
-import BackArrow from '../images/back.svg';
+import BackArrowIcon from '../images/back.svg';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import { useNavigation } from '@react-navigation/native';
@@ -12,6 +12,7 @@ import ScreenWrapper from '../components/utils/ScreenWrapper';
 import Colors from '../styles/colors';
 import Logo from '../images/fullLogo.svg';
 import { useAuthContext } from '../contexts/AuthProvider';
+import styled from 'styled-components/native';
 
 /**
  * Styles for registration screen component
@@ -21,18 +22,8 @@ const styles = StyleSheet.create({
    * Back button
    */
   backButton: {
-    /**
-     * Positions button in the left top corner
-     */
-    position: 'absolute',
-    top: 45,
-    left: 15,
-
-    /**
-     * Makes back button bigger
-     */
-    paddingHorizontal: 10,
-    paddingVertical: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
   /**
@@ -68,6 +59,18 @@ const styles = StyleSheet.create({
   },
 });
 
+const BackArrow = styled(BackArrowIcon)`
+  padding: 0 10px;
+  color: ${Colors.DarkBlue};
+`;
+
+const DefaultText = styled.Text`
+  ${StyledFonts.uiWebRegular};
+  color: ${Colors.DarkBlue};
+  font-size: 18px;
+  line-height: 22px;
+`;
+
 /**
  * Type with props of screen 'Registration' in ProfileStackScreen
  */
@@ -79,6 +82,7 @@ type RegistrationScreenNavigationProp = StackNavigationProp<ProfileStackParamLis
 export default function RegistrationScreen(): ReactElement {
   const authContext = useAuthContext();
   const { t } = useTranslation();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatedPassword, setRepeatedPassword] = useState('');
@@ -105,17 +109,21 @@ export default function RegistrationScreen(): ReactElement {
 
   return (
     <ScreenWrapper scrollable>
-      <TouchableOpacity style={styles.backButton}
-        onPress={(): void => navigation.goBack()}
-      >
-        <BackArrow/>
-      </TouchableOpacity>
       <Logo style={styles.logo} height={80} width={144}/>
       <View style={styles.registrationTitleContainer}>
         <Text style={styles.registrationTitle}>
           {t('signUp.registration')}
         </Text>
       </View>
+      <Input
+        autoCompleteType="username"
+        keyboardType="email-address"
+        placeholder={t('signUp.name')}
+        textContentType="emailAddress"
+        style={styles.input}
+        value={name}
+        onChangeText={val => setName(val)}
+      />
       <Input
         autoCompleteType="username"
         keyboardType="email-address"
@@ -148,6 +156,12 @@ export default function RegistrationScreen(): ReactElement {
         onPress={register}
         style={styles.registrationButton}
       />
+      <TouchableOpacity style={styles.backButton}
+        onPress={(): void => navigation.goBack()}
+      >
+        <BackArrow/>
+        <DefaultText>Назад</DefaultText>
+      </TouchableOpacity>
     </ScreenWrapper>
   );
 }
