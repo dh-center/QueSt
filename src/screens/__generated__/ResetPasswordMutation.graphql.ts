@@ -5,10 +5,16 @@
 import { ConcreteRequest } from "relay-runtime";
 export type ResetPasswordMutationVariables = {
     email: string;
+    code: string;
+    password: string;
 };
 export type ResetPasswordMutationResponse = {
     readonly user: {
-        readonly sendCodeForPasswordReset: boolean;
+        readonly resetPassword: {
+            readonly record: {
+                readonly id: string;
+            };
+        };
     };
 };
 export type ResetPasswordMutation = {
@@ -21,22 +27,36 @@ export type ResetPasswordMutation = {
 /*
 mutation ResetPasswordMutation(
   $email: String!
+  $code: String!
+  $password: String!
 ) {
   user {
-    sendCodeForPasswordReset(email: $email)
+    resetPassword(input: {email: $email, code: $code, newPassword: $password}) {
+      record {
+        id
+      }
+    }
   }
 }
 */
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "email"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "code"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "email"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "password"
+},
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -49,13 +69,51 @@ v1 = [
         "alias": null,
         "args": [
           {
-            "kind": "Variable",
-            "name": "email",
-            "variableName": "email"
+            "fields": [
+              {
+                "kind": "Variable",
+                "name": "code",
+                "variableName": "code"
+              },
+              {
+                "kind": "Variable",
+                "name": "email",
+                "variableName": "email"
+              },
+              {
+                "kind": "Variable",
+                "name": "newPassword",
+                "variableName": "password"
+              }
+            ],
+            "kind": "ObjectValue",
+            "name": "input"
           }
         ],
-        "kind": "ScalarField",
-        "name": "sendCodeForPasswordReset",
+        "concreteType": "UpdateUserPayload",
+        "kind": "LinkedField",
+        "name": "resetPassword",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "User",
+            "kind": "LinkedField",
+            "name": "record",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "id",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
         "storageKey": null
       }
     ],
@@ -64,30 +122,38 @@ v1 = [
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "ResetPasswordMutation",
-    "selections": (v1/*: any*/),
+    "selections": (v3/*: any*/),
     "type": "Mutation",
     "abstractKey": null
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v1/*: any*/),
+      (v0/*: any*/),
+      (v2/*: any*/)
+    ],
     "kind": "Operation",
     "name": "ResetPasswordMutation",
-    "selections": (v1/*: any*/)
+    "selections": (v3/*: any*/)
   },
   "params": {
-    "cacheID": "ed04ea716cc068dcf682df4058bfb440",
+    "cacheID": "bd5ce7fffee07eeae44f9e5c988d07a7",
     "id": null,
     "metadata": {},
     "name": "ResetPasswordMutation",
     "operationKind": "mutation",
-    "text": "mutation ResetPasswordMutation(\n  $email: String!\n) {\n  user {\n    sendCodeForPasswordReset(email: $email)\n  }\n}\n"
+    "text": "mutation ResetPasswordMutation(\n  $email: String!\n  $code: String!\n  $password: String!\n) {\n  user {\n    resetPassword(input: {email: $email, code: $code, newPassword: $password}) {\n      record {\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '115bc33fb63bb99e8bb4b452897dfbac';
+(node as any).hash = 'adb8bdb8bba23c9726ff9516075d9ba3';
 export default node;
