@@ -60,7 +60,9 @@
     "logInWith": "Login with",
     "signUp": "Sign up",
     "password": "Password",
-    "forgotPassword": "Forgot your password?"
+    "forgotPassword": "Forgot your password?",
+    "recoveryPass": "Password recovery",
+    "sendCode": "Send code"
   },
   "signUp": {
     "registration": "Registration",

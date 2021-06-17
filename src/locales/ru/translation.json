@@ -60,7 +60,9 @@
     "logInWith": "Войти с помощью",
     "signUp": "Регистрация",
     "password": "Пароль",
-    "forgotPassword": "Забыли пароль?"
+    "forgotPassword": "Забыли пароль?",
+    "recoveryPass": "Восстановление пароля",
+    "sendCode": "Отправить код"
   },
   "signUp": {
     "registration": "Регистрация",

@@ -15,6 +15,7 @@ import { FriendRequests_data$key } from '../screens/__generated__/FriendRequests
 import { Spinner } from 'native-base';
 import Colors from '../styles/colors';
 import FriendAddingScreenWithSuspense from '../screens/FriendsAdding';
+import ResetPasswordScreen from '../screens/ResetPassword';
 
 /**
  * Type with params of screens and their props in ProfileStackScreen
@@ -39,6 +40,11 @@ export type ProfileStackParamList = {
    * Registration screen props
    */
   Registration: undefined;
+
+  /**
+   * ResetPassword screen props
+   */
+  ResetPassword: undefined;
 
   /**
    * Achievements screen props
@@ -101,6 +107,7 @@ export default function ProfileStackNavigation(): React.ReactElement {
         : <>
           <ProfileStack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }}/>
+          <ProfileStack.Screen name="ResetPassword" component={ResetPasswordScreen} options={{ headerShown: false }}/>
         </>
       }
     </ProfileStack.Navigator>
