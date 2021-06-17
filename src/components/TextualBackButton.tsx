@@ -25,6 +25,8 @@ const BackButtonText = styled.Text`
 `;
 
 /**
+ * Back button with text
+ *
  * @param props - props for button
  */
 export default function TextualBackButton(props: TouchableOpacityProps): React.ReactElement {
