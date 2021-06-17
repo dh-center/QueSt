@@ -17,14 +17,29 @@ const ButtonText = styled.Text`
 `;
 
 interface ButtonProps {
+  /**
+   * Callback when press on button
+   */
   onPress: () => void;
 
+  /**
+   * Text to display
+   */
   text: string;
 
-  right?: boolean;
+  /**
+   * If need to align to right
+   */
+  isRight?: boolean;
 
-  last?: boolean;
+  /**
+   * If it is the last element
+   */
+  isLast?: boolean;
 
+  /**
+   * Custom style
+   */
   style?: StyleProp<ViewStyle>
 }
 
@@ -34,8 +49,8 @@ interface ButtonProps {
 export default function BlueTextButton(props: ButtonProps): React.ReactElement {
   return (
     <Button
-      right={props.right}
-      last={props.last}
+      right={props.isRight}
+      last={props.isLast}
       style={props.style}
       onPress={props.onPress}
     >

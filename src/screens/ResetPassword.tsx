@@ -199,7 +199,7 @@ export default function ResetPasswordScreen({ navigation }: Props): ReactElement
       </TipView>
       {input}
       {step === 2 &&
-        <TextualButton right
+        <TextualButton isRight
           onPress={() => {
             commitMutation(
               environment,

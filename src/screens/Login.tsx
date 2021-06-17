@@ -156,7 +156,7 @@ export default function LoginScreen(): ReactElement {
         value={password}
         onChangeText={val => setPassword(val)}
       />
-      <BlueTextButton right
+      <BlueTextButton isRight
         onPress={() => navigation.navigate('ResetPassword')}
         text={t('signIn.forgotPassword')}
       />
@@ -188,7 +188,7 @@ export default function LoginScreen(): ReactElement {
           .catch(() => Alert.alert(`${t('settings.https_alert')} https://quest.dh-center.ru/privacy-policy.pdf`))}
         text={t('settings.privacyPolicyDeclension')}
       />
-      <BlueTextButton last
+      <BlueTextButton isLast
         onPress={() => Linking.openURL('https://quest.dh-center.ru/eula.pdf')
           .catch(() => Alert.alert(`${t('settings.https_alert')} https://quest.dh-center.ru/eula.pdf`))}
         text={t('settings.eulaDeclension')}
