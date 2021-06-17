@@ -80,8 +80,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const BlueTextButton = styled.TouchableOpacity<{right?: boolean}>`
+const BlueTextButton = styled.TouchableOpacity<{right?: boolean, last?: boolean}>`
   ${props => props.right && 'align-self: flex-end;'}
+  ${props => props.last && 'margin-bottom: 15px;'}
 `;
 
 const BlueTextButtonText = styled.Text`
@@ -201,7 +202,7 @@ export default function LoginScreen(): ReactElement {
       >
         <BlueTextButtonText>{t('settings.privacyPolicyDeclension')}</BlueTextButtonText>
       </BlueTextButton>
-      <BlueTextButton
+      <BlueTextButton last
         onPress={() => Linking.openURL('https://quest.dh-center.ru/eula.pdf')
           .catch(() => Alert.alert(`${t('settings.https_alert')} https://quest.dh-center.ru/eula.pdf`))}
       >
