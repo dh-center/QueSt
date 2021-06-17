@@ -70,7 +70,8 @@
     "password": "Пароль",
     "repeatPassword": "Повторите пароль",
     "successful": "Регистрация успешно завершена",
-    "passwordsDontMatch": "Пароли не совпадают"
+    "passwordsDontMatch": "Пароли не совпадают",
+    "back": "Назад"
   },
   "errors": {
     "WRONG_AUTH_DATA": "Не удалось авторизоваться (данные авторизации невалидны)",

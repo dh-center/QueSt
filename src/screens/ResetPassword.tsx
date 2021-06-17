@@ -11,6 +11,11 @@ import styled from 'styled-components/native';
 import { commitMutation, graphql } from 'react-relay';
 import { useRelayEnvironment } from 'react-relay/hooks';
 import Tip from '../images/tip.svg';
+import { ProfileStackParamList } from '../navigation/profileStack';
+import { StackScreenProps } from '@react-navigation/stack';
+import TextualBackButton from '../components/TextualBackButton';
+
+type Props = StackScreenProps<ProfileStackParamList, 'ResetPassword'>;
 
 /**
  * Styles for login view
@@ -72,8 +77,10 @@ const sendCodeMutation = graphql`
 
 /**
  * Login view
+ *
+ * @param props - props for component rendering
  */
-export default function ResetPasswordScreen(): ReactElement {
+export default function ResetPasswordScreen({ navigation }: Props): ReactElement {
   const { t } = useTranslation();
   const environment = useRelayEnvironment();
   const [email, setEmail] = useState('');
@@ -111,6 +118,7 @@ export default function ResetPasswordScreen(): ReactElement {
           );
         }}
       />
+      <TextualBackButton onPress={(): void => navigation.goBack()}/>
     </ScreenWrapper>
   );
 }

@@ -70,7 +70,8 @@
     "password": "Password",
     "repeatPassword": "Repeat password",
     "successful": "Registration completed successfully",
-    "passwordsDontMatch": "Passwords don't match"
+    "passwordsDontMatch": "Passwords don't match",
+    "back": "Go back"
   },
   "errors": {
     "WRONG_AUTH_DATA": "Authorization failed due to wrong auth data",
