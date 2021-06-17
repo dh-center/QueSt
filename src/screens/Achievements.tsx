@@ -5,12 +5,12 @@ import { StyledFonts } from '../styles/textStyles';
 import Colors from '../styles/colors';
 import { useTranslation } from 'react-i18next';
 import useTabBarHeight from '../components/utils/useTabBarHeight';
-import Back from '../images/back.svg';
 import Emphasis from '../images/emphasis.svg';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import ListButton from '../components/ListButton';
 import { FlatList } from 'react-native';
+import BackArrow from '../components/BackArrow';
 
 type Props = StackScreenProps<ProfileStackParamList, 'Achievements'>;
 
@@ -116,7 +116,7 @@ export default function AchievementsScreen({ navigation }: Props): React.ReactEl
       <BlueCircle/>
       <Row margined>
         <BackButton onPress={(): void => navigation.goBack()}>
-          <Back/>
+          <BackArrow/>
         </BackButton>
         <Title>{t('profile.achievements')}</Title>
       </Row>

@@ -66,6 +66,7 @@
   },
   "signUp": {
     "registration": "Регистрация",
+    "name": "Ваше имя",
     "password": "Пароль",
     "repeatPassword": "Повторите пароль",
     "successful": "Регистрация успешно завершена",
