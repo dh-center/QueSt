@@ -116,8 +116,7 @@ export default function RegistrationScreen(): ReactElement {
         </Text>
       </View>
       <Input
-        autoCompleteType="username"
-        keyboardType="email-address"
+        autoCompleteType="name"
         placeholder={t('signUp.name')}
         textContentType="emailAddress"
         style={styles.input}
