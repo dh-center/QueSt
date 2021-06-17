@@ -1,9 +1,8 @@
 import React, { ReactElement, useState } from 'react';
-import { Alert, Platform, StyleSheet, Text, View } from 'react-native';
+import { Alert, Linking, Platform, StyleSheet, Text, View } from 'react-native';
 import Input from '../components/ui/Input';
-import textStyles from '../styles/textStyles';
+import textStyles, { StyledFonts } from '../styles/textStyles';
 import Button from '../components/ui/Button';
-import UnderlinedButton from '../components/ui/UnderlinedButton';
 import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from '../navigation/profileStack';
@@ -16,6 +15,7 @@ import Logo from '../images/fullLogo.svg';
 import Colors from '../styles/colors';
 import { useAuthContext } from '../contexts/AuthProvider';
 import AppleAuth from '../components/auth/Apple';
+import styled from 'styled-components/native';
 
 /**
  * Styles for login view
@@ -53,17 +53,13 @@ const styles = StyleSheet.create({
     elevation: 0,
     borderColor: 'transparent',
   },
-  recoverPasswordButton: {
-    opacity: 0.5,
-    marginBottom: 15,
-  },
 
   /**
    * Login with socials block
    */
   socials: {
     width: 230,
-    marginBottom: 50,
+    marginBottom: 60,
   },
   socialsText: {
     ...textStyles.default,
@@ -83,6 +79,38 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
 });
+
+const BlueTextButton = styled.TouchableOpacity<{right?: boolean, last?: boolean}>`
+  ${props => props.right && 'align-self: flex-end;'}
+  ${props => props.last && 'margin-bottom: 15px;'}
+`;
+
+const BlueTextButtonText = styled.Text`
+  ${StyledFonts.uiWebRegular};
+  color: ${Colors.Blue};
+  font-size: 18px;
+  line-height: 22px;
+`;
+
+const LoginButton = styled(Button)`
+  margin: 15px 0;
+`;
+
+const Delimiter = styled.View`
+  width: 227px;
+  height: 1px;
+  background-color: ${Colors.Black};
+  margin: 15px 0;
+  opacity: 0.3;
+`;
+
+const GrayText = styled.Text`
+  ${StyledFonts.uiWebRegular};
+  color: #828282;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+`;
 
 /**
  * Type with props of screen 'Login' in ProfileStackScreen
@@ -139,16 +167,21 @@ export default function LoginScreen(): ReactElement {
         value={password}
         onChangeText={val => setPassword(val)}
       />
-      <Button
+      <BlueTextButton right
+        onPress={(): void => console.log('Recover password')}
+      >
+        <BlueTextButtonText>{t('signIn.forgotPassword')}</BlueTextButtonText>
+      </BlueTextButton>
+      <LoginButton
         title={t('signIn.logIn')}
         onPress={login}
-        style={styles.mb30}
       />
-      <UnderlinedButton
-        title={t('signIn.signUp')}
+      <BlueTextButton
         onPress={(): void => navigation.navigate('Registration')}
-        style={styles.mb30}
-      />
+      >
+        <BlueTextButtonText>{t('signIn.signUp')}</BlueTextButtonText>
+      </BlueTextButton>
+      <Delimiter/>
       <View style={styles.socials}>
         <Text style={styles.socialsText}>
           {t('signIn.logInWith')}
@@ -162,11 +195,19 @@ export default function LoginScreen(): ReactElement {
           }
         </View>
       </View>
-      <UnderlinedButton
-        title={t('signIn.forgotPassword')}
-        onPress={(): void => console.log('Recover password')}
-        style={styles.recoverPasswordButton}
-      />
+      <GrayText>{t('settings.agree')}</GrayText>
+      <BlueTextButton
+        onPress={() => Linking.openURL('https://quest.dh-center.ru/privacy-policy.pdf')
+          .catch(() => Alert.alert(`${t('settings.https_alert')} https://quest.dh-center.ru/privacy-policy.pdf`))}
+      >
+        <BlueTextButtonText>{t('settings.privacyPolicyDeclension')}</BlueTextButtonText>
+      </BlueTextButton>
+      <BlueTextButton last
+        onPress={() => Linking.openURL('https://quest.dh-center.ru/eula.pdf')
+          .catch(() => Alert.alert(`${t('settings.https_alert')} https://quest.dh-center.ru/eula.pdf`))}
+      >
+        <BlueTextButtonText>{t('settings.eulaDeclension')}</BlueTextButtonText>
+      </BlueTextButton>
     </ScreenWrapper>
   );
 }
