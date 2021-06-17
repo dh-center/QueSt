@@ -1,7 +1,6 @@
 import React from 'react';
 import Logo from '../images/fullLogo.svg';
 import ScreenWrapper from '../components/utils/ScreenWrapper';
-import Back from '../images/back.svg';
 import styled from 'styled-components/native';
 import Colors from '../styles/colors';
 import { StyledFonts } from '../styles/textStyles';
@@ -10,6 +9,7 @@ import { ProfileStackParamList } from '../navigation/profileStack';
 import { useTranslation } from 'react-i18next';
 import Next from '../images/next.svg';
 import { Alert, Linking } from 'react-native';
+import BackArrow from '../components/BackArrow';
 
 /**
  * Type with props of screen 'About' in ProfileStackScreen
@@ -77,7 +77,7 @@ export default function AboutScreen({ navigation }: Props): React.ReactElement {
     <ScreenWrapper>
       <Row>
         <BackButton onPress={(): void => navigation.goBack()}>
-          <Back/>
+          <BackArrow/>
         </BackButton>
         <Title>{t('settings.about')}</Title>
       </Row>

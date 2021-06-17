@@ -7,7 +7,6 @@ import styled from 'styled-components/native';
 import Colors from '../styles/colors';
 import BlueCircle15 from '../images/blueCircle15.svg';
 import { StyledFonts } from '../styles/textStyles';
-import Back from '../images/back.svg';
 import FriendRequests from '../images/friendRequests.svg';
 import { graphql } from 'react-relay';
 import { useLazyLoadQuery } from 'react-relay/hooks';
@@ -16,6 +15,7 @@ import Button from '../components/ui/Button';
 import { FriendsQuery } from './__generated__/FriendsQuery.graphql';
 import FriendButton from '../components/FriendButton';
 import Plus from '../images/plus.svg';
+import BackArrow from '../components/BackArrow';
 
 type Props = StackScreenProps<ProfileStackParamList, 'Friends'>;
 
@@ -115,7 +115,7 @@ export default function FriendsScreen({ navigation }: Props): React.ReactElement
       <BlueCircle/>
       <Row>
         <BackButton onPress={(): void => navigation.goBack()}>
-          <Back/>
+          <BackArrow/>
         </BackButton>
         <Title>{t('profile.friends')}</Title>
         <TouchableOpacity
