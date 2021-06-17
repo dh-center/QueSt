@@ -5,12 +5,12 @@ import { StyledFonts } from '../styles/textStyles';
 import Colors from '../styles/colors';
 import { useTranslation } from 'react-i18next';
 import useTabBarHeight from '../components/utils/useTabBarHeight';
-import Back from '../images/back.svg';
 import Emphasis from '../images/emphasis.svg';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import CollectionCard from '../components/CollectionCard';
 import { FlatList, ImageSourcePropType } from 'react-native';
+import BackArrow from '../components/BackArrow';
 
 interface CardData {
   name: string,
@@ -138,10 +138,6 @@ const flatColumnStyle = {
   paddingTop: 9,
   paddingHorizontal: 10.5,
 };
-
-const BackArrow = styled(Back)`
-  color: ${Colors.Black};
-`;
 
 /**
  * Displays screen with collection of cards

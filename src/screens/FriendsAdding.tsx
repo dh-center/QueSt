@@ -7,7 +7,6 @@ import styled from 'styled-components/native';
 import Colors from '../styles/colors';
 import BlueCircle15 from '../images/blueCircle15.svg';
 import { StyledFonts } from '../styles/textStyles';
-import Back from '../images/back.svg';
 import { commitMutation, graphql } from 'react-relay';
 import { useLazyLoadQuery, useRelayEnvironment } from 'react-relay/hooks';
 import { Spinner } from 'native-base';
@@ -16,6 +15,7 @@ import Search from '../images/search.svg';
 import { FriendsAddingQuery } from './__generated__/FriendsAddingQuery.graphql';
 import { FlatList } from 'react-native';
 import FriendButton from '../components/FriendButton';
+import BackArrow from '../components/BackArrow';
 
 type Props = StackScreenProps<ProfileStackParamList, 'FriendAdding'>;
 
@@ -67,10 +67,6 @@ const flatListContentStyle = {
   paddingHorizontal: 15,
   paddingBottom: 15,
 };
-
-const BackArrow = styled(Back)`
-  color: ${Colors.Black};
-`;
 
 const addMutation = graphql`
   mutation FriendsAddingMutation($userId: GlobalId!) {

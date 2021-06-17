@@ -1,7 +1,6 @@
 import React from 'react';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import { StackScreenProps } from '@react-navigation/stack';
-import Back from '../images/back.svg';
 import styled from 'styled-components/native';
 import Colors from '../styles/colors';
 import BlueCircle15 from '../images/blueCircle15.svg';
@@ -12,6 +11,7 @@ import { FlatList } from 'react-native';
 import FriendButton from '../components/FriendButton';
 import { commitMutation, graphql } from 'react-relay';
 import { useFragment, useRelayEnvironment } from 'react-relay/hooks';
+import BackArrow from '../components/BackArrow';
 
 type Props = StackScreenProps<ProfileStackParamList, 'FriendRequests'>;
 
@@ -49,10 +49,6 @@ const flatListStyle = {
   paddingBottom: 75,
   paddingHorizontal: 15,
 };
-
-const BackArrow = styled(Back)`
-  color: ${Colors.Black};
-`;
 
 const declineMutation = graphql`
   mutation FriendRequestsDeclineMutation($userId: GlobalId!) {

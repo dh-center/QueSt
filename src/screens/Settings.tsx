@@ -7,9 +7,9 @@ import styled from 'styled-components/native';
 import ListButton from '../components/ListButton';
 import Colors from '../styles/colors';
 import BlueCircle15 from '../images/blueCircle15.svg';
-import Back from '../images/back.svg';
 import { StyledFonts } from '../styles/textStyles';
 import Avatar from '../components/Avatar';
+import BackArrow from '../components/BackArrow';
 
 /**
  * Type with props of screen 'Settings' in ProfileStackScreen
@@ -93,10 +93,6 @@ const LogoutText = styled.Text`
   font-size: 18px;
   line-height: 22px;
   color: ${Colors.White};
-`;
-
-const BackArrow = styled(Back)`
-  color: ${Colors.Black};
 `;
 
 /**

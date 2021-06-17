@@ -1,7 +1,6 @@
 import React from 'react';
 import Logo from '../images/fullLogo.svg';
 import ScreenWrapper from '../components/utils/ScreenWrapper';
-import Back from '../images/back.svg';
 import styled from 'styled-components/native';
 import Colors from '../styles/colors';
 import { StyledFonts } from '../styles/textStyles';
@@ -10,6 +9,7 @@ import { ProfileStackParamList } from '../navigation/profileStack';
 import { useTranslation } from 'react-i18next';
 import Next from '../images/next.svg';
 import { Alert, Linking } from 'react-native';
+import BackArrow from '../components/BackArrow';
 
 /**
  * Type with props of screen 'About' in ProfileStackScreen
@@ -63,10 +63,6 @@ const Row = styled.View`
 
 const BackButton = styled.TouchableOpacity`
   padding: 11px 15px;
-`;
-
-const BackArrow = styled(Back)`
-  color: ${Colors.Black};
 `;
 
 /**
