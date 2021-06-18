@@ -78,7 +78,7 @@ export default function RegistrationScreen(): ReactElement {
     }
 
     try {
-      await authContext.actions.registerWithEmailAndPassword(email, password);
+      await authContext.actions.registerWithEmailAndPassword(name, email, password);
       Alert.alert(t('signUp.successful'));
       navigation.navigate('Login');
     } catch (e) {
@@ -97,7 +97,6 @@ export default function RegistrationScreen(): ReactElement {
       <Input
         autoCompleteType="name"
         placeholder={t('signUp.name')}
-        textContentType="emailAddress"
         style={styles.input}
         value={name}
         onChangeText={val => setName(val)}
