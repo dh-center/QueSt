@@ -77,6 +77,10 @@ export default function RegistrationScreen(): ReactElement {
       return;
     }
 
+    if (name.trim().length <= 1) {
+      Alert.alert(t('signIn.nameLengthError'));
+    }
+
     try {
       await authContext.actions.registerWithEmailAndPassword(name, email, password);
       Alert.alert(t('signUp.successful'));

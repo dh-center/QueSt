@@ -71,7 +71,8 @@
       "Enter the 6-digit code from the letter that was sent to your mail",
       "Enter a new password"
     ],
-    "lengthMismatch": "The code must be six digits",
+    "codeLengthMismatch": "The code must be six digits",
+    "nameLengthError": "The name must contain at least 2 characters",
     "successful": "Password changed successfully"
   },
   "signUp": {

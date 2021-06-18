@@ -124,7 +124,7 @@ export default function InputCodeScreen({ route, navigation }: Props): ReactElem
               email: route.params.email,
               code,
             })
-            : Alert.alert(t('signIn.lengthMismatch'));
+            : Alert.alert(t('signIn.codeLengthMismatch'));
         }}
       />
       <TextualBackButton onPress={(): void => navigation.goBack()}/>
