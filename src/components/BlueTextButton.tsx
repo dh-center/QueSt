@@ -44,6 +44,8 @@ interface ButtonProps {
 }
 
 /**
+ * Blue text with TouchableOpacity properties
+ *
  * @param props - props for button
  */
 export default function BlueTextButton(props: ButtonProps): React.ReactElement {
