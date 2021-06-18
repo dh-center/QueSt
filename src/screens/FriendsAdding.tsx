@@ -7,8 +7,8 @@ import styled from 'styled-components/native';
 import Colors from '../styles/colors';
 import BlueCircle15 from '../images/blueCircle15.svg';
 import { StyledFonts } from '../styles/textStyles';
-import { commitMutation, graphql } from 'react-relay';
-import { useLazyLoadQuery, useRelayEnvironment } from 'react-relay/hooks';
+import { graphql } from 'react-relay';
+import { useLazyLoadQuery, useMutation } from 'react-relay/hooks';
 import { Spinner } from 'native-base';
 import Input from '../components/ui/Input';
 import Search from '../images/search.svg';
@@ -16,6 +16,7 @@ import { FriendsAddingQuery } from './__generated__/FriendsAddingQuery.graphql';
 import { FlatList } from 'react-native';
 import FriendButton from '../components/FriendButton';
 import BackArrow from '../components/BackArrow';
+import { FriendsAddingMutation } from './__generated__/FriendsAddingMutation.graphql';
 
 type Props = StackScreenProps<ProfileStackParamList, 'FriendAdding'>;
 
@@ -68,22 +69,6 @@ const flatListContentStyle = {
   paddingBottom: 15,
 };
 
-const addMutation = graphql`
-  mutation FriendsAddingMutation($userId: GlobalId!) {
-    user {
-      sendFriendRequest(id: $userId) {
-        record {
-          id
-          friends {
-            id
-            ...FriendButton_data
-          }
-        }
-      }
-    }
-  }
-`;
-
 /**
  * Displays friends screen
  *
@@ -92,8 +77,25 @@ const addMutation = graphql`
 function FriendAddingScreen({ navigation }: Props): React.ReactElement {
   const { t } = useTranslation();
   const tabBarHeight = useTabBarHeight();
-  const environment = useRelayEnvironment();
   const [searchString, setSearchString] = useState('');
+
+  const [ addToFriend ] = useMutation<FriendsAddingMutation>(
+    graphql`
+      mutation FriendsAddingMutation($userId: GlobalId!) {
+        user {
+          sendFriendRequest(id: $userId) {
+            record {
+              id
+              friends {
+                id
+                ...FriendButton_data
+              }
+            }
+          }
+        }
+      }
+    `
+  );
 
   const data = useLazyLoadQuery<FriendsAddingQuery>(
     graphql`
@@ -134,14 +136,10 @@ function FriendAddingScreen({ navigation }: Props): React.ReactElement {
             forAddingScreen
             userData={item}
             onAddPress={(): void => {
-              commitMutation(
-                environment,
-                {
-                  mutation: addMutation,
-                  variables: { userId: item.id },
-                  onError: err => console.error(err),
-                }
-              );
+              addToFriend({
+                variables: { userId: item.id },
+                onError: err => console.error(err),
+              });
             }}
           />
         )}
