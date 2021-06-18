@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Alert, StyleSheet, Text, View } from 'react-native';
 import Input from '../components/ui/Input';
 import textStyles, { StyledFonts } from '../styles/textStyles';
 import Button from '../components/ui/Button';
@@ -120,8 +120,14 @@ export default function InputCodeScreen({ route, navigation }: Props): ReactElem
         text={t('signIn.sendCodeAgain')}/>
       <StyledButton
         title={t('signUp.next')}
-        onPress={() => navigation.navigate('SetNewPassword', { email: route.params.email,
-          code })}
+        onPress={() => {
+          code.length === 6
+            ? navigation.navigate('SetNewPassword', {
+              email: route.params.email,
+              code,
+            })
+            : Alert.alert(t('signIn.lengthMismatch'));
+        }}
       />
       <TextualBackButton onPress={(): void => navigation.goBack()}/>
     </ScreenWrapper>

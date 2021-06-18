@@ -68,6 +68,7 @@
     "tip0": "Enter the email address to which your account is linked",
     "tip1": "Enter the 6-digit code from the letter that was sent to your mail",
     "tip2": "Enter a new password",
+    "lengthMismatch": "The code must be six digits",
     "successful": "Password changed successfully"
   },
   "signUp": {
