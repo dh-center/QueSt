@@ -8,13 +8,14 @@ import ScreenWrapper from '../components/utils/ScreenWrapper';
 import Logo from '../images/fullLogo.svg';
 import Colors from '../styles/colors';
 import styled from 'styled-components/native';
-import { commitMutation, graphql } from 'react-relay';
-import { useRelayEnvironment } from 'react-relay/hooks';
+import { graphql } from 'react-relay';
+import { useMutation } from 'react-relay/hooks';
 import Tip from '../images/tip.svg';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import { StackScreenProps } from '@react-navigation/stack';
 import BlueTextButton from '../components/BlueTextButton';
 import TextualBackButton from '../components/TextualBackButton';
+import { InputCodeMutation } from './__generated__/InputCodeMutation.graphql';
 
 type Props = StackScreenProps<ProfileStackParamList, 'InputCode'>;
 
@@ -71,14 +72,6 @@ const StyledButton = styled(Button)`
   margin: 30px 0;
 `;
 
-const sendCodeMutation = graphql`
-  mutation InputCodeMutation($email: String!) {
-    user {
-      sendCodeForPasswordReset(email: $email)
-    }
-  }
-`;
-
 /**
  * View with code input
  *
@@ -86,8 +79,17 @@ const sendCodeMutation = graphql`
  */
 export default function InputCodeScreen({ route, navigation }: Props): ReactElement {
   const { t } = useTranslation();
-  const environment = useRelayEnvironment();
   const [code, setCode] = useState('');
+
+  const [ sendEmail ] = useMutation<InputCodeMutation>(
+    graphql`
+      mutation InputCodeMutation($email: String!) {
+        user {
+          sendCodeForPasswordReset(email: $email)
+        }
+      }
+    `
+  );
 
   return (
     <ScreenWrapper scrollable>
@@ -108,14 +110,10 @@ export default function InputCodeScreen({ route, navigation }: Props): ReactElem
       />
       <TextualButton isRight
         onPress={() => {
-          commitMutation(
-            environment,
-            {
-              mutation: sendCodeMutation,
-              variables: { email: route.params.email },
-              onError: err => console.error(err),
-            }
-          );
+          sendEmail({
+            variables: { email: route.params.email },
+            onError: err => console.error(err),
+          });
         }}
         text={t('signIn.sendCodeAgain')}/>
       <StyledButton

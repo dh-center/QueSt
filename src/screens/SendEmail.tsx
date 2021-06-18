@@ -8,12 +8,13 @@ import ScreenWrapper from '../components/utils/ScreenWrapper';
 import Logo from '../images/fullLogo.svg';
 import Colors from '../styles/colors';
 import styled from 'styled-components/native';
-import { commitMutation, graphql } from 'react-relay';
-import { useRelayEnvironment } from 'react-relay/hooks';
+import { graphql } from 'react-relay';
+import { useMutation } from 'react-relay/hooks';
 import Tip from '../images/tip.svg';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import { StackScreenProps } from '@react-navigation/stack';
 import TextualBackButton from '../components/TextualBackButton';
+import { SendEmailMutation } from './__generated__/SendEmailMutation.graphql';
 
 type Props = StackScreenProps<ProfileStackParamList, 'SendEmail'>;
 
@@ -66,14 +67,6 @@ const StyledButton = styled(Button)`
   margin: 30px 0;
 `;
 
-const sendCodeMutation = graphql`
-  mutation SendEmailMutation($email: String!) {
-    user {
-      sendCodeForPasswordReset(email: $email)
-    }
-  }
-`;
-
 /**
  * Sending email view
  *
@@ -81,8 +74,17 @@ const sendCodeMutation = graphql`
  */
 export default function SendEmailScreen({ navigation }: Props): ReactElement {
   const { t } = useTranslation();
-  const environment = useRelayEnvironment();
   const [email, setEmail] = useState('');
+
+  const [ sendEmail ] = useMutation<SendEmailMutation>(
+    graphql`
+      mutation SendEmailMutation($email: String!) {
+        user {
+          sendCodeForPasswordReset(email: $email)
+        }
+      }
+    `
+  );
 
   return (
     <ScreenWrapper scrollable>
@@ -108,15 +110,11 @@ export default function SendEmailScreen({ navigation }: Props): ReactElement {
         title={t('signIn.sendCode')}
         onPress={() => {
           email.includes('@') && email.length > 4
-            ? commitMutation(
-              environment,
-              {
-                mutation: sendCodeMutation,
-                variables: { email },
-                onError: () => Alert.alert(t('signIn.invalidEmail')),
-                onCompleted: () => navigation.navigate('InputCode', { email }),
-              }
-            )
+            ? sendEmail({
+              variables: { email },
+              onError: () => Alert.alert(t('signIn.invalidEmail')),
+              onCompleted: () => navigation.navigate('InputCode', { email }),
+            })
             : Alert.alert(t('signIn.invalidEmail'));
         }}
       />

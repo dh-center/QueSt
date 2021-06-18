@@ -8,11 +8,12 @@ import ScreenWrapper from '../components/utils/ScreenWrapper';
 import Logo from '../images/fullLogo.svg';
 import Colors from '../styles/colors';
 import styled from 'styled-components/native';
-import { commitMutation, graphql } from 'react-relay';
-import { useRelayEnvironment } from 'react-relay/hooks';
+import { graphql } from 'react-relay';
+import { useMutation } from 'react-relay/hooks';
 import Tip from '../images/tip.svg';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import { StackScreenProps } from '@react-navigation/stack';
+import { SetNewPasswordMutation } from './__generated__/SetNewPasswordMutation.graphql';
 
 type Props = StackScreenProps<ProfileStackParamList, 'SetNewPassword'>;
 
@@ -65,18 +66,6 @@ const StyledButton = styled(Button)`
   margin: 30px 0;
 `;
 
-const setNewPasswordMutation = graphql`
-  mutation SetNewPasswordMutation($email: String!, $code: String!, $password: String!) {
-    user {
-      resetPassword(input: {email: $email, code: $code, newPassword: $password}) {
-        record {
-          id
-        }
-      }
-    }
-  }
-`;
-
 /**
  * Setting new password view
  *
@@ -84,9 +73,22 @@ const setNewPasswordMutation = graphql`
  */
 export default function SetNewPasswordScreen({ route, navigation }: Props): ReactElement {
   const { t } = useTranslation();
-  const environment = useRelayEnvironment();
   const [password, setPassword] = useState('');
   const [repeatedPassword, setRepeatedPassword] = useState('');
+
+  const [ resetPassword ] = useMutation<SetNewPasswordMutation>(
+    graphql`
+      mutation SetNewPasswordMutation($email: String!, $code: String!, $password: String!) {
+        user {
+          resetPassword(input: {email: $email, code: $code, newPassword: $password}) {
+            record {
+              id
+            }
+          }
+        }
+      }
+    `
+  );
 
   return (
     <ScreenWrapper scrollable>
@@ -124,24 +126,20 @@ export default function SetNewPasswordScreen({ route, navigation }: Props): Reac
 
             return;
           }
-          commitMutation(
-            environment,
-            {
-              mutation: setNewPasswordMutation,
-              variables: {
-                email: route.params.email,
-                code: route.params.code,
-                password,
-              },
-              onCompleted: () => {
-                Alert.alert(t('signIn.successful'));
-                navigation.navigate('Login');
-              },
-              onError: err => err.source.errors[0].extensions.code === 'WRONG_RESET_CODE'
-                ? Alert.alert(t('errors.WRONG_RESET_CODE'))
-                : Alert.alert(t('errors.unspecific')),
-            }
-          );
+          resetPassword({
+            variables: {
+              email: route.params.email,
+              code: route.params.code,
+              password,
+            },
+            onCompleted: () => {
+              Alert.alert(t('signIn.successful'));
+              navigation.navigate('Login');
+            },
+            onError: err => err.source.errors[0].extensions.code === 'WRONG_RESET_CODE'
+              ? Alert.alert(t('errors.WRONG_RESET_CODE'))
+              : Alert.alert(t('errors.unspecific')),
+          });
         }}
       />
     </ScreenWrapper>
