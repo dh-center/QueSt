@@ -16,6 +16,7 @@ import Colors from '../styles/colors';
 import { useAuthContext } from '../contexts/AuthProvider';
 import AppleAuth from '../components/auth/Apple';
 import styled from 'styled-components/native';
+import BlueTextButton from '../components/BlueTextButton';
 
 /**
  * Styles for login view
@@ -79,18 +80,6 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
 });
-
-const BlueTextButton = styled.TouchableOpacity<{right?: boolean, last?: boolean}>`
-  ${props => props.right && 'align-self: flex-end;'}
-  ${props => props.last && 'margin-bottom: 15px;'}
-`;
-
-const BlueTextButtonText = styled.Text`
-  ${StyledFonts.uiWebRegular};
-  color: ${Colors.Blue};
-  font-size: 18px;
-  line-height: 22px;
-`;
 
 const LoginButton = styled(Button)`
   margin: 15px 0;
@@ -167,20 +156,18 @@ export default function LoginScreen(): ReactElement {
         value={password}
         onChangeText={val => setPassword(val)}
       />
-      <BlueTextButton right
-        onPress={(): void => console.log('Recover password')}
-      >
-        <BlueTextButtonText>{t('signIn.forgotPassword')}</BlueTextButtonText>
-      </BlueTextButton>
+      <BlueTextButton isRight
+        onPress={() => navigation.navigate('SendEmail')}
+        text={t('signIn.forgotPassword')}
+      />
       <LoginButton
         title={t('signIn.logIn')}
         onPress={login}
       />
       <BlueTextButton
-        onPress={(): void => navigation.navigate('Registration')}
-      >
-        <BlueTextButtonText>{t('signIn.signUp')}</BlueTextButtonText>
-      </BlueTextButton>
+        onPress={() => navigation.navigate('Registration')}
+        text={t('signIn.signUp')}
+      />
       <Delimiter/>
       <View style={styles.socials}>
         <Text style={styles.socialsText}>
@@ -199,15 +186,13 @@ export default function LoginScreen(): ReactElement {
       <BlueTextButton
         onPress={() => Linking.openURL('https://quest.dh-center.ru/privacy-policy.pdf')
           .catch(() => Alert.alert(`${t('settings.https_alert')} https://quest.dh-center.ru/privacy-policy.pdf`))}
-      >
-        <BlueTextButtonText>{t('settings.privacyPolicyDeclension')}</BlueTextButtonText>
-      </BlueTextButton>
-      <BlueTextButton last
+        text={t('settings.privacyPolicyDeclension')}
+      />
+      <BlueTextButton isLast
         onPress={() => Linking.openURL('https://quest.dh-center.ru/eula.pdf')
           .catch(() => Alert.alert(`${t('settings.https_alert')} https://quest.dh-center.ru/eula.pdf`))}
-      >
-        <BlueTextButtonText>{t('settings.eulaDeclension')}</BlueTextButtonText>
-      </BlueTextButton>
+        text={t('settings.eulaDeclension')}
+      />
     </ScreenWrapper>
   );
 }

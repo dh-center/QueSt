@@ -1,10 +1,9 @@
 import React, { ReactElement, useState } from 'react';
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, StyleSheet, Text, View } from 'react-native';
 import Input from '../components/ui/Input';
-import textStyles, { StyledFonts } from '../styles/textStyles';
+import textStyles from '../styles/textStyles';
 import Button from '../components/ui/Button';
 import { useTranslation } from 'react-i18next';
-import Back from '../images/back.svg';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import { useNavigation } from '@react-navigation/native';
@@ -12,20 +11,12 @@ import ScreenWrapper from '../components/utils/ScreenWrapper';
 import Colors from '../styles/colors';
 import Logo from '../images/fullLogo.svg';
 import { useAuthContext } from '../contexts/AuthProvider';
-import styled from 'styled-components/native';
+import TextualBackButton from '../components/TextualBackButton';
 
 /**
  * Styles for registration screen component
  */
 const styles = StyleSheet.create({
-  /**
-   * Back button
-   */
-  backButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-
   /**
    * Logo placeholder styles
    */
@@ -58,18 +49,6 @@ const styles = StyleSheet.create({
     marginVertical: 30,
   },
 });
-
-const BackArrow = styled(Back)`
-  padding: 0 10px;
-  color: ${Colors.DarkBlue};
-`;
-
-const DefaultText = styled.Text`
-  ${StyledFonts.uiWebRegular};
-  color: ${Colors.DarkBlue};
-  font-size: 18px;
-  line-height: 22px;
-`;
 
 /**
  * Type with props of screen 'Registration' in ProfileStackScreen
@@ -155,12 +134,7 @@ export default function RegistrationScreen(): ReactElement {
         onPress={register}
         style={styles.registrationButton}
       />
-      <TouchableOpacity style={styles.backButton}
-        onPress={(): void => navigation.goBack()}
-      >
-        <BackArrow/>
-        <DefaultText>Назад</DefaultText>
-      </TouchableOpacity>
+      <TextualBackButton onPress={() => navigation.goBack()}/>
     </ScreenWrapper>
   );
 }

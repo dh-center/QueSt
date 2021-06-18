@@ -60,7 +60,19 @@
     "logInWith": "Login with",
     "signUp": "Sign up",
     "password": "Password",
-    "forgotPassword": "Forgot your password?"
+    "forgotPassword": "Forgot your password?",
+    "recoveryPass": "Password recovery",
+    "sendCode": "Send code",
+    "invalidEmail": "Invalid email address format",
+    "placeholderCode": "Code from the letter",
+    "sendCodeAgain": "Send again",
+    "tips": [
+      "Enter the email address to which your account is linked",
+      "Enter the 6-digit code from the letter that was sent to your mail",
+      "Enter a new password"
+    ],
+    "lengthMismatch": "The code must be six digits",
+    "successful": "Password changed successfully"
   },
   "signUp": {
     "registration": "Registration",
@@ -68,7 +80,9 @@
     "password": "Password",
     "repeatPassword": "Repeat password",
     "successful": "Registration completed successfully",
-    "passwordsDontMatch": "Passwords don't match"
+    "passwordsDontMatch": "Passwords don't match",
+    "back": "Go back",
+    "next": "Next step"
   },
   "errors": {
     "WRONG_AUTH_DATA": "Authorization failed due to wrong auth data",
@@ -77,6 +91,7 @@
     "WRONG_USER_PASSWORD": "Invalid e-mail or password",
     "NO_USER_WITH_SUCH_USERNAME": "Invalid e-mail or password",
     "INVALID_ACCESS_TOKEN": "Invalid access token",
+    "WRONG_RESET_CODE": "Invalid reset code",
     "unspecific": "Something went wrong"
   },
   "measures": {
