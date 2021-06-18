@@ -205,16 +205,18 @@ class AuthContextActions {
   /**
    * Performs user registration via email and password
    *
+   * @param name - name for registration
    * @param email - email for registration
    * @param password - password for registration
    */
-  public async registerWithEmailAndPassword(email: string, password: string): Promise<void>     {
+  public async registerWithEmailAndPassword(name: string, email: string, password: string): Promise<void> {
     const response = await fetch(`${API_ENDPOINT}/sign-up`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        name,
         email,
         password,
       }),
