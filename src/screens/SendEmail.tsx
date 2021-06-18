@@ -94,7 +94,7 @@ export default function SendEmailScreen({ navigation }: Props): ReactElement {
       </View>
       <TipView>
         <TipIcon/>
-        <TipText>{t(`signIn.tip0`)}</TipText>
+        <TipText>{t(`signIn.tips.0`)}</TipText>
       </TipView>
       <InputWithMargin
         autoCompleteType="username"

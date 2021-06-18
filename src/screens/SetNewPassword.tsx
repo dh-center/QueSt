@@ -98,7 +98,7 @@ export default function SetNewPasswordScreen({ route, navigation }: Props): Reac
       </View>
       <TipView>
         <TipIcon/>
-        <TipText>{t(`signIn.tip2`)}</TipText>
+        <TipText>{t(`signIn.tips.2`)}</TipText>
       </TipView>
       <InputWithMargin
         autoCompleteType="password"

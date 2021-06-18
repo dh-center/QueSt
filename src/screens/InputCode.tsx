@@ -99,7 +99,7 @@ export default function InputCodeScreen({ route, navigation }: Props): ReactElem
       </View>
       <TipView>
         <TipIcon/>
-        <TipText>{t(`signIn.tip1`)}</TipText>
+        <TipText>{t(`signIn.tips.1`)}</TipText>
       </TipView>
       <InputWithMargin
         placeholder={t('signIn.placeholderCode')}
