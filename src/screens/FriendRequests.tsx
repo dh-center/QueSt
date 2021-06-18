@@ -9,9 +9,11 @@ import { useTranslation } from 'react-i18next';
 import useTabBarHeight from '../components/utils/useTabBarHeight';
 import { FlatList } from 'react-native';
 import FriendButton from '../components/FriendButton';
-import { commitMutation, graphql } from 'react-relay';
-import { useFragment, useRelayEnvironment } from 'react-relay/hooks';
+import { graphql } from 'react-relay';
+import { useFragment, useMutation } from 'react-relay/hooks';
 import BackArrow from '../components/BackArrow';
+import { FriendRequestsDeclineMutation } from './__generated__/FriendRequestsDeclineMutation.graphql';
+import { FriendRequestsAcceptMutation } from './__generated__/FriendRequestsAcceptMutation.graphql';
 
 type Props = StackScreenProps<ProfileStackParamList, 'FriendRequests'>;
 
@@ -50,44 +52,6 @@ const flatListStyle = {
   paddingHorizontal: 15,
 };
 
-const declineMutation = graphql`
-  mutation FriendRequestsDeclineMutation($userId: GlobalId!) {
-    user {
-      rejectFriendRequest(id: $userId) {
-        record {
-          id
-          friends {
-            id
-            ...FriendButton_data
-          }
-          friendRequests {
-            id
-          }
-        }
-      }
-    }
-  }
-`;
-
-const acceptMutation = graphql`
-  mutation FriendRequestsAcceptMutation($userId: GlobalId!) {
-    user {
-      acceptFriendRequest(id: $userId) {
-        record {
-          id
-          friends {
-            id
-            ...FriendButton_data
-          }
-          friendRequests {
-            id
-          }
-        }
-      }
-    }
-  }
-`;
-
 /**
  * Displays friendRequests screen
  *
@@ -96,7 +60,48 @@ const acceptMutation = graphql`
 export default function FriendRequestsScreen({ route, navigation }: Props): React.ReactElement {
   const { t } = useTranslation();
   const tabBarHeight = useTabBarHeight();
-  const environment = useRelayEnvironment();
+
+  const [ declineFriendRequest ] = useMutation<FriendRequestsDeclineMutation>(
+    graphql`
+      mutation FriendRequestsDeclineMutation($userId: GlobalId!) {
+        user {
+          rejectFriendRequest(id: $userId) {
+            record {
+              id
+              friends {
+                id
+                ...FriendButton_data
+              }
+              friendRequests {
+                id
+              }
+            }
+          }
+        }
+      }
+    `
+  );
+
+  const [ acceptFriendRequest ] = useMutation<FriendRequestsAcceptMutation>(
+    graphql`
+      mutation FriendRequestsAcceptMutation($userId: GlobalId!) {
+        user {
+          acceptFriendRequest(id: $userId) {
+            record {
+              id
+              friends {
+                id
+                ...FriendButton_data
+              }
+              friendRequests {
+                id
+              }
+            }
+          }
+        }
+      }
+    `
+  );
 
   const data = useFragment(graphql`
     fragment FriendRequests_data on User {
@@ -123,25 +128,17 @@ export default function FriendRequestsScreen({ route, navigation }: Props): Reac
           <FriendButton
             userData={item}
             forRequestsScreen
-            onDeclinePress={(): void => {
-              commitMutation(
-                environment,
-                {
-                  mutation: declineMutation,
-                  variables: { userId: item.id },
-                  onError: err => console.error(err),
-                }
-              );
+            onDeclinePress={() => {
+              declineFriendRequest({
+                variables: { userId: item.id },
+                onError: err => console.error(err),
+              });
             }}
-            onAcceptPress={(): void => {
-              commitMutation(
-                environment,
-                {
-                  mutation: acceptMutation,
-                  variables: { userId: item.id },
-                  onError: err => console.error(err),
-                }
-              );
+            onAcceptPress={() => {
+              acceptFriendRequest({
+                variables: { userId: item.id },
+                onError: err => console.error(err),
+              });
             }}
           />
         )}
