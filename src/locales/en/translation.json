@@ -63,6 +63,7 @@
     "forgotPassword": "Forgot your password?",
     "recoveryPass": "Password recovery",
     "sendCode": "Send code",
+    "invalidEmail": "Invalid email address format",
     "placeholderCode": "Code from the letter",
     "sendCodeAgain": "Send again",
     "tip0": "Enter the email address to which your account is linked",

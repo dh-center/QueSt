@@ -1,5 +1,5 @@
 import React, { ReactElement, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Alert, StyleSheet, Text, View } from 'react-native';
 import Input from '../components/ui/Input';
 import textStyles, { StyledFonts } from '../styles/textStyles';
 import Button from '../components/ui/Button';
@@ -107,15 +107,17 @@ export default function SendEmailScreen({ navigation }: Props): ReactElement {
       <StyledButton
         title={t('signIn.sendCode')}
         onPress={() => {
-          commitMutation(
-            environment,
-            {
-              mutation: sendCodeMutation,
-              variables: { email },
-              onError: err => console.error(err),
-            }
-          );
-          navigation.navigate('InputCode', { email });
+          email.includes('@') && email.length > 4
+            ? commitMutation(
+              environment,
+              {
+                mutation: sendCodeMutation,
+                variables: { email },
+                onError: () => Alert.alert(t('signIn.invalidEmail')),
+                onCompleted: () => navigation.navigate('InputCode', { email }),
+              }
+            )
+            : Alert.alert(t('signIn.invalidEmail'));
         }}
       />
       <TextualBackButton onPress={(): void => navigation.goBack()}/>
