@@ -65,9 +65,9 @@
     "sendCode": "Send code",
     "placeholderCode": "Code from the letter",
     "sendCodeAgain": "Send again",
-    "tip1": "Enter the email address to which your account is linked",
-    "tip2": "Enter the 6-digit code from the letter that was sent to your mail",
-    "tip3": "Enter a new password",
+    "tip0": "Enter the email address to which your account is linked",
+    "tip1": "Enter the 6-digit code from the letter that was sent to your mail",
+    "tip2": "Enter a new password",
     "successful": "Password changed successfully"
   },
   "signUp": {

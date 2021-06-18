@@ -15,7 +15,9 @@ import { FriendRequests_data$key } from '../screens/__generated__/FriendRequests
 import { Spinner } from 'native-base';
 import Colors from '../styles/colors';
 import FriendAddingScreenWithSuspense from '../screens/FriendsAdding';
-import ResetPasswordScreen from '../screens/ResetPassword';
+import SendEmailScreen from '../screens/SendEmail';
+import InputCodeScreen from '../screens/InputCode';
+import SetNewPasswordScreen from '../screens/SetNewPassword';
 
 /**
  * Type with params of screens and their props in ProfileStackScreen
@@ -42,9 +44,19 @@ export type ProfileStackParamList = {
   Registration: undefined;
 
   /**
-   * ResetPassword screen props
+   * SendEmail screen props
    */
-  ResetPassword: undefined;
+  SendEmail: undefined;
+
+  /**
+   * InputCode screen props
+   */
+  InputCode: { email: string };
+
+  /**
+   * SetNewPassword screen props
+   */
+  SetNewPassword: { email: string, code: string };
 
   /**
    * Achievements screen props
@@ -107,7 +119,9 @@ export default function ProfileStackNavigation(): React.ReactElement {
         : <>
           <ProfileStack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="ResetPassword" component={ResetPasswordScreen} options={{ headerShown: false }}/>
+          <ProfileStack.Screen name="SendEmail" component={SendEmailScreen} options={{ headerShown: false }}/>
+          <ProfileStack.Screen name="InputCode" component={InputCodeScreen} options={{ headerShown: false }}/>
+          <ProfileStack.Screen name="SetNewPassword" component={SetNewPasswordScreen} options={{ headerShown: false }}/>
         </>
       }
     </ProfileStack.Navigator>

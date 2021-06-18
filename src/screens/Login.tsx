@@ -157,7 +157,7 @@ export default function LoginScreen(): ReactElement {
         onChangeText={val => setPassword(val)}
       />
       <BlueTextButton isRight
-        onPress={() => navigation.navigate('ResetPassword')}
+        onPress={() => navigation.navigate('SendEmail')}
         text={t('signIn.forgotPassword')}
       />
       <LoginButton
