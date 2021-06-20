@@ -121,6 +121,8 @@ class AuthContextActions {
     checkApiErrors(requestData);
 
     await this.saveTokens(requestData.data);
+
+    return requestData.data;
   }
 
   /**
@@ -144,6 +146,8 @@ class AuthContextActions {
     checkApiErrors(requestData);
 
     await this.saveTokens(requestData.data);
+
+    return requestData.data;
   }
 
   /**
@@ -161,6 +165,8 @@ class AuthContextActions {
       const requestData = await response.json();
 
       await this.saveTokens(requestData.data);
+
+      return requestData.data;
     } else {
       throw new Error('MISSING_AUTH_CODE');
     }

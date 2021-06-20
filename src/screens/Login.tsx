@@ -104,7 +104,7 @@ const GrayText = styled.Text`
 /**
  * Type with props of screen 'Login' in ProfileStackScreen
  */
-type LoginScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Login'>;
+export type LoginScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Login'>;
 
 /**
  * Login view
@@ -174,9 +174,9 @@ export default function LoginScreen(): ReactElement {
           {t('signIn.logInWith')}
         </Text>
         <View style={styles.socialsContainer}>
-          <FacebookAuth/>
-          <VkAuth/>
-          <GoogleAuth/>
+          <FacebookAuth nav={navigation}/>
+          <VkAuth nav={navigation}/>
+          <GoogleAuth nav={navigation}/>
           {
             Platform.OS === 'ios' && <AppleAuth/>
           }

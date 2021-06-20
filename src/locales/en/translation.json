@@ -69,7 +69,8 @@
     "tips": [
       "Enter the email address to which your account is linked",
       "Enter the 6-digit code from the letter that was sent to your mail",
-      "Enter a new password"
+      "Enter a new password",
+      "Come up with a unique username that your friends can use to find you"
     ],
     "codeLengthMismatch": "The code must be six digits",
     "nameLengthError": "The name must contain at least 2 characters",
@@ -78,21 +79,24 @@
   "signUp": {
     "registration": "Registration",
     "name": "Your name",
+    "username": "Username",
     "password": "Password",
     "repeatPassword": "Repeat password",
     "successful": "Registration completed successfully",
     "passwordsDontMatch": "Passwords don't match",
     "back": "Go back",
-    "next": "Next step"
+    "next": "Next step",
+    "register": "Register now"
   },
   "errors": {
     "WRONG_AUTH_DATA": "Authorization failed due to wrong auth data",
     "MISSING_AUTH_CODE": "Can't perform auth due to missing server auth code",
-    "USERNAME_DUPLICATION": "User with this e-mail already exists",
+    "USERNAME_DUPLICATION": "User with this username already exists",
     "WRONG_USER_PASSWORD": "Invalid e-mail or password",
     "NO_USER_WITH_SUCH_USERNAME": "Invalid e-mail or password",
     "INVALID_ACCESS_TOKEN": "Invalid access token",
     "WRONG_RESET_CODE": "Invalid reset code",
+    "VALIDATION_ERROR": "The username must contain at least 4 characters",
     "unspecific": "Something went wrong"
   },
   "measures": {

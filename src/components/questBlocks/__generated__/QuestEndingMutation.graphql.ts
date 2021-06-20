@@ -84,7 +84,7 @@ v2 = [
             "variableName": "questId"
           }
         ],
-        "concreteType": "UserCompleteQuestPayload",
+        "concreteType": "UpdateUserPayload",
         "kind": "LinkedField",
         "name": "completeQuest",
         "plural": false,
