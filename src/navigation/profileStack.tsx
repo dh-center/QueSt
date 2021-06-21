@@ -18,11 +18,17 @@ import FriendAddingScreenWithSuspense from '../screens/FriendsAdding';
 import SendEmailScreen from '../screens/SendEmail';
 import InputCodeScreen from '../screens/InputCode';
 import SetNewPasswordScreen from '../screens/SetNewPassword';
+import ChangeUsernameScreen from '../screens/ChangeUsername';
 
 /**
  * Type with params of screens and their props in ProfileStackScreen
  */
 export type ProfileStackParamList = {
+  /**
+   * ChangeUsername screen props
+   */
+  ChangeUsername: undefined;
+
   /**
    * Main screen props
    */
@@ -98,10 +104,11 @@ export default function ProfileStackNavigation(): React.ReactElement {
   const authContext = useAuthContext();
 
   return (
-    <ProfileStack.Navigator>
+    <ProfileStack.Navigator initialRouteName={'Login'}>
       {authContext.state.accessToken
         ? <>
           <ProfileStack.Screen name="Main" component={ProfileScreen} options={{ headerShown: false }}/>
+          <ProfileStack.Screen name="ChangeUsername" component={ChangeUsernameScreen} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="About" component={AboutScreen} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="Friends" options={{ headerShown: false }}>

@@ -83,8 +83,9 @@ export default function RegistrationScreen(): ReactElement {
 
     try {
       await authContext.actions.registerWithEmailAndPassword(name, email, password);
-      Alert.alert(t('signUp.successful'));
-      navigation.navigate('Login');
+      await authContext.actions.loginWithEmailAndPassword(email, password);
+
+      navigation.navigate('ChangeUsername');
     } catch (e) {
       Alert.alert(t([`errors.${e.message}`, 'errors.unspecific']));
     }
@@ -133,7 +134,7 @@ export default function RegistrationScreen(): ReactElement {
         onChangeText={val => setRepeatedPassword(val)}
       />
       <Button
-        title={t('signUp.registration')}
+        title={t('signUp.next')}
         onPress={register}
         style={styles.registrationButton}
       />

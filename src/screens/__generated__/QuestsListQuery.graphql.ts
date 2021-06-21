@@ -4,7 +4,7 @@
 
 import { ConcreteRequest } from "relay-runtime";
 export type QuestUserProgressStates = "AVAILABLE" | "LOCKED" | "PASSED";
-export type TaskTypes = "QUIZ" | "ROUTE" | "STORY" | "TEST";
+export type TaskTypes = "QUEST" | "QUIZ" | "ROUTE" | "STORY";
 export type WayToTravel = "ON_FOOT" | "WITH_TRANSPORT";
 export type QuestsListQueryVariables = {};
 export type QuestsListQueryResponse = {
