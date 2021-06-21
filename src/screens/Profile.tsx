@@ -113,8 +113,6 @@ export default function ProfileScreen(): React.ReactElement {
           ? { uri: props.user.photo }
           : require('../images/lapki.jpg');
 
-        console.log(props.user.email);
-
         return (
           <ScreenWrapper scrollable>
             <Ellipse/>
