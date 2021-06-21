@@ -5,7 +5,7 @@ import { OAUTH_WEB_CLIENT_ID } from '@env';
 import { Alert, TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { useAuthContext } from '../../contexts/AuthProvider';
-import { LoginScreenNavigationProp } from '../../screens/Login';
+import AuthButtonProps from './AuthButtonProps';
 
 GoogleSignin.configure({
   webClientId: OAUTH_WEB_CLIENT_ID,
@@ -13,21 +13,11 @@ GoogleSignin.configure({
 });
 
 /**
- * Props for GoogleAuth component
- */
-interface GoogleAuthProps {
-  /**
-   * Navigation props from LoginScreen
-   */
-  nav: LoginScreenNavigationProp
-}
-
-/**
  * Button for performing authorization via Google
  *
  * @param props - navigation props
  */
-export default function GoogleAuth(props: GoogleAuthProps): React.ReactElement {
+export default function GoogleAuth(props: AuthButtonProps): React.ReactElement {
   const authContext = useAuthContext();
   const { t } = useTranslation();
 
@@ -36,7 +26,7 @@ export default function GoogleAuth(props: GoogleAuthProps): React.ReactElement {
       const response = await authContext.actions.authWithGoogle();
 
       if (response.isFirstRegistration) {
-        props.nav.navigate('ChangeUsername');
+        props.onFirstLogin();
       }
     } catch (e) {
       Alert.alert(t([`errors.${e.message}`, 'errors.unspecific']));

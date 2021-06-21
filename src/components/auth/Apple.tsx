@@ -3,24 +3,14 @@ import AppleLogo from '../../images/apple.svg';
 import { Alert, TouchableOpacity } from 'react-native';
 import { useAuthContext } from '../../contexts/AuthProvider';
 import { useTranslation } from 'react-i18next';
-import { LoginScreenNavigationProp } from '../../screens/Login';
-
-/**
- * Props for AppleAuth component
- */
-interface AppleAuthProps {
-  /**
-   * Navigation props from LoginScreen
-   */
-  nav: LoginScreenNavigationProp
-}
+import AuthButtonProps from './AuthButtonProps';
 
 /**
  * Button for performing authorization via Apple ID
  *
  * @param props - navigation props
  */
-export default function AppleAuth(props: AppleAuthProps): ReactElement {
+export default function AppleAuth(props: AuthButtonProps): ReactElement {
   const authContext = useAuthContext();
 
   const { t } = useTranslation();
@@ -29,7 +19,7 @@ export default function AppleAuth(props: AppleAuthProps): ReactElement {
       const response = await authContext.actions.authWithApple();
 
       if (response.isFirstRegistration) {
-        props.nav.navigate('ChangeUsername');
+        props.onFirstLogin();
       }
     } catch (e) {
       Alert.alert(t([`errors.${e.message}`, 'errors.unspecific']));
