@@ -111,19 +111,7 @@ export default function ChangeUsernameScreen({ navigation }: Props): ReactElemen
         title={t('signUp.register')}
         onPress={() => updateUsername({
           variables: { username },
-          onError: error => {
-            switch (error.source.errors[0].extensions.code) {
-              case 'USERNAME_DUPLICATION':
-                Alert.alert(t('errors.USERNAME_DUPLICATION'));
-                break;
-              case 'VALIDATION_ERROR':
-                Alert.alert(t('errors.VALIDATION_ERROR'));
-                break;
-              default:
-                console.log('error', error);
-                Alert.alert(t('errors.unspecific'));
-            }
-          },
+          onError: error => Alert.alert(t([`errors.${error.source.errors[0].extensions.code}`, 'errors.unspecific'])),
           onCompleted: () => {
             Alert.alert(t('signUp.successful'));
             navigation.navigate('Main');
