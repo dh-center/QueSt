@@ -22,6 +22,11 @@ export interface TokenPair {
    * User refresh token
    */
   refreshToken: string | null;
+
+  /**
+   * If user login at first time
+   */
+  isFirstRegistration?: boolean;
 }
 
 /**
@@ -98,7 +103,7 @@ class AuthContextActions {
   /**
    * Performs authorization via VKontakte
    */
-  public async authWithVK(): Promise<void>     {
+  public async authWithVK(): Promise<TokenPair>     {
     const data = await VKLogin.login(['friends', 'photos', 'email', 'offline']);
 
     const userDataResponse = await (await fetch(`https://api.vk.com/method/users.get?v=5.126&fields=photo_200,has_photo&access_token=${data.access_token}`)).json();
@@ -121,12 +126,14 @@ class AuthContextActions {
     checkApiErrors(requestData);
 
     await this.saveTokens(requestData.data);
+
+    return requestData.data;
   }
 
   /**
    * Performs authorization via Facebook
    */
-  public async authWithFacebook(): Promise<void> {
+  public async authWithFacebook(): Promise<TokenPair | undefined> {
     const result = await LoginManager.logInWithPermissions(['public_profile', 'email', 'user_photos']);
 
     if (result.isCancelled) {
@@ -144,12 +151,14 @@ class AuthContextActions {
     checkApiErrors(requestData);
 
     await this.saveTokens(requestData.data);
+
+    return requestData.data;
   }
 
   /**
    * Performs auth with Google
    */
-  public async authWithGoogle(): Promise<void> {
+  public async authWithGoogle(): Promise<TokenPair> {
     await GoogleSignin.hasPlayServices();
     const userInfo = await GoogleSignin.signIn();
 
@@ -161,6 +170,8 @@ class AuthContextActions {
       const requestData = await response.json();
 
       await this.saveTokens(requestData.data);
+
+      return requestData.data;
     } else {
       throw new Error('MISSING_AUTH_CODE');
     }
@@ -169,7 +180,7 @@ class AuthContextActions {
   /**
    * Performs auth with Apple ID
    */
-  public async authWithApple(): Promise<void> {
+  public async authWithApple(): Promise<TokenPair> {
     const appleAuthRequestResponse = await appleAuth.performRequest({
       requestedOperation: appleAuth.Operation.LOGIN,
       requestedScopes: [
@@ -196,6 +207,8 @@ class AuthContextActions {
       const requestData = await response.json();
 
       await this.saveTokens(requestData.data);
+
+      return requestData.data;
     } else {
       throw new Error('MISSING_AUTH_CODE');
     }

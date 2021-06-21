@@ -104,7 +104,7 @@ const GrayText = styled.Text`
 /**
  * Type with props of screen 'Login' in ProfileStackScreen
  */
-type LoginScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Login'>;
+export type LoginScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Login'>;
 
 /**
  * Login view
@@ -126,6 +126,8 @@ export default function LoginScreen(): ReactElement {
       Alert.alert(t([`errors.${e.message}`, 'errors.unspecific']));
     }
   };
+
+  const onFirstLogin = (): void => navigation.navigate('ChangeUsername');
 
   return (
     <ScreenWrapper scrollable>
@@ -174,11 +176,11 @@ export default function LoginScreen(): ReactElement {
           {t('signIn.logInWith')}
         </Text>
         <View style={styles.socialsContainer}>
-          <FacebookAuth/>
-          <VkAuth/>
-          <GoogleAuth/>
+          <FacebookAuth onFirstLogin={onFirstLogin}/>
+          <VkAuth onFirstLogin={onFirstLogin}/>
+          <GoogleAuth onFirstLogin={onFirstLogin}/>
           {
-            Platform.OS === 'ios' && <AppleAuth/>
+            Platform.OS === 'ios' && <AppleAuth onFirstLogin={onFirstLogin}/>
           }
         </View>
       </View>
