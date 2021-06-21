@@ -202,6 +202,8 @@ class AuthContextActions {
       const requestData = await response.json();
 
       await this.saveTokens(requestData.data);
+
+      return requestData.data;
     } else {
       throw new Error('MISSING_AUTH_CODE');
     }

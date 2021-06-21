@@ -178,7 +178,7 @@ export default function LoginScreen(): ReactElement {
           <VkAuth nav={navigation}/>
           <GoogleAuth nav={navigation}/>
           {
-            Platform.OS === 'ios' && <AppleAuth/>
+            Platform.OS === 'ios' && <AppleAuth nav={navigation}/>
           }
         </View>
       </View>
