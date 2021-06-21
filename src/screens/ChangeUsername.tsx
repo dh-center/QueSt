@@ -67,7 +67,7 @@ const StyledButton = styled(Button)`
 `;
 
 /**
- * View with code input
+ * Screen with changing username
  *
  * @param props - props for component rendering
  */
