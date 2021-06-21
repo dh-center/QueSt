@@ -12,7 +12,13 @@ GoogleSignin.configure({
   offlineAccess: true,
 });
 
+/**
+ * Props for GoogleAuth component
+ */
 interface GoogleAuthProps {
+  /**
+   * Navigation props from LoginScreen
+   */
   nav: LoginScreenNavigationProp
 }
 

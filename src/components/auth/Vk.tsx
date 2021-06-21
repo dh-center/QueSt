@@ -5,7 +5,13 @@ import { useTranslation } from 'react-i18next';
 import { useAuthContext } from '../../contexts/AuthProvider';
 import { LoginScreenNavigationProp } from '../../screens/Login';
 
+/**
+ * Props for VkAuth component
+ */
 interface VkAuthProps {
+  /**
+   * Navigation props from LoginScreen
+   */
   nav: LoginScreenNavigationProp
 }
 

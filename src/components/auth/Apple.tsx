@@ -5,7 +5,13 @@ import { useAuthContext } from '../../contexts/AuthProvider';
 import { useTranslation } from 'react-i18next';
 import { LoginScreenNavigationProp } from '../../screens/Login';
 
+/**
+ * Props for AppleAuth component
+ */
 interface AppleAuthProps {
+  /**
+   * Navigation props from LoginScreen
+   */
   nav: LoginScreenNavigationProp
 }
 
