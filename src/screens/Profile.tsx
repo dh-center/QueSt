@@ -79,6 +79,7 @@ export default function ProfileScreen(): React.ReactElement {
               firstName
               level
               exp
+              email
             }
         }
       `}
@@ -112,6 +113,8 @@ export default function ProfileScreen(): React.ReactElement {
           ? { uri: props.user.photo }
           : require('../images/lapki.jpg');
 
+        console.log(props.user.email);
+
         return (
           <ScreenWrapper scrollable>
             <Ellipse/>
@@ -119,6 +122,7 @@ export default function ProfileScreen(): React.ReactElement {
               avatar: imageSource,
               name: props.user.firstName || props.user.username,
               username: props.user.username,
+              email: props.user.email ? props.user.email : undefined,
             })}>
               <Settings/>
             </SettingsButton>
