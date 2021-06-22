@@ -17,6 +17,7 @@ import { useMutation } from 'react-relay/hooks';
 import { graphql } from 'react-relay';
 import { SettingsMutation } from './__generated__/SettingsMutation.graphql';
 import Button from '../components/ui/Button';
+import { SettingsSendCodeMutation } from './__generated__/SettingsSendCodeMutation.graphql';
 
 /**
  * Type with props of screen 'Settings' in ProfileStackScreen
@@ -190,6 +191,16 @@ export default function SettingsScreen({ route, navigation }: Props): React.Reac
     }
   };
 
+  const [ sendEmail ] = useMutation<SettingsSendCodeMutation>(
+    graphql`
+      mutation SettingsSendCodeMutation($email: String!) {
+        user {
+          sendCodeForPasswordReset(email: $email)
+        }
+      }
+    `
+  );
+
   return (
     <Wrapper>
       <Header>
@@ -210,7 +221,19 @@ export default function SettingsScreen({ route, navigation }: Props): React.Reac
       </Header>
 
       <Body>
-        <ListButton buttonText={t('settings.password')} type={'settings'}/>
+        {route.params.email &&
+        <ListButton
+          buttonText={t('settings.password')}
+          type={'settings'}
+          onPress={() => {
+            sendEmail({
+              variables: { email: route.params.email },
+              onError: err => console.error(err),
+            });
+            navigation.navigate('ChangePassword', { email: route.params.email ? route.params.email : undefined });
+          }}
+        />
+        }
         <ListButton
           buttonText={t('settings.avatar')}
           type={'settings'}
@@ -219,6 +242,7 @@ export default function SettingsScreen({ route, navigation }: Props): React.Reac
             // setResponse(resp.assets[0] || null);
             resp.didCancel ? console.log('cancelled') : imageUpload(resp.assets[0]);
           })}/>
+        <ListButton buttonText={t('settings.avatar')} type={'settings'}/>
         <ListButton buttonText={t('settings.about')} type={'info'} onPress={() => navigation.navigate('About')}/>
         <LogoutButton onPress={(): Promise<void> => authContext.actions.logout()}>
           <LogoutText>{t('settings.logout')}</LogoutText>

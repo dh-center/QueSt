@@ -79,6 +79,7 @@ export default function ProfileScreen(): React.ReactElement {
               firstName
               level
               exp
+              email
             }
         }
       `}
@@ -119,6 +120,7 @@ export default function ProfileScreen(): React.ReactElement {
               avatar: imageSource,
               name: props.user.firstName || props.user.username,
               username: props.user.username,
+              email: props.user.email ? props.user.email : undefined,
             })}>
               <Settings/>
             </SettingsButton>
