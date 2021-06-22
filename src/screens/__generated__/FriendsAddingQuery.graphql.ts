@@ -13,6 +13,11 @@ export type FriendsAddingQueryResponse = {
         readonly id: string;
         readonly " $fragmentRefs": FragmentRefs<"FriendButton_data">;
     }>;
+    readonly me: {
+        readonly friendPendingRequests: ReadonlyArray<{
+            readonly id: string;
+        }>;
+    };
 };
 export type FriendsAddingQuery = {
     readonly response: FriendsAddingQueryResponse;
@@ -29,6 +34,12 @@ query FriendsAddingQuery(
   usersSearch(username: $username) @include(if: $needFetch) {
     id
     ...FriendButton_data
+  }
+  me {
+    friendPendingRequests {
+      id
+    }
+    id
   }
 }
 
@@ -51,20 +62,32 @@ v1 = {
   "kind": "LocalArgument",
   "name": "username"
 },
-v2 = [
-  {
-    "kind": "Variable",
-    "name": "username",
-    "variableName": "username"
-  }
-],
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "User",
+  "kind": "LinkedField",
+  "name": "friendPendingRequests",
+  "plural": true,
+  "selections": [
+    (v2/*: any*/)
+  ],
+  "storageKey": null
+},
+v4 = [
+  {
+    "kind": "Variable",
+    "name": "username",
+    "variableName": "username"
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -76,19 +99,31 @@ return {
     "name": "FriendsAddingQuery",
     "selections": [
       {
+        "alias": null,
+        "args": null,
+        "concreteType": "User",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          (v3/*: any*/)
+        ],
+        "storageKey": null
+      },
+      {
         "condition": "needFetch",
         "kind": "Condition",
         "passingValue": true,
         "selections": [
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v4/*: any*/),
             "concreteType": "User",
             "kind": "LinkedField",
             "name": "usersSearch",
             "plural": true,
             "selections": [
-              (v3/*: any*/),
+              (v2/*: any*/),
               {
                 "args": null,
                 "kind": "FragmentSpread",
@@ -113,19 +148,32 @@ return {
     "name": "FriendsAddingQuery",
     "selections": [
       {
+        "alias": null,
+        "args": null,
+        "concreteType": "User",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          (v3/*: any*/),
+          (v2/*: any*/)
+        ],
+        "storageKey": null
+      },
+      {
         "condition": "needFetch",
         "kind": "Condition",
         "passingValue": true,
         "selections": [
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v4/*: any*/),
             "concreteType": "User",
             "kind": "LinkedField",
             "name": "usersSearch",
             "plural": true,
             "selections": [
-              (v3/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -162,14 +210,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2400273f146c5e9ffaaba1966c313ae4",
+    "cacheID": "bb857570bb5b3e7c51f61754a3397a63",
     "id": null,
     "metadata": {},
     "name": "FriendsAddingQuery",
     "operationKind": "query",
-    "text": "query FriendsAddingQuery(\n  $username: String!\n  $needFetch: Boolean!\n) {\n  usersSearch(username: $username) @include(if: $needFetch) {\n    id\n    ...FriendButton_data\n  }\n}\n\nfragment FriendButton_data on User {\n  firstName\n  username\n  level\n  photo\n}\n"
+    "text": "query FriendsAddingQuery(\n  $username: String!\n  $needFetch: Boolean!\n) {\n  usersSearch(username: $username) @include(if: $needFetch) {\n    id\n    ...FriendButton_data\n  }\n  me {\n    friendPendingRequests {\n      id\n    }\n    id\n  }\n}\n\nfragment FriendButton_data on User {\n  firstName\n  username\n  level\n  photo\n}\n"
   }
 };
 })();
-(node as any).hash = 'cef60ddc6d150fde86400eb8932fe8ad';
+(node as any).hash = 'c3dd0749854adc688cff0ccf2feead16';
 export default node;
