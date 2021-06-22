@@ -75,14 +75,14 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-  <string>This app requires access to the photo library for uploading profile image.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>The location is necessary so that we can display your position on the map, find nearby quests, and also make sure that you are following the route correctly</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>The location is necessary so that we can display your position on the map, find nearby quests, and also make sure that you are following the route correctly</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>The location is necessary so that we can display your position on the map, find nearby quests, and also make sure that you are following the route correctly</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>This app requires access to the photo library for uploading profile image.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
