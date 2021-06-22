@@ -8,7 +8,7 @@ import { QuestWalkthroughRenderer_quest } from './__generated__/QuestWalkthrough
 import {
   CurrentTaskBlock,
   groupQuestData,
-  QuestBlock,
+  QuestBlock
 } from '../types/questData';
 import TextBlock from './questBlocks/Text/TextBlock';
 import QuestLocationInstanceBlock from './questBlocks/LocationInstance';

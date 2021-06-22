@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {PageBlock, TextQuestBlock} from '../../../types/questData';
+import { PageBlock } from '../../../types/questData';
 import Colors from '../../../styles/colors';
 import { StyledFonts } from '../../../styles/textStyles';
 import styled from 'styled-components/native';
