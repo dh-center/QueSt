@@ -167,6 +167,14 @@ export interface ImageBlock {
 }
 
 /**
+ * Page block includes all text blocks
+ */
+export interface PageBlock {
+  type: 'page',
+  data: TextQuestBlock[],
+}
+
+/**
  * All text blocks
  */
 export type TextQuestBlock =
@@ -176,11 +184,21 @@ export type TextQuestBlock =
   | DelimiterBlock;
 
 /**
- * All quest blocks
+ * All quest blocks (raw data from API)
  */
 export type QuestBlock =
   | LocationInstanceBlock
   | TextQuestBlock
+  | TestBlock
+  | QuestionBlock
+  | CurrentTaskBlock;
+
+/**
+ * All quest blocks after grouping
+ */
+export type GroupedQuestBlock =
+  | LocationInstanceBlock
+  | PageBlock
   | TestBlock
   | QuestionBlock
   | CurrentTaskBlock;
@@ -191,3 +209,54 @@ export type QuestBlock =
 export type CreditBlock =
   | ParagraphBlock
   | ImageBlock;
+
+/**
+ * Array of all text blocks
+ */
+export const textBlockTypes = ['header', 'paragraph', 'quote'];
+
+
+/**
+ * Checks that passed block is text block
+ *
+ * @param block - block to be checked
+ */
+export function isTextBlock(block: QuestBlock): block is TextQuestBlock {
+  return textBlockTypes.some(type => type === block.type);
+}
+
+/**
+ * Group series of text blocks in the quest data into one page
+ *
+ * @param data - data to be grouped
+ */
+export function groupQuestData(data: QuestBlock[]): GroupedQuestBlock[] {
+  let i = 0;
+  let currentTextBlocks: TextQuestBlock[] = [];
+
+  const finalArray: GroupedQuestBlock[] = [];
+
+  while (i < data.length) {
+    const currentBlock = data[i];
+
+    if (isTextBlock(currentBlock)) {
+      currentTextBlocks = [...currentTextBlocks, currentBlock];
+      const nextBlock = data[i + 1];
+
+      if (!nextBlock || !isTextBlock(nextBlock)) {
+        const pageBlock: PageBlock = {
+          type: 'page',
+          data: currentTextBlocks,
+        };
+
+        finalArray.push(pageBlock);
+        currentTextBlocks = [];
+      }
+    } else {
+      finalArray.push(currentBlock);
+    }
+    i++;
+  }
+
+  return finalArray;
+}

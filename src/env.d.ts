@@ -18,4 +18,9 @@ declare module '@env' {
    * VK application id for Auth
    */
   export const VK_APP_ID: string;
+
+  /**
+   * API endpoint of the quest-to-speech service
+   */
+  export const QTS_API_ENDPOINT: string;
 }

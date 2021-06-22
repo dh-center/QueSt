@@ -11,6 +11,9 @@ import React, {
 import qtsApi from '../utils/qtsApi';
 import Sound from 'react-native-sound';
 
+// Enable playback in silence mode
+Sound.setCategory('Playback');
+
 
 /**
  * Props of AudioAccompanimentContext
@@ -51,12 +54,13 @@ export function AudioAccompanimentProvider(props: AudioAccompanimentProviderProp
   const [text, setText] = useState<string | null>(null);
   const sound = useRef<Sound | null>(null);
 
-
   const loadAudio = async (): Promise<void> => {
     if (!text) {
       return;
     }
     const path = await qtsApi.getAudio(props.questId, text);
+
+    console.log(path);
 
     sound.current = new Sound(path, '', (error) => {
       if (error) {
@@ -68,12 +72,13 @@ export function AudioAccompanimentProvider(props: AudioAccompanimentProviderProp
         return;
       }
       // loaded successfully
-      console.log('duration in seconds: ' + sound.current.getDuration() + 'number of channels: ' + sound.current.getNumberOfChannels());
+      console.log('duration in seconds: ' + sound.current.getDuration() + ' number of channels: ' + sound.current.getNumberOfChannels());
 
       if (!isPlaying) {
         return;
       }
       // Play the sound with an onEnd callback
+      console.log('start play');
       sound.current.play((success) => {
         if (success) {
           console.log('successfully finished playing');
@@ -84,34 +89,16 @@ export function AudioAccompanimentProvider(props: AudioAccompanimentProviderProp
     });
   };
 
-  const onStartAudioPlay = (): void => {
-    if (sound.current) {
-      sound.current?.reset();
-      sound.current?.play();
-    }
-  };
-
-  const onStopAudioPlay = ():void => {
-    if (sound.current) {
-      sound.current?.stop();
-    }
-  };
-
-  const onPlayStatusToggle = (): void => {
+  useEffect(() => {
+    console.log('call effect');
+    sound.current?.stop();
+    sound.current?.release();
+    sound.current = null;
     if (isPlaying) {
-      onStartAudioPlay();
-    } else {
-      onStopAudioPlay();
+      console.log('load audio');
+      loadAudio();
     }
-  };
-
-  useEffect(() => {
-    onPlayStatusToggle();
-  }, [ isPlaying ]);
-
-  useEffect(() => {
-    loadAudio();
-  }, [ text ]);
+  }, [isPlaying, text]);
 
 
   return (
