@@ -137,7 +137,7 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
   const [language, setLanguage] = useState<'RU' | 'ENG'>('RU');
-  const [questType, setQuestType] = useState<TaskTypes | undefined>();
+  const [currentQuestType, setCurrentQuestType] = useState<TaskTypes | undefined>();
   const tabBarHeight = useTabBarHeight();
   const questTypesList: (TaskTypes | undefined)[] = [undefined, 'QUEST', 'ROUTE', 'STORY', 'QUIZ'];
 
@@ -193,8 +193,8 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
           showsHorizontalScrollIndicator={false}
           data={questTypesList}
           renderItem={({ item }): React.ReactElement => (
-            <TypeButton active={item === questType} onPress={() => setQuestType(item)}>
-              <TypeButtonText active={item === questType}>{t([`quests.${item}`, 'quests.all'])}</TypeButtonText>
+            <TypeButton active={item === currentQuestType} onPress={() => setCurrentQuestType(item)}>
+              <TypeButtonText active={item === currentQuestType}>{t([`quests.${item}`, 'quests.all'])}</TypeButtonText>
             </TypeButton>
           )}
           keyExtractor={(item, index): string => index.toString()}
@@ -203,7 +203,7 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
 
       <FlatList
         contentContainerStyle={{ paddingTop: 15 }}
-        data={data.filter(quest => quest.node.language === language && (questType ? quest.node.type === questType : true))}
+        data={data.filter(quest => quest.node.language === language && (currentQuestType ? quest.node.type === currentQuestType : true))}
         renderItem={({ item }): React.ReactElement => (
           <>
             <QuestsListItem
