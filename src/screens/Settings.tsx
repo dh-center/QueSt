@@ -160,6 +160,10 @@ export default function SettingsScreen({ route, navigation }: Props): React.Reac
     try {
       const formData = new FormData();
 
+      if (!response.uri) {
+        return;
+      }
+
       formData.append('image', {
         name: response.fileName,
         filename: response.fileName,
@@ -226,23 +230,30 @@ export default function SettingsScreen({ route, navigation }: Props): React.Reac
           buttonText={t('settings.password')}
           type={'settings'}
           onPress={() => {
-            sendEmail({
-              variables: { email: route.params.email },
-              onError: err => console.error(err),
-            });
-            navigation.navigate('ChangePassword', { email: route.params.email ? route.params.email : undefined });
+            if (route.params.email) {
+              sendEmail({
+                variables: { email: route.params.email },
+                onError: err => console.error(err),
+              });
+              navigation.navigate('ChangePassword', { email: route.params.email ? route.params.email : undefined });
+            }
           }}
         />
         }
         <ListButton
           buttonText={t('settings.avatar')}
           type={'settings'}
-          onPress={() => launchImageLibrary({ mediaType: 'photo',
-            includeBase64: true }, resp => {
-            // setResponse(resp.assets[0] || null);
+          onPress={() => launchImageLibrary({ mediaType: 'photo' }, resp => {
+            const fileSize = resp.assets[0].fileSize;
+            const fileSizeInMb = fileSize && fileSize / (1024) / 1024;
+
+            if (fileSizeInMb && fileSizeInMb > 4) {
+              Alert.alert('Size is too large');
+
+              return;
+            }
             resp.didCancel ? console.log('cancelled') : imageUpload(resp.assets[0]);
           })}/>
-        <ListButton buttonText={t('settings.avatar')} type={'settings'}/>
         <ListButton buttonText={t('settings.about')} type={'info'} onPress={() => navigation.navigate('About')}/>
         <LogoutButton onPress={(): Promise<void> => authContext.actions.logout()}>
           <LogoutText>{t('settings.logout')}</LogoutText>
