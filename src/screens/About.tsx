@@ -82,7 +82,7 @@ export default function AboutScreen({ navigation }: Props): React.ReactElement {
         <Title>{t('settings.about')}</Title>
       </Row>
       <StyledLogo height={80} width={144}/>
-      <DefaultText note>Версия 1.3 от 08.05.2021{'\n'}© 2021 Университет ИТМО</DefaultText>
+      <DefaultText note>Версия 0.4.0 от 22.06.2021{'\n'}© 2021 DH Center</DefaultText>
       <Button first onPress={() =>
         Linking.openURL('https://quest.dh-center.ru/privacy-policy.pdf')
           .catch(() => Alert.alert(`${t('settings.https_alert')} https://quest.dh-center.ru/privacy-policy.pdf`))}
