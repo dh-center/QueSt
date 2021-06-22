@@ -3,6 +3,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
+export type Languages = "EN" | "RU";
 export type QuestUserProgressStates = "AVAILABLE" | "LOCKED" | "PASSED";
 export type TaskTypes = "QUEST" | "QUIZ" | "ROUTE" | "STORY";
 export type WayToTravel = "ON_FOOT" | "WITH_TRANSPORT";
@@ -12,6 +13,7 @@ export type QuestsListQueryResponse = {
         readonly edges: ReadonlyArray<{
             readonly node: {
                 readonly id: string;
+                readonly language: Languages;
                 readonly name: string;
                 readonly description: string | null;
                 readonly type: TaskTypes;
@@ -41,6 +43,7 @@ query QuestsListQuery {
     edges {
       node {
         id
+        language
         name
         description
         type
@@ -90,6 +93,13 @@ var v0 = [
                 "args": null,
                 "kind": "ScalarField",
                 "name": "id",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "language",
                 "storageKey": null
               },
               {
@@ -201,14 +211,14 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "f5d24fb7734ea1f85a7e5dff176172c0",
+    "cacheID": "df1da0c8627b496133a6e83836b7e732",
     "id": null,
     "metadata": {},
     "name": "QuestsListQuery",
     "operationKind": "query",
-    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        name\n        description\n        type\n        minLevel\n        questProgressState\n        earnedExp\n        wayToTravel\n        distanceInKilometers\n        durationInMinutes\n        credits {\n          blocks\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        language\n        name\n        description\n        type\n        minLevel\n        questProgressState\n        earnedExp\n        wayToTravel\n        distanceInKilometers\n        durationInMinutes\n        credits {\n          blocks\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '53640dc5703df2a955be113d0a9932a2';
+(node as any).hash = '4c8bb77b83e960e3c259cbd359417569';
 export default node;

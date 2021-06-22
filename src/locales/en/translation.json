@@ -14,7 +14,12 @@
     "passed": "You have completed the quest",
     "experience": "Experience",
     "received": "Received",
-    "endQuest": "Get an award"
+    "endQuest": "Get an award",
+    "QUEST":  "Quests",
+    "ROUTE":  "Routes",
+    "STORY":  "Stories",
+    "QUIZ":  "Tests",
+    "all": "All"
   },
   "achievements": {
     "all": "All",
