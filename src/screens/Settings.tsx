@@ -245,7 +245,7 @@ export default function SettingsScreen({ route, navigation }: Props): React.Reac
           type={'settings'}
           onPress={() => launchImageLibrary({ mediaType: 'photo' }, resp => {
             const fileSize = resp.assets[0].fileSize;
-            const fileSizeInMb = fileSize && fileSize / (1024) / 1024;
+            const fileSizeInMb = fileSize && fileSize / 1024 / 1024;
 
             if (fileSizeInMb && fileSizeInMb > 4) {
               Alert.alert('Size is too large');
