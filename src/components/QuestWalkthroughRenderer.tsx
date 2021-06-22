@@ -18,6 +18,7 @@ import QuestEnding from './questBlocks/QuestEnding';
 import { useRelayEnvironment } from 'react-relay/hooks';
 import { TargetLocationProvider } from '../contexts/TargetLocationContext';
 import useTabBarHeight from './utils/useTabBarHeight';
+import { AudioAccompanimentProvider } from '../contexts/AudioAccompanimentContext';
 
 const styles = StyleSheet.create({
   modal: {
@@ -184,23 +185,25 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
 
   return (
     <TargetLocationProvider>
-      <Suspense fallback={<Spinner color={Colors.DarkBlue}/>}>
-        <MapView>
-          {currentTarget && <QuestLocationInstanceBlock locationInstanceId={currentTarget}/>}
-        </MapView>
-        {currentTaskBlock && <CurrentTask block={currentTaskBlock}/>}
-        <Modalize
-          avoidKeyboardLikeIOS
-          handlePosition={'inside'}
-          ref={modalizeRef}
-          keyboardAvoidingBehavior={'padding'}
-          keyboardAvoidingOffset={-100} // magic value that fixes bottom padding if keyboard is open
-          alwaysOpen={BOTTOM_SHEET_TOP}
-          modalStyle={styles.modal}
-          rootStyle={styles.root}
-          customRenderer={<ModalScrollView>{component}</ModalScrollView>}
-        />
-      </Suspense>
+      <AudioAccompanimentProvider questId={props.quest?.id || ''}>
+        <Suspense fallback={<Spinner color={Colors.DarkBlue}/>}>
+          <MapView>
+            {currentTarget && <QuestLocationInstanceBlock locationInstanceId={currentTarget}/>}
+          </MapView>
+          {currentTaskBlock && <CurrentTask block={currentTaskBlock}/>}
+          <Modalize
+            avoidKeyboardLikeIOS
+            handlePosition={'inside'}
+            ref={modalizeRef}
+            keyboardAvoidingBehavior={'padding'}
+            keyboardAvoidingOffset={-100} // magic value that fixes bottom padding if keyboard is open
+            alwaysOpen={BOTTOM_SHEET_TOP}
+            modalStyle={styles.modal}
+            rootStyle={styles.root}
+            customRenderer={<ModalScrollView>{component}</ModalScrollView>}
+          />
+        </Suspense>
+      </AudioAccompanimentProvider>
     </TargetLocationProvider>
   );
 }, {
