@@ -13,6 +13,12 @@ export type FriendsAddingQueryResponse = {
         readonly id: string;
         readonly " $fragmentRefs": FragmentRefs<"FriendButton_data">;
     }>;
+    readonly me: {
+        readonly id: string;
+        readonly friendPendingRequests: ReadonlyArray<{
+            readonly id: string;
+        }>;
+    };
 };
 export type FriendsAddingQuery = {
     readonly response: FriendsAddingQueryResponse;
@@ -29,6 +35,12 @@ query FriendsAddingQuery(
   usersSearch(username: $username) @include(if: $needFetch) {
     id
     ...FriendButton_data
+  }
+  me {
+    id
+    friendPendingRequests {
+      id
+    }
   }
 }
 
@@ -51,20 +63,44 @@ v1 = {
   "kind": "LocalArgument",
   "name": "username"
 },
-v2 = [
-  {
-    "kind": "Variable",
-    "name": "username",
-    "variableName": "username"
-  }
-],
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
-};
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "User",
+  "kind": "LinkedField",
+  "name": "me",
+  "plural": false,
+  "selections": [
+    (v2/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "User",
+      "kind": "LinkedField",
+      "name": "friendPendingRequests",
+      "plural": true,
+      "selections": [
+        (v2/*: any*/)
+      ],
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v4 = [
+  {
+    "kind": "Variable",
+    "name": "username",
+    "variableName": "username"
+  }
+];
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -75,6 +111,7 @@ return {
     "metadata": null,
     "name": "FriendsAddingQuery",
     "selections": [
+      (v3/*: any*/),
       {
         "condition": "needFetch",
         "kind": "Condition",
@@ -82,13 +119,13 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v4/*: any*/),
             "concreteType": "User",
             "kind": "LinkedField",
             "name": "usersSearch",
             "plural": true,
             "selections": [
-              (v3/*: any*/),
+              (v2/*: any*/),
               {
                 "args": null,
                 "kind": "FragmentSpread",
@@ -112,6 +149,7 @@ return {
     "kind": "Operation",
     "name": "FriendsAddingQuery",
     "selections": [
+      (v3/*: any*/),
       {
         "condition": "needFetch",
         "kind": "Condition",
@@ -119,13 +157,13 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v4/*: any*/),
             "concreteType": "User",
             "kind": "LinkedField",
             "name": "usersSearch",
             "plural": true,
             "selections": [
-              (v3/*: any*/),
+              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -162,14 +200,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2400273f146c5e9ffaaba1966c313ae4",
+    "cacheID": "777c9f3a2d4a43e32a463d896e668d4d",
     "id": null,
     "metadata": {},
     "name": "FriendsAddingQuery",
     "operationKind": "query",
-    "text": "query FriendsAddingQuery(\n  $username: String!\n  $needFetch: Boolean!\n) {\n  usersSearch(username: $username) @include(if: $needFetch) {\n    id\n    ...FriendButton_data\n  }\n}\n\nfragment FriendButton_data on User {\n  firstName\n  username\n  level\n  photo\n}\n"
+    "text": "query FriendsAddingQuery(\n  $username: String!\n  $needFetch: Boolean!\n) {\n  usersSearch(username: $username) @include(if: $needFetch) {\n    id\n    ...FriendButton_data\n  }\n  me {\n    id\n    friendPendingRequests {\n      id\n    }\n  }\n}\n\nfragment FriendButton_data on User {\n  firstName\n  username\n  level\n  photo\n}\n"
   }
 };
 })();
-(node as any).hash = 'cef60ddc6d150fde86400eb8932fe8ad';
+(node as any).hash = '790e5f7e8b7e7e3ab43bd4d1d0d9f1df';
 export default node;

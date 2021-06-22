@@ -51,7 +51,9 @@
     "feedback": "Feedback",
     "https_alert": "Failed to open link.\nThe file is available at:\n",
     "mail_alert": "Failed to start mail application.\nYou can write to the mail to contact us:",
-    "logout": "Log out"
+    "fileSizeAlert": "File is too large. Maximum file size is 4Mb",
+    "logout": "Log out",
+    "confirm": "Confirm"
   },
   "signIn": {
     "welcomeHeader": "Войдите в приложение",

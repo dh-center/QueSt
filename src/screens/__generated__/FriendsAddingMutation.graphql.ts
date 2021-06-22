@@ -16,6 +16,9 @@ export type FriendsAddingMutationResponse = {
                     readonly id: string;
                     readonly " $fragmentRefs": FragmentRefs<"FriendButton_data">;
                 }>;
+                readonly friendPendingRequests: ReadonlyArray<{
+                    readonly id: string;
+                }>;
             };
         };
     };
@@ -38,6 +41,9 @@ mutation FriendsAddingMutation(
         friends {
           id
           ...FriendButton_data
+        }
+        friendPendingRequests {
+          id
         }
       }
     }
@@ -72,6 +78,18 @@ v2 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "User",
+  "kind": "LinkedField",
+  "name": "friendPendingRequests",
+  "plural": true,
+  "selections": [
+    (v2/*: any*/)
+  ],
   "storageKey": null
 };
 return {
@@ -122,7 +140,8 @@ return {
                       }
                     ],
                     "storageKey": null
-                  }
+                  },
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -206,7 +225,8 @@ return {
                       }
                     ],
                     "storageKey": null
-                  }
+                  },
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -219,14 +239,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ce10ba356e90213d52db3674c233e874",
+    "cacheID": "85cf1cbf232c58377a75e3d41b7b9203",
     "id": null,
     "metadata": {},
     "name": "FriendsAddingMutation",
     "operationKind": "mutation",
-    "text": "mutation FriendsAddingMutation(\n  $userId: GlobalId!\n) {\n  user {\n    sendFriendRequest(id: $userId) {\n      record {\n        id\n        friends {\n          id\n          ...FriendButton_data\n        }\n      }\n    }\n  }\n}\n\nfragment FriendButton_data on User {\n  firstName\n  username\n  level\n  photo\n}\n"
+    "text": "mutation FriendsAddingMutation(\n  $userId: GlobalId!\n) {\n  user {\n    sendFriendRequest(id: $userId) {\n      record {\n        id\n        friends {\n          id\n          ...FriendButton_data\n        }\n        friendPendingRequests {\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment FriendButton_data on User {\n  firstName\n  username\n  level\n  photo\n}\n"
   }
 };
 })();
-(node as any).hash = 'b8ac4a1101d123ed738cfe6f631bebc3';
+(node as any).hash = '8f2f84f8ff0ab11c967eaf970c97e4c8';
 export default node;

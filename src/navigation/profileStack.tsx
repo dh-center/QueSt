@@ -33,7 +33,7 @@ export type ProfileStackParamList = {
   /**
    * ChangeUsername screen props
    */
-  ChangePassword: { email?: string };
+  ChangePassword: { email: string };
 
   /**
    * Main screen props
