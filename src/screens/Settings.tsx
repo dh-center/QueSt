@@ -10,6 +10,9 @@ import BlueCircle15 from '../images/blueCircle15.svg';
 import { StyledFonts } from '../styles/textStyles';
 import Avatar from '../components/Avatar';
 import BackArrow from '../components/BackArrow';
+import { useMutation } from 'react-relay/hooks';
+import { graphql } from 'react-relay';
+import { SettingsSendCodeMutation } from './__generated__/SettingsSendCodeMutation.graphql';
 
 /**
  * Type with props of screen 'Settings' in ProfileStackScreen
@@ -104,6 +107,16 @@ export default function SettingsScreen({ route, navigation }: Props): React.Reac
   const { t } = useTranslation();
   const authContext = useAuthContext();
 
+  const [ sendEmail ] = useMutation<SettingsSendCodeMutation>(
+    graphql`
+      mutation SettingsSendCodeMutation($email: String!) {
+        user {
+          sendCodeForPasswordReset(email: $email)
+        }
+      }
+    `
+  );
+
   return (
     <Wrapper>
       <Header>
@@ -124,7 +137,19 @@ export default function SettingsScreen({ route, navigation }: Props): React.Reac
       </Header>
 
       <Body>
-        <ListButton buttonText={t('settings.password')} type={'settings'}/>
+        {route.params.email &&
+          <ListButton
+            buttonText={t('settings.password')}
+            type={'settings'}
+            onPress={() => {
+              sendEmail({
+                variables: { email: route.params.email },
+                onError: err => console.error(err),
+              });
+              navigation.navigate('ChangePassword', { email: route.params.email ? route.params.email : undefined });
+            }}
+          />
+        }
         <ListButton buttonText={t('settings.avatar')} type={'settings'}/>
         <ListButton buttonText={t('settings.about')} type={'info'} onPress={() => navigation.navigate('About')}/>
         <LogoutButton onPress={(): Promise<void> => authContext.actions.logout()}>

@@ -12,6 +12,7 @@ export type ProfileQueryResponse = {
         readonly firstName: string | null;
         readonly level: number;
         readonly exp: number;
+        readonly email: string | null;
     };
 };
 export type ProfileQuery = {
@@ -30,6 +31,7 @@ query ProfileQuery {
     firstName
     level
     exp
+    email
   }
 }
 */
@@ -85,6 +87,13 @@ var v0 = [
         "kind": "ScalarField",
         "name": "exp",
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "email",
+        "storageKey": null
       }
     ],
     "storageKey": null
@@ -108,14 +117,14 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "6b9e6f2c462973a676a13facf991c9eb",
+    "cacheID": "4f1b27216b404eaba15e3e7d2208ee84",
     "id": null,
     "metadata": {},
     "name": "ProfileQuery",
     "operationKind": "query",
-    "text": "query ProfileQuery {\n  user: me {\n    id\n    username\n    photo\n    firstName\n    level\n    exp\n  }\n}\n"
+    "text": "query ProfileQuery {\n  user: me {\n    id\n    username\n    photo\n    firstName\n    level\n    exp\n    email\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'f57a2fa39476e0afe48f191897d1938b';
+(node as any).hash = 'ab500ce6bcb6169c4425e78534af328e';
 export default node;
