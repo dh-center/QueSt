@@ -235,7 +235,7 @@ export default function SettingsScreen({ route, navigation }: Props): React.Reac
                 variables: { email: route.params.email },
                 onError: err => console.error(err),
               });
-              navigation.navigate('ChangePassword', { email: route.params.email ? route.params.email : undefined });
+              navigation.navigate('ChangePassword', { email: route.params.email });
             }
           }}
         />
