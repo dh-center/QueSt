@@ -108,6 +108,7 @@ function FriendAddingScreen({ navigation }: Props): React.ReactElement {
           ...FriendButton_data
         }
         me {
+          id
           friendPendingRequests {
             id
           }
@@ -138,7 +139,7 @@ function FriendAddingScreen({ navigation }: Props): React.ReactElement {
       <FlatList
         style={flatListStyle}
         contentContainerStyle={flatListContentStyle}
-        data={data.usersSearch?.filter(fr => !data.me.friendPendingRequests.find(_fr => _fr.id === fr.id))}
+        data={data.usersSearch?.filter(fr => !data.me.friendPendingRequests.find(_fr => _fr.id === fr.id) && data.me.id !== fr.id)}
         renderItem={({ item }): React.ReactElement => (
           <FriendButton
             forAddingScreen
