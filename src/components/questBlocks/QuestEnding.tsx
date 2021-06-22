@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BlockBody from './BlockBody';
 import styled from 'styled-components/native';
 import { commitMutation, graphql } from 'react-relay';
@@ -11,6 +11,7 @@ import ReceivedExp from './ReceivedExp';
 import ReceivedCards from './ReceivedCards';
 import ReceivedAchievements from './ReceivedAchievements';
 import Congratulation from './Congratulation';
+import useAudioAccompanimentContext from '../../contexts/AudioAccompanimentContext';
 
 /**
  * Type with props of screen 'List' in QuestsStackScreen
@@ -74,6 +75,13 @@ export default function QuestEnding(props: QuestEndingProps): React.ReactElement
   const environment = useRelayEnvironment();
   const [step, setStep] = useState('congratulations');
   const [visibility, setVisibility] = useState(true);
+
+  const { setIsPlaying } = useAudioAccompanimentContext();
+
+  useEffect(() => {
+    setIsPlaying(false);
+  }, []);
+
 
   return (
     <Body>

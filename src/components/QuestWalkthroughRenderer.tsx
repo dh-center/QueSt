@@ -22,7 +22,8 @@ import QuestEnding from './questBlocks/QuestEnding';
 import { useRelayEnvironment } from 'react-relay/hooks';
 import { TargetLocationProvider } from '../contexts/TargetLocationContext';
 import useTabBarHeight from './utils/useTabBarHeight';
-import { AudioAccompanimentProvider } from '../contexts/AudioAccompanimentContext';
+import useAudioAccompanimentContext, { AudioAccompanimentProvider } from '../contexts/AudioAccompanimentContext';
+import { useIsFocused } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   modal: {
@@ -71,6 +72,15 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
   const modalizeRef = useRef<Modalize>(null);
   const tabBarHeight = useTabBarHeight();
   const BOTTOM_SHEET_TOP = tabBarHeight + 40;
+  const isFocused = useIsFocused();
+  const { setIsPlaying } = useAudioAccompanimentContext();
+
+  useEffect(() => {
+    if (!isFocused) {
+      setIsPlaying(false);
+    }
+  }, [ isFocused ]);
+
 
   const [currentTarget, setCurrentTarget] = useState<string>();
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
@@ -168,25 +178,23 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
 
   return (
     <TargetLocationProvider>
-      <AudioAccompanimentProvider questId={props.quest?.id || ''}>
-        <Suspense fallback={<Spinner color={Colors.DarkBlue}/>}>
-          <MapView>
-            {currentTarget && <QuestLocationInstanceBlock locationInstanceId={currentTarget}/>}
-          </MapView>
-          {currentTaskBlock && <CurrentTask block={currentTaskBlock}/>}
-          <Modalize
-            avoidKeyboardLikeIOS
-            handlePosition={'inside'}
-            ref={modalizeRef}
-            keyboardAvoidingBehavior={'padding'}
-            keyboardAvoidingOffset={-100} // magic value that fixes bottom padding if keyboard is open
-            alwaysOpen={BOTTOM_SHEET_TOP}
-            modalStyle={styles.modal}
-            rootStyle={styles.root}
-            customRenderer={<ModalScrollView>{component}</ModalScrollView>}
-          />
-        </Suspense>
-      </AudioAccompanimentProvider>
+      <Suspense fallback={<Spinner color={Colors.DarkBlue}/>}>
+        <MapView>
+          {currentTarget && <QuestLocationInstanceBlock locationInstanceId={currentTarget}/>}
+        </MapView>
+        {currentTaskBlock && <CurrentTask block={currentTaskBlock}/>}
+        <Modalize
+          avoidKeyboardLikeIOS
+          handlePosition={'inside'}
+          ref={modalizeRef}
+          keyboardAvoidingBehavior={'padding'}
+          keyboardAvoidingOffset={-100} // magic value that fixes bottom padding if keyboard is open
+          alwaysOpen={BOTTOM_SHEET_TOP}
+          modalStyle={styles.modal}
+          rootStyle={styles.root}
+          customRenderer={<ModalScrollView>{component}</ModalScrollView>}
+        />
+      </Suspense>
     </TargetLocationProvider>
   );
 }, {
@@ -214,6 +222,7 @@ export default function QuestWalkthroughRenderer({ questId }: QuestWalkthroughRe
       query={graphql`
             query QuestWalkthroughRendererQuery($questId: GlobalId!) {
                 quest(id: $questId) {
+                    id
                     ...QuestWalkthroughRenderer_quest
                 }
             }
@@ -228,7 +237,11 @@ export default function QuestWalkthroughRenderer({ questId }: QuestWalkthroughRe
         }
 
 
-        return <QuestWalkthroughContent quest={props.quest}/>;
+        return (
+          <AudioAccompanimentProvider questId={props.quest?.id || ''}>
+            <QuestWalkthroughContent quest={props.quest}/>
+          </AudioAccompanimentProvider>
+        );
       }}
       variables={{
         questId,
