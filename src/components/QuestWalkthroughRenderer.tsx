@@ -1,11 +1,15 @@
-import React, { useEffect, useRef, useState, Suspense } from 'react';
+import React, { useEffect, useRef, useState, Suspense, useMemo } from 'react';
 import { StyleSheet, Text, View, Animated } from 'react-native';
 import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay';
 import Colors from '../styles/colors';
 import { QuestWalkthroughRendererQuery } from './__generated__/QuestWalkthroughRendererQuery.graphql';
 import { Modalize } from 'react-native-modalize';
 import { QuestWalkthroughRenderer_quest } from './__generated__/QuestWalkthroughRenderer_quest.graphql';
-import { CurrentTaskBlock, QuestBlock, TextQuestBlock } from '../types/questData';
+import {
+  CurrentTaskBlock,
+  groupQuestData,
+  QuestBlock
+} from '../types/questData';
 import TextBlock from './questBlocks/Text/TextBlock';
 import QuestLocationInstanceBlock from './questBlocks/LocationInstance';
 import MapView from './MapView';
@@ -18,6 +22,8 @@ import QuestEnding from './questBlocks/QuestEnding';
 import { useRelayEnvironment } from 'react-relay/hooks';
 import { TargetLocationProvider } from '../contexts/TargetLocationContext';
 import useTabBarHeight from './utils/useTabBarHeight';
+import useAudioAccompanimentContext, { AudioAccompanimentProvider } from '../contexts/AudioAccompanimentContext';
+import { useIsFocused } from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   modal: {
@@ -66,13 +72,23 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
   const modalizeRef = useRef<Modalize>(null);
   const tabBarHeight = useTabBarHeight();
   const BOTTOM_SHEET_TOP = tabBarHeight + 40;
+  const isFocused = useIsFocused();
+  const { setIsPlaying } = useAudioAccompanimentContext();
+
+  useEffect(() => {
+    if (!isFocused) {
+      setIsPlaying(false);
+    }
+  }, [ isFocused ]);
+
 
   const [currentTarget, setCurrentTarget] = useState<string>();
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
-  const [currentTextData, setCurrentTextData] = useState<TextQuestBlock[]>([]);
   const [currentTaskBlock, setCurrentTaskBlock] = useState<CurrentTaskBlock>();
 
-  const questData = props.quest?.data?.blocks as QuestBlock[];
+  const rawQuestData = props.quest?.data?.blocks as QuestBlock[];
+
+  const groupedQuestData = useMemo(() => groupQuestData(rawQuestData), [ rawQuestData ]);
 
   /**
    * Go to next quest block
@@ -80,11 +96,11 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
   const next = (): void => setCurrentBlockIndex(currentBlockIndex + 1);
 
   useEffect(() => {
-    if (!questData) {
+    if (!groupedQuestData) {
       return;
     }
 
-    const currentBlock = questData[currentBlockIndex];
+    const currentBlock = groupedQuestData[currentBlockIndex];
 
     if (!currentBlock) {
       return;
@@ -105,21 +121,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
         setCurrentTaskBlock(currentBlock);
         next();
         break;
-      case 'header':
-      case 'paragraph':
-      case 'quote': {
-        setCurrentTextData([...currentTextData, currentBlock]);
-        const nextBlock = questData[currentBlockIndex + 1];
-        const textBlockTypes = ['header', 'paragraph', 'quote'];
-
-        if (nextBlock && textBlockTypes.includes(nextBlock.type)) {
-          next();
-        }
-        break;
-      }
-      case 'delimiter':
-        next();
-        break;
+      case 'page':
       case 'test':
       case 'question':
         /**
@@ -132,13 +134,13 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       default:
         next();
     }
-  }, [questData, currentBlockIndex]);
+  }, [groupedQuestData, currentBlockIndex]);
 
-  if (!questData) {
+  if (!groupedQuestData) {
     return <Text>No quest data</Text>;
   }
 
-  const currentBlock = questData[currentBlockIndex];
+  const currentBlock = groupedQuestData[currentBlockIndex];
 
   let component;
 
@@ -151,35 +153,27 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
 
     return (
       <View>
-        <MapView />
+        <MapView/>
         <QuestEnding questId={questId}/>
       </View>
     );
-  } else {
-    switch (currentBlock.type) {
-      case 'header':
-      case 'quote':
-      case 'paragraph':
-        component = <TextBlock data={currentTextData} nextCallback={
-          () => {
-            setCurrentTextData([]);
-            next();
-          }
-        }/>;
-        break;
-      case 'test':
-        component = <TestView data={currentBlock} nextCallback={next}/>;
-        break;
-      case 'question':
-        component = <QuestionView data={currentBlock} nextCallback={next}/>;
-        break;
-      case 'locationInstance':
-      case 'delimiter':
-        component = <Spinner color={Colors.DarkBlue}/>;
-        break;
-      default:
-        component = <Text>Unknown block type</Text>;
-    }
+  }
+
+  switch (currentBlock.type) {
+    case 'page':
+      component = <TextBlock page={currentBlock} nextCallback={next}/>;
+      break;
+    case 'test':
+      component = <TestView data={currentBlock} nextCallback={next}/>;
+      break;
+    case 'question':
+      component = <QuestionView data={currentBlock} nextCallback={next}/>;
+      break;
+    case 'locationInstance':
+      component = <Spinner color={Colors.DarkBlue}/>;
+      break;
+    default:
+      component = <Text>Unknown block type</Text>;
   }
 
   return (
@@ -228,6 +222,7 @@ export default function QuestWalkthroughRenderer({ questId }: QuestWalkthroughRe
       query={graphql`
             query QuestWalkthroughRendererQuery($questId: GlobalId!) {
                 quest(id: $questId) {
+                    id
                     ...QuestWalkthroughRenderer_quest
                 }
             }
@@ -241,7 +236,12 @@ export default function QuestWalkthroughRenderer({ questId }: QuestWalkthroughRe
           return <Text>Loading</Text>;
         }
 
-        return <QuestWalkthroughContent quest={props.quest}/>;
+
+        return (
+          <AudioAccompanimentProvider questId={props.quest?.id || ''}>
+            <QuestWalkthroughContent quest={props.quest}/>
+          </AudioAccompanimentProvider>
+        );
       }}
       variables={{
         questId,

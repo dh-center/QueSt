@@ -9,6 +9,7 @@ export type QuestWalkthroughRendererQueryVariables = {
 };
 export type QuestWalkthroughRendererQueryResponse = {
     readonly quest: {
+        readonly id: string;
         readonly " $fragmentRefs": FragmentRefs<"QuestWalkthroughRenderer_quest">;
     } | null;
 };
@@ -24,8 +25,8 @@ query QuestWalkthroughRendererQuery(
   $questId: GlobalId!
 ) {
   quest(id: $questId) {
-    ...QuestWalkthroughRenderer_quest
     id
+    ...QuestWalkthroughRenderer_quest
   }
 }
 
@@ -51,7 +52,14 @@ v1 = [
     "name": "id",
     "variableName": "questId"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -67,6 +75,7 @@ return {
         "name": "quest",
         "plural": false,
         "selections": [
+          (v2/*: any*/),
           {
             "args": null,
             "kind": "FragmentSpread",
@@ -93,13 +102,7 @@ return {
         "name": "quest",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -124,14 +127,14 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c0f32972c9cc4ad801086177c2773b98",
+    "cacheID": "9026ff681707a96bf550ee2a370d2835",
     "id": null,
     "metadata": {},
     "name": "QuestWalkthroughRendererQuery",
     "operationKind": "query",
-    "text": "query QuestWalkthroughRendererQuery(\n  $questId: GlobalId!\n) {\n  quest(id: $questId) {\n    ...QuestWalkthroughRenderer_quest\n    id\n  }\n}\n\nfragment QuestWalkthroughRenderer_quest on Quest {\n  id\n  data {\n    blocks\n  }\n}\n"
+    "text": "query QuestWalkthroughRendererQuery(\n  $questId: GlobalId!\n) {\n  quest(id: $questId) {\n    id\n    ...QuestWalkthroughRenderer_quest\n  }\n}\n\nfragment QuestWalkthroughRenderer_quest on Quest {\n  id\n  data {\n    blocks\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'e6a6bac6c3ac0679954d23fed305eb3c';
+(node as any).hash = 'c5069826bf1998c38a440d6b5426d52f';
 export default node;
