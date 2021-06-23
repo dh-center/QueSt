@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import BlueCircle15 from '../images/blueCircle15.svg';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../styles/textStyles';
@@ -11,6 +11,10 @@ import { ProfileStackParamList } from '../navigation/profileStack';
 import ListButton from '../components/ListButton';
 import { FlatList } from 'react-native';
 import BackArrow from '../components/BackArrow';
+import { useLazyLoadQuery } from 'react-relay/hooks';
+import { graphql } from 'react-relay';
+import { AchievementsQuery } from './__generated__/AchievementsQuery.graphql';
+import { Spinner } from 'native-base';
 
 type Props = StackScreenProps<ProfileStackParamList, 'Achievements'>;
 
@@ -55,24 +59,24 @@ const BasicText = styled.Text<{active?: boolean}>`
   color: ${Colors.Black};
 `;
 
-const achievementsList = [
-  {
-    name: 'Друг Достоевского',
-    progress: 85,
-  },
-  {
-    name: 'Петербургская интеллигенция',
-    progress: 30,
-  },
-  {
-    name: 'История наводнений в Санкт-Петербурге',
-    progress: 70,
-  },
-  {
-    name: 'Начало положено!',
-    progress: 100,
-  },
-];
+// const achievementsList = [
+//   {
+//     name: 'Друг Достоевского',
+//     progress: 85,
+//   },
+//   {
+//     name: 'Петербургская интеллигенция',
+//     progress: 30,
+//   },
+//   {
+//     name: 'История наводнений в Санкт-Петербурге',
+//     progress: 70,
+//   },
+//   {
+//     name: 'Начало положено!',
+//     progress: 100,
+//   },
+// ];
 
 const flatListStyle = {
   paddingTop: 27,
@@ -93,22 +97,37 @@ enum AchievementsScreenTabs {
  *
  * @param props - props for component rendering
  */
-export default function AchievementsScreen({ navigation }: Props): React.ReactElement {
+function AchievementsScreen({ navigation }: Props): React.ReactElement {
   const { t } = useTranslation();
   const tabBarHeight = useTabBarHeight();
   let data;
+
+  const achievementsList = useLazyLoadQuery<AchievementsQuery>(
+    graphql`
+      query AchievementsQuery {
+        achievements {
+          id
+          name
+          unit
+          currentValue
+          requiredValue
+        }
+      }
+    `,
+    {}
+  );
 
   const [currentTab, setCurrentTab] = useState<AchievementsScreenTabs>(AchievementsScreenTabs.ALL);
 
   switch (currentTab) {
     case AchievementsScreenTabs.RECEIVED:
-      data = achievementsList.filter(achievement => achievement.progress === 100);
+      data = achievementsList.achievements.filter(achievement => achievement.currentValue >= achievement.requiredValue);
       break;
     case AchievementsScreenTabs.PROCESS:
-      data = achievementsList.filter(achievement => achievement.progress < 100);
+      data = achievementsList.achievements.filter(achievement => achievement.currentValue < achievement.requiredValue);
       break;
     default:
-      data = achievementsList;
+      data = achievementsList.achievements;
   }
 
   return (
@@ -137,16 +156,33 @@ export default function AchievementsScreen({ navigation }: Props): React.ReactEl
       <FlatList
         contentContainerStyle={flatListStyle}
         data={data}
-        renderItem={({ item }): React.ReactElement => (
-          <ListButton
-            buttonText={item.name}
-            type={'achievements'}
-            percent={item.progress}
-          />
-        )}
+        renderItem={({ item }): React.ReactElement => {
+          const percent = Math.round(item.currentValue  * 100 / item.requiredValue);
+
+          return (
+            <ListButton
+              buttonText={item.name}
+              type={'achievements'}
+              percent={percent > 100 ? 100 : percent}
+            />
+          );
+        }}
         keyExtractor={(item, index): string => index.toString()}
         ListEmptyComponent={<BasicText>Empty</BasicText>}
       />
     </Body>
+  );
+}
+
+/**
+ * Displays friends screen in Suspense
+ *
+ * @param props - props for component rendering
+ */
+export default function AchievementsScreenWithSuspense(props: Props): React.ReactElement {
+  return (
+    <Suspense fallback={<Spinner color={Colors.DarkBlue}/>}>
+      <AchievementsScreen {...props}/>
+    </Suspense>
   );
 }
