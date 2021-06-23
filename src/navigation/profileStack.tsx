@@ -110,32 +110,38 @@ export default function ProfileStackNavigation(): React.ReactElement {
   const authContext = useAuthContext();
 
   return (
-    <ProfileStack.Navigator initialRouteName={'Login'}>
+    <ProfileStack.Navigator initialRouteName={'Login'} screenOptions={{ headerShown: false }}>
       {authContext.state.accessToken
         ? <>
-          <ProfileStack.Screen name="Main" component={ProfileScreen} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="ChangeUsername" component={ChangeUsernameScreen} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="ChangePassword" component={ChangePasswordScreen} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="About" component={AboutScreen} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="Friends" options={{ headerShown: false }}>
+          <ProfileStack.Screen name="Main" component={ProfileScreen}/>
+          <ProfileStack.Screen name="ChangeUsername" component={ChangeUsernameScreen}/>
+          <ProfileStack.Screen name="ChangePassword" component={ChangePasswordScreen}/>
+          <ProfileStack.Screen name="Settings" component={SettingsScreen}/>
+          <ProfileStack.Screen name="About" component={AboutScreen}/>
+          <ProfileStack.Screen name="Friends">
             {(props) => (
               <Suspense fallback={<Spinner color={Colors.DarkBlue}/>}>
                 <FriendsScreen {...props}/>
               </Suspense>
             )}
           </ProfileStack.Screen>
-          <ProfileStack.Screen name="FriendRequests" component={FriendRequestsScreen} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="FriendAdding" component={FriendAddingScreenWithSuspense} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="Achievements" component={AchievementsScreen} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="CardsCollection" component={CardsCollectionScreen} options={{ headerShown: false }}/>
+          <ProfileStack.Screen name="FriendRequests" component={FriendRequestsScreen}/>
+          <ProfileStack.Screen name="FriendAdding" component={FriendAddingScreenWithSuspense}/>
+          <ProfileStack.Screen name="Achievements" component={AchievementsScreen}/>
+          <ProfileStack.Screen name="CardsCollection">
+            {(props) => (
+              <Suspense fallback={<Spinner color={Colors.DarkBlue}/>}>
+                <CardsCollectionScreen {...props}/>
+              </Suspense>
+            )}
+          </ProfileStack.Screen>
         </>
         : <>
-          <ProfileStack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="SendEmail" component={SendEmailScreen} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="InputCode" component={InputCodeScreen} options={{ headerShown: false }}/>
-          <ProfileStack.Screen name="SetNewPassword" component={SetNewPasswordScreen} options={{ headerShown: false }}/>
+          <ProfileStack.Screen name="Login" component={LoginScreen}/>
+          <ProfileStack.Screen name="Registration" component={RegistrationScreen}/>
+          <ProfileStack.Screen name="SendEmail" component={SendEmailScreen}/>
+          <ProfileStack.Screen name="InputCode" component={InputCodeScreen}/>
+          <ProfileStack.Screen name="SetNewPassword" component={SetNewPasswordScreen}/>
         </>
       }
     </ProfileStack.Navigator>

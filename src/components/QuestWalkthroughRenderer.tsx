@@ -62,7 +62,7 @@ interface QuestWalkthroughContentProps {
   /**
    * Quest data for rendering
    */
-  quest?: QuestWalkthroughRenderer_quest | null;
+  quest: QuestWalkthroughRenderer_quest;
 }
 
 /**
@@ -154,7 +154,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
     return (
       <View>
         <MapView/>
-        <QuestEnding questId={questId}/>
+        <QuestEnding questId={questId} data={props.quest}/>
       </View>
     );
   }
@@ -204,6 +204,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       data {
         blocks
       }
+      ...QuestEndingData
     }
   `,
 });
@@ -234,6 +235,10 @@ export default function QuestWalkthroughRenderer({ questId }: QuestWalkthroughRe
 
         if (!props) {
           return <Text>Loading</Text>;
+        }
+
+        if (!props.quest) {
+          return <Text>No such quest</Text>;
         }
 
 

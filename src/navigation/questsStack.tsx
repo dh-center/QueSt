@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Quests from '../screens/QuestsList';
 import QuestInfoScreen from '../screens/QuestInfo';
+import { Spinner } from 'native-base';
+import Colors from '../styles/colors';
 
 /**
  * Type with params of screens and their props in QuestsStackScreen
@@ -9,15 +11,7 @@ import QuestInfoScreen from '../screens/QuestInfo';
 export type QuestsStackParamList = {
   List: { needRefresh: boolean };
   Description: {
-    id: string;
-    title: string;
-    description: string | null,
-    state: string,
-    exp: number,
-    wayToTravel: string,
-    distanceInKilometers: number,
-    durationInMinutes: number,
-    credits: readonly unknown[] | undefined,
+    questId: string
   };
 };
 
@@ -30,7 +24,13 @@ export default function QuestsStackNavigation(): React.ReactElement {
   return (
     <QuestsStack.Navigator>
       <QuestsStack.Screen name="List" component={Quests} options={{ headerShown: false }}/>
-      <QuestsStack.Screen name="Description" component={QuestInfoScreen} options={{ headerShown: false }}/>
+      <QuestsStack.Screen name="Description" options={{ headerShown: false }}>
+        {(props) => (
+          <Suspense fallback={<Spinner color={Colors.DarkBlue}/>}>
+            <QuestInfoScreen {...props}/>
+          </Suspense>
+        )}
+      </QuestsStack.Screen>
     </QuestsStack.Navigator>
   );
 }

@@ -9,6 +9,7 @@ export type QuestWalkthroughRenderer_quest = {
     readonly data: {
         readonly blocks: ReadonlyArray<unknown>;
     } | null;
+    readonly " $fragmentRefs": FragmentRefs<"QuestEndingData">;
     readonly " $refType": "QuestWalkthroughRenderer_quest";
 };
 export type QuestWalkthroughRenderer_quest$data = QuestWalkthroughRenderer_quest;
@@ -49,10 +50,15 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "QuestEndingData"
     }
   ],
   "type": "Quest",
   "abstractKey": null
 };
-(node as any).hash = 'b59d161681b55dff46899710d7c9f35e';
+(node as any).hash = '5942d2217981d333ee706525fa7fd241';
 export default node;
