@@ -19,7 +19,13 @@
     "ROUTE":  "Routes",
     "STORY":  "Stories",
     "QUIZ":  "Tests",
-    "all": "All"
+    "all": "All",
+    "RELEVANCE": "By relevance",
+    "NEAR": "Nearby",
+    "LONG": "By duration",
+    "AVAILABLE": "By availability",
+    "AToZ": "Alphabetically (A-Z)",
+    "ZToA": "Alphabetically (Z-A)"
   },
   "achievements": {
     "all": "All",

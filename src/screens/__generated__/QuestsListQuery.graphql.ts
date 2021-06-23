@@ -17,6 +17,7 @@ export type QuestsListQueryResponse = {
                 readonly name: string;
                 readonly description: string | null;
                 readonly type: TaskTypes;
+                readonly recommendationScore: number;
                 readonly minLevel: number;
                 readonly questProgressState: QuestUserProgressStates;
                 readonly earnedExp: number;
@@ -47,6 +48,7 @@ query QuestsListQuery {
         name
         description
         type
+        recommendationScore
         minLevel
         questProgressState
         earnedExp
@@ -121,6 +123,13 @@ var v0 = [
                 "args": null,
                 "kind": "ScalarField",
                 "name": "type",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "recommendationScore",
                 "storageKey": null
               },
               {
@@ -211,14 +220,14 @@ return {
     "selections": (v0/*: any*/)
   },
   "params": {
-    "cacheID": "df1da0c8627b496133a6e83836b7e732",
+    "cacheID": "96c175d3733648ae8eaa6d9d7b1f0a49",
     "id": null,
     "metadata": {},
     "name": "QuestsListQuery",
     "operationKind": "query",
-    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        language\n        name\n        description\n        type\n        minLevel\n        questProgressState\n        earnedExp\n        wayToTravel\n        distanceInKilometers\n        durationInMinutes\n        credits {\n          blocks\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query QuestsListQuery {\n  quests {\n    edges {\n      node {\n        id\n        language\n        name\n        description\n        type\n        recommendationScore\n        minLevel\n        questProgressState\n        earnedExp\n        wayToTravel\n        distanceInKilometers\n        durationInMinutes\n        credits {\n          blocks\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '4c8bb77b83e960e3c259cbd359417569';
+(node as any).hash = 'cc8d67a60f6d30375287c54167cf62ec';
 export default node;
