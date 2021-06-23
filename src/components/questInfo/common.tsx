@@ -1,6 +1,6 @@
-import styled from "styled-components/native";
-import Colors from "../../styles/colors";
-import {StyledFonts} from "../../styles/textStyles";
+import styled from 'styled-components/native';
+import Colors from '../../styles/colors';
+import { StyledFonts } from '../../styles/textStyles';
 
 export const Line = styled.View<{vertical?: boolean}>`
   height: ${props => props.vertical ? 50 : 1}px;

@@ -19,12 +19,11 @@ import WhiteGradient from '../components/WhiteGradient';
 import useTabBarHeight from '../components/utils/useTabBarHeight';
 import BackArrow from '../components/BackArrow';
 import { graphql } from 'react-relay';
-import { useLazyLoadQuery, usePreloadedQuery } from 'react-relay/hooks';
+import { useLazyLoadQuery } from 'react-relay/hooks';
 import { QuestInfoQuery } from './__generated__/QuestInfoQuery.graphql';
 import Credits from '../components/questInfo/Credits';
 import { BasicText, Block, Icon, Line } from '../components/questInfo/common';
 import AwardsAndStats from '../components/questInfo/AwardsAndStats';
-import CollectionCardsList from '../components/CollectionCardsList';
 
 /**
  * Type with props of screen 'Map' in BottomTabNavigator
