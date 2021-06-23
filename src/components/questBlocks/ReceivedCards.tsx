@@ -4,6 +4,9 @@ import styled from 'styled-components/native';
 import { StyledFonts } from '../../styles/textStyles';
 import Colors from '../../styles/colors';
 import { useTranslation } from 'react-i18next';
+import { useFragment } from 'react-relay/hooks';
+import { graphql } from 'react-relay';
+import { ReceivedCardsData$key } from './__generated__/ReceivedCardsData.graphql';
 
 const Title = styled.Text`
   ${StyledFonts.roboto};
@@ -20,17 +23,36 @@ const CardsView = styled.View`
 `;
 
 /**
- * Component for displaying received collection cards
+ * Props for received cards
  */
-export default function ReceivedCards(): React.ReactElement {
+interface Props {
+  /**
+   * Data to render
+   */
+  data: ReceivedCardsData$key
+}
+
+/**
+ * Component for displaying received collection cards
+ *
+ * @param props - props for component rendering
+ */
+export default function ReceivedCards(props: Props): React.ReactElement {
   const { t } = useTranslation();
+  const data = useFragment(graphql`
+    fragment ReceivedCardsData on Person @relay(plural: true) {
+      id
+      ...CollectionCardData
+    }
+  `, props.data);
 
   return (
     <>
       <Title>{t('quests.received')}</Title>
       <CardsView>
-        <CollectionCard imgSource={require('../../images/Dostoevsky.png')} text={'Федор\nДостоевский'} isReceived/>
-        <CollectionCard imgSource={require('../../images/Belinsky.png')} text={'Виссарион\nБелинский'} isReceived/>
+        {data.map(item => {
+          return <CollectionCard key={item.id} data={item} isReceived/>;
+        })}
       </CardsView>
     </>
   );
