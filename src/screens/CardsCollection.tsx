@@ -8,70 +8,13 @@ import useTabBarHeight from '../components/utils/useTabBarHeight';
 import Emphasis from '../images/emphasis.svg';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ProfileStackParamList } from '../navigation/profileStack';
-import CollectionCard from '../components/CollectionCard';
-import { FlatList, ImageSourcePropType } from 'react-native';
+import { CollectionCardProps } from '../components/CollectionCard';
+import { FlatList } from 'react-native';
 import BackArrow from '../components/BackArrow';
-
-interface CardData {
-  name: string,
-  img: ImageSourcePropType,
-  isReceived: boolean,
-}
-
-interface EmptyCardData {
-  name: null,
-  img: null,
-  isReceived: null,
-}
-
-const cardsList: (CardData | EmptyCardData)[] = [
-  {
-    name: 'Федор\nДостоевский №1',
-    img: require('../images/Dostoevsky.png'),
-    isReceived: true,
-  },
-  {
-    name: 'Виссарион\nБелинский №4',
-    img: require('../images/Belinsky.png'),
-    isReceived: false,
-  },
-  {
-    name: 'Виссарион\nБелинский №1',
-    img: require('../images/Belinsky.png'),
-    isReceived: true,
-  },
-  {
-    name: 'Федор\nДостоевский №2',
-    img: require('../images/Dostoevsky.png'),
-    isReceived: true,
-  },
-  {
-    name: 'Виссарион\nБелинский №3',
-    img: require('../images/Belinsky.png'),
-    isReceived: false,
-  },
-  {
-    name: 'Виссарион\nБелинский №2',
-    img: require('../images/Belinsky.png'),
-    isReceived: true,
-  },
-  {
-    name: 'Федор\nДостоевский №3',
-    img: require('../images/Dostoevsky.png'),
-    isReceived: true,
-  },
-  {
-    name: 'Федор\nДостоевский №4',
-    img: require('../images/Dostoevsky.png'),
-    isReceived: false,
-  },
-];
-
-const emptyCardData: EmptyCardData = {
-  name: null,
-  img: null,
-  isReceived: null,
-};
+import { useLazyLoadQuery } from 'react-relay/hooks';
+import { graphql } from 'react-relay';
+import { CardsCollectionQuery } from './__generated__/CardsCollectionQuery.graphql';
+import CollectionCardsList, { EmptyCardData, getEmptyCard } from '../components/CollectionCardsList';
 
 type Props = StackScreenProps<ProfileStackParamList, 'CardsCollection'>;
 
@@ -116,11 +59,6 @@ const BasicText = styled.Text<{active?: boolean}>`
   color: ${Colors.Black};
 `;
 
-const EmptyCard = styled.View`
-  flex: 1;
-  margin: 0 4.5px;
-`;
-
 /**
  * List of tabs on AchievementsScreen
  */
@@ -130,14 +68,6 @@ enum CardsScreenTabs {
   PROCESS
 }
 
-const flatContentStyle = {
-  paddingBottom: 15,
-};
-
-const flatColumnStyle = {
-  paddingTop: 9,
-  paddingHorizontal: 10.5,
-};
 
 /**
  * Displays screen with collection of cards
@@ -148,25 +78,58 @@ export default function CardsCollectionScreen({ navigation }: Props): React.Reac
   const { t } = useTranslation();
   const tabBarHeight = useTabBarHeight();
   const flatListRef = useRef<FlatList>(null);
-  let data;
+  const cardsData = useLazyLoadQuery<CardsCollectionQuery>(graphql`
+    query CardsCollectionQuery {
+      personsCards {
+        id
+        ...CollectionCardData
+      }
+      me {
+        receivedPersonsCards {
+          id
+          ...CollectionCardData
+        }
+      }
+    }
+  `, {});
+  const cardsList = cardsData.personsCards;
+  const receivedCardIds = useMemo(() => cardsData.me.receivedPersonsCards.map(card => card.id), [ cardsList ]);
+  const receivedCards: (CollectionCardProps | EmptyCardData)[] = useMemo(() => {
+    const result: CollectionCardProps[] = cardsData.me.receivedPersonsCards
+      .map(card => {
+        return ({
+          data: card,
+          isReceived: true,
+        });
+      });
 
-  const receivedCards = useMemo(() => {
-    const result = cardsList.filter(card => card.isReceived);
-
-    result.length % 2 === 1 && result.push(emptyCardData);
+    if (result.length % 2 === 1) {
+      return [...result, getEmptyCard()];
+    }
 
     return result;
   }, [ cardsList ]);
 
-  const lockedCards = useMemo(() => {
-    const result = cardsList.filter(card => !card.isReceived);
+  const lockedCards: (CollectionCardProps | EmptyCardData)[] = useMemo(() => {
+    const result = cardsList
+      .filter(card => !receivedCardIds.includes(card.id))
+      .map(card => {
+        return ({
+          data: card,
+          isReceived: receivedCardIds.includes(card.id),
+        });
+      });
 
-    result.length % 2 === 1 && result.push(emptyCardData);
+
+    if (result.length % 2 === 1) {
+      return [...result, getEmptyCard()];
+    }
 
     return result;
   }, [ cardsList ]);
 
   const [currentTab, setCurrentTab] = useState<CardsScreenTabs>(CardsScreenTabs.ALL);
+  let data: (CollectionCardProps | EmptyCardData)[];
 
   switch (currentTab) {
     case CardsScreenTabs.RECEIVED:
@@ -176,13 +139,15 @@ export default function CardsCollectionScreen({ navigation }: Props): React.Reac
       data = lockedCards;
       break;
     default:
-      data = receivedCards.concat(lockedCards);
+      data = [...receivedCards, ...lockedCards];
   }
 
   useEffect(() => {
-    if (flatListRef.current) {
-      flatListRef.current.scrollToIndex({ animated: false,
-        index: 0 });
+    if (flatListRef.current && data.length) {
+      flatListRef.current.scrollToIndex({
+        animated: false,
+        index: 0,
+      });
     }
   }, [ currentTab ]);
 
@@ -209,18 +174,7 @@ export default function CardsCollectionScreen({ navigation }: Props): React.Reac
           {currentTab === CardsScreenTabs.PROCESS && <Emphasis/>}
         </TabView>
       </Row>
-      <FlatList
-        ref={flatListRef}
-        contentContainerStyle={flatContentStyle}
-        data={data}
-        horizontal={false}
-        numColumns={2}
-        columnWrapperStyle={flatColumnStyle}
-        renderItem={({ item }): React.ReactElement => (
-          item.name === null ? <EmptyCard/> : <CollectionCard imgSource={item.img} text={item.name} isReceived={item.isReceived}/>
-        )}
-        keyExtractor={(item, index): string => index.toString()}
-      />
+      <CollectionCardsList ref={flatListRef} items={data}/>
     </Body>
   );
 }

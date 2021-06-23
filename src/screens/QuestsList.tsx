@@ -118,18 +118,9 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
         renderItem={({ item }): React.ReactElement => (
           <>
             <QuestsListItem
-              onPress={(): void => navigation.navigate('Description', {
-                id: item.node.id,
-                title: item.node.name,
-                description: item.node.description,
-                state: item.node.questProgressState,
-                exp: item.node.earnedExp,
-                credits: item.node.credits?.blocks,
-                wayToTravel: item.node.wayToTravel,
-                distanceInKilometers: item.node.distanceInKilometers,
-                durationInMinutes: item.node.durationInMinutes,
-              })
-              }
+              onPress={(): void => {
+                navigation.navigate('Description', { questId: item.node.id });
+              }}
               name={item.node.name}
               type={item.node.type}
               minLevel={item.node.minLevel}

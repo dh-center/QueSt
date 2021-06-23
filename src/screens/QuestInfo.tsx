@@ -14,15 +14,17 @@ import Walker from '../images/walker.svg';
 import BlueCircle5 from '../images/blueCircle5.svg';
 import { QuestsStackParamList } from '../navigation/questsStack';
 import styled from 'styled-components/native';
-import Exp from '../images/exp.svg';
-import AchievementIcon from '../images/achievement.svg';
-import Cards from '../images/cards.svg';
 import Passed from '../images/passed.svg';
 import WhiteGradient from '../components/WhiteGradient';
-import decodeHTMLEntities from '../components/utils/decodingHTMLEntities';
 import useTabBarHeight from '../components/utils/useTabBarHeight';
-import { CreditBlock } from '../types/questData';
 import BackArrow from '../components/BackArrow';
+import { graphql } from 'react-relay';
+import { useLazyLoadQuery, usePreloadedQuery } from 'react-relay/hooks';
+import { QuestInfoQuery } from './__generated__/QuestInfoQuery.graphql';
+import Credits from '../components/questInfo/Credits';
+import { BasicText, Block, Icon, Line } from '../components/questInfo/common';
+import AwardsAndStats from '../components/questInfo/AwardsAndStats';
+import CollectionCardsList from '../components/CollectionCardsList';
 
 /**
  * Type with props of screen 'Map' in BottomTabNavigator
@@ -88,64 +90,15 @@ const Info = styled.ScrollView
   margin-bottom: ${props => props.tabBarHeight}px;
 `;
 
-const Block = styled.View<{isEmpty?: boolean}>`
-  margin: ${props => props.isEmpty ? 0 : 30}px 0;
-`;
-
-const Row = styled.View`
-  flex-direction: row;
-  align-items: center;
-  height: 50px;
-  margin: 30px 0;
-`;
-
-const Cell = styled.View<{vertical?: boolean}>`
-  flex: 1;
-  flex-direction: ${props => props.vertical ? 'column' : 'row'};
-  align-items: center;
-  justify-content: center;
-`;
-
-const Line = styled.View<{vertical?: boolean}>`
-  height: ${props => props.vertical ? 50 : 1}px;
-  width: ${props => props.vertical ? '1px' : '100%'};
-  background-color: ${Colors.Blue};
-`;
-
-const Icon = styled.View`
-  margin-right: 10px;
-`;
-
-const BasicText = styled.Text<{margined?: boolean, count?: boolean}>`
-  ${StyledFonts.uiWebRegular};
-  font-size: 18px;
-  line-height: 22px;
-  color: ${Colors.Black};
-  margin-bottom: ${props => props.margined ? 30 : 0}px;
-  margin-left: ${props => props.count ? 15 : 0}px;
-`;
-
 const AdviceText = styled(BasicText)`
   color: ${Colors.DarkBlue};
   text-align: center;
 `;
 
-const HeadersText = styled.Text<{margined?: boolean}>`
+const Subtitle = styled.Text`
   ${StyledFonts.uiWebMedium};
-  font-size: 22px;
   line-height: 22px;
   color: ${Colors.Black};
-  margin-top: ${props => props.margined ? 5 : 0}px;
-`;
-
-const CreditsText = styled.Text`
-  ${StyledFonts.uiWebMedium};
-  font-size: 18px;
-  line-height: 22px;
-  color: ${Colors.Black};
-`;
-
-const Subtitle = styled(CreditsText)`
   font-size: 22px;
   margin-bottom: 15px;
 `;
@@ -161,13 +114,6 @@ const CardsView = styled.View`
   justify-content: space-between;
 `;
 
-const CreditsImage = styled.Image<{margined?: boolean}>`
-  align-self: center;
-  width: 70%;
-  aspect-ratio: 1;
-  resize-mode: contain;
-  margin-top: ${props => props.margined ? '15' : '0'}px;
-`;
 
 const styles = StyleSheet.create({
   routeLength: {
@@ -191,6 +137,31 @@ const styles = StyleSheet.create({
   },
 });
 
+export const questInfoDataQuery = graphql`
+    query QuestInfoQuery($id: GlobalId!) {
+      quest(id: $id) {
+        id
+        name
+        earnedExp
+        description
+        wayToTravel
+        distanceInKilometers
+        durationInMinutes
+        questProgressState
+        ...AwardsAndStats
+        ...CreditsInfo
+        linkedAchievements {
+          id
+          ...AchievementData
+        }
+        personsCards {
+          id
+          ...CollectionCardData
+        }
+      }
+    }
+`;
+
 /**
  * Functional component of the screen with quest info
  *
@@ -200,23 +171,13 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
   const navigation = useNavigation<MapScreenNavigationProp>();
   const tabBarHeight = useTabBarHeight();
   const { t } = useTranslation();
-  const creditsData = route.params.credits as CreditBlock[];
+  const { quest } = useLazyLoadQuery<QuestInfoQuery>(questInfoDataQuery, { id: route.params.questId });
 
-  let creditsInfo;
-  let creditsImage;
 
-  if (creditsData) {
-    creditsData.forEach(item => {
-      switch (item.type) {
-        case 'paragraph':
-          creditsInfo = item.data.text;
-          break;
-        case 'image':
-          creditsImage = item.data.file.url;
-          break;
-      }
-    });
+  if (!quest) {
+    return <div>No quest with this id</div>;
   }
+
 
   return (
     <Body>
@@ -227,12 +188,12 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
         </BackButton>
         <ScrollView>
           <Text style={textStyles.robotoMedium}>
-            {route.params.title}
+            {quest.name}
           </Text>
         </ScrollView>
       </Header>
       <ContainerView>
-        {route.params.state === 'PASSED' &&
+        {quest.questProgressState === 'PASSED' &&
           <PassedView>
             <Passed/>
           </PassedView>
@@ -240,51 +201,21 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
         <Container>
           <WhiteGradient/>
           <Info tabBarHeight={tabBarHeight}>
-            {route.params.state !== 'PASSED' &&
-            <Row>
-              <Cell>
-                <Icon as={Exp}/>
-                <BasicText>{route.params.exp} exp</BasicText>
-              </Cell>
-              <Line vertical/>
-              <Cell>
-                <Icon as={AchievementIcon}/>
-                <BasicText>+2</BasicText>
-              </Cell>
-              <Line vertical/>
-              <Cell>
-                <Icon as={Cards}/>
-                <BasicText>+2</BasicText>
-              </Cell>
-            </Row>
-            }
-            {route.params.state === 'PASSED' &&
-            <Row>
-              <Cell vertical>
-                <BasicText>{t('quests.mileage')}</BasicText>
-                <HeadersText margined>{route.params.distanceInKilometers} {t('measures.kilometers')}</HeadersText>
-              </Cell>
-              <Line vertical/>
-              <Cell vertical>
-                <BasicText>{t('quests.received')}</BasicText>
-                <HeadersText margined>{route.params.exp} exp</HeadersText>
-              </Cell>
-            </Row>
-            }
+            <AwardsAndStats data={quest}/>
             <Line/>
-            <Block isEmpty={!route.params.description && route.params.state === 'PASSED'}>
-              {route.params.description ?
-                <BasicText margined={route.params.state !== 'PASSED'}>{route.params.description}</BasicText> : undefined
+            <Block isEmpty={!quest.description && quest.questProgressState === 'PASSED'}>
+              {quest.description ?
+                <BasicText margined={quest.questProgressState !== 'PASSED'}>{quest.description}</BasicText> : undefined
               }
-              {route.params.state !== 'PASSED' &&
+              {quest.questProgressState !== 'PASSED' &&
               <>
                 <View style={styles.routeLength}>
                   <Icon as={Walker}/>
                   <BasicText>
-                    {route.params.distanceInKilometers} {t('measures.kilometers')} ~ {route.params.durationInMinutes} {t('measures.minutes')}
+                    {quest.distanceInKilometers} {t('measures.kilometers')} ~ {quest.durationInMinutes} {t('measures.minutes')}
                   </BasicText>
                 </View>
-                {route.params.wayToTravel === 'WITH_TRANSPORT' &&
+                {quest.wayToTravel === 'WITH_TRANSPORT' &&
                   <View style={styles.advice}>
                     <AdviceText>{t('quests.advice')}</AdviceText>
                   </View>
@@ -292,60 +223,54 @@ export default function QuestInfoScreen({ route }: Props): React.ReactElement {
               </>
               }
             </Block>
-            {(!!route.params.description || route.params.state !== 'PASSED') && <Line/>}
+            {(!!quest.description || quest.questProgressState !== 'PASSED') && <Line/>}
             <Block>
-              <TextRow>
-                <Subtitle>
-                  {route.params.state === 'PASSED' ? t('quests.achievementsPassed') : t('quests.achievements')}
-                </Subtitle>
-                {route.params.state !== 'PASSED' &&
-                <BasicText count>2</BasicText>
-                }
-              </TextRow>
-              <View style={styles.achievementsView}>
-                <Achievement text={'Петербургская интеллигенция'}/>
-                <Achievement text={'Друг Достоевского'}/>
-              </View>
+              {quest.linkedAchievements.length > 0 &&
+                <>
+                  <TextRow>
+                    <Subtitle>
+                      {quest.questProgressState === 'PASSED' ? t('quests.achievementsPassed') : t('quests.achievements')}
+                    </Subtitle>
+                    {quest.questProgressState !== 'PASSED' &&
+                    <BasicText count>{quest.linkedAchievements.length}</BasicText>
+                    }
+                  </TextRow>
+                  <View style={styles.achievementsView}>
+                    {
+                      quest.linkedAchievements.map(ach => (
+                        <Achievement data={ach} key={ach.id}/>
+                      ))
+                    }
+                  </View>
+                </>
+              }
+
               <TextRow>
                 <Subtitle>{t('quests.cards')}</Subtitle>
-                {route.params.state !== 'PASSED' &&
-                <BasicText count>2</BasicText>
+                {quest.questProgressState !== 'PASSED' &&
+                <BasicText count>{quest.personsCards.length}</BasicText>
                 }
               </TextRow>
               <CardsView>
-                <CollectionCard
-                  imgSource={require('../images/Dostoevsky.png')}
-                  text={'Федор\nДостоевский'}
-                  isReceived={route.params.state === 'PASSED'}
-                />
-                <CollectionCard
-                  imgSource={require('../images/Belinsky.png')}
-                  text={'Виссарион\nБелинский'}
-                  isReceived={route.params.state === 'PASSED'}
-                />
+                {quest.personsCards
+                  .slice(0, 2)
+                  .map(item => <CollectionCard key={item.id} isReceived={quest.questProgressState === 'PASSED'} data={item}/>)
+                }
               </CardsView>
             </Block>
-            {creditsData && !!creditsData.length &&
-              <>
-                <Line/>
-                <Block>
-                  {creditsInfo !== undefined && <CreditsText>{decodeHTMLEntities(creditsInfo)}</CreditsText>}
-                  {creditsImage !== undefined && <CreditsImage source={{ uri: creditsImage }} margined={creditsInfo}/>}
-                </Block>
-              </>
-            }
+            <Credits data={quest}/>
             <Button
-              title={route.params.state === 'PASSED' ? t('quests.repeatQuest') : t('quests.startQuest')}
+              title={quest.questProgressState === 'PASSED' ? t('quests.repeatQuest') : t('quests.startQuest')}
               // eslint-disable-next-line react-native/no-inline-styles
               style={{
                 ...styles.startButton,
-                backgroundColor: route.params.state === 'PASSED' ? Colors.Blue : Colors.Green,
-                opacity: route.params.state === 'LOCKED' ? 0.5 : 1,
+                backgroundColor: quest.questProgressState === 'PASSED' ? Colors.Blue : Colors.Green,
+                opacity: quest.questProgressState === 'LOCKED' ? 0.5 : 1,
               }}
               onPress={(): void => navigation.navigate('Map', {
-                questId: route.params.id,
+                questId: quest.id,
               })}
-              disabled={route.params.state === 'LOCKED'}
+              disabled={quest.questProgressState === 'LOCKED'}
             />
           </Info>
         </Container>
