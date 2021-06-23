@@ -291,6 +291,9 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
               Platform.OS === 'android' && { maxHeight: 80 },
               Platform.OS === 'ios' && { overflow: 'visible' },
             ]}
+            flatListProps={{
+              scrollEnabled: Platform.OS === 'android',
+            }}
             ArrowDownIconComponent={() => <ArrowDown/>}
             ArrowUpIconComponent={() => <ArrowUp/>}
           />
