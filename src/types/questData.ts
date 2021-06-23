@@ -12,6 +12,24 @@ export interface LocationInstanceBlock {
 }
 
 /**
+ * Block with location coordinates
+ */
+export interface LocationFromCoordsBlock {
+  type: 'approximationToCoordinates';
+  data: {
+    /**
+     * Location latitude
+     */
+    latitude: number;
+
+    /**
+     * Location longitude
+     */
+    longitude: number;
+  }
+}
+
+/**
  * Text header block data
  */
 export interface HeaderBlock {
@@ -188,6 +206,7 @@ export type TextQuestBlock =
  */
 export type QuestBlock =
   | LocationInstanceBlock
+  | LocationFromCoordsBlock
   | TextQuestBlock
   | TestBlock
   | QuestionBlock
@@ -198,6 +217,7 @@ export type QuestBlock =
  */
 export type GroupedQuestBlock =
   | LocationInstanceBlock
+  | LocationFromCoordsBlock
   | PageBlock
   | TestBlock
   | QuestionBlock
