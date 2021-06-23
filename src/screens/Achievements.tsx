@@ -59,24 +59,6 @@ const BasicText = styled.Text<{active?: boolean}>`
   color: ${Colors.Black};
 `;
 
-// const achievementsList = [
-//   {
-//     name: 'Друг Достоевского',
-//     progress: 85,
-//   },
-//   {
-//     name: 'Петербургская интеллигенция',
-//     progress: 30,
-//   },
-//   {
-//     name: 'История наводнений в Санкт-Петербурге',
-//     progress: 70,
-//   },
-//   {
-//     name: 'Начало положено!',
-//     progress: 100,
-//   },
-// ];
 
 const flatListStyle = {
   paddingTop: 27,
