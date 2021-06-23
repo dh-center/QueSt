@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
       height: 2,
     },
     shadowRadius: 3,
-    overflow: 'visible',
   },
 });
 
@@ -287,7 +286,11 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
             containerStyle={styles.containerStyle}
             listItemLabelStyle={styles.listItemLabelStyle}
             listItemContainerStyle={styles.listItemContainerStyle}
-            dropDownContainerStyle={[styles.dropDownContainerStyle, Platform.OS === 'android' && { maxHeight: 80 }]}
+            dropDownContainerStyle={[
+              styles.dropDownContainerStyle,
+              Platform.OS === 'android' && { maxHeight: 80 },
+              Platform.OS === 'ios' && { overflow: 'visible' },
+            ]}
             ArrowDownIconComponent={() => <ArrowDown/>}
             ArrowUpIconComponent={() => <ArrowUp/>}
           />
