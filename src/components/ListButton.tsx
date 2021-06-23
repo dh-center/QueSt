@@ -74,7 +74,7 @@ export default function ListButton({ style: _style, icon, percent, type, buttonT
   return (
     <Button {...rest}>
       {icon && <Icon as={icon}/>}
-      {type === 'achievements' && percent && <ProgressCircle percent={percent}/>}
+      {type === 'achievements' && percent !== undefined && <ProgressCircle percent={percent}/>}
       <ButtonText>{buttonText}</ButtonText>
       {type !== 'info' && <Next rotated={type === 'achievements'}/>}
       {type === 'info' && <InfoCircle/>}

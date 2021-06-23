@@ -6,7 +6,6 @@ import SettingsScreen from '../screens/Settings';
 import RegistrationScreen from '../screens/Registration';
 import { useAuthContext } from '../contexts/AuthProvider';
 import { ImageSourcePropType } from 'react-native';
-import AchievementsScreen from '../screens/Achievements';
 import AboutScreen from '../screens/About';
 import CardsCollectionScreen from '../screens/CardsCollection';
 import FriendsScreen from '../screens/Friends';
@@ -20,6 +19,7 @@ import InputCodeScreen from '../screens/InputCode';
 import SetNewPasswordScreen from '../screens/SetNewPassword';
 import ChangeUsernameScreen from '../screens/ChangeUsername';
 import ChangePasswordScreen from '../screens/ChangePassword';
+import AchievementsScreenWithSuspense from '../screens/Achievements';
 
 /**
  * Type with params of screens and their props in ProfileStackScreen
@@ -125,9 +125,9 @@ export default function ProfileStackNavigation(): React.ReactElement {
               </Suspense>
             )}
           </ProfileStack.Screen>
-          <ProfileStack.Screen name="FriendRequests" component={FriendRequestsScreen}/>
-          <ProfileStack.Screen name="FriendAdding" component={FriendAddingScreenWithSuspense}/>
-          <ProfileStack.Screen name="Achievements" component={AchievementsScreen}/>
+          <ProfileStack.Screen name="FriendRequests" component={FriendRequestsScreen} options={{ headerShown: false }}/>
+          <ProfileStack.Screen name="FriendAdding" component={FriendAddingScreenWithSuspense} options={{ headerShown: false }}/>
+          <ProfileStack.Screen name="Achievements" component={AchievementsScreenWithSuspense} options={{ headerShown: false }}/>
           <ProfileStack.Screen name="CardsCollection">
             {(props) => (
               <Suspense fallback={<Spinner color={Colors.DarkBlue}/>}>
