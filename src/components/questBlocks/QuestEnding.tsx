@@ -5,13 +5,14 @@ import { commitMutation, graphql } from 'react-relay';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { QuestsStackParamList } from '../../navigation/questsStack';
 import { useNavigation } from '@react-navigation/native';
-import { useRelayEnvironment } from 'react-relay/hooks';
+import { useFragment, useRelayEnvironment } from 'react-relay/hooks';
 import { Modal } from 'react-native';
 import ReceivedExp from './ReceivedExp';
 import ReceivedCards from './ReceivedCards';
 import ReceivedAchievements from './ReceivedAchievements';
 import Congratulation from './Congratulation';
 import useAudioAccompanimentContext from '../../contexts/AudioAccompanimentContext';
+import { QuestEndingData$key } from './__generated__/QuestEndingData.graphql';
 
 /**
  * Type with props of screen 'List' in QuestsStackScreen
@@ -44,6 +45,11 @@ interface QuestEndingProps {
    * Quest id
    */
   questId: string;
+
+  /**
+   * Data for rendering
+   */
+  data: QuestEndingData$key
 }
 
 const mutation = graphql`
@@ -75,6 +81,16 @@ export default function QuestEnding(props: QuestEndingProps): React.ReactElement
   const environment = useRelayEnvironment();
   const [step, setStep] = useState('congratulations');
   const [visibility, setVisibility] = useState(true);
+  const data = useFragment(graphql`
+    fragment QuestEndingData on Quest {
+      personsCards {
+        ...ReceivedCardsData
+      }
+      linkedAchievements {
+        ...ReceivedAchievementsData
+      }
+    }
+  `, props.data);
 
   const { setIsPlaying } = useAudioAccompanimentContext();
 
@@ -93,13 +109,18 @@ export default function QuestEnding(props: QuestEndingProps): React.ReactElement
         <ModalView
           activeOpacity={1}
           onPress={() => {
-            switch (step) {
+            switch (step) { /* eslint-disable no-fallthrough */
               case 'exp':
-                setStep('cards');
-                break;
+                if (data.personsCards.length > 0) {
+                  setStep('cards');
+                  break;
+                }
+
               case 'cards':
-                setStep('achievements');
-                break;
+                if (data.linkedAchievements.length > 0) {
+                  setStep('achievements');
+                  break;
+                }
               case 'achievements':
                 setVisibility(false);
                 navigation.navigate('List', { needRefresh: true });
@@ -125,10 +146,10 @@ export default function QuestEnding(props: QuestEndingProps): React.ReactElement
               <ReceivedExp exp={90}/>
             }
             {step === 'cards' &&
-              <ReceivedCards/>
+              <ReceivedCards data={data.personsCards}/>
             }
             {step === 'achievements' &&
-              <ReceivedAchievements/>
+              <ReceivedAchievements data={data.linkedAchievements}/>
             }
           </Container>
         </ModalView>

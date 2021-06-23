@@ -1,23 +1,20 @@
-import { ImageSourcePropType } from 'react-native';
 import React from 'react';
 import { StyledFonts } from '../styles/textStyles';
 import Colors from '../styles/colors';
 import styled from 'styled-components/native';
 import LockSVG from '../images/lock.svg';
+import { useFragment } from 'react-relay/hooks';
+import { graphql } from 'react-relay';
+import { CollectionCardData$key } from './__generated__/CollectionCardData.graphql';
 
 /**
  * Card props
  */
 export interface CollectionCardProps {
   /**
-   * Text on card
+   * Person card data
    */
-  text: string;
-
-  /**
-   * Path to image
-   */
-  imgSource: ImageSourcePropType;
+  data: CollectionCardData$key
 
   /**
    * Is the card already received
@@ -65,10 +62,19 @@ const Lock = styled(LockSVG)`
  * @param props - component props
  */
 export default function CollectionCard(props: CollectionCardProps): React.ReactElement {
+  const data = useFragment(graphql`
+    fragment CollectionCardData on Person {
+      firstName
+      lastName
+      cardPhotoLink
+      mainPhotoLink
+    }
+  `, props.data);
+
   return (
     <Card passed={props.isReceived}>
-      {props.isReceived && <CardImage source={props.imgSource}/>}
-      <CardText passed={props.isReceived}>{props.text}</CardText>
+      {props.isReceived && <CardImage source={{ uri: data.cardPhotoLink || data.mainPhotoLink || '' }}/>}
+      <CardText passed={props.isReceived}>{data.firstName} {data.lastName}</CardText>
       {!props.isReceived && <Lock/>}
     </Card>
   );
