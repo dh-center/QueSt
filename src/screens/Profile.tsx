@@ -10,7 +10,7 @@ import { StyledFonts } from '../styles/textStyles';
 import Settings from '../images/settings.svg';
 import BlueEllipse from '../images/blueEllipse.svg';
 import Friends from '../images/friends.svg';
-import Rating from '../images/rating.svg';
+// import Rating from '../images/rating.svg';
 import Achievements from '../images/achievements.svg';
 import Collection from '../images/collection.svg';
 import ProgressBlock from '../components/ProgressBlock';
@@ -132,7 +132,7 @@ export default function ProfileScreen(): React.ReactElement {
               currentExp={props.user.exp - props.user.level * 100}
             />
             <ListButton icon={Friends} buttonText={t('profile.friends')} onPress={(): void => navigation.navigate('Friends')}/>
-            <ListButton icon={Rating} buttonText={t('profile.rating')}/>
+            {/* <ListButton icon={Rating} buttonText={t('profile.rating')}/>*/}
             <ListButton icon={Achievements} buttonText={t('profile.achievements')} onPress={(): void => navigation.navigate('Achievements')}/>
             <ListButton icon={Collection} buttonText={t('profile.cards')} onPress={(): void => navigation.navigate('CardsCollection')}/>
           </ScreenWrapper>
