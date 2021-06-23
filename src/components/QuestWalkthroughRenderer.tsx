@@ -24,6 +24,7 @@ import { TargetLocationProvider } from '../contexts/TargetLocationContext';
 import useTabBarHeight from './utils/useTabBarHeight';
 import useAudioAccompanimentContext, { AudioAccompanimentProvider } from '../contexts/AudioAccompanimentContext';
 import { useIsFocused } from '@react-navigation/native';
+import QuestLocationFromCoordsBlock from './questBlocks/LocationFromCoords';
 
 const styles = StyleSheet.create({
   modal: {
@@ -83,6 +84,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
 
 
   const [currentTarget, setCurrentTarget] = useState<string>();
+  const [currentTargetCoords, setCurrentTargetCoords] = useState<{ latitude: number; longitude: number}>();
   const [currentBlockIndex, setCurrentBlockIndex] = useState(0);
   const [currentTaskBlock, setCurrentTaskBlock] = useState<CurrentTaskBlock>();
 
@@ -115,6 +117,18 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
           modalizeRef.current.close('alwaysOpen');
         }
         setCurrentTarget(currentBlock.data.locationInstanceId);
+        setCurrentTargetCoords(undefined);
+        next();
+        break;
+      case 'approximationToCoordinates':
+        /**
+         * Minimize bottom sheet panel
+         */
+        if (modalizeRef.current) {
+          modalizeRef.current.close('alwaysOpen');
+        }
+        setCurrentTargetCoords(currentBlock.data);
+        setCurrentTarget(undefined);
         next();
         break;
       case 'currentQuestTask':
@@ -169,6 +183,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
     case 'question':
       component = <QuestionView data={currentBlock} nextCallback={next}/>;
       break;
+    case 'approximationToCoordinates':
     case 'locationInstance':
       component = <Spinner color={Colors.DarkBlue}/>;
       break;
@@ -181,6 +196,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       <Suspense fallback={<Spinner color={Colors.DarkBlue}/>}>
         <MapView>
           {currentTarget && <QuestLocationInstanceBlock locationInstanceId={currentTarget}/>}
+          {currentTargetCoords && <QuestLocationFromCoordsBlock latitude={currentTargetCoords.latitude} longitude={currentTargetCoords.longitude}/>}
         </MapView>
         {currentTaskBlock && <CurrentTask block={currentTaskBlock}/>}
         <Modalize
