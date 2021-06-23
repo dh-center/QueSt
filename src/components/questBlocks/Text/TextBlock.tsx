@@ -1,5 +1,5 @@
-import React from 'react';
-import { TextQuestBlock } from '../../../types/questData';
+import React, { useEffect } from 'react';
+import { PageBlock } from '../../../types/questData';
 import Colors from '../../../styles/colors';
 import { StyledFonts } from '../../../styles/textStyles';
 import styled from 'styled-components/native';
@@ -9,6 +9,9 @@ import decodeHTMLEntities from '../../utils/decodingHTMLEntities';
 import Quote from './Quote';
 import BlockBody from '../BlockBody';
 import useTargetLocationContext from '../../../contexts/TargetLocationContext';
+import VoiceIcon from '../../../images/voice.svg';
+import useAudioAccompanimentContext from '../../../contexts/AudioAccompanimentContext';
+
 
 const Body = styled(BlockBody)`
   padding-left: 15px;
@@ -34,6 +37,11 @@ const Paragraph = styled.Text`
   color: ${Colors.Black};
 `;
 
+const VoiceButton = styled.TouchableOpacity`
+  align-self: flex-end;
+  padding: 10px;
+`;
+
 /**
  * Props for QuestTextBlock
  */
@@ -41,7 +49,7 @@ interface QuestTextBlockProps {
   /**
    * Blocks for rendering text data
    */
-  data: (TextQuestBlock)[]
+  page: PageBlock
 
   /**
    * Function to go to the next block
@@ -56,14 +64,22 @@ interface QuestTextBlockProps {
  */
 export default function TextBlock(props: QuestTextBlockProps): React.ReactElement {
   const { isUserNearLocation, targetLocation } = useTargetLocationContext();
+  const { setIsPlaying, setText } = useAudioAccompanimentContext();
 
-  if (props.data.length === 0) {
+  useEffect(() => {
+    setText(props.page.data.map(block => decodeHTMLEntities(block.data.text).replace(/[<>]/ig, '')).join('\n'));
+  }, [ props.page ]);
+
+  if (props.page.data.length === 0) {
     return <Spinner color={Colors.DarkBlue}/>;
   }
 
   return (
     <Body>
-      {props.data.map((block, index) => {
+      <VoiceButton onPress={() => setIsPlaying(isPl => !isPl)}>
+        <VoiceIcon/>
+      </VoiceButton>
+      {props.page.data.map((block, index) => {
         let component;
 
         const text = decodeHTMLEntities(block.data.text);
