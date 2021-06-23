@@ -4,6 +4,8 @@ import Colors from '../styles/colors';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../styles/textStyles';
 import Human from '../images/human.svg';
+import Route from '../images/route.svg';
+import Book from '../images/book.svg';
 import Puzzle from '../images/puzzle.svg';
 import Next from '../images/next.svg';
 import Passed from '../images/passed.svg';
@@ -109,6 +111,7 @@ export default function QuestsListItem({ style: _style, name, type, minLevel, pr
   const { t } = useTranslation();
   let iconViewColor;
   let Wrapper;
+  let icon;
 
   switch (progressState) {
     case 'PASSED':
@@ -125,12 +128,27 @@ export default function QuestsListItem({ style: _style, name, type, minLevel, pr
       break;
   }
 
+  switch (type) {
+    case 'QUEST':
+      icon = <Human/>;
+      break;
+    case 'ROUTE':
+      icon = <Route/>;
+      break;
+    case 'STORY':
+      icon = <Book/>;
+      break;
+    case 'QUIZ':
+      icon = <Puzzle/>;
+      break;
+  }
+
   return (
     <>
       <Wrapper>
         <QuestItem {...rest}>
           <IconView color={iconViewColor}>
-            {type === 'ROUTE' ? <Human/> : <Puzzle/>}
+            {icon}
           </IconView>
           <QuestName>{name}</QuestName>
           {progressState === 'LOCKED' && <Lock/>}
