@@ -25,6 +25,7 @@ import useTabBarHeight from './utils/useTabBarHeight';
 import useAudioAccompanimentContext, { AudioAccompanimentProvider } from '../contexts/AudioAccompanimentContext';
 import { useIsFocused } from '@react-navigation/native';
 import QuestLocationFromCoordsBlock from './questBlocks/LocationFromCoords';
+import AllocationTask from './questBlocks/AllocationTask';
 
 const styles = StyleSheet.create({
   modal: {
@@ -138,6 +139,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       case 'page':
       case 'test':
       case 'question':
+      case 'matchOptions':
         /**
          * Opens modal to top if there are test or question blocks
          */
@@ -182,6 +184,9 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       break;
     case 'question':
       component = <QuestionView data={currentBlock} nextCallback={next}/>;
+      break;
+    case 'matchOptions':
+      component = <AllocationTask data={currentBlock} nextCallback={next}/>;
       break;
     case 'approximationToCoordinates':
     case 'locationInstance':
