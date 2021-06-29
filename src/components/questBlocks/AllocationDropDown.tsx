@@ -91,8 +91,6 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     position: 'absolute',
     top: '50%',
-    // marginTop: '50%',
-    // transform: [ { translateY: 50% } ],
     alignSelf: 'center',
     borderRadius: 15,
     elevation: 8,
