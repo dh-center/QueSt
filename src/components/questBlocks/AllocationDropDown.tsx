@@ -14,7 +14,7 @@ const DropDown = styled(DropDownPicker)<{isCorrect?: boolean}>`
         return Colors.Green;
       case false:
         return Colors.Red;
-      default:
+      case undefined:
         return Colors.White;
     }
   }};
