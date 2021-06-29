@@ -14,7 +14,7 @@ const DropDown = styled(DropDownPicker)<{isCorrect?: boolean}>`
         return Colors.Green;
       case false:
         return Colors.Red;
-      default:
+      case undefined:
         return Colors.White;
     }
   }};
@@ -91,8 +91,6 @@ const styles = StyleSheet.create({
     borderColor: 'transparent',
     position: 'absolute',
     top: '50%',
-    // marginTop: '50%',
-    // transform: [ { translateY: 50% } ],
     alignSelf: 'center',
     borderRadius: 15,
     elevation: 8,

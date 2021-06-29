@@ -66,6 +66,13 @@ export default function AllocationTask(props: AllocationTaskProps): React.ReactE
   const [isAnswered, setIsAnswered] = useState(false);
   let questionIcon;
 
+  /**
+   * Function for random sorting
+   */
+  function randomSort(): number {
+    return Math.random() - 0.5;
+  }
+
   const optionItems = props.data.data.options
     .map((option, index) => {
       return {
@@ -73,7 +80,7 @@ export default function AllocationTask(props: AllocationTaskProps): React.ReactE
         value: index,
       };
     })
-    .sort(() => Math.random() - 0.5);
+    .sort(randomSort);
 
   if (isAnswered) {
     /**
@@ -107,17 +114,18 @@ export default function AllocationTask(props: AllocationTaskProps): React.ReactE
       )}
       <Next
         onPress={() => {
+          const isAllItemsWithAnswers = userAnswers.filter(answer => answer !== undefined).length === props.data.data.options.length;
+
           if (isAnswered) {
             return props.nextCallback();
           }
-          if (userAnswers.filter(answer => answer !== undefined).length !== props.data.data.options.length) {
+          if (!isAllItemsWithAnswers) {
             Alert.alert(t('quests.chooseAnswer'));
           } else {
             setIsAnswered(true);
-            userAnswers.map((answer, index) => {
-              userAnswersCorrectness[index] = answer === props.data.data.options[index].left;
-            });
-            setUserAnswersCorrectness(userAnswersCorrectness);
+            setUserAnswersCorrectness(userAnswers.map((answer, index) => {
+              return answer === props.data.data.options[index].left;
+            }));
           }
         }}
       />
