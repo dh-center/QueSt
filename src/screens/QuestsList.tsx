@@ -174,7 +174,7 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
   const navigation = useNavigation<ListScreenNavigationProp>();
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
-  const [language, setLanguage] = useState<'RU' | 'ENG'>('RU');
+  const [language, setLanguage] = useState<'RU' | 'EN'>('RU');
   const [currentQuestType, setCurrentQuestType] = useState<TaskTypes | undefined>();
   const tabBarHeight = useTabBarHeight();
   const questTypesList: (TaskTypes | undefined)[] = [undefined, 'QUEST', 'ROUTE', 'STORY', 'QUIZ'];
@@ -297,7 +297,7 @@ function QuestsListScreen(props: QuestsListQueryResponse & {retry: (() => void) 
             ArrowDownIconComponent={() => <ArrowDown/>}
             ArrowUpIconComponent={() => <ArrowUp/>}
           />
-          <LanguageButton onPress={() => setLanguage(language === 'RU' ? 'ENG' : 'RU')}>
+          <LanguageButton onPress={() => setLanguage(language === 'RU' ? 'EN' : 'RU')}>
             <LanguageButtonText>{language}</LanguageButtonText>
           </LanguageButton>
         </Row>
