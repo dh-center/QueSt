@@ -66,6 +66,13 @@ export default function AllocationTask(props: AllocationTaskProps): React.ReactE
   const [isAnswered, setIsAnswered] = useState(false);
   let questionIcon;
 
+  /**
+   * Function for random sorting
+   */
+  function randomSort(): number {
+    return Math.random() - 0.5;
+  }
+
   const optionItems = props.data.data.options
     .map((option, index) => {
       return {
@@ -73,7 +80,7 @@ export default function AllocationTask(props: AllocationTaskProps): React.ReactE
         value: index,
       };
     })
-    .sort(() => Math.random() - 0.5);
+    .sort(randomSort);
 
   if (isAnswered) {
     /**
