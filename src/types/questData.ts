@@ -157,6 +157,34 @@ export interface QuestionBlock {
   }
 }
 
+/**
+ * Question block data
+ */
+export interface AllocationBlock {
+  type: 'matchOptions';
+  data: {
+    /**
+     * Task
+     */
+    task: string;
+
+    /**
+     * Answer options
+     */
+    options: {
+      /**
+       * Item to match
+       */
+      left: string;
+
+      /**
+       * Right answer
+       */
+      right: string;
+    }[];
+  }
+}
+
 export interface CurrentTaskBlock {
   type: 'currentQuestTask';
   data: {
@@ -210,6 +238,7 @@ export type QuestBlock =
   | TextQuestBlock
   | TestBlock
   | QuestionBlock
+  | AllocationBlock
   | CurrentTaskBlock;
 
 /**
@@ -221,6 +250,7 @@ export type GroupedQuestBlock =
   | PageBlock
   | TestBlock
   | QuestionBlock
+  | AllocationBlock
   | CurrentTaskBlock;
 
 /**

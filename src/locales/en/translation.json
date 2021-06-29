@@ -10,6 +10,8 @@
     "startQuest": "Start quest",
     "repeatQuest": "Repeat quest",
     "enterAnswer": "Enter your answer",
+    "answer": "Right answer",
+    "chooseAnswer": "Choose an answer for each item",
     "congratulations": "Congratulations!",
     "passed": "You have completed the quest",
     "experience": "Experience",

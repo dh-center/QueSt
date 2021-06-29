@@ -81,6 +81,7 @@ export function AudioAccompanimentProvider(props: AudioAccompanimentProviderProp
       console.log('start play');
       sound.current.play((success) => {
         if (success) {
+          setIsPlaying(!isPlaying);
           console.log('successfully finished playing');
         } else {
           console.log('playback failed due to audio decoding errors');
