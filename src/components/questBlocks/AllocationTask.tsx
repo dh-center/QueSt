@@ -123,10 +123,9 @@ export default function AllocationTask(props: AllocationTaskProps): React.ReactE
             Alert.alert(t('quests.chooseAnswer'));
           } else {
             setIsAnswered(true);
-            userAnswers.map((answer, index) => {
-              userAnswersCorrectness[index] = answer === props.data.data.options[index].left;
-            });
-            setUserAnswersCorrectness(userAnswersCorrectness);
+            setUserAnswersCorrectness(userAnswers.map((answer, index) => {
+              return answer === props.data.data.options[index].left;
+            }));
           }
         }}
       />
