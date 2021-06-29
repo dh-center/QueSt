@@ -107,10 +107,12 @@ export default function AllocationTask(props: AllocationTaskProps): React.ReactE
       )}
       <Next
         onPress={() => {
+          const isAllItemsWithAnswers = userAnswers.filter(answer => answer !== undefined).length === props.data.data.options.length;
+
           if (isAnswered) {
             return props.nextCallback();
           }
-          if (userAnswers.filter(answer => answer !== undefined).length !== props.data.data.options.length) {
+          if (!isAllItemsWithAnswers) {
             Alert.alert(t('quests.chooseAnswer'));
           } else {
             setIsAnswered(true);
