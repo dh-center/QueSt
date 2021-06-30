@@ -11,7 +11,6 @@ import Account from '../images/navigation/account.svg';
 import Quests from '../images/navigation/quests.svg';
 import TabBar from '../components/TabBar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useAuthContext } from '../contexts/AuthProvider';
 
 /**
  * Type with params of screens and their props in BottomTabNavigator
@@ -39,7 +38,6 @@ const Icon = styled.View<{color: string}>`
 export default function MainTabsNavigation(): React.ReactElement {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
-  const authContext = useAuthContext();
 
   const TAB_BAR_OWM_HEIGHT = 78;
   const TAB_BAR_FULL_HEIGHT = insets.bottom + TAB_BAR_OWM_HEIGHT;
@@ -55,34 +53,31 @@ export default function MainTabsNavigation(): React.ReactElement {
           },
         }}
       >
-        {authContext.state.accessToken &&
-          <>
-            <Tab.Screen
-              name="Map"
-              options={{
-                title: t('map.title').toLowerCase(),
-                tabBarIcon: ({ color }): React.ReactElement => {
-                  return <Icon color={color} as={Map}/>;
-                },
-              }}
-              component={MapScreen}
-            />
-            <Tab.Screen
-              name="Quests"
-              options={{
-                title: t('quests.title').toLowerCase(),
-                tabBarIcon: ({ color }): React.ReactElement => {
-                  return <Icon color={color} as={Quests}/>;
-                },
-              }}
-              component={QuestsStackNavigation}
-            />
-          </>
-        }
+        <>
+          <Tab.Screen
+            name="Map"
+            options={{
+              title: t('map.title').toLowerCase(),
+              tabBarIcon: ({ color }): React.ReactElement => {
+                return <Icon color={color} as={Map}/>;
+              },
+            }}
+            component={MapScreen}
+          />
+          <Tab.Screen
+            name="Quests"
+            options={{
+              title: t('quests.title').toLowerCase(),
+              tabBarIcon: ({ color }): React.ReactElement => {
+                return <Icon color={color} as={Quests}/>;
+              },
+            }}
+            component={QuestsStackNavigation}
+          />
+        </>
         <Tab.Screen
           name="Profile"
           options={{
-            tabBarVisible: !!authContext.state.accessToken,
             title: t('profile.title').toLowerCase(),
             tabBarIcon: ({ color }): React.ReactElement => {
               return <Icon color={color} as={Account}/>;

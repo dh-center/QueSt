@@ -1,9 +1,9 @@
 import React  from 'react';
 import { StatusBar } from 'react-native';
-import MainTabsNavigation from './navigation/mainTabs';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AuthProvider  from './contexts/AuthProvider';
 import RelayEnvProvider from './contexts/RelayEnvProvider';
+import AppNavigator from './navigation/AppNavigator';
 
 /**
  * Imports i18next plugin to react native app
@@ -19,7 +19,7 @@ function App(): React.ReactElement {
       <RelayEnvProvider>
         <StatusBar backgroundColor="transparent" barStyle="dark-content" translucent={true}/>
         <SafeAreaProvider>
-          <MainTabsNavigation/>
+          <AppNavigator/>
         </SafeAreaProvider>
       </RelayEnvProvider>
     </AuthProvider>
