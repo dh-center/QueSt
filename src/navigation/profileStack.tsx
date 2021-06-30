@@ -14,6 +14,7 @@ import FriendAddingScreenWithSuspense from '../screens/FriendsAdding';
 import ChangeUsernameScreen from '../screens/ChangeUsername';
 import ChangePasswordScreen from '../screens/ChangePassword';
 import AchievementsScreenWithSuspense from '../screens/Achievements';
+import { useAuthContext } from '../contexts/AuthProvider';
 
 /**
  * Type with params of screens and their props in ProfileStackScreen
@@ -76,8 +77,14 @@ const ProfileStack = createStackNavigator<ProfileStackParamList>();
  * Component for implementing navigation between screens in profile tab
  */
 export default function ProfileStackNavigation(): React.ReactElement {
+  const authContext = useAuthContext();
+
+  console.log(authContext.state.isFirstRegistration);
+
+  const needChangeUsername = authContext.state.isFirstRegistration === true;
+
   return (
-    <ProfileStack.Navigator initialRouteName={'Main'} screenOptions={{ headerShown: false }}>
+    <ProfileStack.Navigator initialRouteName={needChangeUsername ? 'ChangeUsername' : 'Main'} screenOptions={{ headerShown: false }}>
       <ProfileStack.Screen name="Main" component={ProfileScreen}/>
       <ProfileStack.Screen name="ChangeUsername" component={ChangeUsernameScreen}/>
       <ProfileStack.Screen name="ChangePassword" component={ChangePasswordScreen}/>

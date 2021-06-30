@@ -127,7 +127,7 @@ export default function LoginScreen(): ReactElement {
     }
   };
 
-  const onFirstLogin = (): void => navigation.navigate('ChangeUsername');
+  const onFirstLogin = (): void => console.log('ChangeUsername');
 
   return (
     <ScreenWrapper scrollable withoutTabBar>

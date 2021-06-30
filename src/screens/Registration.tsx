@@ -85,7 +85,7 @@ export default function RegistrationScreen(): ReactElement {
       await authContext.actions.registerWithEmailAndPassword(name, email, password);
       await authContext.actions.loginWithEmailAndPassword(email, password);
 
-      navigation.navigate('ChangeUsername');
+      console.log('ChangeUsername');
     } catch (e) {
       Alert.alert(t([`errors.${e.message}`, 'errors.unspecific']));
     }
