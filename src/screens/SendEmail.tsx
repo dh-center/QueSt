@@ -11,12 +11,12 @@ import styled from 'styled-components/native';
 import { graphql } from 'react-relay';
 import { useMutation } from 'react-relay/hooks';
 import Tip from '../images/tip.svg';
-import { ProfileStackParamList } from '../navigation/profileStack';
 import { StackScreenProps } from '@react-navigation/stack';
 import TextualBackButton from '../components/TextualBackButton';
 import { SendEmailMutation } from './__generated__/SendEmailMutation.graphql';
+import { AuthStackParamList } from '../navigation/authStack';
 
-type Props = StackScreenProps<ProfileStackParamList, 'SendEmail'>;
+type Props = StackScreenProps<AuthStackParamList, 'SendEmail'>;
 
 /**
  * Styles for login view
@@ -87,7 +87,7 @@ export default function SendEmailScreen({ navigation }: Props): ReactElement {
   );
 
   return (
-    <ScreenWrapper scrollable>
+    <ScreenWrapper scrollable withoutTabBar>
       <Logo style={styles.logo} height={80} width={144}/>
       <View style={styles.welcomeTextContainer}>
         <Text style={styles.welcomeTextMedium}>

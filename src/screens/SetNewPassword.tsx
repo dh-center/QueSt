@@ -11,11 +11,11 @@ import styled from 'styled-components/native';
 import { graphql } from 'react-relay';
 import { useMutation } from 'react-relay/hooks';
 import Tip from '../images/tip.svg';
-import { ProfileStackParamList } from '../navigation/profileStack';
 import { StackScreenProps } from '@react-navigation/stack';
 import { SetNewPasswordMutation } from './__generated__/SetNewPasswordMutation.graphql';
+import { AuthStackParamList } from '../navigation/authStack';
 
-type Props = StackScreenProps<ProfileStackParamList, 'SetNewPassword'>;
+type Props = StackScreenProps<AuthStackParamList, 'SetNewPassword'>;
 
 /**
  * Styles for login view
@@ -91,7 +91,7 @@ export default function SetNewPasswordScreen({ route, navigation }: Props): Reac
   );
 
   return (
-    <ScreenWrapper scrollable>
+    <ScreenWrapper scrollable withoutTabBar>
       <Logo style={styles.logo} height={80} width={144}/>
       <View style={styles.welcomeTextContainer}>
         <Text style={styles.welcomeTextMedium}>

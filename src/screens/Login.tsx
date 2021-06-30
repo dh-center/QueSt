@@ -5,7 +5,6 @@ import textStyles, { StyledFonts } from '../styles/textStyles';
 import Button from '../components/ui/Button';
 import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ProfileStackParamList } from '../navigation/profileStack';
 import { useNavigation } from '@react-navigation/native';
 import ScreenWrapper from '../components/utils/ScreenWrapper';
 import FacebookAuth from '../components/auth/Facebook';
@@ -17,6 +16,7 @@ import { useAuthContext } from '../contexts/AuthProvider';
 import AppleAuth from '../components/auth/Apple';
 import styled from 'styled-components/native';
 import BlueTextButton from '../components/BlueTextButton';
+import { AuthStackParamList } from '../navigation/authStack';
 
 /**
  * Styles for login view
@@ -104,7 +104,7 @@ const GrayText = styled.Text`
 /**
  * Type with props of screen 'Login' in ProfileStackScreen
  */
-export type LoginScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Login'>;
+export type LoginScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Login'>;
 
 /**
  * Login view
@@ -130,7 +130,7 @@ export default function LoginScreen(): ReactElement {
   const onFirstLogin = (): void => navigation.navigate('ChangeUsername');
 
   return (
-    <ScreenWrapper scrollable>
+    <ScreenWrapper scrollable withoutTabBar>
       <Logo style={styles.logo} height={80} width={144}/>
       <View style={styles.welcomeTextContainer}>
         <Text style={styles.welcomeTextMedium}>

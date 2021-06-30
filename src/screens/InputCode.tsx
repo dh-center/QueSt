@@ -11,13 +11,13 @@ import styled from 'styled-components/native';
 import { graphql } from 'react-relay';
 import { useMutation } from 'react-relay/hooks';
 import Tip from '../images/tip.svg';
-import { ProfileStackParamList } from '../navigation/profileStack';
 import { StackScreenProps } from '@react-navigation/stack';
 import BlueTextButton from '../components/BlueTextButton';
 import TextualBackButton from '../components/TextualBackButton';
 import { InputCodeMutation } from './__generated__/InputCodeMutation.graphql';
+import { AuthStackParamList } from '../navigation/authStack';
 
-type Props = StackScreenProps<ProfileStackParamList, 'InputCode'>;
+type Props = StackScreenProps<AuthStackParamList, 'InputCode'>;
 
 /**
  * Styles for login view
@@ -92,7 +92,7 @@ export default function InputCodeScreen({ route, navigation }: Props): ReactElem
   );
 
   return (
-    <ScreenWrapper scrollable>
+    <ScreenWrapper scrollable withoutTabBar>
       <Logo style={styles.logo} height={80} width={144}/>
       <View style={styles.welcomeTextContainer}>
         <Text style={styles.welcomeTextMedium}>

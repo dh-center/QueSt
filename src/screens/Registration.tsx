@@ -5,13 +5,13 @@ import textStyles from '../styles/textStyles';
 import Button from '../components/ui/Button';
 import { useTranslation } from 'react-i18next';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { ProfileStackParamList } from '../navigation/profileStack';
 import { useNavigation } from '@react-navigation/native';
 import ScreenWrapper from '../components/utils/ScreenWrapper';
 import Colors from '../styles/colors';
 import Logo from '../images/fullLogo.svg';
 import { useAuthContext } from '../contexts/AuthProvider';
 import TextualBackButton from '../components/TextualBackButton';
+import { AuthStackParamList } from '../navigation/authStack';
 
 /**
  * Styles for registration screen component
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
 /**
  * Type with props of screen 'Registration' in ProfileStackScreen
  */
-type RegistrationScreenNavigationProp = StackNavigationProp<ProfileStackParamList, 'Registration'>;
+type RegistrationScreenNavigationProp = StackNavigationProp<AuthStackParamList, 'Registration'>;
 
 /**
  * Registration screen component
@@ -92,7 +92,7 @@ export default function RegistrationScreen(): ReactElement {
   };
 
   return (
-    <ScreenWrapper scrollable>
+    <ScreenWrapper scrollable withoutTabBar>
       <Logo style={styles.logo} height={80} width={144}/>
       <View style={styles.registrationTitleContainer}>
         <Text style={styles.registrationTitle}>
