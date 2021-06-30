@@ -26,6 +26,7 @@ import useAudioAccompanimentContext, { AudioAccompanimentProvider } from '../con
 import { useIsFocused } from '@react-navigation/native';
 import QuestLocationFromCoordsBlock from './questBlocks/LocationFromCoords';
 import AllocationTask from './questBlocks/AllocationTask';
+import DialogBlockView from './questBlocks/DialogBlock';
 
 const styles = StyleSheet.create({
   modal: {
@@ -140,6 +141,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       case 'test':
       case 'question':
       case 'matchOptions':
+      case 'dialog':
         /**
          * Opens modal to top if there are test or question blocks
          */
@@ -187,6 +189,9 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       break;
     case 'matchOptions':
       component = <AllocationTask data={currentBlock} nextCallback={next}/>;
+      break;
+    case 'dialog':
+      component = <DialogBlockView data={currentBlock} nextCallback={next}/>;
       break;
     case 'approximationToCoordinates':
     case 'locationInstance':

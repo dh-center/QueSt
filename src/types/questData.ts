@@ -158,7 +158,7 @@ export interface QuestionBlock {
 }
 
 /**
- * Question block data
+ * Allocation task data
  */
 export interface AllocationBlock {
   type: 'matchOptions';
@@ -181,6 +181,36 @@ export interface AllocationBlock {
        * Right answer
        */
       right: string;
+    }[];
+  }
+}
+
+/**
+ * Dialog block data
+ */
+export interface DialogBlock {
+  type: 'dialog';
+  data: {
+    messages: {
+      /**
+       * Is this message left-side
+       */
+      isLeft: boolean;
+
+      /**
+       * Message text
+       */
+      message: string;
+
+      /**
+       * Person id or 'user'
+       */
+      sender: string;
+
+      /**
+       * Text for button with users answer
+       */
+      reaction?: string;
     }[];
   }
 }
@@ -239,6 +269,7 @@ export type QuestBlock =
   | TestBlock
   | QuestionBlock
   | AllocationBlock
+  | DialogBlock
   | CurrentTaskBlock;
 
 /**
@@ -251,6 +282,7 @@ export type GroupedQuestBlock =
   | TestBlock
   | QuestionBlock
   | AllocationBlock
+  | DialogBlock
   | CurrentTaskBlock;
 
 /**
