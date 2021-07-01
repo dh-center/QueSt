@@ -86,7 +86,7 @@ class AuthContextActions {
    * @param password - user's password
    * @param isFirstRegistration - is it first user registration or not
    */
-  public async loginWithEmailAndPassword(email: string, password: string, isFirstRegistration: boolean): Promise<void> {
+  public async loginWithEmailAndPassword(email: string, password: string, isFirstRegistration?: boolean): Promise<void> {
     const queryString = objToQueryString({
       email,
       password,

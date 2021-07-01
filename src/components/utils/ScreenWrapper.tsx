@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 import Colors from '../../styles/colors';
 import { ScrollView, StyleProp, View, ViewStyle } from 'react-native';
 import useTabBarHeight from './useTabBarHeight';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 /**
  * Styled SafeAreaView component
@@ -17,8 +18,8 @@ const Body = styled(View)`
  *
  * @param props
  */
-const BodyWithoutScrollView = styled(Body)<{tabBarHeight: number}>`
-  padding: 74px 15px ${props => props.tabBarHeight}px;
+const BodyWithoutScrollView = styled(Body)<{bottomOffset: number}>`
+  padding: 74px 15px ${props => props.bottomOffset}px;
   align-items: center;
 `;
 
@@ -33,8 +34,8 @@ const CustomScrollView = styled(ScrollView).attrs(() => ({
     paddingTop: 74,
     paddingHorizontal: 15,
   },
-}))<{tabBarHeight: number}>`
-  margin-bottom: ${props => props.tabBarHeight}px;
+}))<{bottomOffset: number}>`
+  margin-bottom: ${props => props.bottomOffset}px;
 `;
 
 /**
@@ -57,9 +58,9 @@ interface ScreenWrapperProps {
   style?: StyleProp<ViewStyle>
 
   /**
-   * Add margins for tab bar or no
+   * If screen renders without tab bar menu
    */
-  noTabBar?: boolean;
+  withoutTabBar?: boolean
 }
 
 /**
@@ -69,18 +70,21 @@ interface ScreenWrapperProps {
  */
 export default function ScreenWrapper(props: ScreenWrapperProps): ReactElement {
   const tabBarHeight = useTabBarHeight();
+  const insets = useSafeAreaInsets();
+
+  const bottomOffset = props.withoutTabBar ? insets.bottom : tabBarHeight;
 
   if (props.scrollable) {
     return (
       <Body style={props.style}>
-        <CustomScrollView tabBarHeight={props.noTabBar ? 0 : tabBarHeight }>
+        <CustomScrollView bottomOffset={bottomOffset}>
           { props.children }
         </CustomScrollView>
       </Body>
     );
   } else {
     return (
-      <BodyWithoutScrollView style={props.style} tabBarHeight={tabBarHeight}>
+      <BodyWithoutScrollView style={props.style} bottomOffset={bottomOffset}>
         { props.children }
       </BodyWithoutScrollView>
     );

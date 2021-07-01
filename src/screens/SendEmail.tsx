@@ -87,7 +87,7 @@ export default function SendEmailScreen({ navigation }: Props): ReactElement {
   );
 
   return (
-    <ScreenWrapper scrollable noTabBar>
+    <ScreenWrapper scrollable withoutTabBar>
       <Logo style={styles.logo} height={80} width={144}/>
       <View style={styles.welcomeTextContainer}>
         <Text style={styles.welcomeTextMedium}>

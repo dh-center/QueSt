@@ -91,7 +91,7 @@ export default function SetNewPasswordScreen({ route, navigation }: Props): Reac
   );
 
   return (
-    <ScreenWrapper scrollable noTabBar>
+    <ScreenWrapper scrollable withoutTabBar>
       <Logo style={styles.logo} height={80} width={144}/>
       <View style={styles.welcomeTextContainer}>
         <Text style={styles.welcomeTextMedium}>

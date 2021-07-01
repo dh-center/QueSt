@@ -90,7 +90,7 @@ export default function RegistrationScreen(): ReactElement {
   };
 
   return (
-    <ScreenWrapper scrollable noTabBar>
+    <ScreenWrapper scrollable withoutTabBar>
       <Logo style={styles.logo} height={80} width={144}/>
       <View style={styles.registrationTitleContainer}>
         <Text style={styles.registrationTitle}>
