@@ -11,12 +11,8 @@ import styled from 'styled-components/native';
 import { graphql } from 'react-relay';
 import { useMutation } from 'react-relay/hooks';
 import Tip from '../images/tip.svg';
-import { ProfileStackParamList } from '../navigation/profileStack';
-import { StackScreenProps } from '@react-navigation/stack';
 import { ChangeUsernameMutation } from './__generated__/ChangeUsernameMutation.graphql';
 import { useAuthContext } from '../contexts/AuthProvider';
-
-type Props = StackScreenProps<ProfileStackParamList, 'ChangeUsername'>;
 
 /**
  * Styles for login view
@@ -69,10 +65,8 @@ const StyledButton = styled(Button)`
 
 /**
  * Screen with changing username
- *
- * @param props - props for component rendering
  */
-export default function ChangeUsernameScreen({ navigation }: Props): ReactElement {
+export default function ChangeUsernameScreen(): ReactElement {
   const { t } = useTranslation();
   const authContext = useAuthContext();
   const [username, setUsername] = useState('');
