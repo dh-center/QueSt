@@ -1,6 +1,6 @@
 import React  from 'react';
 import { StatusBar } from 'react-native';
-import MainTabsNavigation from './navigation/mainTabs';
+import AppNavigator from './navigation/appNavigator';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AuthProvider  from './contexts/AuthProvider';
 import RelayEnvProvider from './contexts/RelayEnvProvider';
@@ -19,7 +19,7 @@ function App(): React.ReactElement {
       <RelayEnvProvider>
         <StatusBar backgroundColor="transparent" barStyle="dark-content" translucent={true}/>
         <SafeAreaProvider>
-          <MainTabsNavigation/>
+          <AppNavigator/>
         </SafeAreaProvider>
       </RelayEnvProvider>
     </AuthProvider>

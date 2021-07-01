@@ -19,7 +19,7 @@ export default function AppleAuth(props: AuthButtonProps): ReactElement {
       const response = await authContext.actions.authWithApple();
 
       if (response.isFirstRegistration) {
-        props.onFirstLogin();
+        props.onFirstLogin && props.onFirstLogin();
       }
     } catch (e) {
       Alert.alert(t([`errors.${e.message}`, 'errors.unspecific']));

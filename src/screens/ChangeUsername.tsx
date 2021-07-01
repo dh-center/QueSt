@@ -11,11 +11,8 @@ import styled from 'styled-components/native';
 import { graphql } from 'react-relay';
 import { useMutation } from 'react-relay/hooks';
 import Tip from '../images/tip.svg';
-import { ProfileStackParamList } from '../navigation/profileStack';
-import { StackScreenProps } from '@react-navigation/stack';
 import { ChangeUsernameMutation } from './__generated__/ChangeUsernameMutation.graphql';
-
-type Props = StackScreenProps<ProfileStackParamList, 'ChangeUsername'>;
+import { useAuthContext } from '../contexts/AuthProvider';
 
 /**
  * Styles for login view
@@ -68,11 +65,10 @@ const StyledButton = styled(Button)`
 
 /**
  * Screen with changing username
- *
- * @param props - props for component rendering
  */
-export default function ChangeUsernameScreen({ navigation }: Props): ReactElement {
+export default function ChangeUsernameScreen(): ReactElement {
   const { t } = useTranslation();
+  const authContext = useAuthContext();
   const [username, setUsername] = useState('');
 
   const [ updateUsername ] = useMutation<ChangeUsernameMutation>(
@@ -114,7 +110,7 @@ export default function ChangeUsernameScreen({ navigation }: Props): ReactElemen
           onError: error => Alert.alert(t([`errors.${error.source.errors[0].extensions.code}`, 'errors.unspecific'])),
           onCompleted: () => {
             Alert.alert(t('signUp.successful'));
-            navigation.navigate('Main');
+            authContext.actions.setFirstRegistrationFalse();
           },
         })}
       />

@@ -8,6 +8,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 /**
  * Panel for displaying with information
+ *
+ * @param props
  */
 const Container = styled.View<{topOffset: number}>`
   /**
