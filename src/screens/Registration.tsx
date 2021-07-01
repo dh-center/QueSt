@@ -83,7 +83,7 @@ export default function RegistrationScreen(): ReactElement {
 
     try {
       await authContext.actions.registerWithEmailAndPassword(name, email, password);
-      await authContext.actions.loginWithEmailAndPassword(email, password);
+      await authContext.actions.loginWithEmailAndPassword(email, password, true);
     } catch (e) {
       Alert.alert(t([`errors.${e.message}`, 'errors.unspecific']));
     }

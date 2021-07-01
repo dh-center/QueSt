@@ -14,7 +14,7 @@ import Tip from '../images/tip.svg';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChangeUsernameMutation } from './__generated__/ChangeUsernameMutation.graphql';
-import {useAuthContext} from "../contexts/AuthProvider";
+import { useAuthContext } from '../contexts/AuthProvider';
 
 type Props = StackScreenProps<ProfileStackParamList, 'ChangeUsername'>;
 

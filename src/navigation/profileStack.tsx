@@ -1,9 +1,7 @@
 import React, { Suspense } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import ProfileScreen from '../screens/Profile';
-import LoginScreen from '../screens/Login';
 import SettingsScreen from '../screens/Settings';
-import RegistrationScreen from '../screens/Registration';
 import { useAuthContext } from '../contexts/AuthProvider';
 import { ImageSourcePropType } from 'react-native';
 import AboutScreen from '../screens/About';
@@ -14,9 +12,6 @@ import { FriendRequests_data$key } from '../screens/__generated__/FriendRequests
 import { Spinner } from 'native-base';
 import Colors from '../styles/colors';
 import FriendAddingScreenWithSuspense from '../screens/FriendsAdding';
-import SendEmailScreen from '../screens/SendEmail';
-import InputCodeScreen from '../screens/InputCode';
-import SetNewPasswordScreen from '../screens/SetNewPassword';
 import ChangeUsernameScreen from '../screens/ChangeUsername';
 import ChangePasswordScreen from '../screens/ChangePassword';
 import AchievementsScreenWithSuspense from '../screens/Achievements';
