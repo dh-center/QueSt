@@ -1,12 +1,8 @@
-import React from 'react';
-import styled from 'styled-components/native';
+import React, { useState } from 'react';
 import BlockBody from './BlockBody';
-import Colors from '../../styles/colors';
 import { DialogBlock } from '../../types/questData';
-
-const Body = styled(BlockBody)`
-  background-color: ${Colors.Background};
-`;
+import NextButton from '../ui/NextButton';
+import Message from './Message';
 
 /**
  * Props for DialogBlock
@@ -24,10 +20,30 @@ interface DialogBlockProps {
 }
 
 /**
- * @param props
+ * Component for dialog displaying
+ *
+ * @param props - dialog data
  */
 export default function DialogBlockView(props: DialogBlockProps): React.ReactElement {
+  const [currentMessageIndex, setCurrentMessageIndex] = useState(1);
+
+  const getMoreMessages = (): void => setCurrentMessageIndex(currentMessageIndex + 1);
+
   return (
-    <Body/>
+    <BlockBody>
+      {props.data.data.messages.slice(0, currentMessageIndex).map((message, index) =>
+        <Message
+          key={index}
+          messageIndex={index}
+          senderId={message.sender}
+          isLeft={message.isLeft}
+          reaction={message.reaction}
+          message={message.message}
+          needImage={index === 0 || message.sender !== props.data.data.messages[index - 1].sender}
+          getMoreMessage={getMoreMessages}
+        />
+      )}
+      {currentMessageIndex === props.data.data.messages.length + 1 && <NextButton onPress={() => props.nextCallback()}/>}
+    </BlockBody>
   );
 }
