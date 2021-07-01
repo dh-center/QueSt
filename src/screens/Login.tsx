@@ -127,10 +127,8 @@ export default function LoginScreen(): ReactElement {
     }
   };
 
-  const onFirstLogin = (): void => navigation.navigate('ChangeUsername');
-
   return (
-    <ScreenWrapper scrollable>
+    <ScreenWrapper scrollable noTabBar>
       <Logo style={styles.logo} height={80} width={144}/>
       <View style={styles.welcomeTextContainer}>
         <Text style={styles.welcomeTextMedium}>
@@ -176,11 +174,11 @@ export default function LoginScreen(): ReactElement {
           {t('signIn.logInWith')}
         </Text>
         <View style={styles.socialsContainer}>
-          <FacebookAuth onFirstLogin={onFirstLogin}/>
-          <VkAuth onFirstLogin={onFirstLogin}/>
-          <GoogleAuth onFirstLogin={onFirstLogin}/>
+          <FacebookAuth/>
+          <VkAuth/>
+          <GoogleAuth/>
           {
-            Platform.OS === 'ios' && <AppleAuth onFirstLogin={onFirstLogin}/>
+            Platform.OS === 'ios' && <AppleAuth/>
           }
         </View>
       </View>

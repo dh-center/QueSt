@@ -18,7 +18,7 @@ export default function VkAuth(props: AuthButtonProps): React.ReactElement {
       const response = await authContext.actions.authWithVK();
 
       if (response.isFirstRegistration) {
-        props.onFirstLogin();
+        props.onFirstLogin && props.onFirstLogin();
       }
     } catch (e) {
       Alert.alert(t([`errors.${e.message}`, 'errors.unspecific']));

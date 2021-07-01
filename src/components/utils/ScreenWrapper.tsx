@@ -55,6 +55,11 @@ interface ScreenWrapperProps {
    * Custom styles
    */
   style?: StyleProp<ViewStyle>
+
+  /**
+   * Add margins for tab bar or no
+   */
+  noTabBar?: boolean;
 }
 
 /**
@@ -68,7 +73,7 @@ export default function ScreenWrapper(props: ScreenWrapperProps): ReactElement {
   if (props.scrollable) {
     return (
       <Body style={props.style}>
-        <CustomScrollView tabBarHeight={tabBarHeight}>
+        <CustomScrollView tabBarHeight={props.noTabBar ? 0 : tabBarHeight }>
           { props.children }
         </CustomScrollView>
       </Body>

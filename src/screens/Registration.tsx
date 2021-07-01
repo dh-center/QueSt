@@ -84,15 +84,13 @@ export default function RegistrationScreen(): ReactElement {
     try {
       await authContext.actions.registerWithEmailAndPassword(name, email, password);
       await authContext.actions.loginWithEmailAndPassword(email, password);
-
-      navigation.navigate('ChangeUsername');
     } catch (e) {
       Alert.alert(t([`errors.${e.message}`, 'errors.unspecific']));
     }
   };
 
   return (
-    <ScreenWrapper scrollable>
+    <ScreenWrapper scrollable noTabBar>
       <Logo style={styles.logo} height={80} width={144}/>
       <View style={styles.registrationTitleContainer}>
         <Text style={styles.registrationTitle}>

@@ -19,7 +19,7 @@ export default function FacebookAuth(props: AuthButtonProps): React.ReactElement
       const response = await authContext.actions.authWithFacebook();
 
       if (response && response.isFirstRegistration) {
-        props.onFirstLogin();
+        props.onFirstLogin && props.onFirstLogin();
       }
     } catch (e) {
       Alert.alert(t([`errors.${e.message}`, 'errors.unspecific']));

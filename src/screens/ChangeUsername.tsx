@@ -14,6 +14,7 @@ import Tip from '../images/tip.svg';
 import { ProfileStackParamList } from '../navigation/profileStack';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChangeUsernameMutation } from './__generated__/ChangeUsernameMutation.graphql';
+import {useAuthContext} from "../contexts/AuthProvider";
 
 type Props = StackScreenProps<ProfileStackParamList, 'ChangeUsername'>;
 
@@ -73,6 +74,7 @@ const StyledButton = styled(Button)`
  */
 export default function ChangeUsernameScreen({ navigation }: Props): ReactElement {
   const { t } = useTranslation();
+  const authContext = useAuthContext();
   const [username, setUsername] = useState('');
 
   const [ updateUsername ] = useMutation<ChangeUsernameMutation>(
@@ -114,7 +116,7 @@ export default function ChangeUsernameScreen({ navigation }: Props): ReactElemen
           onError: error => Alert.alert(t([`errors.${error.source.errors[0].extensions.code}`, 'errors.unspecific'])),
           onCompleted: () => {
             Alert.alert(t('signUp.successful'));
-            navigation.navigate('Main');
+            authContext.actions.setFirstRegistrationFalse();
           },
         })}
       />

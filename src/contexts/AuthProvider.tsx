@@ -97,7 +97,10 @@ class AuthContextActions {
 
     checkApiErrors(data);
 
-    await this.saveTokens(data.data);
+    await this.saveTokens({
+      ...data.data,
+      isFirstRegistration: true,
+    });
   }
 
   /**
@@ -272,6 +275,19 @@ class AuthContextActions {
       return responseJson.data;
     }
     throw new Error(`Can't refresh tokens`);
+  }
+
+  /**
+   * Set isFirstRegistration value as false
+   */
+  public setFirstRegistrationFalse(): void {
+    this.dispatch({
+      type: 'SET_TOKENS',
+      payload: {
+        ...this.state,
+        isFirstRegistration: false,
+      },
+    });
   }
 
   /**
