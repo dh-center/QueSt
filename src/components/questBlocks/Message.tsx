@@ -135,7 +135,7 @@ export default function Message(props: MessageProps): React.ReactElement {
       needFetch: props.senderId !== 'user' }
   );
 
-  let senderImageSource = require('../../images/lapki.jpg');
+  let senderImageSource;
 
   if (props.senderId === 'user' && data.user?.photo) {
     senderImageSource = { uri: data.user?.photo };
@@ -155,7 +155,7 @@ export default function Message(props: MessageProps): React.ReactElement {
         ?
         <Row isLeft={props.isLeft}>
           <SenderImageView>
-            <SenderImage source={senderImageSource}/>
+            <SenderImage source={senderImageSource ? senderImageSource : require('../../images/lapki.jpg')}/>
           </SenderImageView>
           <MessageView>
             <DefaultText isLeft={props.isLeft}>{senderName}</DefaultText>
