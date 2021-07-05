@@ -79,7 +79,6 @@ const MessageBlock = styled.View<{isLeft: boolean}>`
   align-self: ${props => props.isLeft ? 'flex-start' : 'flex-end'};
   margin-top: 5px;
   padding: 10px;
-  border: 0.2px solid #BDBDBD;
   border-radius: 15px;
   elevation: ${2};
   box-shadow: 0 2px 3px rgba(0,0,0,0.2);
@@ -90,7 +89,6 @@ const MessageBlockWithoutAvatar = styled.View<{isLeft: boolean}>`
   align-self: ${props => props.isLeft ? 'flex-start' : 'flex-end'};
   ${props => props.isLeft ? 'margin: -25px 30px 0 60px;' : 'margin: -25px 60px 0 30px;'}
   padding: 10px;
-  border: 0.2px solid #BDBDBD;
   border-radius: 15px;
   elevation: ${2};
   box-shadow: 0 2px 3px rgba(0,0,0,0.2);
