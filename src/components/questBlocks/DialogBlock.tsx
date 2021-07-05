@@ -40,7 +40,7 @@ export default function DialogBlockView(props: DialogBlockProps): React.ReactEle
           reaction={message.reaction}
           message={message.message}
           needImage={index === 0 || message.sender !== props.data.data.messages[index - 1].sender}
-          getMoreMessage={getMoreMessages}
+          getMoreMessages={getMoreMessages}
         />
       )}
       {currentMessageIndex === props.data.data.messages.length + 1 && <NextButton onPress={() => props.nextCallback()}/>}

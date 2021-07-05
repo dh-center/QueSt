@@ -42,7 +42,7 @@ interface MessageProps {
   /**
    * Function to increment messages count
    */
-  getMoreMessage:  () => void;
+  getMoreMessages:  () => void;
 }
 
 const Body = styled.View`
@@ -112,7 +112,7 @@ const ReactionButton = styled(Button)`
  */
 export default function Message(props: MessageProps): React.ReactElement {
   useEffect(() => {
-    !props.reaction && props.getMoreMessage();
+    !props.reaction && props.getMoreMessages();
   }, [ props.messageIndex ]);
 
   const data = useLazyLoadQuery<MessageQuery>(
@@ -178,7 +178,7 @@ export default function Message(props: MessageProps): React.ReactElement {
       {props.reaction && !isReacted &&
         <ReactionButton title={props.reaction} onPress={() => {
           setIsReacted(true);
-          props.getMoreMessage();
+          props.getMoreMessages();
         }}/>
       }
     </Body>
