@@ -27,6 +27,7 @@ import { useIsFocused } from '@react-navigation/native';
 import QuestLocationFromCoordsBlock from './questBlocks/LocationFromCoords';
 import AllocationTask from './questBlocks/AllocationTask';
 import DialogBlockView from './questBlocks/DialogBlock';
+import HighlightingInTextView from './questBlocks/HighlightingInTextView';
 
 const styles = StyleSheet.create({
   modal: {
@@ -110,6 +111,8 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       return;
     }
 
+    console.log(currentBlock);
+
     switch (currentBlock.type) {
       case 'locationInstance':
         /**
@@ -142,6 +145,7 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       case 'question':
       case 'matchOptions':
       case 'dialog':
+      case 'answerInText':
         /**
          * Opens modal to top if there are test or question blocks
          */
@@ -192,6 +196,9 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       break;
     case 'dialog':
       component = <DialogBlockView data={currentBlock} nextCallback={next}/>;
+      break;
+    case 'answerInText':
+      component = <HighlightingInTextView data={currentBlock} nextCallback={next}/>;
       break;
     case 'approximationToCoordinates':
     case 'locationInstance':
