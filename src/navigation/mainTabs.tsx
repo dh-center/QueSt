@@ -11,6 +11,7 @@ import Account from '../images/navigation/account.svg';
 import Quests from '../images/navigation/quests.svg';
 import TabBar from '../components/TabBar';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useAuthContext } from '../contexts/AuthProvider';
 
 /**
  * Type with params of screens and their props in BottomTabNavigator
@@ -36,6 +37,7 @@ const Icon = styled.View<{color: string}>`
  * Functional component for implementing navigation between screens
  */
 export default function MainTabsNavigation(): React.ReactElement {
+  const authContext = useAuthContext();
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
 
@@ -76,6 +78,7 @@ export default function MainTabsNavigation(): React.ReactElement {
         <Tab.Screen
           name="Profile"
           options={{
+            tabBarVisible: !authContext.state.isFirstRegistration,
             title: t('profile.title').toLowerCase(),
             tabBarIcon: ({ color }): React.ReactElement => {
               return <Icon color={color} as={Account}/>;

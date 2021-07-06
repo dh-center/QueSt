@@ -15,6 +15,7 @@ import FriendAddingScreenWithSuspense from '../screens/FriendsAdding';
 import ChangeUsernameScreen from '../screens/ChangeUsername';
 import ChangePasswordScreen from '../screens/ChangePassword';
 import AchievementsScreenWithSuspense from '../screens/Achievements';
+import OnboardingSlider from '../onboarding/OnboardingSlider';
 
 /**
  * Type with params of screens and their props in ProfileStackScreen
@@ -94,6 +95,11 @@ export type ProfileStackParamList = {
    * FriendAdding screen props
    */
   FriendAdding: undefined;
+
+  /**
+   * Onboarding stack props
+   */
+  Onboarding: undefined;
 };
 
 const ProfileStack = createStackNavigator<ProfileStackParamList>();
@@ -105,8 +111,13 @@ export default function ProfileStackNavigation(): React.ReactElement {
   const authContext = useAuthContext();
 
   return (
-    <ProfileStack.Navigator initialRouteName={'Login'} screenOptions={{ headerShown: false }}>
-      {authContext.state.isFirstRegistration && <ProfileStack.Screen name="ChangeUsername" component={ChangeUsernameScreen}/>}
+    <ProfileStack.Navigator initialRouteName={'ChangeUsername'} screenOptions={{ headerShown: false }}>
+      {authContext.state.isFirstRegistration &&
+        <>
+          <ProfileStack.Screen name="ChangeUsername" component={ChangeUsernameScreen}/>
+          <ProfileStack.Screen name="Onboarding" component={OnboardingSlider}/>
+        </>
+      }
       <ProfileStack.Screen name="Main" component={ProfileScreen}/>
       <ProfileStack.Screen name="ChangePassword" component={ChangePasswordScreen}/>
       <ProfileStack.Screen name="Settings" component={SettingsScreen}/>
