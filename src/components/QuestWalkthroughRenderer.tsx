@@ -111,8 +111,6 @@ const QuestWalkthroughContent = createFragmentContainer<QuestWalkthroughContentP
       return;
     }
 
-    console.log(currentBlock);
-
     switch (currentBlock.type) {
       case 'locationInstance':
         /**
