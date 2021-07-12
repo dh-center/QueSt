@@ -215,6 +215,24 @@ export interface DialogBlock {
   }
 }
 
+/**
+ * Highlighting inn text block data
+ */
+export interface HighlightingInTextBlock {
+  type: 'answerInText';
+  data: {
+    /**
+     * Task
+     */
+    task: string;
+
+    /**
+     * Text with highlighting
+     */
+    text: string;
+  }
+}
+
 export interface CurrentTaskBlock {
   type: 'currentQuestTask';
   data: {
@@ -270,6 +288,7 @@ export type QuestBlock =
   | QuestionBlock
   | AllocationBlock
   | DialogBlock
+  | HighlightingInTextBlock
   | CurrentTaskBlock;
 
 /**
@@ -283,6 +302,7 @@ export type GroupedQuestBlock =
   | QuestionBlock
   | AllocationBlock
   | DialogBlock
+  | HighlightingInTextBlock
   | CurrentTaskBlock;
 
 /**
