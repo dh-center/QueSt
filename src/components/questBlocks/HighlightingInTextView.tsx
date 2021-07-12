@@ -31,17 +31,21 @@ const HeaderText = styled.Text`
 `;
 
 const Row = styled.View`
-  min-height: 34px;
   margin: 10px 15px 0;
   flex-direction: row;
   align-items: center;
+  flex-wrap: wrap;
 `;
 
 const DefaultText = styled.Text`
   ${StyledFonts.uiWebRegular};
   font-size: 18px;
-  line-height: 22px;
+  line-height: 34px;
   color: ${Colors.Black};
+`;
+
+const Next = styled(NextButton)`
+  margin-top: 30px;
 `;
 
 /**
@@ -127,18 +131,22 @@ export default function HighlightingInTextView(props: HighlightingInTextViewProp
                 />;
               }
 
-              return <DefaultText key={wordIndex}>{item}</DefaultText>;
+              return item.split(' ').map(word => {
+                wordIndex++;
+
+                return <DefaultText key={wordIndex}>{word} </DefaultText>;
+              });
             })}
         </Row>
       )}
       {!isAnswered &&
-        <NextButton onPress={() => {
+        <Next onPress={() => {
           setIsCorrectlyAnswered(userAnswers.filter(answer => answer === false).length === 0 && userAnswers.filter(answer => answer === true).length === rightAnswersCount);
           setIsAnswered(true);
         }} />
       }
       {isAnswered && (isUserNearLocation || !targetLocation) &&
-        <NextButton onPress={() => props.nextCallback()} />
+        <Next onPress={() => props.nextCallback()} />
       }
     </BlockBody>
   );

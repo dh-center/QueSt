@@ -15,7 +15,7 @@ const TextButton = styled.TouchableOpacity<{color: string, pressed: boolean, ans
   background-color: ${props => props.color};
   ${props => !props.pressed && !props.answered && 'border-bottom-color: #222222; border-bottom-width: 0.5px;'}
   ${props => props.withGreenBorder && 'border: #5BC378 1.5px;'}
-  border-radius: 3px;
+  ${props => (props.pressed || props.answered) && 'border-radius: 3px;'}
 `;
 
 interface TextButtonProps {
