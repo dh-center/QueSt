@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../styles/textStyles';
 import Colors from '../styles/colors';
@@ -20,11 +20,6 @@ const TextButton = styled.TouchableOpacity<{color: string, pressed: boolean, ans
 
 interface TextButtonProps {
   /**
-   * Item index
-   */
-  index: number,
-
-  /**
    * Text for displaying
    */
   text: string,
@@ -40,14 +35,9 @@ interface TextButtonProps {
   isAnswered: boolean,
 
   /**
-   * Users answers
+   * onPress callback
    */
-  answers: (boolean | undefined)[];
-
-  /**
-   * Function to set users answers
-   */
-  setAnswers: Dispatch<SetStateAction<(boolean | undefined)[]>>;
+  onPress: (pressed: boolean) => void,
 }
 
 /**
@@ -80,8 +70,7 @@ export default function HighlightingButton(props: TextButtonProps): React.ReactE
       answered={props.isAnswered}
       disabled={props.isAnswered}
       onPress={() => {
-        props.answers[props.index] = !pressed ? props.isRightAnswer : undefined;
-        props.setAnswers(props.answers);
+        props.onPress(pressed);
         setPressed(!pressed);
       }}
     >

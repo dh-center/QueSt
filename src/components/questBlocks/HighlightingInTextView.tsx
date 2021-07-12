@@ -28,6 +28,7 @@ const HeaderText = styled.Text`
   line-height: 22px;
   color: ${Colors.Black};
   margin-top: 30px;
+  align-self: flex-start;
 `;
 
 const Row = styled.View`
@@ -70,8 +71,7 @@ interface HighlightingInTextViewProps {
  */
 export default function HighlightingInTextView(props: HighlightingInTextViewProps): React.ReactElement {
   const { isUserNearLocation, targetLocation } = useTargetLocationContext();
-  const [isAnswered, setIsAnswered] = useState(false);
-  const [userAnswers, setUserAnswers] = useState<(boolean | undefined)[]>([]);
+  const [userAnswersObj, setUserAnswersObj] = useState<Record<number, boolean | undefined>>({});
   const [isCorrectlyAnswered, setIsCorrectlyAnswered] = useState<boolean>();
   const [rightAnswerIdentifier, wrongAnswerIdentifier] = ['class="true-answer">', 'class="possible-answer">'];
   let questionIcon;
@@ -108,25 +108,31 @@ export default function HighlightingInTextView(props: HighlightingInTextViewProp
             .split('<')
             .map((item, itemIndex) => {
               if (item.includes(rightAnswerIdentifier)) {
+                const currentButton = buttonIndex++;
+
                 return <HighlightingButton
                   key={strIndex.toString() + itemIndex.toString()}
-                  index={buttonIndex++}
                   text={item.slice(rightAnswerIdentifier.length + 1)}
                   isRightAnswer={true}
-                  isAnswered={isAnswered}
-                  answers={userAnswers}
-                  setAnswers={setUserAnswers}
+                  isAnswered={isCorrectlyAnswered !== undefined}
+                  onPress={(pressed: boolean) => setUserAnswersObj({
+                    ...userAnswersObj,
+                    [currentButton]: !pressed ? true : undefined,
+                  })}
                 />;
               }
               if (item.includes(wrongAnswerIdentifier)) {
+                const currentButton = buttonIndex++;
+
                 return <HighlightingButton
                   key={strIndex.toString() + itemIndex.toString()}
-                  index={buttonIndex++}
                   text={item.slice(wrongAnswerIdentifier.length + 1)}
                   isRightAnswer={false}
-                  isAnswered={isAnswered}
-                  answers={userAnswers}
-                  setAnswers={setUserAnswers}
+                  isAnswered={isCorrectlyAnswered !== undefined}
+                  onPress={(pressed: boolean) => setUserAnswersObj({
+                    ...userAnswersObj,
+                    [currentButton]: !pressed ? false : undefined,
+                  })}
                 />;
               }
 
@@ -134,13 +140,15 @@ export default function HighlightingInTextView(props: HighlightingInTextViewProp
             })}
         </Row>
       )}
-      {!isAnswered &&
+      {isCorrectlyAnswered === undefined &&
         <Next onPress={() => {
-          setIsCorrectlyAnswered(userAnswers.filter(answer => answer === false).length === 0 && userAnswers.filter(answer => answer === true).length === rightAnswersCount);
-          setIsAnswered(true);
+          const haveWrongAnswers = Object.values(userAnswersObj).filter(answer => answer === false).length !== 0;
+          const allRightAnswersPressed = Object.values(userAnswersObj).filter(answer => answer === true).length === rightAnswersCount;
+
+          setIsCorrectlyAnswered(!haveWrongAnswers && allRightAnswersPressed);
         }} />
       }
-      {isAnswered && (isUserNearLocation || !targetLocation) &&
+      {isCorrectlyAnswered !== undefined && (isUserNearLocation || !targetLocation) &&
         <Next onPress={() => props.nextCallback()} />
       }
     </BlockBody>
