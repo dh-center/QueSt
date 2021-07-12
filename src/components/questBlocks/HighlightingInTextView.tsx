@@ -111,7 +111,7 @@ export default function HighlightingInTextView(props: HighlightingInTextViewProp
                 const currentButton = buttonIndex++;
 
                 return <HighlightingButton
-                  key={strIndex.toString() + itemIndex.toString()}
+                  key={`${strIndex}${itemIndex}`}
                   text={item.slice(rightAnswerIdentifier.length + 1)}
                   isRightAnswer={true}
                   isAnswered={isCorrectlyAnswered !== undefined}
@@ -125,7 +125,7 @@ export default function HighlightingInTextView(props: HighlightingInTextViewProp
                 const currentButton = buttonIndex++;
 
                 return <HighlightingButton
-                  key={strIndex.toString() + itemIndex.toString()}
+                  key={`${strIndex}${itemIndex}`}
                   text={item.slice(wrongAnswerIdentifier.length + 1)}
                   isRightAnswer={false}
                   isAnswered={isCorrectlyAnswered !== undefined}
@@ -136,7 +136,7 @@ export default function HighlightingInTextView(props: HighlightingInTextViewProp
                 />;
               }
 
-              return item.split(' ').map((word, wordIndex) => <DefaultText key={strIndex.toString() + itemIndex.toString() + wordIndex.toString()}>{word} </DefaultText>);
+              return item.split(' ').map((word, wordIndex) => <DefaultText key={`${strIndex}${itemIndex}${wordIndex}`}>{word} </DefaultText>);
             })}
         </Row>
       )}
