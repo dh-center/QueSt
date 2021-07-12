@@ -73,6 +73,7 @@ export default function HighlightingInTextView(props: HighlightingInTextViewProp
   const [isAnswered, setIsAnswered] = useState(false);
   const [userAnswers, setUserAnswers] = useState<(boolean | undefined)[]>([]);
   const [isCorrectlyAnswered, setIsCorrectlyAnswered] = useState<boolean>();
+  const [rightAnswerIdentifier, wrongAnswerIdentifier] = ['class="true-answer">', 'class="possible-answer">'];
   let questionIcon;
 
   const strings = props.data.data.text.split('<br>');
@@ -91,7 +92,7 @@ export default function HighlightingInTextView(props: HighlightingInTextViewProp
     questionIcon = (isCorrectlyAnswered) ? <RightAnswer/> : <WrongAnswer/>;
   }
 
-  let wordIndex = 0;
+  let buttonIndex = 0;
 
   return (
     <BlockBody>
@@ -99,31 +100,29 @@ export default function HighlightingInTextView(props: HighlightingInTextViewProp
         {questionIcon}
         <HeaderText>{props.data.data.task}</HeaderText>
       </Header>
-      {strings.map((string, index) =>
-        <Row key={index}>
+      {strings.map((string, strIndex) =>
+        <Row key={strIndex}>
           {string
             .replace(/span/g, '')
             .replace(/\/>/g, '')
             .split('<')
-            .map((item) => {
-              wordIndex++;
-
-              if (item.includes('class="true-answer">')) {
+            .map((item, itemIndex) => {
+              if (item.includes(rightAnswerIdentifier)) {
                 return <HighlightingButton
-                  key={wordIndex}
-                  index={wordIndex}
-                  text={item.slice(21)}
+                  key={strIndex.toString() + itemIndex.toString()}
+                  index={buttonIndex++}
+                  text={item.slice(rightAnswerIdentifier.length + 1)}
                   isRightAnswer={true}
                   isAnswered={isAnswered}
                   answers={userAnswers}
                   setAnswers={setUserAnswers}
                 />;
               }
-              if (item.includes('class="possible-answer">')) {
+              if (item.includes(wrongAnswerIdentifier)) {
                 return <HighlightingButton
-                  key={wordIndex}
-                  index={wordIndex}
-                  text={item.slice(25)}
+                  key={strIndex.toString() + itemIndex.toString()}
+                  index={buttonIndex++}
+                  text={item.slice(wrongAnswerIdentifier.length + 1)}
                   isRightAnswer={false}
                   isAnswered={isAnswered}
                   answers={userAnswers}
@@ -131,11 +130,7 @@ export default function HighlightingInTextView(props: HighlightingInTextViewProp
                 />;
               }
 
-              return item.split(' ').map(word => {
-                wordIndex++;
-
-                return <DefaultText key={wordIndex}>{word} </DefaultText>;
-              });
+              return item.split(' ').map((word, wordIndex) => <DefaultText key={strIndex.toString() + itemIndex.toString() + wordIndex.toString()}>{word} </DefaultText>);
             })}
         </Row>
       )}
