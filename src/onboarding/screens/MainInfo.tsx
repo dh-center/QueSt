@@ -5,6 +5,12 @@ import styled from 'styled-components/native';
 import { StyledFonts } from '../../styles/textStyles';
 import Colors from '../../styles/colors';
 
+const Container = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
 const Logo = styled(LogoIcon)`
   margin-bottom: 25px;
 `;
@@ -30,10 +36,12 @@ const Delimiter = styled.View`
 export default function MainInfo(): React.ReactElement {
   return (
     <OnboardingBody isFirstScreen>
-      <Logo height={80} width={144}/>
-      <DefaultText>Que.St: квесты по Петербургу</DefaultText>
-      <Delimiter/>
-      <DefaultText>Приложение, посвещенное изучению истории и культруы Санкт-Петербурга!</DefaultText>
+      <Container>
+        <Logo height={80} width={144}/>
+        <DefaultText>Que.St: квесты по Петербургу</DefaultText>
+        <Delimiter/>
+        <DefaultText>Приложение, посвещенное изучению истории и культруы Санкт-Петербурга!</DefaultText>
+      </Container>
     </OnboardingBody>
   );
 }

@@ -6,7 +6,6 @@ import { StyledFonts } from '../../styles/textStyles';
 const Row = styled.View`
   flex-direction: row;
   align-self: stretch;
-  margin-bottom: 40px;
   align-items: center;
 `;
 

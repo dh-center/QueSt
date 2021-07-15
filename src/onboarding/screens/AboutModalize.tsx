@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import OnboardingBody from '../components/OnboardingBody';
-import Phone from '../../images/mockPhone.svg';
+import MockPhone from '../../images/mockPhone.svg';
 import ScreenInfo from '../components/ScreenInfo';
 import styled from 'styled-components/native';
 import { Dimensions, View } from 'react-native';
@@ -37,16 +37,20 @@ const pageBlock: PageBlock = {
   ],
 };
 
+const MockPhoneView = styled.View`
+  flex: 1;
+  max-height: ${Dimensions.get('screen'). width * 400 / 375 + 50}px;
+  margin-bottom: 20px;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
 const Gradient = styled(LinearGradient)`
   position: absolute;
   align-self: center;
   height: 147%;
   width: 100%;
   z-index: 999;
-`;
-
-const MockPhone = styled(Phone)`
-  margin-bottom: 20px;
 `;
 
 const ModalizeView = styled.View<{width: number, height: number}>`
@@ -76,34 +80,36 @@ const Handle = styled.View`
  *
  */
 export default function AboutModalize(): React.ReactElement {
-  const phoneSVGWidth = Dimensions.get('screen').width;
-  const phoneSVGHeight = phoneSVGWidth * 400 / 375;
-  const modalizeWidth = phoneSVGWidth * 305 / 375;
-  const modalizeHeight = phoneSVGHeight * 325 / 400;
+  const [mockPhoneHeight, setMockPhoneHeight] = useState(Dimensions.get('screen').width * 400 / 375);
+  const mockPhoneWidth = mockPhoneHeight * 375 / 400;
+  const modalizeWidth = mockPhoneWidth * 305 / 375;
+  const modalizeHeight = mockPhoneHeight * 325 / 400;
 
   return (
     <TargetLocationProvider>
       <AudioAccompanimentProvider questId={''}>
         <OnboardingBody>
-          <View>
-            <MockPhone width={phoneSVGWidth} height={phoneSVGHeight}/>
-            <ModalizeView width={modalizeWidth} height={modalizeHeight}>
-              <Handle/>
-              <TextBlock page={pageBlock} nextCallback={() => console.log()}/>
-            </ModalizeView>
-            <Gradient
-              start={{
-                x: 0.5,
-                y: 1,
-              }}
-              end={{
-                x: 0.5,
-                y: 0,
-              }}
-              colors={[Colors.Background, 'rgba(255, 255, 255, 0)']}
-              locations={[0.35, 0.65]}
-            />
-          </View>
+          <MockPhoneView onLayout={(event) => setMockPhoneHeight(Math.min(mockPhoneHeight, event.nativeEvent.layout.height))}>
+            <View>
+              <MockPhone width={mockPhoneWidth} height={mockPhoneHeight}/>
+              <ModalizeView width={modalizeWidth} height={modalizeHeight}>
+                <Handle/>
+                <TextBlock page={pageBlock} nextCallback={() => console.log()}/>
+              </ModalizeView>
+              <Gradient
+                start={{
+                  x: 0.5,
+                  y: 1,
+                }}
+                end={{
+                  x: 0.5,
+                  y: 0,
+                }}
+                colors={[Colors.Background, 'rgba(255, 255, 255, 0)']}
+                locations={[0.35, 0.65]}
+              />
+            </View>
+          </MockPhoneView>
           <ScreenInfo title={'Потяните вверх'} description={'Во время прохождения квеста весь контент появляется в окне, которое можно открыть, потянув вверх, или, наоборот, свернуть, смахнув вниз, чтобы посмотреть на карту.'}/>
         </OnboardingBody>
       </AudioAccompanimentProvider>

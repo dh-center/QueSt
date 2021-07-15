@@ -2,6 +2,7 @@ import React from 'react';
 import { StyledFonts } from '../../styles/textStyles';
 import Colors from '../../styles/colors';
 import styled from 'styled-components/native';
+import { View } from 'react-native';
 
 const Title = styled.Text`
   ${StyledFonts.roboto};
@@ -39,9 +40,9 @@ interface ScreenInfoProps {
  */
 export default function ScreenInfo({ title, description }: ScreenInfoProps): React.ReactElement {
   return (
-    <>
+    <View>
       <Title>{title}</Title>
       <Description>{description}</Description>
-    </>
+    </View>
   );
 }
