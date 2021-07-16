@@ -58,17 +58,21 @@ const Gradient = styled(LinearGradient)`
   flex: 1;
 `;
 
-const ModalizeView = styled.View<{width: number, height: number}>`
+const ModalizeContainer = styled.View<{width: number, height: number}>`
+  background-color: ${Colors.White};
   height: ${props => props.height}px;
   width: ${props => props.width}px;
   position: absolute;
   bottom: 0;
   align-self: center;
-  background-color: ${Colors.White};
   border-radius: 10px;
+  elevation: ${16};
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+`;
+
+const ModalizeView = styled.View`
+  flex: 1;
   padding: 12px 15px;
-  elevation: ${8};
-  box-shadow: 0 4px 4.65px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 `;
 
@@ -97,10 +101,12 @@ export default function AboutModalize(): React.ReactElement {
           <MockPhoneView onLayout={(event) => event.nativeEvent.layout.height > 0 && setMockPhoneHeight(Math.min(mockPhoneHeight, event.nativeEvent.layout.height))}>
             <View>
               <MockPhone width={mockPhoneWidth} height={mockPhoneHeight}/>
-              <ModalizeView width={modalizeWidth} height={modalizeHeight}>
-                <Handle/>
-                <TextBlock page={pageBlock} nextCallback={() => console.log()}/>
-              </ModalizeView>
+              <ModalizeContainer width={modalizeWidth} height={modalizeHeight}>
+                <ModalizeView>
+                  <Handle/>
+                  <TextBlock page={pageBlock} nextCallback={() => console.log()}/>
+                </ModalizeView>
+              </ModalizeContainer>
               <GradientView>
                 <Gradient
                   start={{

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import OnboardingBody from '../components/OnboardingBody';
 import MockPhone from '../../images/mockPhone.svg';
 import ScreenInfo from '../components/ScreenInfo';
-import { Dimensions, View } from 'react-native';
+import { Dimensions, Platform, View } from 'react-native';
 import styled from 'styled-components/native';
 import Colors from '../../styles/colors';
 import Alarm from '../../images/alarm.svg';
@@ -23,13 +23,13 @@ const TaskView = styled.View<{width: number, topOffset: number}>`
   top: ${props => props.topOffset}px;
   align-self: center;
   background-color: ${Colors.White};
-  border: rgba(85, 85, 107, 0.15) 1px;
+  ${Platform.OS === 'ios' && 'border: rgba(85, 85, 107, 0.15) 1px;'}
   border-radius: 10px;
   padding: 15px 20px;
   flex-direction: row;
   align-items: center;
-  elevation: ${8};
-  box-shadow: 0 4px 4.65px rgba(0,0,0,0.2);
+  elevation: ${16};
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
 `;
 
 const TaskText = styled.Text`
