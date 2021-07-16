@@ -22,7 +22,7 @@ export default function AboutGeolocation(): React.ReactElement {
 
   return (
     <OnboardingBody>
-      <MockPhoneView onLayout={(event) => setMockPhoneHeight(Math.min(mockPhoneHeight, event.nativeEvent.layout.height))}>
+      <MockPhoneView onLayout={(event) => event.nativeEvent.layout.height > 0 && setMockPhoneHeight(Math.min(mockPhoneHeight, event.nativeEvent.layout.height))}>
         <MockPhone width={mockPhoneWidth} height={mockPhoneHeight}/>
       </MockPhoneView>
       <ScreenInfo title={'Геолокация'} description={'Во время прохождения квестов и маршрутов необходимо перемещаться между локациями.'}/>

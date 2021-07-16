@@ -45,12 +45,17 @@ const MockPhoneView = styled.View`
   justify-content: flex-end;
 `;
 
-const Gradient = styled(LinearGradient)`
-  position: absolute;
-  align-self: center;
+const GradientView = styled.View`
   height: 147%;
   width: 100%;
+  position: absolute;
+  align-self: center;
   z-index: 999;
+  elevation: ${999};
+`;
+
+const Gradient = styled(LinearGradient)`
+  flex: 1;
 `;
 
 const ModalizeView = styled.View<{width: number, height: number}>`
@@ -89,25 +94,27 @@ export default function AboutModalize(): React.ReactElement {
     <TargetLocationProvider>
       <AudioAccompanimentProvider questId={''}>
         <OnboardingBody>
-          <MockPhoneView onLayout={(event) => setMockPhoneHeight(Math.min(mockPhoneHeight, event.nativeEvent.layout.height))}>
+          <MockPhoneView onLayout={(event) => event.nativeEvent.layout.height > 0 && setMockPhoneHeight(Math.min(mockPhoneHeight, event.nativeEvent.layout.height))}>
             <View>
               <MockPhone width={mockPhoneWidth} height={mockPhoneHeight}/>
               <ModalizeView width={modalizeWidth} height={modalizeHeight}>
                 <Handle/>
                 <TextBlock page={pageBlock} nextCallback={() => console.log()}/>
               </ModalizeView>
-              <Gradient
-                start={{
-                  x: 0.5,
-                  y: 1,
-                }}
-                end={{
-                  x: 0.5,
-                  y: 0,
-                }}
-                colors={[Colors.Background, 'rgba(255, 255, 255, 0)']}
-                locations={[0.35, 0.65]}
-              />
+              <GradientView>
+                <Gradient
+                  start={{
+                    x: 0.5,
+                    y: 1,
+                  }}
+                  end={{
+                    x: 0.5,
+                    y: 0,
+                  }}
+                  colors={[Colors.Background, 'rgba(255, 255, 255, 0)']}
+                  locations={[0.35, 0.65]}
+                />
+              </GradientView>
             </View>
           </MockPhoneView>
           <ScreenInfo title={'Потяните вверх'} description={'Во время прохождения квеста весь контент появляется в окне, которое можно открыть, потянув вверх, или, наоборот, свернуть, смахнув вниз, чтобы посмотреть на карту.'}/>

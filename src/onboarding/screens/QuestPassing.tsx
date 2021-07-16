@@ -52,7 +52,7 @@ export default function QuestPassing(): React.ReactElement {
 
   return (
     <OnboardingBody>
-      <MockPhoneView onLayout={(event) => setMockPhoneHeight(Math.min(mockPhoneHeight, event.nativeEvent.layout.height))}>
+      <MockPhoneView onLayout={(event) => event.nativeEvent.layout.height > 0 && setMockPhoneHeight(Math.min(mockPhoneHeight, event.nativeEvent.layout.height))}>
         <View>
           <MockPhone width={mockPhoneWidth} height={mockPhoneHeight}/>
           <TaskView width={taskViewWidth} topOffset={taskViewTopOffset}>
