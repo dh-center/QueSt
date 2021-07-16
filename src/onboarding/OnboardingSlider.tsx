@@ -9,6 +9,7 @@ import Colors from '../styles/colors';
 import styled from 'styled-components/native';
 import { StyledFonts } from '../styles/textStyles';
 import { useAuthContext } from '../contexts/AuthProvider';
+import Back from '../images/back.svg';
 
 const data = [
   {
@@ -50,15 +51,22 @@ const activeDot = {
 };
 
 const DoneButton = styled.TouchableOpacity`
-  background-color: ${Colors.Blue};
-  padding: 12px;
+  padding: 13px;
   border-radius: 30px;
+  flex-direction: row;
+  align-items: center;
 `;
 
 const ButtonText = styled.Text`
-  ${StyledFonts.uiWebRegular};
-  font-size: 18px;
-  color: ${Colors.White};
+  ${StyledFonts.uiWebMedium};
+  font-size: 16px;
+  color: ${Colors.DarkBlue};
+`;
+
+const NextArrow = styled(Back)`
+  color: ${Colors.DarkBlue};
+  transform: rotate(180deg);
+  margin-left: 10px;
 `;
 
 /**
@@ -75,6 +83,15 @@ export default function OnboardingSlider(): React.ReactElement {
     );
   };
 
+  const _renderDoneButton = (): React.ReactElement => {
+    return (
+      <DoneButton onPress={() => authContext.actions.setFirstRegistrationFalse()}>
+        <ButtonText>Done</ButtonText>
+        <NextArrow/>
+      </DoneButton>
+    );
+  };
+
   const _keyExtractor = (item: Item): string => item.index.toString();
 
   return (
@@ -84,7 +101,7 @@ export default function OnboardingSlider(): React.ReactElement {
       dotStyle={dot}
       activeDotStyle={activeDot}
       showNextButton={false}
-      renderDoneButton={() => <DoneButton onPress={() => authContext.actions.setFirstRegistrationFalse()}><ButtonText>Done</ButtonText></DoneButton>}
+      renderDoneButton={_renderDoneButton}
       keyExtractor={_keyExtractor}
     />
   );
