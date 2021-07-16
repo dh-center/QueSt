@@ -12,7 +12,13 @@ import { graphql } from 'react-relay';
 import { useMutation } from 'react-relay/hooks';
 import Tip from '../images/tip.svg';
 import { ChangeUsernameMutation } from './__generated__/ChangeUsernameMutation.graphql';
-import { useAuthContext } from '../contexts/AuthProvider';
+import { ProfileStackParamList } from '../navigation/profileStack';
+import { StackScreenProps } from '@react-navigation/stack';
+
+/**
+ * Type with props of screen 'ChangeUsername' in ProfileStackScreen
+ */
+type Props = StackScreenProps<ProfileStackParamList, 'ChangeUsername'>;
 
 /**
  * Styles for login view
@@ -65,10 +71,11 @@ const StyledButton = styled(Button)`
 
 /**
  * Screen with changing username
+ *
+ * @param props - props for component rendering
  */
-export default function ChangeUsernameScreen(): ReactElement {
+export default function ChangeUsernameScreen({ navigation }: Props): ReactElement {
   const { t } = useTranslation();
-  const authContext = useAuthContext();
   const [username, setUsername] = useState('');
 
   const [ updateUsername ] = useMutation<ChangeUsernameMutation>(
@@ -105,14 +112,16 @@ export default function ChangeUsernameScreen(): ReactElement {
       />
       <StyledButton
         title={t('signUp.register')}
-        onPress={() => updateUsername({
-          variables: { username },
-          onError: error => Alert.alert(t([`errors.${error.source.errors[0].extensions.code}`, 'errors.unspecific'])),
-          onCompleted: () => {
-            Alert.alert(t('signUp.successful'));
-            authContext.actions.setFirstRegistrationFalse();
-          },
-        })}
+        onPress={() => {
+          updateUsername({
+            variables: { username },
+            onError: error => Alert.alert(t([`errors.${error.source.errors[0].extensions.code}`, 'errors.unspecific'])),
+            onCompleted: () => {
+              Alert.alert(t('signUp.successful'));
+              navigation.navigate('Onboarding');
+            },
+          });
+        }}
       />
     </ScreenWrapper>
   );
